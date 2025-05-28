@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Innovation Resilience Framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0a0a0a;
+            --accent: #4F46E5;
+            --accent-light: #6366F1;
+            --light: #fafafa;
+            --gray: #6b7280;
+            --border: #e5e7eb;
+            --max-width: 1100px;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background: white;
+            overflow-x: hidden;
+        }
+        
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        nav .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: transform 0.3s;
+        }
+        
+        nav .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        nav .menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        nav .menu a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        
+        nav .menu a:hover {
+            color: var(--primary);
+        }
+        
+        nav .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        nav .menu a:hover::after,
+        nav .menu a.active::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: -20%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            right: -20%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 200;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+        
+        .hero h1 strong {
+            font-weight: 600;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+        
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px 0 rgba(79, 70, 229, 0.4);
+        }
+        
+        .btn-secondary {
+            border: 2px solid var(--border);
+            color: var(--primary);
+            background: white;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 200;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section-title.animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section-subtitle.animate {
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Framework Section */
+        .framework-visual {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 4rem;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .framework-visual.animate {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .framework-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            pointer-events: none;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .framework-visual h3 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+        
+        .pillar {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .pillar.animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .pillar:nth-child(1) { animation-delay: 0.1s; }
+        .pillar:nth-child(2) { animation-delay: 0.2s; }
+        .pillar:nth-child(3) { animation-delay: 0.3s; }
+        .pillar:nth-child(4) { animation-delay: 0.4s; }
+        
+        .pillar:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pillar-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 20px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: transform 0.3s;
+        }
+        
+        .pillar:hover .pillar-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .pillar h4 {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tool-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .tool-card.animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        
+        .tool-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .tool-card:hover {
+            border-color: transparent;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .tool-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .tool-card .tool-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+        
+        .tool-card:hover .tool-link {
+            gap: 0.75rem;
+        }
+        
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: var(--light);
+            border-radius: 24px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 600;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        /* Survey Section */
+        .survey-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .survey-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .survey-intro h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+        
+        .survey-intro p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        
+        .survey-form {
+            margin-top: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .form-section.animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .form-section h4 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .checkbox-group label,
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .checkbox-group label:hover,
+        .radio-group label:hover {
+            color: var(--accent);
+        }
+        
+        .checkbox-group input[type="checkbox"],
+        .radio-group input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .form-submit {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .required {
+            color: #ef4444;
+        }
+        
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #10b981;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* Blog Section */
+        .blog-section {
+            background: var(--light);
+            padding: 6rem 0;
+        }
+        
+        .blog-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .blog-card.animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .blog-card:hover .blog-image::after {
+            opacity: 1;
+        }
+        
+        .blog-content {
+            padding: 2rem;
+        }
+        
+        .blog-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .blog-excerpt {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .blog-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+        
+        .blog-card:hover .blog-link {
+            gap: 0.75rem;
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            background: var(--gradient);
+            padding: 4rem 2rem;
+            border-radius: 24px;
+            margin: 4rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite reverse;
+        }
+        
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-section h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter-section p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+        
+        .newsletter-form button {
+            background: white;
+            color: var(--accent);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        footer .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        footer h3 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        
+        footer a {
+            color: white;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        
+        footer a:hover {
+            opacity: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 5rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s;
+            }
+            
+            nav .menu.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .framework-visual {
+                padding: 2rem;
+            }
+            
+            .survey-container {
+                padding: 2rem;
+            }
+            
+            .form-section {
+                padding: 1.5rem;
+            }
+            
+            .stats-container {
+                padding: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                min-width: 100%;
+            }
+        }
+        
+        /* Intersection Observer Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo">CIRF</a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="menu" id="menu">
+                <li><a href="#framework">Framework</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#survey">Survey</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Cultural Innovation<br><strong>Resilience Framework</strong></h1>
+            <p class="subtitle">Building economic resilience through cultural innovation while maintaining community sovereignty</p>
+            <div class="cta-buttons">
+                <a href="#tools" class="btn btn-primary">Explore Tools →</a>
+                <a href="#survey" class="btn btn-secondary">Take Survey</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section>
+        <div class="stats-container animate-on-scroll">
+            <div class="stat">
+                <div class="stat-number" data-count="50">0</div>
+                <div class="stat-label">Countries Studied</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" data-count="200">0</div>
+                <div class="stat-label">Case Studies Analyzed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" data-count="4">0</div>
+                <div class="stat-label">Core Pillars</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" data-count="6">0</div>
+                <div class="stat-label">Practical Tools</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Section -->
+    <section id="framework">
+        <h2 class="section-title animate-on-scroll">The Framework</h2>
+        <p class="section-subtitle animate-on-scroll">A comprehensive model for understanding how cultural innovation drives economic resilience</p>
+        
+        <div class="framework-visual animate-on-scroll">
+            <h3>Four Operational Pillars</h3>
+            <div class="pillars">
+                <div class="pillar animate-on-scroll">
+                    <div class="pillar-icon">💰</div>
+                    <h4>Economic Value Creation</h4>
+                </div>
+                <div class="pillar animate-on-scroll">
+                    <div class="pillar-icon">🎨</div>
+                    <h4>Cultural Integrity</h4>
+                </div>
+                <div class="pillar animate-on-scroll">
+                    <div class="pillar-icon">🔄</div>
+                    <h4>Adaptability</h4>
+                </div>
+                <div class="pillar animate-on-scroll">
+                    <div class="pillar-icon">👥</div>
+                    <h4>Social Empowerment</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools">
+        <h2 class="section-title animate-on-scroll">Practical Tools</h2>
+        <p class="section-subtitle animate-on-scroll">Ready-to-use resources for implementing cultural innovation strategies</p>
+        
+        <div class="tools-grid">
+            <div class="tool-card animate-on-scroll">
+                <div class="tool-icon">📋</div>
+                <h3>CIRF Assessment Tool</h3>
+                <p>Audit your organization's cultural innovation capacity and identify opportunities for growth</p>
+                <a href="#" class="tool-link">Coming Soon →</a>
+            </div>
+            
+            <div class="tool-card animate-on-scroll">
+                <div class="tool-icon">🎨</div>
+                <h3>Cultural Innovation Canvas</h3>
+                <p>Strategic planning tool for cultural entrepreneurs and innovators</p>
+                <a href="#" class="tool-link">Coming Soon →</a>
+            </div>
+            
+            <div class="tool-card animate-on-scroll">
+                <div class="tool-icon">📊</div>
+                <h3>Policy Canvas</h3>
+                <p>Framework for policymakers to build resilience through culture</p>
+                <a href="#" class="tool-link">Coming Soon →</a>
+            </div>
+            
+            <div class="tool-card animate-on-scroll">
+                <div class="tool-icon">🤝</div>
+                <h3>Partnership Checklist</h3>
+                <p>Assess readiness for ethical cultural collaboration</p>
+                <a href="#" class="tool-link">Coming Soon →</a>
+            </div>
+            
+            <div class="tool-card animate-on-scroll">
+                <div class="tool-icon">💡</div>
+                <h3>Revenue Stream Designer</h3>
+                <p>Map sustainable income sources for cultural enterprises</p>
+                <a href="#" class="tool-link">Coming Soon →</a>
+            </div>
+            
+            <div class="tool-card animate-on-scroll">
+                <div class="tool-icon">📈</div>
+                <h3>Impact Measurement Tool</h3>
+                <p>Track collective impact across cultural innovation networks</p>
+                <a href="#" class="tool-link">Coming Soon →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Survey Section -->
+    <section id="survey">
+        <h2 class="section-title animate-on-scroll">Cultural Innovation Survey</h2>
+        <p class="section-subtitle animate-on-scroll">Help shape frameworks that serve communities, not extract from them</p>
+        
+        <div class="survey-container animate-on-scroll">
+            <div class="survey-intro">
+                <h3>For Cultural Entrepreneurs</h3>
+                <p>This survey is part of research examining how cultural innovation can build economic resilience while maintaining community sovereignty. Your insights will help develop practical tools for cultural entrepreneurs.</p>
+                <p><strong>Time Required:</strong> 3-7 minutes<br>
+                <strong>Confidentiality:</strong> Your responses will be anonymized</p>
+            </div>
+            
+            <form class="survey-form" id="culturalSurvey" action="https://formsubmit.co/lalrin.sangsiama@gmail.com" method="POST">
+                <!-- Hidden fields for FormSubmit configuration -->
+                <input type="hidden" name="_subject" value="New CIRF Survey Response">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                
+                <!-- Section 1: Background -->
+                <div class="form-section animate-on-scroll">
+                    <h4>Section 1: Background Information</h4>
+                    
+                    <div class="form-group">
+                        <label for="name">Name (Optional)</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Age Group <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="age" value="18-25" required> 18-25</label>
+                            <label><input type="radio" name="age" value="26-35" required> 26-35</label>
+                            <label><input type="radio" name="age" value="36-45" required> 36-45</label>
+                            <label><input type="radio" name="age" value="46-55" required> 46-55</label>
+                            <label><input type="radio" name="age" value="56+" required> 56+</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Gender <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gender" value="female" required> Female</label>
+                            <label><input type="radio" name="gender" value="male" required> Male</label>
+                            <label><input type="radio" name="gender" value="non-binary" required> Non-binary</label>
+                            <label><input type="radio" name="gender" value="prefer-not" required> Prefer not to say</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="region">State/Region <span class="required">*</span></label>
+                        <select id="region" name="region" required>
+                            <option value="">Select your region</option>
+                            <option value="mizoram">Mizoram</option>
+                            <option value="nagaland">Nagaland</option>
+                            <option value="manipur">Manipur</option>
+                            <option value="meghalaya">Meghalaya</option>
+                            <option value="arunachal">Arunachal Pradesh</option>
+                            <option value="assam">Assam</option>
+                            <option value="tripura">Tripura</option>
+                            <option value="sikkim">Sikkim</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Type of Cultural Innovation (Select all that apply) <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="type" value="crafts"> Traditional crafts/textiles</label>
+                            <label><input type="checkbox" name="type" value="music"> Music/performing arts</label>
+                            <label><input type="checkbox" name="type" value="food"> Food/culinary traditions</label>
+                            <label><input type="checkbox" name="type" value="digital"> Digital content creation</label>
+                            <label><input type="checkbox" name="type" value="tourism"> Cultural tourism</label>
+                            <label><input type="checkbox" name="type" value="medicine"> Traditional medicine/wellness</label>
+                            <label><input type="checkbox" name="type" value="language"> Language/literature</label>
+                            <label><input type="checkbox" name="type" value="visual"> Visual arts</label>
+                            <label><input type="checkbox" name="type" value="fashion"> Fashion/design</label>
+                            <label><input type="checkbox" name="type" value="mobility"> Mobility</label>
+                            <label><input type="checkbox" name="type" value="other"> Other</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section 2: Economic Value -->
+                <div class="form-section animate-on-scroll">
+                    <h4>Section 2: Economic Value Creation</h4>
+                    
+                    <div class="form-group">
+                        <label>What are your main sources of revenue? (Select all that apply) <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="revenue" value="direct-sales"> Direct sales of cultural products</label>
+                            <label><input type="checkbox" name="revenue" value="services"> Services (performances, workshops, etc.)</label>
+                            <label><input type="checkbox" name="revenue" value="tourism"> Tourism-related activities</label>
+                            <label><input type="checkbox" name="revenue" value="digital"> Digital content monetization</label>
+                            <label><input type="checkbox" name="revenue" value="licensing"> Licensing/royalties</label>
+                            <label><input type="checkbox" name="revenue" value="grants"> Grants/donations</label>
+                            <label><input type="checkbox" name="revenue" value="teaching"> Teaching/training</label>
+                            <label><input type="checkbox" name="revenue" value="other"> Other</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>What are your biggest challenges in generating income? <span class="required">*</span></label>
+                        <textarea name="challenges" required placeholder="Please describe your main challenges..."></textarea>
+                    </div>
+                </div>
+                
+                <!-- Section 3: Your Vision -->
+                <div class="form-section animate-on-scroll">
+                    <h4>Section 3: Vision and Aspirations</h4>
+                    
+                    <div class="form-group">
+                        <label>What does success look like for you?</label>
+                        <textarea name="success" placeholder="Describe your vision of success..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>What gives you hope?</label>
+                        <textarea name="hope" placeholder="Share what motivates and inspires you..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email (if you'd like to receive research findings)</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com">
+                    </div>
+                </div>
+                
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-primary">Submit Survey</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog-section">
+        <div class="blog-container">
+            <h2 class="section-title animate-on-scroll">Latest Insights</h2>
+            <p class="section-subtitle animate-on-scroll">Thoughts on cultural innovation, resilience, and community sovereignty</p>
+            
+            <div class="blog-grid">
+                <article class="blog-card animate-on-scroll">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 15, 2024</div>
+                        <h3 class="blog-title">Cultural Innovation as Economic Strategy</h3>
+                        <p class="blog-excerpt">Exploring how communities can leverage their cultural assets for sustainable economic development while maintaining authenticity...</p>
+                        <a href="#" class="blog-link">Read More →</a>
+                    </div>
+                </article>
+                
+                <article class="blog-card animate-on-scroll">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 10, 2024</div>
+                        <h3 class="blog-title">Lessons from Indigenous Enterprises</h3>
+                        <p class="blog-excerpt">What we can learn from TOSEPAN and other indigenous cooperatives about building resilient economic ecosystems...</p>
+                        <a href="#" class="blog-link">Read More →</a>
+                    </div>
+                </article>
+                
+                <article class="blog-card animate-on-scroll">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 5, 2024</div>
+                        <h3 class="blog-title">The Four Pillars in Practice</h3>
+                        <p class="blog-excerpt">Real-world applications of the CIRF framework across different cultural contexts and scales...</p>
+                        <a href="#" class="blog-link">Read More →</a>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Newsletter Signup -->
+            <div class="newsletter-section animate-on-scroll">
+                <div class="newsletter-content">
+                    <h3>Stay Connected</h3>
+                    <p>Get insights on cultural innovation and resilience delivered to your inbox</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Footer -->
+    <footer id="contact">
+        <div class="container">
+            <h3>Let's Build Together</h3>
+            <p>Questions about implementing the CIRF in your context?</p>
+            <p style="margin-top: 2rem;">
+                <a href="mailto:lalrin.sangsiama@gmail.com" style="color: white; text-decoration: none;">contact@cirf.org</a>
+            </p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <p style="margin-top: 3rem; opacity: 0.6; font-size: 0.9rem;">© 2024 Cultural Innovation Resilience Framework</p>
+        </div>
+    </footer>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        Thank you! Your response has been submitted.
+    </div>
+
+    <script>
+        // Remove loader when page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hide');
+            }, 500);
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+        
+        menuToggle.addEventListener('click', function() {
+            menu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+        
+        // Navbar scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Active menu item
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.menu a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Intersection Observer for animations
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Animate sections on scroll
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        document.querySelectorAll('.section-title, .section-subtitle, .framework-visual, .tool-card, .pillar, .form-section, .blog-card').forEach(el => {
+            sectionObserver.observe(el);
+        });
+        
+        // Counter animation
+        const counters = document.querySelectorAll('.stat-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    let count = 0;
+                    const increment = target / 50;
+                    
+                    const updateCount = () => {
+                        if (count < target) {
+                            count += increment;
+                            counter.textContent = Math.ceil(count);
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    
+                    updateCount();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        });
+        
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+        
+        // Form submission (replace with your email)
+        document.getElementById('culturalSurvey').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+            
+            // Reset form
+            this.reset();
+            
+            // Scroll to top of form
+            document.getElementById('survey').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Newsletter form
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Newsletter signup coming soon!');
+            this.reset();
+        });
+        
+        // Scroll indicator click
+        document.querySelector('.scroll-indicator').addEventListener('click', function() {
+            document.getElementById('framework').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
