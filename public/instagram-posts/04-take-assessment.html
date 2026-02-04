@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 4 - Take The Assessment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: linear-gradient(180deg, #f5f0e8 0%, #fdfdfb 100%);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .decorative-line {
+      position: absolute;
+      top: 80px;
+      right: 80px;
+      width: 100px;
+      height: 100px;
+      border-right: 2px solid #d4af37;
+      border-top: 2px solid #d4af37;
+    }
+
+    .decorative-line-2 {
+      position: absolute;
+      bottom: 200px;
+      left: 80px;
+      width: 60px;
+      height: 60px;
+      border-left: 2px solid rgba(212, 175, 55, 0.3);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 40px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #0a0a0a;
+      margin-bottom: 40px;
+      max-width: 700px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .subtext {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #7c7c7c;
+      max-width: 550px;
+      margin-bottom: 50px;
+    }
+
+    .assessment-preview {
+      background: #0a0a0a;
+      padding: 40px 50px;
+      margin-top: auto;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-left h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: #fdfdfb;
+      margin-bottom: 8px;
+    }
+
+    .preview-left p {
+      font-size: 15px;
+      color: #7c7c7c;
+    }
+
+    .preview-stats {
+      display: flex;
+      gap: 50px;
+    }
+
+    .preview-stat {
+      text-align: center;
+    }
+
+    .preview-stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #d4af37;
+    }
+
+    .preview-stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #7c7c7c;
+    }
+
+    .features-row {
+      display: flex;
+      gap: 30px;
+    }
+
+    .feature-tag {
+      padding: 12px 24px;
+      background: white;
+      border: 1px solid #e0dbd3;
+      font-size: 14px;
+      font-weight: 500;
+      color: #0a0a0a;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #d4af37;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #0a0a0a;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="decorative-line"></div>
+    <div class="decorative-line-2"></div>
+
+    <div class="content">
+      <div class="label">Free Assessment</div>
+      <h1 class="headline">
+        Discover your<br>
+        <em>cultural innovation</em><br>
+        potential
+      </h1>
+      <p class="subtext">
+        40 questions. 15 minutes. Unlock personalized insights, frameworks, and tools built from 362 case studies.
+      </p>
+
+      <div class="assessment-preview">
+        <div class="preview-left">
+          <h3>CIRF Assessment</h3>
+          <p>Comprehensive cultural innovation diagnostic</p>
+        </div>
+        <div class="preview-stats">
+          <div class="preview-stat">
+            <div class="preview-stat-number">40</div>
+            <div class="preview-stat-label">Questions</div>
+          </div>
+          <div class="preview-stat">
+            <div class="preview-stat-number">6</div>
+            <div class="preview-stat-label">Assessments</div>
+          </div>
+          <div class="preview-stat">
+            <div class="preview-stat-number">10+</div>
+            <div class="preview-stat-label">Tools</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-row">
+        <div class="feature-tag">Personalized Report</div>
+        <div class="feature-tag">Benchmark Data</div>
+        <div class="feature-tag">Action Steps</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">Take the assessment free</div>
+    </div>
+  </div>
+</body>
+</html>

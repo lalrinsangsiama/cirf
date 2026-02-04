@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 2 - The Problem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #fdfdfb;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #c67557, #d4af37, #5b8c9e);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 100px 80px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c67557;
+      margin-bottom: 60px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #0a0a0a;
+      margin-bottom: 60px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: auto;
+      margin-bottom: 60px;
+    }
+
+    .stat {
+      padding: 30px;
+      background: #f5f0e8;
+      border-left: 3px solid #d4af37;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      color: #0a0a0a;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-unit {
+      font-size: 24px;
+      color: #d4af37;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      font-weight: 400;
+      color: #7c7c7c;
+      line-height: 1.5;
+    }
+
+    .bottom-text {
+      font-size: 18px;
+      font-weight: 300;
+      color: #7c7c7c;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="top-accent"></div>
+
+    <div class="content">
+      <div class="label">The Problem</div>
+      <h1 class="headline">
+        One impossible choice:<br>
+        Abandon your culture,<br>
+        or remain in poverty.
+      </h1>
+
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-number">476<span class="stat-unit">M</span></div>
+          <div class="stat-label">Indigenous people facing<br>this impossible choice</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">$1.2<span class="stat-unit">T</span></div>
+          <div class="stat-label">Traditional knowledge<br>commercialized without consent</div>
+        </div>
+      </div>
+
+      <p class="bottom-text">
+        A language disappears every two weeks. We're building the alternative.
+      </p>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">Learn more at cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

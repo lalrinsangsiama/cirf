@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 18 - Appropriation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #fdfdfb;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: #c67557;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 100px 80px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .big-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      font-weight: 700;
+      color: #c67557;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 28px;
+      font-weight: 400;
+      color: #0a0a0a;
+      margin-bottom: 50px;
+    }
+
+    .stark-line {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: #0a0a0a;
+      margin-bottom: 20px;
+    }
+
+    .final-line {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      font-style: italic;
+      color: #c67557;
+      margin-top: 40px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #c67557;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="top-accent"></div>
+
+    <div class="content">
+      <div class="big-stat">$1.2 trillion</div>
+      <div class="stat-label">stolen.</div>
+      <div class="stark-line">Zero benefit shared.</div>
+      <div class="final-line">Until now.</div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A1A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2D2D2D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A227;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Decorative circles representing cultural innovation -->
+  <circle cx="950" cy="315" r="180" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3"/>
+  <circle cx="950" cy="315" r="140" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.4"/>
+  <circle cx="950" cy="315" r="100" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.5"/>
+  <circle cx="950" cy="315" r="60" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
+
+  <!-- Small decorative dots -->
+  <circle cx="890" cy="255" r="4" fill="#C9A227" opacity="0.8"/>
+  <circle cx="1010" cy="255" r="4" fill="#C9A227" opacity="0.8"/>
+  <circle cx="890" cy="375" r="4" fill="#C9A227" opacity="0.8"/>
+  <circle cx="1010" cy="375" r="4" fill="#C9A227" opacity="0.8"/>
+
+  <!-- Main title -->
+  <text x="80" y="260" font-family="Georgia, serif" font-size="120" font-weight="200" fill="#FAFAFA" letter-spacing="-2">CIRF</text>
+
+  <!-- Gold accent line -->
+  <rect x="80" y="280" width="200" height="4" fill="url(#goldGradient)" rx="2"/>
+
+  <!-- Subtitle -->
+  <text x="80" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#FAFAFA" opacity="0.9">Cultural Innovation</text>
+  <text x="80" y="390" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#FAFAFA" opacity="0.9">Resilience Framework</text>
+
+  <!-- Tagline -->
+  <text x="80" y="470" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#C9A227" opacity="0.9">Transforming indigenous wisdom into economic resilience</text>
+
+  <!-- Website -->
+  <text x="80" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#FAFAFA" opacity="0.6">cirf.org</text>
+</svg>

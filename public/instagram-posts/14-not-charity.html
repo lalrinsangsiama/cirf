@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 14 - Not Charity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .crossed {
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      font-weight: 400;
+      color: #4a4a4a;
+      text-decoration: line-through;
+      text-decoration-color: #d4af37;
+      text-decoration-thickness: 4px;
+      margin-bottom: 40px;
+      opacity: 0.5;
+    }
+
+    .main-word {
+      font-family: 'Playfair Display', serif;
+      font-size: 140px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: -2px;
+    }
+
+    .period {
+      color: #d4af37;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="crossed">Not charity.</div>
+      <div class="main-word">Enterprise<span class="period">.</span></div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

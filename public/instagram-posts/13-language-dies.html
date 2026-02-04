@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 13 - A Language Dies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #fdfdfb;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: #c67557;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 120px 80px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .urgency-label {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c67557;
+      margin-bottom: 60px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #0a0a0a;
+      margin-bottom: 60px;
+    }
+
+    .headline .accent {
+      color: #c67557;
+      font-weight: 700;
+    }
+
+    .response {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 400;
+      font-style: italic;
+      color: #0a0a0a;
+      padding-left: 40px;
+      border-left: 4px solid #c67557;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #c67557;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="top-accent"></div>
+
+    <div class="content">
+      <div class="urgency-label">The Urgency</div>
+      <h1 class="headline">
+        A language dies<br>
+        <span class="accent">every two weeks.</span>
+      </h1>
+      <p class="response">
+        We're building<br>the alternative.
+      </p>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

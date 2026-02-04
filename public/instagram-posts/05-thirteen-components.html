@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 5 - The 13 Components</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header {
+      padding: 60px 80px 40px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 15px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 400;
+      color: #fdfdfb;
+    }
+
+    .components-grid {
+      padding: 40px 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .component {
+      padding: 20px 24px;
+      background: rgba(245, 240, 232, 0.03);
+      border-left: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .component:nth-child(-n+5) {
+      border-left-color: #d4af37;
+    }
+
+    .component:nth-child(n+6):nth-child(-n+9) {
+      border-left-color: #5b8c9e;
+    }
+
+    .component:nth-child(n+10) {
+      border-left-color: #a8b5a0;
+    }
+
+    .component-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: rgba(253, 253, 251, 0.3);
+      margin-bottom: 6px;
+    }
+
+    .component-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: #fdfdfb;
+      line-height: 1.3;
+    }
+
+    .legend {
+      position: absolute;
+      bottom: 100px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      gap: 40px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 3px;
+    }
+
+    .legend-color.gold { background: #d4af37; }
+    .legend-color.ocean { background: #5b8c9e; }
+    .legend-color.sage { background: #a8b5a0; }
+
+    .legend-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #7c7c7c;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">The Framework</div>
+      <h1 class="headline">13 Components of Cultural Innovation</h1>
+    </div>
+
+    <div class="components-grid">
+      <div class="component">
+        <div class="component-number">01</div>
+        <div class="component-name">Cultural Integrity</div>
+      </div>
+      <div class="component">
+        <div class="component-number">02</div>
+        <div class="component-name">Innovation Capacity</div>
+      </div>
+      <div class="component">
+        <div class="component-number">03</div>
+        <div class="component-name">Community Control</div>
+      </div>
+      <div class="component">
+        <div class="component-number">04</div>
+        <div class="component-name">Market Access</div>
+      </div>
+      <div class="component">
+        <div class="component-number">05</div>
+        <div class="component-name">Knowledge Transfer</div>
+      </div>
+      <div class="component">
+        <div class="component-number">06</div>
+        <div class="component-name">Resource Availability</div>
+      </div>
+      <div class="component">
+        <div class="component-number">07</div>
+        <div class="component-name">Protective Capacity</div>
+      </div>
+      <div class="component">
+        <div class="component-number">08</div>
+        <div class="component-name">Network Strength</div>
+      </div>
+      <div class="component">
+        <div class="component-number">09</div>
+        <div class="component-name">Adaptive Governance</div>
+      </div>
+      <div class="component">
+        <div class="component-number">10</div>
+        <div class="component-name">Economic Viability</div>
+      </div>
+      <div class="component">
+        <div class="component-number">11</div>
+        <div class="component-name">Social Cohesion</div>
+      </div>
+      <div class="component">
+        <div class="component-number">12</div>
+        <div class="component-name">Environmental Sustainability</div>
+      </div>
+      <div class="component">
+        <div class="component-number">13</div>
+        <div class="component-name">External Recognition</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color gold"></div>
+        <div class="legend-label">Foundation</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color ocean"></div>
+        <div class="legend-label">Capacity</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color sage"></div>
+        <div class="legend-label">Outcomes</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">Measure yours at cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

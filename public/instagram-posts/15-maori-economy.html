@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 15 - Māori Economy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #fdfdfb;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 100px 80px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 40px;
+    }
+
+    .big-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 160px;
+      font-weight: 700;
+      color: #0a0a0a;
+      line-height: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .stat-unit {
+      font-size: 80px;
+      color: #d4af37;
+    }
+
+    .stat-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 400;
+      font-style: italic;
+      color: #0a0a0a;
+      margin-bottom: 60px;
+    }
+
+    .proof {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0a0a0a;
+      padding: 30px 40px;
+      background: #f5f0e8;
+      border-left: 4px solid #d4af37;
+      display: inline-block;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="top-accent"></div>
+
+    <div class="content">
+      <div class="label">Case Study</div>
+      <div class="big-stat">$126<span class="stat-unit">B</span></div>
+      <div class="stat-label">The Māori economy.</div>
+      <div class="proof">Proof it works.</div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@200;300;400;500;600;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans bg-pearl text-ink overflow-x-hidden leading-normal font-light;
+  }
+
+  ::selection {
+    @apply bg-ink text-pearl;
+  }
+}
+
+@layer components {
+  /* Hero title animation */
+  .hero-line {
+    @apply block overflow-hidden;
+  }
+
+  .hero-line span {
+    @apply inline-block;
+    transform: translateY(110%);
+    animation: revealText 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  }
+
+  .hero-line:nth-child(2) span {
+    animation-delay: 0.1s;
+  }
+
+  .hero-line:nth-child(3) span {
+    animation-delay: 0.2s;
+  }
+
+  /* Animated elements on scroll - uses JS to add 'js-ready' class to enable animations */
+  .animate-on-scroll {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  /* Only hide elements when JS is ready (prevents invisible content if JS fails) */
+  .js-ready .animate-on-scroll:not(.visible) {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Nav link underline effect */
+  .nav-link {
+    @apply relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-[-8px] left-0 w-0 h-px bg-ink transition-all duration-300;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply inline-block px-6 py-3 bg-ink text-pearl font-medium rounded-full transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    @apply bg-gold text-ink;
+  }
+
+  .btn-secondary {
+    @apply inline-block px-6 py-3 border border-ink bg-transparent text-ink rounded-full transition-all duration-300;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-ink text-pearl;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-500;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-2 shadow-xl;
+  }
+
+  /* Section label */
+  .section-label {
+    @apply text-sm uppercase tracking-[0.2em] text-gold font-medium mb-4;
+  }
+
+  /* Section title */
+  .section-title {
+    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-light mb-4;
+  }
+
+  /* Gold accent border */
+  .gold-border-top {
+    @apply relative;
+  }
+
+  .gold-border-top::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold to-ocean transform scale-x-0 origin-left transition-transform duration-500;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .gold-border-top:hover::before {
+    @apply scale-x-100;
+  }
+
+  /* Slider/range input styling */
+  input[type="range"] {
+    @apply w-full h-2 rounded-lg appearance-none bg-sand cursor-pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 rounded-full bg-gold cursor-pointer;
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    @apply w-4 h-4 rounded-full bg-gold cursor-pointer border-none;
+  }
+
+  /* Select styling */
+  select {
+    @apply w-full p-3 border border-ink/20 rounded-lg bg-white text-ink transition-all duration-300;
+  }
+
+  select:focus {
+    @apply outline-none border-gold ring-2 ring-gold/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

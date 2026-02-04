@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 7 - Success Statistics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .gold-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 50px;
+    }
+
+    .big-stat {
+      margin-bottom: 20px;
+    }
+
+    .big-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 180px;
+      font-weight: 700;
+      color: #fdfdfb;
+      line-height: 1;
+      letter-spacing: -5px;
+    }
+
+    .big-number span {
+      font-size: 100px;
+      color: #d4af37;
+    }
+
+    .big-label {
+      font-size: 24px;
+      font-weight: 300;
+      color: #7c7c7c;
+      margin-top: 10px;
+    }
+
+    .divider {
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      margin: 50px 0;
+    }
+
+    .supporting-stats {
+      display: flex;
+      gap: 80px;
+    }
+
+    .support-stat {
+      text-align: center;
+    }
+
+    .support-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #fdfdfb;
+    }
+
+    .support-number span {
+      color: #d4af37;
+    }
+
+    .support-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #7c7c7c;
+      margin-top: 8px;
+    }
+
+    .context {
+      margin-top: 50px;
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: #7c7c7c;
+      max-width: 500px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="gold-glow"></div>
+
+    <div class="content">
+      <div class="label">Evidence-Based Results</div>
+
+      <div class="big-stat">
+        <div class="big-number">98.6<span>%</span></div>
+        <div class="big-label">Success rate at scores 8+</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="supporting-stats">
+        <div class="support-stat">
+          <div class="support-number">78.1<span>%</span></div>
+          <div class="support-label">Predictive Accuracy</div>
+        </div>
+        <div class="support-stat">
+          <div class="support-number">362</div>
+          <div class="support-label">Case Studies</div>
+        </div>
+        <div class="support-stat">
+          <div class="support-number">47</div>
+          <div class="support-label">Countries</div>
+        </div>
+      </div>
+
+      <p class="context">
+        "The framework that tells you not just what to do, but what actually works."
+      </p>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

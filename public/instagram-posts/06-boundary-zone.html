@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 6 - The Boundary Zone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: linear-gradient(180deg, #fdfdfb 0%, #f5f0e8 100%);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c67557;
+      margin-bottom: 30px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #0a0a0a;
+      margin-bottom: 30px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .subtext {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #7c7c7c;
+      max-width: 600px;
+      margin-bottom: 50px;
+    }
+
+    .visualization {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .score-bar {
+      width: 100%;
+      height: 120px;
+      background: #0a0a0a;
+      position: relative;
+      display: flex;
+    }
+
+    .score-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .danger-zone {
+      width: 30%;
+      background: linear-gradient(90deg, #0a0a0a, #2a1a1a);
+      border-right: 2px dashed rgba(198, 117, 87, 0.5);
+    }
+
+    .boundary-zone {
+      width: 25%;
+      background: linear-gradient(90deg, #2a2a1a, #3a3a2a);
+      border-right: 2px solid #d4af37;
+    }
+
+    .success-zone {
+      width: 45%;
+      background: linear-gradient(90deg, #1a2a1a, #2a3a2a);
+    }
+
+    .zone-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(253, 253, 251, 0.5);
+      margin-bottom: 8px;
+    }
+
+    .zone-range {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fdfdfb;
+    }
+
+    .danger-zone .zone-range { color: #c67557; }
+    .boundary-zone .zone-range { color: #d4af37; }
+    .success-zone .zone-range { color: #a8b5a0; }
+
+    .stats-row {
+      position: absolute;
+      bottom: 200px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #0a0a0a;
+      line-height: 1;
+    }
+
+    .stat-value span {
+      font-size: 28px;
+      color: #d4af37;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #7c7c7c;
+      margin-top: 8px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Key Discovery</div>
+      <h1 class="headline">
+        The <em>Boundary Zone</em>:<br>
+        Where success happens
+      </h1>
+      <p class="subtext">
+        Our research discovered a critical threshold between scores 4-6/13 where success rates jump dramatically.
+      </p>
+
+      <div class="visualization">
+        <div class="score-bar">
+          <div class="score-section danger-zone">
+            <div class="zone-label">Risk Zone</div>
+            <div class="zone-range">0-4</div>
+          </div>
+          <div class="score-section boundary-zone">
+            <div class="zone-label">Boundary</div>
+            <div class="zone-range">4-6</div>
+          </div>
+          <div class="score-section success-zone">
+            <div class="zone-label">Success Zone</div>
+            <div class="zone-range">7-13</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-value">64.7<span>%</span></div>
+        <div class="stat-label">At Score 7</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">98.6<span>%</span></div>
+        <div class="stat-label">At Score 8+</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">+39.1<span>%</span></div>
+        <div class="stat-label">Synergy Effect</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">Find your score at cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

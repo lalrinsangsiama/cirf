@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 16 - Community Control</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.03;
+      background-image:
+        radial-gradient(circle at 20% 30%, #d4af37 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, #d4af37 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .gold-accent {
+      position: absolute;
+      top: 80px;
+      left: 80px;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .line {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 400;
+      color: #fdfdfb;
+      margin-bottom: 30px;
+      line-height: 1.1;
+    }
+
+    .line em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .line:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+    <div class="gold-accent"></div>
+
+    <div class="content">
+      <div class="line">Your <em>culture.</em></div>
+      <div class="line">Your <em>rules.</em></div>
+      <div class="line">Your <em>profit.</em></div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

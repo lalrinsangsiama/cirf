@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRF Instagram Post 10 - Join The Movement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #d4af37;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.1;
+      background-image:
+        radial-gradient(circle at 30% 20%, #0a0a0a 2px, transparent 2px),
+        radial-gradient(circle at 70% 80%, #0a0a0a 2px, transparent 2px);
+      background-size: 80px 80px;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      opacity: 0.6;
+      margin-bottom: 40px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: #0a0a0a;
+      margin-bottom: 40px;
+    }
+
+    .headline em {
+      font-style: italic;
+      display: block;
+    }
+
+    .subtext {
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #0a0a0a;
+      opacity: 0.8;
+      max-width: 600px;
+      margin-bottom: 60px;
+    }
+
+    .cta-box {
+      background: #0a0a0a;
+      padding: 30px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .cta-text {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+
+    .cta-url {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 1px;
+    }
+
+    .features-row {
+      position: absolute;
+      bottom: 160px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .feature {
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0a0a0a;
+      letter-spacing: 1px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-weight: 300;
+      font-style: italic;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+
+    <div class="content">
+      <div class="label">Start Today</div>
+      <h1 class="headline">
+        Culture is<br>
+        <em>Capital.</em>
+      </h1>
+      <p class="subtext">
+        Join thousands of cultural innovators building economies from their heritage. Take the free assessment and unlock your potential.
+      </p>
+
+      <div class="cta-box">
+        <div class="cta-text">Start Your Journey</div>
+        <div class="cta-url">cultureinnovation.org</div>
+      </div>
+    </div>
+
+    <div class="features-row">
+      <div class="feature">
+        <div class="feature-icon">✓</div>
+        <div class="feature-text">Free Assessment</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✓</div>
+        <div class="feature-text">Instant Results</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✓</div>
+        <div class="feature-text">Premium Tools</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✓</div>
+        <div class="feature-text">Global Community</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIRF</div>
+      <div class="tagline">Heritage is not a museum. It is an economy.</div>
+    </div>
+  </div>
+</body>
+</html>

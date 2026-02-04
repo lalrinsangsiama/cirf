@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A227;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="180" height="180" rx="40" fill="#1A1A1A"/>
+  <!-- CIRF text -->
+  <text x="90" y="105" font-family="Georgia, serif" font-size="52" font-weight="200" fill="#FAFAFA" text-anchor="middle" letter-spacing="-1">CIRF</text>
+  <!-- Gold accent line -->
+  <rect x="45" y="115" width="90" height="3" fill="url(#goldGradient)" rx="1.5"/>
+</svg>
