@@ -6,6 +6,9 @@
 -- Fixes TOCTOU race condition in use_credit()
 -- ============================================
 
+-- Drop existing function first if return type changed
+DROP FUNCTION IF EXISTS public.use_credit_atomic(UUID, TEXT);
+
 CREATE OR REPLACE FUNCTION public.use_credit_atomic(
   user_uuid UUID,
   p_assessment_type TEXT DEFAULT 'cirf'
@@ -61,6 +64,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- 2. ATOMIC ASSESSMENT SUBMISSION WITH CREDIT
 -- Ensures assessment is saved AND credit is deducted atomically
 -- ============================================
+
+-- Drop existing function first if return type changed
+DROP FUNCTION IF EXISTS public.save_assessment_with_credit(UUID, TEXT, JSONB, INTEGER, JSONB, BOOLEAN);
 
 CREATE OR REPLACE FUNCTION public.save_assessment_with_credit(
   p_user_id UUID,
@@ -145,6 +151,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- 3. ATOMIC CREDIT ADDITION WITH IDEMPOTENCY
 -- Prevents duplicate credit additions from webhook retries
 -- ============================================
+
+-- Drop existing function first if return type changed
+DROP FUNCTION IF EXISTS public.add_credits_with_order_update(UUID, INTEGER, TEXT, TEXT, TEXT);
 
 CREATE OR REPLACE FUNCTION public.add_credits_with_order_update(
   user_uuid UUID,
@@ -232,6 +241,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- Deletes all user data in a single transaction
 -- ============================================
 
+-- Drop existing function first if return type changed
+DROP FUNCTION IF EXISTS public.delete_user_account(UUID);
+
 CREATE OR REPLACE FUNCTION public.delete_user_account(user_uuid UUID)
 RETURNS TABLE (success BOOLEAN, error_message TEXT) AS $$
 DECLARE
@@ -295,6 +307,10 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- Syncs profile role to JWT app_metadata for secure admin checks
 -- ============================================
 
+-- Drop existing trigger and function first if return type changed
+DROP TRIGGER IF EXISTS on_profile_role_change ON public.profiles;
+DROP FUNCTION IF EXISTS public.set_admin_claim();
+
 CREATE OR REPLACE FUNCTION public.set_admin_claim()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -336,6 +352,9 @@ WHERE razorpay_payment_id IS NOT NULL;
 -- 7. PROCESS REFUND FUNCTION (if not exists)
 -- Used by refund endpoint to update order status
 -- ============================================
+
+-- Drop existing function first if return type changed
+DROP FUNCTION IF EXISTS public.process_refund(TEXT, TEXT, INTEGER, TEXT);
 
 CREATE OR REPLACE FUNCTION public.process_refund(
   p_order_id TEXT,
