@@ -1,0 +1,176 @@
+<svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1000" height="800" fill="white"/>
+  
+  <!-- Define gradients and patterns -->
+  <defs>
+    <!-- Gradients for domains -->
+    <linearGradient id="innovation-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e3f2fd"/>
+      <stop offset="100%" style="stop-color:#1976d2"/>
+    </linearGradient>
+    <linearGradient id="economics-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f3e5f5"/>
+      <stop offset="100%" style="stop-color:#7b1fa2"/>
+    </linearGradient>
+    <linearGradient id="resilience-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8f5e8"/>
+      <stop offset="100%" style="stop-color:#388e3c"/>
+    </linearGradient>
+    <linearGradient id="development-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff3e0"/>
+      <stop offset="100%" style="stop-color:#f57c00"/>
+    </linearGradient>
+    
+    <!-- Convergence gradients -->
+    <radialGradient id="convergence-grad-1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fff8e1"/>
+      <stop offset="100%" style="stop-color:#fbc02d"/>
+    </radialGradient>
+    <radialGradient id="convergence-grad-2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#e8f5e8"/>
+      <stop offset="100%" style="stop-color:#4caf50"/>
+    </radialGradient>
+    <radialGradient id="convergence-grad-3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#e1f5fe"/>
+      <stop offset="100%" style="stop-color:#03a9f4"/>
+    </radialGradient>
+    
+    <!-- Arrow markers -->
+    <marker id="arrowhead-large" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-convergence" markerWidth="10" markerHeight="6" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2e7d32"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="500" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#333">Figure 2.3: Theoretical Convergences Informing Framework Development</text>
+  
+  <!-- THEORETICAL DOMAINS (Top Level) -->
+  <text x="500" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#666">THEORETICAL DOMAINS</text>
+  
+  <!-- Innovation Studies -->
+  <rect x="80" y="90" width="160" height="80" rx="15" fill="url(#innovation-grad)" stroke="#1976d2" stroke-width="2"/>
+  <text x="160" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Innovation Studies</text>
+  <text x="160" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Systems theory</text>
+  <text x="160" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Co-creation</text>
+  <text x="160" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Community networks</text>
+  
+  <!-- Cultural Economics -->
+  <rect x="280" y="90" width="160" height="80" rx="15" fill="url(#economics-grad)" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="360" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Cultural Economics</text>
+  <text x="360" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Cultural capital</text>
+  <text x="360" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Multiple values</text>
+  <text x="360" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Asset mobilization</text>
+  
+  <!-- Resilience Theory -->
+  <rect x="480" y="90" width="160" height="80" rx="15" fill="url(#resilience-grad)" stroke="#388e3c" stroke-width="2"/>
+  <text x="560" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Resilience Theory</text>
+  <text x="560" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Adaptive capacity</text>
+  <text x="560" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Cultural continuity</text>
+  <text x="560" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Traditional knowledge</text>
+  
+  <!-- Development Studies -->
+  <rect x="680" y="90" width="160" height="80" rx="15" fill="url(#development-grad)" stroke="#f57c00" stroke-width="2"/>
+  <text x="760" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Development Studies</text>
+  <text x="760" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Endogenous development</text>
+  <text x="760" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Community control</text>
+  <text x="760" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Self-determination</text>
+  
+  <!-- CONVERGENCES SECTION -->
+  <text x="500" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#666">THEORETICAL CONVERGENCES</text>
+  
+  <!-- Convergence 1: Community Control -->
+  <ellipse cx="200" cy="320" rx="140" ry="60" fill="url(#convergence-grad-1)" stroke="#f57c00" stroke-width="3"/>
+  <text x="200" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#e65100">COMMUNITY CONTROL</text>
+  <text x="200" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#bf360c">Organizing Principle</text>
+  <text x="200" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#bf360c">Emerges across ALL domains</text>
+  <text x="200" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#bf360c">as prerequisite, not outcome</text>
+  
+  <!-- Convergence 2: Innovation-within-Tradition -->
+  <ellipse cx="500" cy="320" rx="150" ry="60" fill="url(#convergence-grad-2)" stroke="#4caf50" stroke-width="3"/>
+  <text x="500" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1b5e20">INNOVATION-WITHIN-</text>
+  <text x="500" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1b5e20">TRADITION</text>
+  <text x="500" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Creative preservation rather</text>
+  <text x="500" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">than creative destruction</text>
+  
+  <!-- Convergence 3: Multidimensional Value Creation -->
+  <ellipse cx="800" cy="320" rx="140" ry="60" fill="url(#convergence-grad-3)" stroke="#03a9f4" stroke-width="3"/>
+  <text x="800" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#01579b">MULTIDIMENSIONAL</text>
+  <text x="800" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#01579b">VALUE CREATION</text>
+  <text x="800" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#0277bd">Simultaneous economic, cultural,</text>
+  <text x="800" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#0277bd">social & environmental benefits</text>
+  
+  <!-- Arrows from domains to convergences -->
+  <!-- To Community Control -->
+  <path d="M 160 170 Q 150 220 180 280" stroke="#f57c00" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 360 170 Q 320 220 240 280" stroke="#f57c00" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 560 170 Q 520 220 350 300" stroke="#f57c00" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 760 170 Q 680 220 340 300" stroke="#f57c00" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  
+  <!-- To Innovation-within-Tradition -->
+  <path d="M 160 170 Q 280 220 450 280" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 560 170 Q 540 220 520 280" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 760 170 Q 680 220 550 280" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  
+  <!-- To Multidimensional Value -->
+  <path d="M 360 170 Q 500 220 750 280" stroke="#03a9f4" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 560 170 Q 650 220 760 280" stroke="#03a9f4" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  <path d="M 760 170 Q 780 220 800 280" stroke="#03a9f4" stroke-width="2" fill="none" marker-end="url(#arrowhead-convergence)"/>
+  
+  <!-- FRAMEWORK REQUIREMENTS SECTION -->
+  <text x="500" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#666">FRAMEWORK REQUIREMENTS</text>
+  
+  <!-- Framework Requirements Box -->
+  <rect x="200" y="500" width="600" height="200" rx="20" fill="#f8f9fa" stroke="#333" stroke-width="3"/>
+  
+  <!-- Requirements Content -->
+  <text x="500" y="530" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Cultural Innovation Resilience Framework (CIRF)</text>
+  
+  <!-- Four pillars -->
+  <text x="220" y="560" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1976d2">Four Operational Pillars:</text>
+  <text x="230" y="580" font-family="Arial, sans-serif" font-size="11" fill="#333">• Economic Value Creation</text>
+  <text x="230" y="595" font-family="Arial, sans-serif" font-size="11" fill="#333">• Cultural Integrity & Authenticity</text>
+  <text x="230" y="610" font-family="Arial, sans-serif" font-size="11" fill="#333">• Adaptability & Sustainability</text>
+  <text x="230" y="625" font-family="Arial, sans-serif" font-size="11" fill="#333">• Social Empowerment & Inclusion</text>
+  
+  <!-- Five filters -->
+  <text x="420" y="560" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#7b1fa2">Five Community Control Filters:</text>
+  <text x="430" y="580" font-family="Arial, sans-serif" font-size="11" fill="#333">• Activities Serve Community Interests</text>
+  <text x="430" y="595" font-family="Arial, sans-serif" font-size="11" fill="#333">• Protect Cultural Assets</text>
+  <text x="430" y="610" font-family="Arial, sans-serif" font-size="11" fill="#333">• Address Community Relevance</text>
+  <text x="430" y="625" font-family="Arial, sans-serif" font-size="11" fill="#333">• Promote Sustainability</text>
+  <text x="430" y="640" font-family="Arial, sans-serif" font-size="11" fill="#333">• Maintain Dignity</text>
+  
+  <!-- Four capacities -->
+  <text x="620" y="560" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#388e3c">Four Resilience Capacities:</text>
+  <text x="630" y="580" font-family="Arial, sans-serif" font-size="11" fill="#333">• Protective Capacity</text>
+  <text x="630" y="595" font-family="Arial, sans-serif" font-size="11" fill="#333">• Adaptive Capacity</text>
+  <text x="630" y="610" font-family="Arial, sans-serif" font-size="11" fill="#333">• Transformative Capacity</text>
+  <text x="630" y="625" font-family="Arial, sans-serif" font-size="11" fill="#333">• Generative Capacity</text>
+  
+  <!-- Key principles -->
+  <text x="500" y="670" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">Core Principles: Community Sovereignty + Innovation-within-Tradition + Multidimensional Assessment</text>
+  <text x="500" y="685" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Addresses all five critical gaps identified in literature analysis</text>
+  
+  <!-- Large arrows from convergences to framework -->
+  <path d="M 200 380 Q 250 430 350 480" stroke="#333" stroke-width="4" fill="none" marker-end="url(#arrowhead-large)"/>
+  <path d="M 500 380 Q 500 430 500 480" stroke="#333" stroke-width="4" fill="none" marker-end="url(#arrowhead-large)"/>
+  <path d="M 800 380 Q 750 430 650 480" stroke="#333" stroke-width="4" fill="none" marker-end="url(#arrowhead-large)"/>
+  
+  <!-- Connection labels -->
+  <text x="280" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#333" transform="rotate(-20 280 450)">Embed community</text>
+  <text x="280" y="463" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#333" transform="rotate(-20 280 463)">control throughout</text>
+  
+  <text x="500" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Enable creative</text>
+  <text x="500" y="463" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">preservation</text>
+  
+  <text x="720" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#333" transform="rotate(20 720 450)">Integrate multiple</text>
+  <text x="720" y="463" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#333" transform="rotate(20 720 463)">value dimensions</text>
+  
+  <!-- Bottom note -->
+  <text x="500" y="750" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">Framework development detailed in Chapter 3</text>
+  
+</svg>

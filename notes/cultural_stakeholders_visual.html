@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sacred Watershed: Cultural Innovation Framework</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8E8 20%, #7BC8A4 40%, #68B684 60%, #4A7C59 80%, #2F4F4F 100%);
+            min-height: 100vh;
+            color: #2c3e50;
+            overflow-x: auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #2980b9, #3498db, #1abc9c, #16a085);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: ripple 4s ease-in-out infinite;
+        }
+        
+        @keyframes ripple {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.02); filter: brightness(1.1); }
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: #34495e;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+        }
+        
+        .watershed-container {
+            position: relative;
+            width: 100%;
+            height: 900px;
+            background: 
+                radial-gradient(ellipse at 50% 10%, rgba(135,206,235,0.4) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(135,206,235,0.3) 0%, rgba(152,216,232,0.2) 30%, rgba(123,200,164,0.1) 70%, transparent 100%);
+            border-radius: 20px;
+            margin: 40px auto;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+        }
+        
+        .sacred-spring {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #3498db 0%, #2980b9 50%, #1abc9c 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            box-shadow: 0 0 30px rgba(52,152,219,0.8);
+            animation: springFlow 3s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        @keyframes springFlow {
+            0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 30px rgba(52,152,219,0.8); }
+            50% { transform: translateX(-50%) scale(1.1); box-shadow: 0 0 40px rgba(52,152,219,1); }
+        }
+        
+        .tributary {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            z-index: 5;
+        }
+        
+        .tributary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .tributary-economic {
+            top: 150px;
+            left: 20%;
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            transform: rotate(-20deg);
+        }
+        
+        .tributary-cultural {
+            top: 150px;
+            right: 20%;
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            transform: rotate(20deg);
+        }
+        
+        .tributary-adaptability {
+            top: 280px;
+            left: 10%;
+            width: 180px;
+            height: 70px;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            transform: rotate(-10deg);
+        }
+        
+        .tributary-social {
+            top: 280px;
+            right: 10%;
+            width: 180px;
+            height: 70px;
+            background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%);
+            transform: rotate(10deg);
+        }
+        
+        .main-river {
+            position: absolute;
+            top: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 400px;
+            background: linear-gradient(180deg, 
+                rgba(52,152,219,0.9) 0%, 
+                rgba(41,128,185,0.8) 25%, 
+                rgba(26,188,156,0.7) 50%, 
+                rgba(22,160,133,0.6) 75%, 
+                rgba(39,174,96,0.5) 100%);
+            border-radius: 60px;
+            animation: riverFlow 6s ease-in-out infinite;
+            z-index: 2;
+        }
+        
+        @keyframes riverFlow {
+            0%, 100% { 
+                background: linear-gradient(180deg, 
+                    rgba(52,152,219,0.9) 0%, 
+                    rgba(41,128,185,0.8) 25%, 
+                    rgba(26,188,156,0.7) 50%, 
+                    rgba(22,160,133,0.6) 75%, 
+                    rgba(39,174,96,0.5) 100%);
+            }
+            50% { 
+                background: linear-gradient(180deg, 
+                    rgba(46,204,113,0.9) 0%, 
+                    rgba(52,152,219,0.8) 25%, 
+                    rgba(155,89,182,0.7) 50%, 
+                    rgba(142,68,173,0.6) 75%, 
+                    rgba(52,152,219,0.5) 100%);
+            }
+        }
+        
+        .bridge {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 40px;
+            background: linear-gradient(90deg, rgba(139,69,19,0.9) 0%, rgba(160,82,45,0.8) 50%, rgba(139,69,19,0.9) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.8em;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 6;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .bridge:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+        
+        .bridge-benefit { top: 260px; }
+        .bridge-protection { top: 340px; }
+        .bridge-relevance { top: 420px; }
+        .bridge-sustainable { top: 500px; }
+        .bridge-dignity { top: 580px; }
+        
+        .delta-channel {
+            position: absolute;
+            bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: channelFlow 4s ease-in-out infinite;
+        }
+        
+        .delta-channel:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes channelFlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .channel-protective {
+            left: 5%;
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            transform: rotate(-15deg);
+        }
+        
+        .channel-adaptive {
+            left: 25%;
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            transform: rotate(-5deg);
+        }
+        
+        .channel-transformative {
+            right: 25%;
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            transform: rotate(5deg);
+        }
+        
+        .channel-generator {
+            right: 5%;
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+            transform: rotate(15deg);
+        }
+        
+        .water-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(52,152,219,0.8);
+            border-radius: 50%;
+            animation: flow 8s linear infinite;
+        }
+        
+        @keyframes flow {
+            0% { transform: translateY(-20px) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(800px) translateX(0); opacity: 0; }
+        }
+        
+        .ecosystem-legend {
+            margin: 50px auto;
+            max-width: 1000px;
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .legend-title {
+            text-align: center;
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .legend-section {
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid;
+        }
+        
+        .source-section {
+            background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(26,188,156,0.1) 100%);
+            border-color: #3498db;
+        }
+        
+        .tributaries-section {
+            background: linear-gradient(135deg, rgba(243,156,18,0.1) 0%, rgba(231,76,60,0.1) 100%);
+            border-color: #e67e22;
+        }
+        
+        .bridges-section {
+            background: linear-gradient(135deg, rgba(139,69,19,0.1) 0%, rgba(160,82,45,0.1) 100%);
+            border-color: #8b4513;
+        }
+        
+        .legend-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .legend-item {
+            margin: 8px 0;
+            font-size: 0.9em;
+            color: #34495e;
+        }
+        
+        .wisdom-water {
+            text-align: center;
+            font-size: 1.3em;
+            font-style: italic;
+            color: #2c3e50;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .watershed-container {
+                height: 700px;
+            }
+            
+            .tributary, .delta-channel {
+                font-size: 0.8em;
+            }
+            
+            .bridge {
+                width: 150px;
+                font-size: 0.7em;
+            }
+            
+            .legend-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">The Sacred Watershed</h1>
+        <p class="subtitle">Cultural Innovation as Living Waters that Nourish Communities</p>
+        
+        <div class="watershed-container">
+            <!-- Sacred Spring (Community Source) -->
+            <div class="sacred-spring" onclick="showDetails('spring')" title="Sacred Spring - Community Source">
+                🏘️
+            </div>
+            
+            <!-- Four Tributary Streams (Operational Pillars) -->
+            <div class="tributary tributary-economic" onclick="showDetails('economic')" title="Economic Tributary">
+                <div>💰<br>Economic Value<br><small>Community Resilience</small></div>
+            </div>
+            
+            <div class="tributary tributary-cultural" onclick="showDetails('cultural')" title="Cultural Tributary">
+                <div>🎭<br>Cultural Integrity<br><small>Collective Strength</small></div>
+            </div>
+            
+            <div class="tributary tributary-adaptability" onclick="showDetails('adaptability')" title="Adaptability Tributary">
+                <div>🌱<br>Adaptability<br><small>Long-term Viability</small></div>
+            </div>
+            
+            <div class="tributary tributary-social" onclick="showDetails('social')" title="Social Tributary">
+                <div>🤝<br>Social Empowerment<br><small>Collective Advancement</small></div>
+            </div>
+            
+            <!-- Main River (Integration Flow) -->
+            <div class="main-river"></div>
+            
+            <!-- Five Bridges (Community Control Mechanisms) -->
+            <div class="bridge bridge-benefit" onclick="showDetails('benefit')" title="Benefit Assessment Bridge">
+                📊 Community Benefit Assessment
+            </div>
+            
+            <div class="bridge bridge-protection" onclick="showDetails('protection')" title="Protection Bridge">
+                🔒 Cultural Protection Mechanisms
+            </div>
+            
+            <div class="bridge bridge-relevance" onclick="showDetails('relevance')" title="Relevance Bridge">
+                🎯 Community Relevance Assessment
+            </div>
+            
+            <div class="bridge bridge-sustainable" onclick="showDetails('sustainable')" title="Sustainability Bridge">
+                ♻️ Sustainable Development Assessment
+            </div>
+            
+            <div class="bridge bridge-dignity" onclick="showDetails('dignity')" title="Dignity Bridge">
+                ✊ Dignity & Empowerment Assessment
+            </div>
+            
+            <!-- Four Delta Channels (Resilience Capacities) -->
+            <div class="delta-channel channel-protective" onclick="showDetails('protective')" title="Protective Channel">
+                🛡️<br>Protective<br>Capacity
+            </div>
+            
+            <div class="delta-channel channel-adaptive" onclick="showDetails('adaptive')" title="Adaptive Channel">
+                🌊<br>Adaptive<br>Capacity
+            </div>
+            
+            <div class="delta-channel channel-transformative" onclick="showDetails('transformative')" title="Transformative Channel">
+                🦋<br>Transformative<br>Capacity
+            </div>
+            
+            <div class="delta-channel channel-generator" onclick="showDetails('generator')" title="Generator Channel">
+                ⚡<br>Generator<br>Capacity
+            </div>
+        </div>
+        
+        <div class="wisdom-water">
+            "Like a sacred watershed, cultural innovation begins at the community spring, 
+            gathers strength from four flowing tributaries, passes through five guardian bridges, 
+            and spreads into four mighty channels that nourish the entire landscape of possibility."
+        </div>
+        
+        <div class="ecosystem-legend">
+            <h2 class="legend-title">🌊 The Living Watershed Ecosystem</h2>
+            <div class="legend-grid">
+                <div class="legend-section source-section">
+                    <h3>🏘️ Sacred Spring (Source)</h3>
+                    <div class="legend-item">Community wisdom and validation</div>
+                    <div class="legend-item">Cultural knowledge and values</div>
+                    <div class="legend-item">Collective decision-making power</div>
+                    <div class="legend-item">Source of all authentic innovation</div>
+                </div>
+                
+                <div class="legend-section tributaries-section">
+                    <h3>🏔️ Four Tributaries (Pillars)</h3>
+                    <div class="legend-item">💰 Economic: Sustainable prosperity flows</div>
+                    <div class="legend-item">🎭 Cultural: Authentic expression streams</div>
+                    <div class="legend-item">🌱 Adaptability: Resilient evolution currents</div>
+                    <div class="legend-item">🤝 Social: Empowerment waterways</div>
+                </div>
+                
+                <div class="legend-section bridges-section">
+                    <h3>🌉 Five Guardian Bridges (Controls)</h3>
+                    <div class="legend-item">📊 Benefit Assessment Gateway</div>
+                    <div class="legend-item">🔒 Cultural Protection Checkpoint</div>
+                    <div class="legend-item">🎯 Relevance Validation Crossing</div>
+                    <div class="legend-item">♻️ Sustainability Evaluation Bridge</div>
+                    <div class="legend-item">✊ Dignity Empowerment Passage</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(155,89,182,0.1) 0%, rgba(52,152,219,0.1) 100%); border-radius: 15px; border-left: 5px solid #9b59b6;">
+                <h3 style="color: #2c3e50; margin-bottom: 15px;">🏞️ Four Delta Channels (Resilience Capacities)</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div class="legend-item">🛡️ <strong>Protective:</strong> Safeguarding heritage waters</div>
+                    <div class="legend-item">🌊 <strong>Adaptive:</strong> Flexible response streams</div>
+                    <div class="legend-item">🦋 <strong>Transformative:</strong> System-changing torrents</div>
+                    <div class="legend-item">⚡ <strong>Generator:</strong> Value-creating springs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showDetails(type) {
+            const details = {
+                spring: "🏘️ SACRED SPRING: The eternal source where all cultural innovation begins. Community wisdom, values, and collective decision-making power flow from this sacred wellspring.",
+                
+                economic: "💰 ECONOMIC TRIBUTARY: A steady stream of sustainable prosperity that strengthens community resilience. These waters carry opportunities for livelihood that honor cultural values while creating economic stability.",
+                
+                cultural: "🎭 CULTURAL TRIBUTARY: Pure waters of authentic expression and collective strength. This stream carries the essence of traditions, language, and identity that define who the community is.",
+                
+                adaptability: "🌱 ADAPTABILITY TRIBUTARY: Flexible currents that enable resilient evolution and long-term viability. These waters help the community bend without breaking, adapting while preserving core identity.",
+                
+                social: "🤝 SOCIAL TRIBUTARY: Empowering waters that unite all community members in collective advancement. This stream ensures no one is left behind and all voices are heard.",
+                
+                benefit: "📊 BENEFIT ASSESSMENT BRIDGE: The first guardian crossing that measures whether initiatives truly serve community wellbeing. Only beneficial waters may pass to nourish downstream communities.",
+                
+                protection: "🔒 PROTECTION BRIDGE: Sacred guardian that protects cultural knowledge and practices from appropriation. This bridge ensures the waters remain pure and respected.",
+                
+                relevance: "🎯 RELEVANCE BRIDGE: Wisdom keeper that ensures all flowing initiatives address real community needs and priorities, not external agendas.",
+                
+                sustainable: "♻️ SUSTAINABILITY BRIDGE: Future guardian that evaluates whether the flowing innovations will nourish generations to come, protecting environmental and cultural sustainability.",
+                
+                dignity: "✊ DIGNITY BRIDGE: Honor keeper that ensures all waters flow with respect for community agency, self-determination, and cultural values.",
+                
+                protective: "🛡️ PROTECTIVE CAPACITY: Mighty waters that defend cultural assets, knowledge, and community wellbeing. These channels create safe harbors and protected spaces.",
+                
+                adaptive: "🌊 ADAPTIVE CAPACITY: Ever-flowing streams that respond flexibly to changing conditions while maintaining cultural essence. Like water finding its way around obstacles.",
+                
+                transformative: "🦋 TRANSFORMATIVE CAPACITY: Powerful currents that reshape landscapes and create new pathways. These waters carve canyons of possibility and new territories of hope.",
+                
+                generator: "⚡ GENERATOR CAPACITY: Electric waters that spark new cultural expressions, economic opportunities, and innovative solutions. These channels energize the entire ecosystem."
+            };
+            
+            alert(details[type]);
+        }
+        
+        // Create flowing water particles
+        function createWaterParticles() {
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'water-particle';
+                particle.style.left = (50 + (Math.random() - 0.5) * 10) + '%';
+                particle.style.top = '200px';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                document.querySelector('.watershed-container').appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 8000);
+            }, 500);
+        }
+        
+        createWaterParticles();
+        
+        // Add gentle ripple effects to water elements
+        document.querySelectorAll('.tributary, .delta-channel, .sacred-spring').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.animation = 'none';
+                this.style.transform += ' scale(1.05)';
+                setTimeout(() => {
+                    this.style.animation = '';
+                    this.style.transform = this.style.transform.replace(' scale(1.05)', '');
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

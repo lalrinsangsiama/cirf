@@ -1,0 +1,153 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="0" width="1000" height="600" fill="#f9f9f9"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Evolution of Cultural Innovation Theory</text>
+  
+  <!-- Timeline -->
+  <line x1="100" y1="500" x2="900" y2="500" stroke="#333" stroke-width="2"/>
+  
+  <!-- Time markers -->
+  <line x1="100" y1="500" x2="100" y2="510" stroke="#333" stroke-width="2"/>
+  <text x="100" y="525" font-family="Arial" font-size="12" text-anchor="middle">1970s</text>
+  
+  <line x1="260" y1="500" x2="260" y2="510" stroke="#333" stroke-width="2"/>
+  <text x="260" y="525" font-family="Arial" font-size="12" text-anchor="middle">1980s</text>
+  
+  <line x1="420" y1="500" x2="420" y2="510" stroke="#333" stroke-width="2"/>
+  <text x="420" y="525" font-family="Arial" font-size="12" text-anchor="middle">1990s</text>
+  
+  <line x1="580" y1="500" x2="580" y2="510" stroke="#333" stroke-width="2"/>
+  <text x="580" y="525" font-family="Arial" font-size="12" text-anchor="middle">2000s</text>
+  
+  <line x1="740" y1="500" x2="740" y2="510" stroke="#333" stroke-width="2"/>
+  <text x="740" y="525" font-family="Arial" font-size="12" text-anchor="middle">2010s</text>
+  
+  <line x1="900" y1="500" x2="900" y2="510" stroke="#333" stroke-width="2"/>
+  <text x="900" y="525" font-family="Arial" font-size="12" text-anchor="middle">2020s</text>
+  
+  <!-- Critical Theory -->
+  <rect x="50" y="80" width="160" height="60" rx="10" fill="#e6f2ff" stroke="#0066cc" stroke-width="2"/>
+  <text x="130" y="120" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Critical Theory</text>
+  <line x1="130" y1="140" x2="130" y2="170" stroke="#0066cc" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="80" y="170" width="100" height="40" rx="5" fill="#e6f2ff" stroke="#0066cc" stroke-width="1"/>
+  <text x="130" y="195" font-family="Arial" font-size="11" text-anchor="middle">Adorno & Horkheimer</text>
+  <text x="130" y="210" font-family="Arial" font-size="9" text-anchor="middle">"Culture Industry" (1944)</text>
+  <line x1="130" y1="210" x2="130" y2="230" stroke="#0066cc" stroke-width="1"/>
+  
+  <ellipse cx="130" cy="240" rx="60" ry="20" fill="#e6f2ff" stroke="#0066cc" stroke-width="1"/>
+  <text x="130" y="244" font-family="Arial" font-size="10" text-anchor="middle">Cultural Standardization</text>
+  <line x1="130" y1="260" x2="180" y2="290" stroke="#0066cc" stroke-width="1"/>
+  
+  <!-- Cultural Capital Theory -->
+  <rect x="230" y="120" width="160" height="60" rx="10" fill="#e8f4e8" stroke="#339933" stroke-width="2"/>
+  <text x="310" y="155" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Cultural Capital Theory</text>
+  <line x1="310" y1="180" x2="310" y2="200" stroke="#339933" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="260" y="200" width="100" height="40" rx="5" fill="#e8f4e8" stroke="#339933" stroke-width="1"/>
+  <text x="310" y="223" font-family="Arial" font-size="11" text-anchor="middle">Pierre Bourdieu</text>
+  <text x="310" y="238" font-family="Arial" font-size="9" text-anchor="middle">"Forms of Capital" (1986)</text>
+  <line x1="310" y1="240" x2="310" y2="260" stroke="#339933" stroke-width="1"/>
+  
+  <ellipse cx="310" cy="280" rx="85" ry="20" fill="#e8f4e8" stroke="#339933" stroke-width="1"/>
+  <text x="310" y="284" font-family="Arial" font-size="10" text-anchor="middle">Symbolic Capital Conversion Mechanisms</text>
+  <line x1="350" y1="290" x2="380" y2="330" stroke="#339933" stroke-width="1"/>
+  
+  <!-- Production of Culture -->
+  <rect x="180" y="290" width="160" height="60" rx="10" fill="#ffebf5" stroke="#cc6699" stroke-width="2"/>
+  <text x="260" y="325" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Production of Culture</text>
+  <line x1="260" y1="350" x2="260" y2="370" stroke="#cc6699" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="210" y="370" width="100" height="40" rx="5" fill="#ffebf5" stroke="#cc6699" stroke-width="1"/>
+  <text x="260" y="393" font-family="Arial" font-size="11" text-anchor="middle">Peterson & Anand</text>
+  <text x="260" y="408" font-family="Arial" font-size="9" text-anchor="middle">"Production of Culture" (2004)</text>
+  <line x1="260" y1="410" x2="240" y2="440" stroke="#cc6699" stroke-width="1"/>
+  
+  <ellipse cx="210" cy="460" rx="75" ry="20" fill="#ffebf5" stroke="#cc6699" stroke-width="1"/>
+  <text x="210" y="464" font-family="Arial" font-size="10" text-anchor="middle">Cultural Production Systems</text>
+  <line x1="240" y1="470" x2="400" y2="490" stroke="#cc6699" stroke-width="1"/>
+  
+  <!-- Creative Industries Paradigm -->
+  <rect x="380" y="330" width="180" height="60" rx="10" fill="#fff2cc" stroke="#ffcc00" stroke-width="2"/>
+  <text x="470" y="365" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Creative Industries Paradigm</text>
+  <line x1="470" y1="390" x2="470" y2="410" stroke="#ffcc00" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="420" y="410" width="100" height="40" rx="5" fill="#fff2cc" stroke="#ffcc00" stroke-width="1"/>
+  <text x="470" y="433" font-family="Arial" font-size="11" text-anchor="middle">Caves</text>
+  <text x="470" y="448" font-family="Arial" font-size="9" text-anchor="middle">"Creative Industries" (2000)</text>
+  <line x1="470" y1="450" x2="470" y2="470" stroke="#ffcc00" stroke-width="1"/>
+  
+  <ellipse cx="470" cy="490" rx="85" ry="20" fill="#fff2cc" stroke="#ffcc00" stroke-width="1"/>
+  <text x="470" y="494" font-family="Arial" font-size="10" text-anchor="middle">Economic Properties of Creativity</text>
+  <line x1="525" y1="480" x2="580" y2="450" stroke="#ffcc00" stroke-width="1"/>
+  
+  <!-- Knowledge Base Theory -->
+  <rect x="570" y="300" width="160" height="60" rx="10" fill="#e6e6f2" stroke="#6666cc" stroke-width="2"/>
+  <text x="650" y="335" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Knowledge Base Theory</text>
+  <line x1="650" y1="360" x2="650" y2="380" stroke="#6666cc" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="600" y="380" width="100" height="40" rx="5" fill="#e6e6f2" stroke="#6666cc" stroke-width="1"/>
+  <text x="650" y="403" font-family="Arial" font-size="11" text-anchor="middle">Asheim et al.</text>
+  <text x="650" y="418" font-family="Arial" font-size="9" text-anchor="middle">"Knowledge Bases" (2007)</text>
+  <line x1="650" y1="420" x2="650" y2="440" stroke="#6666cc" stroke-width="1"/>
+  
+  <ellipse cx="650" cy="460" rx="70" ry="20" fill="#e6e6f2" stroke="#6666cc" stroke-width="1"/>
+  <text x="650" y="464" font-family="Arial" font-size="10" text-anchor="middle">Symbolic Knowledge</text>
+  <line x1="690" y1="450" x2="730" y2="420" stroke="#6666cc" stroke-width="1"/>
+  
+  <!-- Network Market Theory -->
+  <rect x="730" y="200" width="160" height="60" rx="10" fill="#ffe6cc" stroke="#ff9933" stroke-width="2"/>
+  <text x="810" y="235" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Network Market Theory</text>
+  <line x1="810" y1="260" x2="810" y2="280" stroke="#ff9933" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="760" y="280" width="100" height="40" rx="5" fill="#ffe6cc" stroke="#ff9933" stroke-width="1"/>
+  <text x="810" y="303" font-family="Arial" font-size="11" text-anchor="middle">Potts et al.</text>
+  <text x="810" y="318" font-family="Arial" font-size="9" text-anchor="middle">"Social Network Markets" (2008)</text>
+  <line x1="810" y1="320" x2="810" y2="340" stroke="#ff9933" stroke-width="1"/>
+  
+  <ellipse cx="810" cy="360" rx="70" ry="20" fill="#ffe6cc" stroke="#ff9933" stroke-width="1"/>
+  <text x="810" y="364" font-family="Arial" font-size="10" text-anchor="middle">Network Value Determination</text>
+  <line x1="780" y1="375" x2="750" y2="410" stroke="#ff9933" stroke-width="1"/>
+  
+  <!-- Cultural Innovation Resilience -->
+  <rect x="680" y="80" width="220" height="60" rx="10" fill="#fcebeb" stroke="#cc3333" stroke-width="2"/>
+  <text x="790" y="115" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Cultural Innovation Resilience</text>
+  <line x1="790" y1="140" x2="790" y2="160" stroke="#cc3333" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <rect x="740" y="160" width="100" height="40" rx="5" fill="#fcebeb" stroke="#cc3333" stroke-width="1"/>
+  <text x="790" y="183" font-family="Arial" font-size="11" text-anchor="middle">Pratt</text>
+  <text x="790" y="198" font-family="Arial" font-size="9" text-anchor="middle">"Resilience & Cultural Economy" (2015)</text>
+  <line x1="790" y1="200" x2="750" y2="230" stroke="#cc3333" stroke-width="1"/>
+  
+  <!-- Integration arrows -->
+  <path d="M210 240 Q 330 190 580 230" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M350 320 Q 450 270 690 300" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M540 380 Q 620 420 700 380" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M730 340 Q 690 250 800 180" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+  
+  <!-- CIRF -->
+  <rect x="700" y="410" width="180" height="90" rx="10" fill="#e1f7e1" stroke="#009900" stroke-width="3"/>
+  <text x="790" y="445" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">Cultural Innovation</text>
+  <text x="790" y="470" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">Resilience Framework</text>
+  <text x="790" y="490" font-family="Arial" font-size="12" text-anchor="middle">(CIRF)</text>
+  
+  <!-- Legend -->
+  <rect x="870" y="550" width="120" height="20" rx="5" fill="#e8f4e8" stroke="#339933" stroke-width="1"/>
+  <text x="930" y="564" font-family="Arial" font-size="10" text-anchor="middle">Theoretical Paradigm</text>
+  
+  <rect x="870" y="575" width="60" height="20" rx="5" fill="#fff" stroke="#333" stroke-width="1"/>
+  <text x="900" y="589" font-family="Arial" font-size="10" text-anchor="middle">Key Work</text>
+  
+  <ellipse cx="900" cy="605" rx="40" ry="10" fill="#fff" stroke="#333" stroke-width="1"/>
+  <text x="900" y="608" font-family="Arial" font-size="8" text-anchor="middle">Key Concept</text>
+
+  <!-- Explanatory text -->
+  <text x="100" y="570" font-family="Arial" font-size="10" fill="#666">
+    This diagram illustrates the evolution of cultural innovation theory through major theoretical paradigms, showing how
+  </text>
+  <text x="100" y="585" font-family="Arial" font-size="10" fill="#666">
+    diverse perspectives have converged into the integrated Cultural Innovation Resilience Framework (CIRF).
+  </text>
+</svg>

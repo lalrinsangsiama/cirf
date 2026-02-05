@@ -1,0 +1,119 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img [ref=e5]:
+        - generic [ref=e10]: The Indian Startup
+    - button "Open menu" [ref=e11]:
+      - img [ref=e12]
+  - dialog "Navigation menu" [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e16]:
+        - paragraph [ref=e17]: Menu
+        - button [ref=e18]:
+          - img [ref=e19]
+      - navigation [ref=e22]:
+        - generic [ref=e23]:
+          - link "Dashboard" [ref=e24] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e26]
+            - paragraph [ref=e29]: Dashboard
+          - link "Courses" [ref=e30] [cursor=pointer]:
+            - /url: /pricing
+            - img [ref=e32]
+            - paragraph [ref=e35]: Courses
+          - link "Portfolio" [ref=e36] [cursor=pointer]:
+            - /url: /portfolio/portfolio-dashboard
+            - img [ref=e38]
+            - paragraph [ref=e41]: Portfolio
+          - link "Community" [ref=e42] [cursor=pointer]:
+            - /url: /community
+            - img [ref=e44]
+            - paragraph [ref=e49]: Community
+          - link "Profile" [ref=e50] [cursor=pointer]:
+            - /url: /profile
+            - img [ref=e52]
+            - paragraph [ref=e55]: Profile
+      - generic [ref=e56]:
+        - link "Help & Support" [ref=e57] [cursor=pointer]:
+          - /url: /help
+          - img [ref=e58]
+          - paragraph [ref=e61]: Help & Support
+        - link "Settings" [ref=e62] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e63]
+          - paragraph [ref=e66]: Settings
+        - button "Sign Out" [ref=e67]:
+          - img [ref=e68]
+          - paragraph [ref=e71]: Sign Out
+  - navigation [ref=e73]:
+    - link "Dashboard" [ref=e74] [cursor=pointer]:
+      - /url: /dashboard
+      - img [ref=e76]
+      - paragraph [ref=e79]: Dashboard
+    - link "Courses" [ref=e80] [cursor=pointer]:
+      - /url: /pricing
+      - img [ref=e82]
+      - paragraph [ref=e85]: Courses
+    - link "Portfolio" [ref=e86] [cursor=pointer]:
+      - /url: /portfolio/portfolio-dashboard
+      - img [ref=e88]
+      - paragraph [ref=e91]: Portfolio
+    - link "Community" [ref=e92] [cursor=pointer]:
+      - /url: /community
+      - img [ref=e94]
+      - paragraph [ref=e99]: Community
+    - link "Profile" [ref=e100] [cursor=pointer]:
+      - /url: /profile
+      - img [ref=e102]
+      - paragraph [ref=e105]: Profile
+  - generic [ref=e107]:
+    - banner [ref=e108]:
+      - link [ref=e110] [cursor=pointer]:
+        - /url: /
+        - img [ref=e111]:
+          - generic [ref=e116]: The Indian Startup
+    - main [ref=e117]:
+      - generic [ref=e118]:
+        - generic [ref=e119]:
+          - img [ref=e121]
+          - generic [ref=e124]:
+            - heading "404" [level=1] [ref=e125]
+            - paragraph [ref=e126]: Page not found
+        - generic [ref=e127]:
+          - heading "Oops! This page went on its own startup journey." [level=2] [ref=e128]
+          - paragraph [ref=e129]: The page you're looking for doesn't exist or may have been moved. Let's get you back on track to building your startup.
+        - generic [ref=e130]:
+          - generic [ref=e131]:
+            - link "Go Home" [ref=e132] [cursor=pointer]:
+              - /url: /
+              - button "Go Home" [ref=e133]:
+                - img [ref=e134]
+                - text: Go Home
+            - button "Go Back" [ref=e137]:
+              - img [ref=e138]
+              - text: Go Back
+          - generic [ref=e140]:
+            - paragraph [ref=e141]: "Popular pages:"
+            - generic [ref=e142]:
+              - link "Sign Up" [ref=e143] [cursor=pointer]:
+                - /url: /signup
+              - text: •
+              - link "Dashboard" [ref=e144] [cursor=pointer]:
+                - /url: /dashboard
+              - text: •
+              - link "Community" [ref=e145] [cursor=pointer]:
+                - /url: /community
+    - contentinfo [ref=e146]:
+      - paragraph [ref=e149]:
+        - text: Need help?
+        - link "Contact Support" [ref=e150] [cursor=pointer]:
+          - /url: mailto:support@theindianstartup.in
+  - button "Feedback" [ref=e151]:
+    - img [ref=e152]
+    - text: Feedback
+  - region "Notifications alt+T"
+```

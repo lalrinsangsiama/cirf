@@ -1,0 +1,205 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img [ref=e5]:
+        - generic [ref=e10]: The Indian Startup
+    - button "Open menu" [ref=e11]:
+      - img [ref=e12]
+  - dialog "Navigation menu" [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e16]:
+        - paragraph [ref=e17]: Menu
+        - button [ref=e18]:
+          - img [ref=e19]
+      - navigation [ref=e22]:
+        - generic [ref=e23]:
+          - link "Dashboard" [ref=e24] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e26]
+            - paragraph [ref=e29]: Dashboard
+          - link "Courses" [ref=e30] [cursor=pointer]:
+            - /url: /pricing
+            - img [ref=e32]
+            - paragraph [ref=e35]: Courses
+          - link "Portfolio" [ref=e36] [cursor=pointer]:
+            - /url: /portfolio/portfolio-dashboard
+            - img [ref=e38]
+            - paragraph [ref=e41]: Portfolio
+          - link "Community" [ref=e42] [cursor=pointer]:
+            - /url: /community
+            - img [ref=e44]
+            - paragraph [ref=e49]: Community
+          - link "Profile" [ref=e50] [cursor=pointer]:
+            - /url: /profile
+            - img [ref=e52]
+            - paragraph [ref=e55]: Profile
+      - generic [ref=e56]:
+        - link "Help & Support" [ref=e57] [cursor=pointer]:
+          - /url: /help
+          - img [ref=e58]
+          - paragraph [ref=e61]: Help & Support
+        - link "Settings" [ref=e62] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e63]
+          - paragraph [ref=e66]: Settings
+        - button "Sign Out" [ref=e67]:
+          - img [ref=e68]
+          - paragraph [ref=e71]: Sign Out
+  - navigation [ref=e73]:
+    - link "Dashboard" [ref=e74] [cursor=pointer]:
+      - /url: /dashboard
+      - img [ref=e76]
+      - paragraph [ref=e79]: Dashboard
+    - link "Courses" [ref=e80] [cursor=pointer]:
+      - /url: /pricing
+      - img [ref=e82]
+      - paragraph [ref=e85]: Courses
+    - link "Portfolio" [ref=e86] [cursor=pointer]:
+      - /url: /portfolio/portfolio-dashboard
+      - img [ref=e88]
+      - paragraph [ref=e91]: Portfolio
+    - link "Community" [ref=e92] [cursor=pointer]:
+      - /url: /community
+      - img [ref=e94]
+      - paragraph [ref=e99]: Community
+    - link "Profile" [ref=e100] [cursor=pointer]:
+      - /url: /profile
+      - img [ref=e102]
+      - paragraph [ref=e105]: Profile
+  - generic [ref=e107]:
+    - banner [ref=e108]:
+      - generic [ref=e110]:
+        - link [ref=e111] [cursor=pointer]:
+          - /url: /
+          - img [ref=e112]:
+            - generic [ref=e117]: The Indian Startup
+        - link "Back to Home" [ref=e118] [cursor=pointer]:
+          - /url: /
+          - button "Back to Home" [ref=e119]:
+            - img [ref=e120]
+            - text: Back to Home
+    - generic [ref=e124]:
+      - heading "About The Indian Startup" [level=1] [ref=e125]
+      - paragraph [ref=e126]: Empowering Indian founders with comprehensive, step-by-step guidance to build successful startups from idea to global scale.
+    - main [ref=e127]:
+      - generic [ref=e128]:
+        - generic [ref=e129]:
+          - img [ref=e131]
+          - heading "Our Mission" [level=2] [ref=e135]
+        - paragraph [ref=e136]: "The Indian Startup was founded with a simple mission: to make entrepreneurship accessible to every aspiring Indian founder. We believe that the knowledge and guidance needed to build a successful startup should not be locked behind expensive consulting fees or inaccessible networks."
+        - paragraph [ref=e137]: Our platform provides India-specific guidance, templates, and resources that address the unique challenges faced by entrepreneurs in the Indian ecosystem - from navigating complex regulatory requirements to accessing government schemes and building investor-ready businesses.
+      - generic [ref=e138]:
+        - generic [ref=e139]:
+          - img [ref=e141]
+          - heading "What We Offer" [level=2] [ref=e144]
+        - paragraph [ref=e145]: "We provide comprehensive educational products covering every aspect of building a startup in India:"
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - heading "30 Comprehensive Courses" [level=4] [ref=e148]
+            - paragraph [ref=e149]: From 30-day launch sprints to sector-specific mastery programs covering FinTech, HealthTech, E-commerce, and more.
+          - generic [ref=e150]:
+            - heading "3,000+ Resources" [level=4] [ref=e151]
+            - paragraph [ref=e152]: Templates, playbooks, checklists, and guides designed specifically for Indian regulations and market conditions.
+          - generic [ref=e153]:
+            - heading "Government Schemes Database" [level=4] [ref=e154]
+            - paragraph [ref=e155]: Access information about 500+ government schemes across all 28 states and 8 UTs to maximize benefits.
+          - generic [ref=e156]:
+            - heading "Portfolio Builder" [level=4] [ref=e157]
+            - paragraph [ref=e158]: Build your investor-ready startup portfolio automatically as you complete course activities.
+      - generic [ref=e160]:
+        - heading "Our Platform" [level=2] [ref=e161]
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]: "30"
+            - generic [ref=e165]: Complete Courses
+          - generic [ref=e166]:
+            - generic [ref=e167]: 1000+
+            - generic [ref=e168]: Templates & Tools
+          - generic [ref=e169]:
+            - generic [ref=e170]: 450+
+            - generic [ref=e171]: Action Items
+          - generic [ref=e172]:
+            - generic [ref=e173]: "365"
+            - generic [ref=e174]: Days Access
+      - generic [ref=e175]:
+        - generic [ref=e176]:
+          - img [ref=e178]
+          - heading "Our Values" [level=2] [ref=e181]
+        - generic [ref=e182]:
+          - generic [ref=e183]:
+            - img [ref=e184]
+            - generic [ref=e187]:
+              - heading "India-First Approach" [level=4] [ref=e188]
+              - paragraph [ref=e189]: Every piece of content is designed specifically for Indian regulations, markets, and business practices.
+          - generic [ref=e190]:
+            - img [ref=e191]
+            - generic [ref=e194]:
+              - heading "Practical Implementation" [level=4] [ref=e195]
+              - paragraph [ref=e196]: We focus on actionable guidance with real templates, not just theory.
+          - generic [ref=e197]:
+            - img [ref=e198]
+            - generic [ref=e201]:
+              - heading "Founder Success" [level=4] [ref=e202]
+              - paragraph [ref=e203]: Our success is measured by the success of our founders.
+          - generic [ref=e204]:
+            - img [ref=e205]
+            - generic [ref=e208]:
+              - heading "Continuous Improvement" [level=4] [ref=e209]
+              - paragraph [ref=e210]: We regularly update our content to reflect the latest regulations and best practices.
+      - generic [ref=e211]:
+        - generic [ref=e212]:
+          - img [ref=e214]
+          - heading "Business Information" [level=2] [ref=e216]
+        - generic [ref=e218]:
+          - generic [ref=e219]:
+            - heading "Platform Name" [level=4] [ref=e220]
+            - paragraph [ref=e221]: The Indian Startup
+          - generic [ref=e222]:
+            - heading "Business Type" [level=4] [ref=e223]
+            - paragraph [ref=e224]: Digital Educational Platform
+          - generic [ref=e225]:
+            - heading "Website" [level=4] [ref=e226]
+            - link "theindianstartup.in" [ref=e227] [cursor=pointer]:
+              - /url: https://theindianstartup.in
+          - generic [ref=e228]:
+            - heading "Support Email" [level=4] [ref=e229]
+            - link "support@theindianstartup.in" [ref=e230] [cursor=pointer]:
+              - /url: mailto:support@theindianstartup.in
+          - generic [ref=e231]:
+            - heading "Products Offered" [level=4] [ref=e232]
+            - paragraph [ref=e233]: Online courses, templates, and educational resources for entrepreneurs
+          - generic [ref=e234]:
+            - heading "Location" [level=4] [ref=e235]
+            - paragraph [ref=e236]: Bangalore, Karnataka, India
+      - generic [ref=e237]:
+        - img [ref=e238]
+        - heading "Ready to Start Your Journey?" [level=2] [ref=e243]
+        - paragraph [ref=e244]: Join thousands of founders who are building successful startups with our guidance.
+        - generic [ref=e245]:
+          - link "Get Started" [ref=e246] [cursor=pointer]:
+            - /url: /signup
+            - button "Get Started" [ref=e247]
+          - link "Contact Us" [ref=e248] [cursor=pointer]:
+            - /url: /contact
+            - button "Contact Us" [ref=e249]
+      - generic [ref=e251]:
+        - link "Terms of Service" [ref=e252] [cursor=pointer]:
+          - /url: /terms
+        - text: "|"
+        - link "Privacy Policy" [ref=e253] [cursor=pointer]:
+          - /url: /privacy
+        - text: "|"
+        - link "Refund Policy" [ref=e254] [cursor=pointer]:
+          - /url: /refund-policy
+        - text: "|"
+        - link "Contact Us" [ref=e255] [cursor=pointer]:
+          - /url: /contact
+  - button "Feedback" [ref=e256]:
+    - img [ref=e257]
+    - text: Feedback
+  - region "Notifications alt+T"
+```

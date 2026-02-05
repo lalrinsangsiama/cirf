@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Innovation Resilience Framework - Statistical Visualizations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        .viz-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .viz-title {
+            font-size: 1.8em;
+            color: #34495e;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .viz-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .chart-container {
+            position: relative;
+            margin: 20px auto;
+        }
+        .small-chart {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .legend-custom {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 15px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        .insight-box {
+            background: #f0f7ff;
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .key-finding {
+            font-weight: bold;
+            color: #2980b9;
+        }
+        #heatmap {
+            margin: 20px auto;
+        }
+        .axis {
+            font-size: 12px;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 10px;
+            font: 12px sans-serif;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .critical-threshold {
+            stroke: #e74c3c;
+            stroke-width: 3;
+            stroke-dasharray: 5,5;
+        }
+        .threshold-label {
+            fill: #e74c3c;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cultural Innovation Resilience Framework</h1>
+        <p class="subtitle">Statistical Analysis of 362 Global Cultural Innovation Cases (1995-2025)</p>
+
+        <!-- Overall Score Distribution -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Bimodal Reality: Score Distribution Reveals Two Distinct Worlds</h2>
+            <p class="viz-description">The distribution shows a striking pattern - initiatives cluster at either end, with few in the middle ground</p>
+            <div class="chart-container">
+                <canvas id="scoreDistribution"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Key Insight:</span> The bimodal distribution suggests a "tipping point" phenomenon. Initiatives either achieve critical mass (scores 9-13) or struggle significantly (scores 2-6). The gap at scores 7-8 indicates few cases remain in transition.</p>
+            </div>
+        </div>
+
+        <!-- Status Distribution Donut -->
+        <div class="viz-section">
+            <h2 class="viz-title">Current Status: The Success Story</h2>
+            <p class="viz-description">76.2% of cultural innovations remain ongoing - a testament to resilience</p>
+            <div class="chart-container small-chart">
+                <canvas id="statusDonut"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Average Scores by Status:</span><br>
+                • Ongoing: 9.64/13<br>
+                • Crisis: 4.88/13<br>
+                • Closed: 3.07/13</p>
+            </div>
+        </div>
+
+        <!-- Component Frequency Waterfall -->
+        <div class="viz-section">
+            <h2 class="viz-title">Component Presence: From Universal to Rare</h2>
+            <p class="viz-description">Which components are most common across all 362 cases?</p>
+            <div class="chart-container">
+                <canvas id="componentWaterfall"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Pattern Revealed:</span> Cultural components (integrity, relevance) are most common, while resilience capacities (transformative, protective) are rarest. This suggests maintaining culture is easier than building deep resilience.</p>
+            </div>
+        </div>
+
+        <!-- Critical Success Factors -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Adaptation Imperative: What Separates Success from Failure</h2>
+            <p class="viz-description">Component presence differences between ongoing and closed cases</p>
+            <div class="chart-container">
+                <canvas id="successFactors"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">The 80% Rule:</span> Adaptive Capacity and Adaptability show 80%+ higher presence in successful cases. These are the strongest predictors of success - without adaptation, cultural innovation cannot survive.</p>
+            </div>
+        </div>
+
+        <!-- Three-Stage Decline Pattern -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Cascade of Decline: How Cultural Innovations Fail</h2>
+            <p class="viz-description">Component group erosion from Ongoing → Crisis → Closed</p>
+            <div class="chart-container">
+                <canvas id="declinePattern"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Early Warning System:</span> Resilience capacities erode first (61%→21%→6%), followed by community control (73%→40%→22%), while operational pillars deteriorate last. Monitor resilience capacities as early indicators of crisis.</p>
+            </div>
+        </div>
+
+        <!-- Score Zones Visualization -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Critical Eight: Score Zones and Success Probability</h2>
+            <p class="viz-description">How scores predict initiative status</p>
+            <div class="chart-container">
+                <canvas id="scoreZones"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">The Magic Number:</span> Score 8 appears to be the sustainability threshold. 100% of cases scoring exactly 8 are ongoing. Below this, failure risk increases dramatically.</p>
+            </div>
+        </div>
+
+        <!-- Component Co-occurrence Heatmap -->
+        <div class="viz-section">
+            <h2 class="viz-title">The 97% Rule: Component Synergies</h2>
+            <p class="viz-description">Some components almost always appear together</p>
+            <div id="heatmap"></div>
+            <div class="insight-box">
+                <p><span class="key-finding">Natural Clusters:</span><br>
+                • Adaptability ↔ Adaptive Capacity (97% co-occurrence)<br>
+                • Sustainable Development → Economic Value (97% dependency)<br>
+                • Cultural Protection → Cultural Integrity (98% dependency)<br>
+                These represent integrated capabilities that develop together.</p>
+            </div>
+        </div>
+
+        <!-- Framework Architecture -->
+        <div class="viz-section">
+            <h2 class="viz-title">CIRF Architecture: The 13 Components</h2>
+            <p class="viz-description">How the framework's three levels perform in successful vs. failed cases</p>
+            <div class="chart-container">
+                <canvas id="frameworkArchitecture"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Successful Balance:</span> High-scoring cases (11-13) average:<br>
+                • Operational Pillars: 3.9/4<br>
+                • Community Control: 4.5/5<br>
+                • Resilience Capacities: 3.3/4<br>
+                Failed cases show "hollowing out" - surface components remain while deeper mechanisms erode.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Color palette
+        const colors = {
+            primary: '#3498db',
+            success: '#2ecc71',
+            warning: '#f39c12',
+            danger: '#e74c3c',
+            secondary: '#95a5a6',
+            info: '#9b59b6',
+            dark: '#34495e',
+            light: '#ecf0f1'
+        };
+
+        // 1. Score Distribution - Bimodal Histogram
+        const scoreDistCtx = document.getElementById('scoreDistribution').getContext('2d');
+        new Chart(scoreDistCtx, {
+            type: 'bar',
+            data: {
+                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'],
+                datasets: [{
+                    label: 'Number of Cases',
+                    data: [2, 5, 21, 28, 18, 22, 15, 8, 26, 35, 42, 48, 41, 51],
+                    backgroundColor: function(context) {
+                        const value = context.parsed.x;
+                        if (value <= 2) return colors.danger;
+                        if (value <= 6) return colors.warning;
+                        if (value <= 8) return colors.secondary;
+                        return colors.success;
+                    },
+                    borderColor: '#2c3e50',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'CIRF Score Distribution (n=362)',
+                        font: { size: 16 }
+                    },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Cases'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'CIRF Score (out of 13)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Status Distribution Donut
+        const statusCtx = document.getElementById('statusDonut').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Ongoing', 'Crisis', 'Closed'],
+                datasets: [{
+                    data: [276, 50, 29],
+                    backgroundColor: [colors.success, colors.warning, colors.danger],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: { size: 14 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return `${label}: ${value} cases (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Component Frequency Waterfall
+        const componentCtx = document.getElementById('componentWaterfall').getContext('2d');
+        const componentData = [
+            { name: 'Cultural Integrity', percent: 87.3 },
+            { name: 'Community Relevance', percent: 83.4 },
+            { name: 'Economic Value Creation', percent: 80.1 },
+            { name: 'Cultural Protection', percent: 75.4 },
+            { name: 'Community Benefit', percent: 72.9 },
+            { name: 'Dignity & Empowerment', percent: 70.7 },
+            { name: 'Adaptability', percent: 68.5 },
+            { name: 'Social Empowerment', percent: 65.5 },
+            { name: 'Adaptive Capacity', percent: 62.7 },
+            { name: 'Sustainable Development', percent: 59.9 },
+            { name: 'Generative Capacity', percent: 51.9 },
+            { name: 'Protective Capacity', percent: 40.1 },
+            { name: 'Transformative Capacity', percent: 34.3 }
+        ];
+
+        new Chart(componentCtx, {
+            type: 'bar',
+            data: {
+                labels: componentData.map(d => d.name),
+                datasets: [{
+                    label: 'Presence (%)',
+                    data: componentData.map(d => d.percent),
+                    backgroundColor: function(context) {
+                        const value = context.parsed.y;
+                        if (value >= 80) return colors.success;
+                        if (value >= 60) return colors.primary;
+                        if (value >= 40) return colors.warning;
+                        return colors.danger;
+                    },
+                    borderColor: '#2c3e50',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Present in ${context.parsed.x}% of all cases`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Percentage of Cases'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 4. Success Factors - Diverging Bar Chart
+        const successCtx = document.getElementById('successFactors').getContext('2d');
+        const successData = [
+            { component: 'Adaptive Capacity', ongoing: 87.3, closed: 3.4, diff: 83.9 },
+            { component: 'Adaptability', ongoing: 85.5, closed: 3.4, diff: 82.1 },
+            { component: 'Economic Value', ongoing: 91.7, closed: 20.7, diff: 71.0 },
+            { component: 'Sustainable Dev.', ongoing: 68.1, closed: 0, diff: 68.1 },
+            { component: 'Generative Cap.', ongoing: 62.0, closed: 0, diff: 62.0 },
+            { component: 'Community Benefit', ongoing: 83.0, closed: 24.1, diff: 58.9 },
+            { component: 'Dignity & Empower.', ongoing: 79.3, closed: 27.6, diff: 51.7 },
+            { component: 'Social Empower.', ongoing: 72.8, closed: 24.1, diff: 48.7 }
+        ];
+
+        new Chart(successCtx, {
+            type: 'bar',
+            data: {
+                labels: successData.map(d => d.component),
+                datasets: [
+                    {
+                        label: 'Ongoing Cases',
+                        data: successData.map(d => d.ongoing),
+                        backgroundColor: colors.success,
+                        borderColor: colors.success,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Closed Cases',
+                        data: successData.map(d => d.closed),
+                        backgroundColor: colors.danger,
+                        borderColor: colors.danger,
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Component Presence: Ongoing vs Closed Cases',
+                        font: { size: 14 }
+                    },
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Presence (%)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 5. Three-Stage Decline Pattern
+        const declineCtx = document.getElementById('declinePattern').getContext('2d');
+        new Chart(declineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ongoing', 'Crisis', 'Closed'],
+                datasets: [
+                    {
+                        label: 'Resilience Capacities',
+                        data: [61, 21, 6],
+                        borderColor: colors.danger,
+                        backgroundColor: colors.danger + '20',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Community Control',
+                        data: [73, 40, 22],
+                        borderColor: colors.warning,
+                        backgroundColor: colors.warning + '20',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Operational Pillars',
+                        data: [86, 51, 33],
+                        borderColor: colors.primary,
+                        backgroundColor: colors.primary + '20',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Component Group Erosion Patterns',
+                        font: { size: 14 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Average Presence (%)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 6. Score Zones Visualization
+        const zoneCtx = document.getElementById('scoreZones').getContext('2d');
+        const zoneData = {
+            labels: ['0-2', '3-5', '6-8', '9-11', '12-13'],
+            ongoing: [3.5, 29, 65, 96, 96],
+            crisis: [29, 52, 25, 3, 2],
+            closed: [68, 19, 10, 1, 2]
+        };
+
+        new Chart(zoneCtx, {
+            type: 'bar',
+            data: {
+                labels: zoneData.labels,
+                datasets: [
+                    {
+                        label: 'Ongoing',
+                        data: zoneData.ongoing,
+                        backgroundColor: colors.success
+                    },
+                    {
+                        label: 'Crisis',
+                        data: zoneData.crisis,
+                        backgroundColor: colors.warning
+                    },
+                    {
+                        label: 'Closed',
+                        data: zoneData.closed,
+                        backgroundColor: colors.danger
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Score Range'
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Percentage of Cases'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Status Distribution by Score Range',
+                        font: { size: 14 }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.parsed.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 7. Component Co-occurrence Heatmap
+        const margin = {top: 80, right: 50, bottom: 150, left: 150};
+        const width = 800 - margin.left - margin.right;
+        const height = 600 - margin.top - margin.bottom;
+
+        const components = [
+            'Adaptability', 'Adaptive Cap.', 'Sustainable Dev.', 
+            'Economic Value', 'Cultural Protect.', 'Cultural Integ.',
+            'Community Ben.', 'Community Rel.'
+        ];
+
+        const cooccurrenceData = [
+            [100, 97, 85, 88, 72, 75, 82, 80],
+            [97, 100, 84, 87, 71, 74, 81, 79],
+            [52, 51, 100, 97, 45, 48, 78, 76],
+            [88, 87, 69, 100, 68, 71, 77, 75],
+            [68, 67, 43, 61, 100, 98, 58, 60],
+            [75, 74, 48, 71, 89, 100, 65, 68],
+            [77, 76, 95, 83, 54, 58, 100, 98],
+            [80, 79, 94, 85, 56, 61, 98, 100]
+        ];
+
+        const svg = d3.select("#heatmap")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleBand()
+            .range([0, width])
+            .domain(components)
+            .padding(0.05);
+
+        const y = d3.scaleBand()
+            .range([height, 0])
+            .domain(components)
+            .padding(0.05);
+
+        const colorScale = d3.scaleSequential()
+            .interpolator(d3.interpolateBlues)
+            .domain([40, 100]);
+
+        // Create tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip");
+
+        // Draw rectangles
+        components.forEach((comp1, i) => {
+            components.forEach((comp2, j) => {
+                svg.append("rect")
+                    .attr("x", x(comp2))
+                    .attr("y", y(comp1))
+                    .attr("width", x.bandwidth())
+                    .attr("height", y.bandwidth())
+                    .style("fill", colorScale(cooccurrenceData[i][j]))
+                    .style("stroke", "#fff")
+                    .style("stroke-width", 2)
+                    .on("mouseover", function(event) {
+                        tooltip.style("opacity", 1);
+                        tooltip.html(`${comp1} + ${comp2}<br>${cooccurrenceData[i][j]}% co-occurrence`)
+                            .style("left", (event.pageX + 10) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function() {
+                        tooltip.style("opacity", 0);
+                    });
+
+                // Add text labels for high values
+                if (cooccurrenceData[i][j] >= 95 && i !== j) {
+                    svg.append("text")
+                        .attr("x", x(comp2) + x.bandwidth() / 2)
+                        .attr("y", y(comp1) + y.bandwidth() / 2)
+                        .attr("text-anchor", "middle")
+                        .attr("dominant-baseline", "middle")
+                        .style("fill", "white")
+                        .style("font-weight", "bold")
+                        .text(cooccurrenceData[i][j] + "%");
+                }
+            });
+        });
+
+        // Add X axis
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-45)");
+
+        // Add Y axis
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // Add title
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("font-weight", "bold")
+            .text("Component Co-occurrence Matrix (%)");
+
+        // 8. Framework Architecture Radar
+        const architectureCtx = document.getElementById('frameworkArchitecture').getContext('2d');
+        new Chart(architectureCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    'Economic Value', 'Cultural Integrity', 'Adaptability', 'Social Empowerment',
+                    'Community Benefit', 'Cultural Protection', 'Community Relevance', 
+                    'Sustainable Dev.', 'Dignity & Empower.',
+                    'Protective Cap.', 'Adaptive Cap.', 'Transformative Cap.', 'Generative Cap.'
+                ],
+                datasets: [
+                    {
+                        label: 'High Success (11-13)',
+                        data: [98, 99, 95, 88, 96, 93, 97, 91, 89, 71, 94, 56, 82],
+                        borderColor: colors.success,
+                        backgroundColor: colors.success + '20',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Crisis Cases',
+                        data: [54, 78, 26, 44, 54, 52, 68, 8, 48, 12, 22, 10, 18],
+                        borderColor: colors.warning,
+                        backgroundColor: colors.warning + '20',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Failed Cases',
+                        data: [21, 79, 3, 24, 24, 38, 55, 0, 28, 0, 3, 0, 0],
+                        borderColor: colors.danger,
+                        backgroundColor: colors.danger + '20',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Component Presence Across Status Categories',
+                        font: { size: 14 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

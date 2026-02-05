@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4 Results - Key Visualizations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .chart-container {
+            margin: 30px 0;
+            page-break-inside: avoid;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .chart-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .chart-subtitle {
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        canvas {
+            max-height: 400px;
+        }
+        .stats-box {
+            background: #f8f9fa;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        h1 {
+            color: #000;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chapter 4 Results - Key Visualizations for Doctoral Thesis</h1>
+    
+    <h2>Figure 4.1: Critical Threshold Validation</h2>
+    <div class="chart-container">
+        <div class="chart-title">Success Rate by CIRF Score</div>
+        <div class="chart-subtitle">Dramatic threshold effect between Scores 7-8 validates critical minimum viable combination</div>
+        <canvas id="thresholdChart"></canvas>
+        <div class="stats-box">
+            <strong>Key Finding:</strong> Success rate jumps from 64.7% (Score 7) to 100.0% (Score 8), representing a +35.3 percentage point threshold effect (p < 0.001).
+        </div>
+    </div>
+
+    <h2>Figure 4.2: Component Necessity Analysis</h2>
+    <div class="chart-container">
+        <div class="chart-title">Component Achievement Rates in Operating vs. Failed Cases</div>
+        <div class="chart-subtitle">Five components emerge as near-necessary conditions (≥85% in Operating cases)</div>
+        <canvas id="componentChart"></canvas>
+        <div class="stats-box">
+            <strong>Key Finding:</strong> Five components achieve ≥85% presence in Operating cases: Economic Value (91.7%), Community Relevance (90.6%), Cultural Integrity (90.3%), Adaptive Capacity (86.3%), and Adaptability (85.2%).
+        </div>
+    </div>
+
+    <h2>Figure 4.3: Cultural Innovation Distinction</h2>
+    <div class="grid">
+        <div class="chart-container">
+            <div class="chart-title">Success Rates by Innovation Approach</div>
+            <div class="chart-subtitle">Cultural + Economic synergy shows +39.1 pp advantage</div>
+            <canvas id="synergyChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-title">Performance Distribution</div>
+            <div class="chart-subtitle">Score distribution across 362 cases</div>
+            <canvas id="distributionChart"></canvas>
+        </div>
+    </div>
+
+    <h2>Figure 4.4: Barrier Analysis</h2>
+    <div class="chart-container">
+        <div class="chart-title">Primary Barriers to Cultural Innovation Success</div>
+        <div class="chart-subtitle">Missing components that most strongly predict failure</div>
+        <canvas id="barrierChart"></canvas>
+        <div class="stats-box">
+            <strong>Key Finding:</strong> Missing Adaptive Capacity increases failure risk by 71.5 percentage points, representing the strongest barrier to success (OR = 8.4, 95% CI: 4.2-16.8).
+        </div>
+    </div>
+
+    <h2>Figure 4.5: Framework Validation Metrics</h2>
+    <div class="grid">
+        <div class="chart-container">
+            <div class="chart-title">Predictive Performance at Optimal Threshold</div>
+            <div class="chart-subtitle">Score ≥7 threshold optimization</div>
+            <canvas id="validationChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-title">Geographic Universality</div>
+            <div class="chart-subtitle">Success rates across major regions</div>
+            <canvas id="geographicChart"></canvas>
+        </div>
+    </div>
+
+    <h2>Figure 4.6: Place-Based Impact Analysis</h2>
+    <div class="chart-container">
+        <div class="chart-title">Advanced Capacity Components in High vs. Medium Performers</div>
+        <div class="chart-subtitle">Components enabling sustained place-based impact</div>
+        <canvas id="placeBasedChart"></canvas>
+        <div class="stats-box">
+            <strong>Key Finding:</strong> High-performing enterprises (Score 10+) show significant advantages in Transformative Capacity (+42.3 pp), Protective Capacity (+41.1 pp), and Generative Capacity (+37.1 pp).
+        </div>
+    </div>
+
+    <script>
+        // Chart.js default configuration
+        Chart.defaults.font.family = 'Times New Roman';
+        Chart.defaults.font.size = 12;
+        Chart.defaults.plugins.legend.position = 'bottom';
+
+        // Color palette
+        const colors = {
+            primary: '#0066cc',
+            secondary: '#ff6b35',
+            success: '#28a745',
+            warning: '#ffc107',
+            danger: '#dc3545',
+            info: '#17a2b8',
+            light: '#f8f9fa',
+            dark: '#343a40'
+        };
+
+        // Figure 4.1: Critical Threshold Validation
+        const thresholdCtx = document.getElementById('thresholdChart').getContext('2d');
+        new Chart(thresholdCtx, {
+            type: 'line',
+            data: {
+                labels: ['0-3', '4-5', '6', '7', '8', '9-13'],
+                datasets: [{
+                    label: 'Success Rate (%)',
+                    data: [15.7, 28.2, 41.7, 64.7, 100.0, 98.0],
+                    borderColor: colors.primary,
+                    backgroundColor: colors.primary + '20',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: colors.primary,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Success Rate (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'CIRF Score Range'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Figure 4.2: Component Necessity Analysis
+        const componentCtx = document.getElementById('componentChart').getContext('2d');
+        new Chart(componentCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Economic Value', 'Community Relevance', 'Cultural Integrity', 
+                    'Adaptive Capacity', 'Adaptability', 'Dignity & Empowerment',
+                    'Community Benefit', 'Social Empowerment', 'Sustainable Development',
+                    'Cultural Protection', 'Protective Capacity', 'Transformative Capacity',
+                    'Generative Capacity'
+                ],
+                datasets: [{
+                    label: 'Operating Cases (%)',
+                    data: [91.7, 90.6, 90.3, 86.3, 85.2, 77.3, 78.3, 78.7, 67.9, 60.6, 48.0, 40.4, 67.9],
+                    backgroundColor: colors.success
+                }, {
+                    label: 'Failed Cases (%)',
+                    data: [54.9, 66.7, 76.5, 21.6, 25.5, 35.3, 37.2, 45.1, 7.8, 50.9, 19.6, 17.6, 21.6],
+                    backgroundColor: colors.danger
+                }]
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Achievement Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Figure 4.3: Cultural Innovation Synergy
+        const synergyCtx = document.getElementById('synergyChart').getContext('2d');
+        new Chart(synergyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Cultural + Economic', 'Economic Only', 'Cultural Only', 'Neither'],
+                datasets: [{
+                    label: 'Success Rate (%)',
+                    data: [90.5, 68.4, 34.4, 12.5],
+                    backgroundColor: [colors.success, colors.info, colors.warning, colors.danger],
+                    borderColor: [colors.success, colors.info, colors.warning, colors.danger],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Success Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Figure 4.3: Performance Distribution
+        const distributionCtx = document.getElementById('distributionChart').getContext('2d');
+        new Chart(distributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Excellent (12-13)', 'High (10-11)', 'Medium-High (8-9)', 'Medium (6-7)', 'Low (4-5)', 'Critical (0-3)'],
+                datasets: [{
+                    data: [24.9, 18.8, 20.2, 11.3, 10.8, 14.1],
+                    backgroundColor: [
+                        colors.success,
+                        '#20c997',
+                        colors.info,
+                        colors.warning,
+                        colors.secondary,
+                        colors.danger
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Figure 4.4: Barrier Analysis
+        const barrierCtx = document.getElementById('barrierChart').getContext('2d');
+        new Chart(barrierCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Adaptive Capacity',
+                    'Adaptability', 
+                    'Sustainable Development',
+                    'Generative Capacity',
+                    'Economic Value Creation'
+                ],
+                datasets: [{
+                    label: 'Barrier Effect (pp)',
+                    data: [71.5, 67.9, 62.9, 50.6, 36.8],
+                    backgroundColor: colors.danger,
+                    borderColor: colors.danger,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Increased Failure Risk (percentage points)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Figure 4.5: Framework Validation
+        const validationCtx = document.getElementById('validationChart').getContext('2d');
+        new Chart(validationCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Sensitivity', 'Specificity', 'PPV', 'NPV', 'Accuracy'],
+                datasets: [{
+                    label: 'Score ≥7 Threshold',
+                    data: [85.6, 87.7, 96.0, 62.3, 86.0],
+                    borderColor: colors.primary,
+                    backgroundColor: colors.primary + '20',
+                    borderWidth: 2,
+                    pointBackgroundColor: colors.primary
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // Figure 4.5: Geographic Universality
+        const geographicCtx = document.getElementById('geographicChart').getContext('2d');
+        new Chart(geographicCtx, {
+            type: 'bar',
+            data: {
+                labels: ['North America', 'Europe', 'Asia', 'Africa', 'Latin America', 'Oceania'],
+                datasets: [{
+                    label: 'Success Rate (%)',
+                    data: [87.0, 85.7, 76.0, 84.6, 81.5, 100.0],
+                    backgroundColor: colors.info,
+                    borderColor: colors.info,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Success Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Figure 4.6: Place-Based Impact
+        const placeBasedCtx = document.getElementById('placeBasedChart').getContext('2d');
+        new Chart(placeBasedCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Transformative Capacity',
+                    'Protective Capacity',
+                    'Generative Capacity',
+                    'Sustainable Development'
+                ],
+                datasets: [{
+                    label: 'High Performers (Score 10+)',
+                    data: [60.4, 62.0, 79.1, 89.9],
+                    backgroundColor: colors.success
+                }, {
+                    label: 'Medium Performers (Score 7-9)',
+                    data: [18.1, 20.9, 42.0, 54.0],
+                    backgroundColor: colors.warning
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Achievement Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

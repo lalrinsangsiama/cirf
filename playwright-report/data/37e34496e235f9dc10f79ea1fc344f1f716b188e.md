@@ -1,0 +1,212 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img [ref=e5]:
+        - generic [ref=e10]: The Indian Startup
+    - button "Open menu" [ref=e11]:
+      - img [ref=e12]
+  - dialog "Navigation menu" [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e16]:
+        - paragraph [ref=e17]: Menu
+        - button [ref=e18]:
+          - img [ref=e19]
+      - navigation [ref=e22]:
+        - generic [ref=e23]:
+          - link "Dashboard" [ref=e24] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e26]
+            - paragraph [ref=e29]: Dashboard
+          - link "Courses" [ref=e30] [cursor=pointer]:
+            - /url: /pricing
+            - img [ref=e32]
+            - paragraph [ref=e35]: Courses
+          - link "Portfolio" [ref=e36] [cursor=pointer]:
+            - /url: /portfolio/portfolio-dashboard
+            - img [ref=e38]
+            - paragraph [ref=e41]: Portfolio
+          - link "Community" [ref=e42] [cursor=pointer]:
+            - /url: /community
+            - img [ref=e44]
+            - paragraph [ref=e49]: Community
+          - link "Profile" [ref=e50] [cursor=pointer]:
+            - /url: /profile
+            - img [ref=e52]
+            - paragraph [ref=e55]: Profile
+      - generic [ref=e56]:
+        - link "Help & Support" [ref=e57] [cursor=pointer]:
+          - /url: /help
+          - img [ref=e58]
+          - paragraph [ref=e61]: Help & Support
+        - link "Settings" [ref=e62] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e63]
+          - paragraph [ref=e66]: Settings
+        - button "Sign Out" [ref=e67]:
+          - img [ref=e68]
+          - paragraph [ref=e71]: Sign Out
+  - navigation [ref=e73]:
+    - link "Dashboard" [ref=e74] [cursor=pointer]:
+      - /url: /dashboard
+      - img [ref=e76]
+      - paragraph [ref=e79]: Dashboard
+    - link "Courses" [ref=e80] [cursor=pointer]:
+      - /url: /pricing
+      - img [ref=e82]
+      - paragraph [ref=e85]: Courses
+    - link "Portfolio" [ref=e86] [cursor=pointer]:
+      - /url: /portfolio/portfolio-dashboard
+      - img [ref=e88]
+      - paragraph [ref=e91]: Portfolio
+    - link "Community" [ref=e92] [cursor=pointer]:
+      - /url: /community
+      - img [ref=e94]
+      - paragraph [ref=e99]: Community
+    - link "Profile" [ref=e100] [cursor=pointer]:
+      - /url: /profile
+      - img [ref=e102]
+      - paragraph [ref=e105]: Profile
+  - generic [ref=e107]:
+    - navigation [ref=e108]:
+      - generic [ref=e110]:
+        - link [ref=e111] [cursor=pointer]:
+          - /url: /
+          - img [ref=e112]:
+            - generic [ref=e117]: The Indian Startup
+        - generic [ref=e118]:
+          - link "Pricing" [ref=e119] [cursor=pointer]:
+            - /url: /pricing
+          - button "Get Started" [ref=e120]
+    - generic [ref=e123]:
+      - heading "The Complete Startup Education Platform" [level=1] [ref=e124]:
+        - text: The Complete
+        - text: Startup Education Platform
+      - paragraph [ref=e125]: 30 comprehensive courses taking you from idea to global expansion. Built specifically for Indian founders.
+      - button "Explore Courses" [ref=e127]:
+        - generic [ref=e128]:
+          - text: Explore Courses
+          - img [ref=e129]
+      - generic [ref=e131]:
+        - generic [ref=e132]:
+          - img [ref=e133]
+          - generic [ref=e136]: 30 comprehensive courses
+        - generic [ref=e137]:
+          - img [ref=e138]
+          - generic [ref=e142]: 296 expert modules
+        - generic [ref=e143]:
+          - img [ref=e144]
+          - generic [ref=e147]: 450+ templates
+      - generic [ref=e148]:
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: 3-day money back guarantee
+        - generic [ref=e153]:
+          - img [ref=e154]
+          - generic [ref=e157]: 1500+ lessons
+        - generic [ref=e158]:
+          - img [ref=e159]
+          - generic [ref=e162]: 365 days access
+    - generic [ref=e165]:
+      - heading "Why Indian Founders Choose Us" [level=2] [ref=e166]
+      - paragraph [ref=e167]: Comprehensive, practical guidance designed for the Indian startup ecosystem
+      - generic [ref=e168]:
+        - generic [ref=e169]:
+          - img [ref=e171]
+          - heading "Step-by-Step Courses" [level=3] [ref=e175]
+          - paragraph [ref=e176]: From incorporation to funding to global expansion. Clear modules that build on each other.
+        - generic [ref=e177]:
+          - img [ref=e179]
+          - heading "Ready-to-Use Templates" [level=3] [ref=e182]
+          - paragraph [ref=e183]: 1000+ templates for legal, finance, compliance, pitch decks, and more. Use them immediately.
+        - generic [ref=e184]:
+          - img [ref=e186]
+          - heading "India-Specific" [level=3] [ref=e188]
+          - paragraph [ref=e189]: GST, MCA, DPIIT, state schemes, and regulations. Built for Indian founders, not adapted.
+    - generic [ref=e192]:
+      - heading "What You Get" [level=2] [ref=e193]
+      - paragraph [ref=e194]: Everything to build, fund, and scale your startup
+      - generic [ref=e195]:
+        - generic [ref=e196]:
+          - img [ref=e197]
+          - generic [ref=e200]:
+            - text: 30 step-by-step courses
+            - paragraph [ref=e201]: From launch to global expansion
+        - generic [ref=e202]:
+          - img [ref=e203]
+          - generic [ref=e206]:
+            - text: 1000+ templates and tools
+            - paragraph [ref=e207]: Ready to use immediately
+        - generic [ref=e208]:
+          - img [ref=e209]
+          - generic [ref=e212]:
+            - text: India-specific compliance guides
+            - paragraph [ref=e213]: GST, MCA, DPIIT and more
+        - generic [ref=e214]:
+          - img [ref=e215]
+          - generic [ref=e218]:
+            - text: Investor-ready portfolio builder
+            - paragraph [ref=e219]: Builds automatically as you learn
+        - generic [ref=e220]:
+          - img [ref=e221]
+          - generic [ref=e224]:
+            - text: Lifetime updates
+            - paragraph [ref=e225]: Always current with regulations
+        - generic [ref=e226]:
+          - img [ref=e227]
+          - generic [ref=e230]:
+            - text: Self-paced learning
+            - paragraph [ref=e231]: Learn at your own schedule
+      - link "See full course catalog" [ref=e233] [cursor=pointer]:
+        - /url: /pricing
+        - text: See full course catalog
+        - img [ref=e234]
+    - link "Read more success stories" [ref=e240] [cursor=pointer]:
+      - /url: /community/success-stories
+      - text: Read more success stories
+      - img [ref=e241]
+    - generic [ref=e246]:
+      - generic [ref=e247]:
+        - img [ref=e248]
+        - text: All-Access Bundle
+      - generic [ref=e251]:
+        - generic [ref=e252]: ₹1,49,999
+        - generic [ref=e253]: Save ₹74,971
+      - generic [ref=e254]: 30 courses • 1000+ templates • Lifetime access
+      - generic [ref=e255]:
+        - button "Get All-Access" [ref=e256]
+        - button "View All Pricing" [ref=e257]
+      - paragraph [ref=e258]: Or explore individual courses starting at ₹4,999
+    - generic [ref=e261]:
+      - img [ref=e263]
+      - heading "3-Day Money-Back Guarantee" [level=2] [ref=e265]
+      - paragraph [ref=e266]: Try risk-free. If you're not completely satisfied with the quality and value, we'll refund your purchase. No questions asked.
+      - button "Sign Up" [ref=e267]:
+        - text: Sign Up
+        - img [ref=e268]
+    - contentinfo [ref=e270]:
+      - generic [ref=e272]:
+        - generic [ref=e273]:
+          - paragraph [ref=e274]: THE INDIAN STARTUP
+          - paragraph [ref=e275]: © 2026 The Indian Startup
+        - generic [ref=e276]:
+          - link "About" [ref=e277] [cursor=pointer]:
+            - /url: /about
+          - link "Terms" [ref=e278] [cursor=pointer]:
+            - /url: /terms
+          - link "Privacy" [ref=e279] [cursor=pointer]:
+            - /url: /privacy
+          - link "Refunds" [ref=e280] [cursor=pointer]:
+            - /url: /refund-policy
+          - link "Shipping" [ref=e281] [cursor=pointer]:
+            - /url: /shipping-delivery
+          - link "Contact" [ref=e282] [cursor=pointer]:
+            - /url: /contact
+  - button "Feedback" [ref=e283]:
+    - img [ref=e284]
+    - text: Feedback
+  - region "Notifications alt+T"
+```

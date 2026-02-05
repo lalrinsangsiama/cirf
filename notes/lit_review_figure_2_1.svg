@@ -1,0 +1,130 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="white"/>
+  
+  <!-- Define gradients for circles -->
+  <defs>
+    <radialGradient id="innovation-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#E3F2FD;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#1976D2;stop-opacity:0.3"/>
+    </radialGradient>
+    <radialGradient id="economics-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#F3E5F5;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#7B1FA2;stop-opacity:0.3"/>
+    </radialGradient>
+    <radialGradient id="resilience-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#E8F5E8;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#388E3C;stop-opacity:0.3"/>
+    </radialGradient>
+    <radialGradient id="development-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFF3E0;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#F57C00;stop-opacity:0.3"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Four overlapping circles representing theoretical domains -->
+  
+  <!-- Innovation Studies (top left) -->
+  <circle cx="280" cy="200" r="120" fill="url(#innovation-grad)" stroke="#1976D2" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Cultural Economics (top right) -->
+  <circle cx="520" cy="200" r="120" fill="url(#economics-grad)" stroke="#7B1FA2" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Resilience Theory (bottom left) -->
+  <circle cx="280" cy="350" r="120" fill="url(#resilience-grad)" stroke="#388E3C" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Development Studies (bottom right) -->
+  <circle cx="520" cy="350" r="120" fill="url(#development-grad)" stroke="#F57C00" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Central intersection - Cultural Innovation -->
+  <circle cx="400" cy="275" r="50" fill="#FFEB3B" stroke="#F57F17" stroke-width="3" opacity="0.9"/>
+  
+  <!-- Community Control organizing principle (outer ring) -->
+  <circle cx="400" cy="275" r="180" fill="none" stroke="#D32F2F" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
+  
+  <!-- Domain Labels -->
+  <text x="280" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1976D2">Innovation Studies</text>
+  <text x="275" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1976D2">• Systems theory</text>
+  <text x="275" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1976D2">• Co-creation</text>
+  <text x="275" y="171" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1976D2">• Social innovation</text>
+  
+  <text x="520" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#7B1FA2">Cultural Economics</text>
+  <text x="525" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7B1FA2">• Cultural capital</text>
+  <text x="525" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7B1FA2">• Value creation</text>
+  <text x="525" y="171" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7B1FA2">• Creative industries</text>
+  
+  <text x="280" y="435" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#388E3C">Resilience Theory</text>
+  <text x="275" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#388E3C">• Adaptive capacity</text>
+  <text x="275" y="463" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#388E3C">• Cultural resilience</text>
+  <text x="275" y="476" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#388E3C">• Traditional knowledge</text>
+  
+  <text x="520" y="435" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F57C00">Development Studies</text>
+  <text x="525" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#F57C00">• Endogenous development</text>
+  <text x="525" y="463" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#F57C00">• Community control</text>
+  <text x="525" y="476" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#F57C00">• Post-development</text>
+  
+  <!-- Central Cultural Innovation label -->
+  <text x="400" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#F57F17">CULTURAL</text>
+  <text x="400" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#F57F17">INNOVATION</text>
+  
+  <!-- Community Control label -->
+  <text x="400" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#D32F2F">Community Control</text>
+  <text x="400" y="498" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#D32F2F">(Organizing Principle)</text>
+  
+  <!-- Tension/Gap arrows between domains -->
+  
+  <!-- Innovation Studies ↔ Cultural Economics -->
+  <path d="M 350 180 Q 400 160 450 180" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 450 180 Q 400 160 350 180" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="400" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">Creative destruction vs.</text>
+  <text x="400" y="168" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">cultural preservation</text>
+  
+  <!-- Innovation Studies ↔ Resilience Theory -->
+  <path d="M 260 240 Q 240 275 260 310" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 260 310 Q 240 275 260 240" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="200" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">Individual vs.</text>
+  <text x="200" y="283" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">collective</text>
+  <text x="200" y="296" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">innovation</text>
+  
+  <!-- Cultural Economics ↔ Development Studies -->
+  <path d="M 540 240 Q 560 275 540 310" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 540 310 Q 560 275 540 240" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="600" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">Market vs.</text>
+  <text x="600" y="283" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">community</text>
+  <text x="600" y="296" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">control</text>
+  
+  <!-- Resilience Theory ↔ Development Studies -->
+  <path d="M 350 370 Q 400 390 450 370" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 450 370 Q 400 390 350 370" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="400" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">Adaptation vs.</text>
+  <text x="400" y="418" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">transformation</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">Figure 2.1: Theoretical Domains and Cultural Innovation Challenges</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="480" width="250" height="100" fill="none" stroke="#999" stroke-width="1"/>
+  <text x="60" y="500" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Legend:</text>
+  <circle cx="70" cy="515" r="8" fill="#E3F2FD" stroke="#1976D2" stroke-width="1"/>
+  <text x="85" y="520" font-family="Arial, sans-serif" font-size="10" fill="#333">Theoretical domains</text>
+  <circle cx="70" cy="535" r="8" fill="#FFEB3B" stroke="#F57F17" stroke-width="1"/>
+  <text x="85" y="540" font-family="Arial, sans-serif" font-size="10" fill="#333">Cultural innovation intersection</text>
+  <circle cx="70" cy="555" r="12" fill="none" stroke="#D32F2F" stroke-width="2" stroke-dasharray="3,2"/>
+  <text x="85" y="560" font-family="Arial, sans-serif" font-size="10" fill="#333">Community control organizing principle</text>
+  <path d="M 200 515 Q 210 510 220 515" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-small)"/>
+  <text x="230" y="520" font-family="Arial, sans-serif" font-size="10" fill="#333">Tensions/gaps between domains</text>
+  
+  <!-- Small arrow marker for legend -->
+  <defs>
+    <marker id="arrowhead-small" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#666"/>
+    </marker>
+  </defs>
+</svg>

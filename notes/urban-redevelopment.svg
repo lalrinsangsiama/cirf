@@ -1,0 +1,116 @@
+<svg viewBox="0 0 900 750" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="750" rx="10" fill="#f8f9fa" />
+  
+  <!-- Title -->
+  <text x="450" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">CIRF Application: Urban Redevelopment Context</text>
+  <text x="450" y="70" font-family="Arial" font-size="16" font-style="italic" text-anchor="middle">Post-Industrial City Case Study</text>
+
+  <!-- Context box -->
+  <rect x="50" y="100" width="800" height="80" rx="5" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" />
+  <text x="60" y="125" font-family="Arial" font-size="16" font-weight="bold" fill="#1565c0">Context &amp; Challenge:</text>
+  <text x="60" y="150" font-family="Arial" font-size="14">Former manufacturing city facing economic decline, abandoned industrial sites, population loss, and identity crisis</text>
+  <text x="60" y="170" font-family="Arial" font-size="14">requiring fundamental economic reorientation while leveraging industrial heritage assets.</text>
+
+  <!-- Central CIRF wheel -->
+  <circle cx="450" cy="350" r="180" fill="white" stroke="#424242" stroke-width="2" />
+  <circle cx="450" cy="350" r="140" fill="#f5f5f5" stroke="#424242" stroke-width="1" />
+  <circle cx="450" cy="350" r="100" fill="white" stroke="#424242" stroke-width="1" />
+  <circle cx="450" cy="350" r="60" fill="#f5f5f5" stroke="#424242" stroke-width="1" />
+  <circle cx="450" cy="350" r="20" fill="#1976d2" />
+  
+  <!-- Center text -->
+  <text x="450" y="355" font-family="Arial" font-size="14" fill="white" text-anchor="middle">CIRF</text>
+
+  <!-- Inner ring labels (Resilience Capacities) -->
+  <text x="450" y="335" font-family="Arial" font-size="10" text-anchor="middle" font-weight="bold">Resilience Capacities</text>
+  
+  <!-- Capacity segments -->
+  <path d="M 450 350 L 450 290 A 60 60 0 0 1 502 350 Z" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" />
+  <text x="470" y="320" font-family="Arial" font-size="10" text-anchor="middle" fill="#2e7d32" font-weight="bold">Transformative</text>
+  <text x="470" y="332" font-family="Arial" font-size="8" text-anchor="middle">Primary Focus</text>
+  
+  <path d="M 450 350 L 502 350 A 60 60 0 0 1 450 410 Z" fill="#bbdefb" stroke="#1565c0" stroke-width="1" />
+  <text x="470" y="380" font-family="Arial" font-size="10" text-anchor="middle" fill="#1565c0">Adaptive</text>
+  
+  <path d="M 450 350 L 450 410 A 60 60 0 0 1 398 350 Z" fill="#ffecb3" stroke="#ff8f00" stroke-width="1" />
+  <text x="430" y="380" font-family="Arial" font-size="10" text-anchor="middle" fill="#ff8f00">Absorptive</text>
+  
+  <path d="M 450 350 L 398 350 A 60 60 0 0 1 450 290 Z" fill="#e1bee7" stroke="#6a1b9a" stroke-width="1" />
+  <text x="430" y="320" font-family="Arial" font-size="10" text-anchor="middle" fill="#6a1b9a">Anticipatory</text>
+  
+  <!-- Middle ring (Causal Mechanisms) -->
+  <text x="450" y="235" font-family="Arial" font-size="10" text-anchor="middle" font-weight="bold">Causal Mechanisms</text>
+  
+  <!-- Mechanism segments -->
+  <path d="M 450 350 L 450 250 A 100 100 0 0 1 550 350 Z" fill="#ede7f6" stroke="#4527a0" stroke-width="1" />
+  <text x="490" y="290" font-family="Arial" font-size="10" text-anchor="middle" fill="#4527a0" font-weight="bold">Capital Conversion</text>
+  <text x="490" y="305" font-family="Arial" font-size="8" text-anchor="middle">Primary Mechanism</text>
+  
+  <path d="M 450 350 L 550 350 A 100 100 0 0 1 450 450 Z" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" />
+  <text x="490" y="410" font-family="Arial" font-size="10" text-anchor="middle" fill="#2e7d32">Network Development</text>
+  
+  <path d="M 450 350 L 450 450 A 100 100 0 0 1 350 350 Z" fill="#fff8e1" stroke="#ff8f00" stroke-width="1" />
+  <text x="410" y="410" font-family="Arial" font-size="10" text-anchor="middle" fill="#ff8f00">Institutional Innovation</text>
+  
+  <path d="M 450 350 L 350 350 A 100 100 0 0 1 450 250 Z" fill="#e3f2fd" stroke="#1565c0" stroke-width="1" />
+  <text x="410" y="290" font-family="Arial" font-size="10" text-anchor="middle" fill="#1565c0">Symbolic Knowledge</text>
+  
+  <!-- Outer ring (Contextual Mediators) -->
+  <text x="450" y="190" font-family="Arial" font-size="10" text-anchor="middle" font-weight="bold">Contextual Mediators</text>
+  
+  <!-- Context segments -->
+  <path d="M 450 350 L 450 210 A 140 140 0 0 1 590 350 Z" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="1" />
+  <text x="505" y="255" font-family="Arial" font-size="10" text-anchor="middle" fill="#6a1b9a">Governance Arrangements</text>
+  <text x="505" y="270" font-family="Arial" font-size="8" text-anchor="middle">Fragmented but supportive</text>
+  
+  <path d="M 450 350 L 590 350 A 140 140 0 0 1 450 490 Z" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" />
+  <text x="505" y="435" font-family="Arial" font-size="10" text-anchor="middle" fill="#2e7d32">Industrial Structure</text>
+  <text x="505" y="450" font-family="Arial" font-size="8" text-anchor="middle">Post-industrial transition</text>
+  
+  <path d="M 450 350 L 450 490 A 140 140 0 0 1 310 350 Z" fill="#fff8e1" stroke="#ff8f00" stroke-width="1" />
+  <text x="395" y="435" font-family="Arial" font-size="10" text-anchor="middle" fill="#ff8f00">Knowledge Ecology</text>
+  <text x="395" y="450" font-family="Arial" font-size="8" text-anchor="middle">Strong cultural knowledge</text>
+  
+  <path d="M 450 350 L 310 350 A 140 140 0 0 1 450 210 Z" fill="#e3f2fd" stroke="#1565c0" stroke-width="1" />
+  <text x="395" y="255" font-family="Arial" font-size="10" text-anchor="middle" fill="#1565c0">Cultural Context</text>
+  <text x="395" y="270" font-family="Arial" font-size="8" text-anchor="middle">Strong industrial heritage</text>
+  
+  <!-- Outermost ring (Temporal Dynamics) -->
+  <text x="450" y="155" font-family="Arial" font-size="10" text-anchor="middle" font-weight="bold">Temporal Dynamics</text>
+  
+  <!-- Temporal segments -->
+  <path d="M 450 350 L 450 170 A 180 180 0 0 1 630 350 Z" fill="#fce4ec" stroke="#c2185b" stroke-width="1" />
+  <text x="530" y="225" font-family="Arial" font-size="10" text-anchor="middle" fill="#c2185b">Long-term Horizon (5+ years)</text>
+  
+  <path d="M 450 350 L 630 350 A 180 180 0 0 1 450 530 Z" fill="#e0f7fa" stroke="#00838f" stroke-width="1" />
+  <text x="530" y="465" font-family="Arial" font-size="10" text-anchor="middle" fill="#00838f">Path Creation</text>
+  <text x="530" y="480" font-family="Arial" font-size="8" text-anchor="middle">New economic identity</text>
+  
+  <path d="M 450 350 L 450 530 A 180 180 0 0 1 270 350 Z" fill="#f9fbe7" stroke="#827717" stroke-width="1" />
+  <text x="370" y="465" font-family="Arial" font-size="10" text-anchor="middle" fill="#827717">Reorganization Phase</text>
+  
+  <path d="M 450 350 L 270 350 A 180 180 0 0 1 450 170 Z" fill="#e8eaf6" stroke="#283593" stroke-width="1" />
+  <text x="370" y="225" font-family="Arial" font-size="10" text-anchor="middle" fill="#283593">Reinforcing Feedback</text>
+  <text x="370" y="240" font-family="Arial" font-size="8" text-anchor="middle">Identity-economy loop</text>
+
+  <!-- Implementation Box -->
+  <rect x="50" y="550" width="800" height="150" rx="5" fill="#fff3e0" stroke="#e65100" stroke-width="2" />
+  <text x="60" y="575" font-family="Arial" font-size="16" font-weight="bold" fill="#e65100">Implementation Pathway: Network-Led Configuration</text>
+  
+  <!-- Implementation details -->
+  <rect x="70" y="590" width="370" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1" />
+  <text x="80" y="610" font-family="Arial" font-size="12" font-weight="bold">Key Interventions:</text>
+  <text x="80" y="630" font-family="Arial" font-size="11">• Cultural heritage adaptive reuse program for industrial sites</text>
+  
+  <rect x="70" y="650" width="370" height="35" rx="5" fill="white" stroke="#e65100" stroke-width="1" />
+  <text x="80" y="670" font-family="Arial" font-size="12" font-weight="bold">Stakeholders:</text>
+  <text x="80" y="685" font-family="Arial" font-size="11">• Multi-sector alliance with arts, business, education, government</text>
+  
+  <rect x="460" y="590" width="370" height="95" rx="5" fill="white" stroke="#e65100" stroke-width="1" />
+  <text x="470" y="610" font-family="Arial" font-size="12" font-weight="bold">Outcomes:</text>
+  <text x="470" y="630" font-family="Arial" font-size="11">• Transformation of industrial heritage into creative spaces</text>
+  <text x="470" y="650" font-family="Arial" font-size="11">• Development of new cultural-economic narratives</text>
+  <text x="470" y="670" font-family="Arial" font-size="11">• Creation of distinctive place identity attracting investment</text>
+  <text x="470" y="690" font-family="Arial" font-size="11">• Cross-sectoral innovation spreading beyond cultural domains</text>
+</svg>

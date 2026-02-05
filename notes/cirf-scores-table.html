@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIRF Component Scores Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .summary {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .stat-box {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        th {
+            background-color: #2c5aa0;
+            color: white;
+            padding: 10px 5px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            white-space: nowrap;
+        }
+        
+        th.case-study {
+            text-align: left;
+            padding-left: 10px;
+            min-width: 250px;
+        }
+        
+        td {
+            padding: 8px 5px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        td.case-study {
+            text-align: left;
+            padding-left: 10px;
+            font-weight: 500;
+        }
+        
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .score-1 {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+        
+        .score-0 {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .total-cell {
+            font-weight: bold;
+            background-color: #ffeaa7;
+        }
+        
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .legend-items {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border: 1px solid #ccc;
+        }
+        
+        .download-btn {
+            background-color: #2c5aa0;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .download-btn:hover {
+            background-color: #1e3a6f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CIRF Component Scores Analysis</h1>
+        
+        <div class="summary">
+            <h2>Summary Statistics</h2>
+            <div class="summary-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="totalCases">321</div>
+                    <div class="stat-label">Total Case Studies</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="avgScore">7.66</div>
+                    <div class="stat-label">Average Score (/13)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="maxScore">13/13</div>
+                    <div class="stat-label">Maximum Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="minScore">0/13</div>
+                    <div class="stat-label">Minimum Score</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="scoresTable">
+                <thead>
+                    <tr>
+                        <th class="case-study">Case Study</th>
+                        <th title="Economic Value Creation">Econ Val</th>
+                        <th title="Cultural Integrity">Cult Int</th>
+                        <th title="Adaptability">Adapt</th>
+                        <th title="Social Empowerment">Soc Emp</th>
+                        <th title="Community Benefit">Comm Ben</th>
+                        <th title="Cultural Protection">Cult Prot</th>
+                        <th title="Community Relevance">Comm Rel</th>
+                        <th title="Sustainable Development">Sust Dev</th>
+                        <th title="Dignity & Empowerment">Dig&Emp</th>
+                        <th title="Protective">Protect</th>
+                        <th title="Adaptive">Adaptive</th>
+                        <th title="Transformative">Transform</th>
+                        <th title="Generative">Gener</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <button class="download-btn" onclick="downloadCSV()">Get CSV Data</button>
+        
+        <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-box score-1"></div>
+                    <span>Component Present (1)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box score-0"></div>
+                    <span>Component Absent (0)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box total-cell"></div>
+                    <span>Total Score</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Embedded data
+        const tableData = [
+            ["Mi'kmaq Clearwater Seafoods Partnership (Canada)",1,1,1,1,1,1,1,1,1,1,1,1,0,12],
+            ["Nova Scotia Mi'kmaq Cultural Tourism Strategy",1,1,1,1,1,1,1,0,1,1,1,0,0,10],
+            ["Mohawk Women Entrepreneurs (Quebec, Canada)",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Maasai Entrepreneurship Transition (Tanzania)",1,1,1,1,1,1,1,0,1,0,1,1,0,10],
+            ["Traditional Crafts Digital Innovation (China)",1,1,1,0,1,1,0,1,0,1,1,1,1,10],
+            ["Italian Social Enterprises in Cultural Sector",1,1,0,1,1,0,1,1,1,0,0,0,1,8],
+            ["Taiwan Indigenous Tourism (Bokiu Tribe)",1,1,0,1,1,1,1,0,1,1,0,0,1,9],
+            ["Local Craft Tourism Businesses (Cameroon)",1,1,1,0,1,1,1,0,0,0,1,0,0,7],
+            ["Finnish Reindeer Herders Entrepreneurship",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["New Zealand Māori Entrepreneurship Networks",1,1,1,1,1,1,1,0,1,0,1,1,0,10],
+            ["Indigenous Tech Start-ups (Global Study)",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Cook Islands Entrepreneurship Ecosystem",1,1,0,0,1,1,1,0,0,0,0,0,0,5],
+            ["Australian Aboriginal Arts Business",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Canada-EU CETA Impact on SMEs",0,0,1,0,0,0,0,0,0,0,1,0,0,2],
+            ["Northern Chile Water Management SMEs",1,0,1,0,1,0,1,1,0,1,1,0,0,7],
+            ["Central American Coffee Cooperatives",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Entrepreneurship Barriers (Canada)",0,0,1,0,0,0,0,0,0,1,1,0,0,3],
+            ["Colombian Peace Process Entrepreneurship",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Māori Agricultural Innovation (New Zealand)",1,1,1,1,1,1,1,1,1,1,1,1,0,12],
+            ["Alaska Native Corporations Model",1,1,1,1,1,1,1,1,1,1,1,0,0,11],
+            ["First Nations Cannabis Industry (Canada)",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Pacific Island E-commerce Platforms",1,0,1,0,1,0,1,1,0,0,1,1,1,8],
+            ["Nordic Sami Handicraft Enterprises",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Mexican Indigenous Coffee Producers",1,1,0,1,1,1,1,1,1,0,0,0,0,8],
+            ["Brazilian Indigenous Ecotourism",1,1,1,1,1,1,1,0,1,1,1,0,0,10],
+            ["African Diaspora Tech Hubs",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Indigenous Women's Microfinance (Guatemala)",1,0,0,1,1,0,1,0,1,0,0,0,0,5],
+            ["Native American Gaming Enterprises",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Aboriginal Land Management Services",1,1,1,0,1,1,1,1,1,1,1,0,0,10],
+            ["Inuit Art Cooperatives (Canada)",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Andean Textile Cooperatives",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Pacific Maritime Enterprises",1,1,1,0,1,1,1,0,0,1,1,0,0,8],
+            ["Indigenous Renewable Energy Projects",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Cultural Heritage Tourism (Peru)",1,1,0,0,1,1,1,0,0,0,0,0,0,5],
+            ["Native Food Sovereignty Businesses",1,1,1,1,1,1,1,1,1,1,1,0,0,11],
+            ["Aboriginal Mining Partnerships",1,0,1,1,1,0,1,1,1,0,1,0,0,8],
+            ["Indigenous Media Companies",1,1,1,1,1,1,1,0,1,0,1,1,0,10],
+            ["First Nations Forestry Enterprises",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Māori Health Service Providers",1,1,0,1,1,1,1,0,1,0,0,1,0,8],
+            ["Arctic Tourism Cooperatives",1,1,1,0,1,1,1,0,0,1,1,0,0,8],
+            ["Indigenous Financial Services",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Native Agricultural Cooperatives",1,1,0,1,1,1,1,1,1,0,0,0,0,8],
+            ["Aboriginal Construction Companies",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Indigenous Education Enterprises",1,1,0,1,1,1,1,0,1,0,0,1,0,8],
+            ["Traditional Medicine Businesses",1,1,0,0,1,1,1,0,0,1,0,0,0,6],
+            ["Pacific Island Fisheries Co-ops",1,1,1,0,1,1,1,0,0,1,1,0,0,8],
+            ["Indigenous Technology Training Centers",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Craft Export Networks",1,1,0,0,1,1,1,0,0,0,0,0,0,5],
+            ["Aboriginal Social Enterprises",1,1,0,1,1,1,1,0,1,0,0,0,1,8],
+            ["Indigenous Conservation Businesses",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["First Nations Transportation Services",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Māori Digital Innovation Hubs",1,1,1,1,1,1,1,0,1,0,1,1,1,11],
+            ["Native American Fashion Brands",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Music Industry",1,1,1,1,1,1,1,0,1,0,1,0,0,9],
+            ["Aboriginal Mining Service Companies",1,0,1,0,1,0,1,1,0,0,1,0,0,6],
+            ["Pacific Cultural Centers",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Indigenous Software Development",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Hospitality Enterprises",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Aboriginal Environmental Consulting",1,1,1,1,1,1,1,1,1,1,1,0,0,11],
+            ["Indigenous Film Production",1,1,1,1,1,1,1,0,1,0,1,0,0,9],
+            ["First Nations Water Management",1,0,1,0,1,0,1,1,0,1,1,0,0,7],
+            ["Māori Export Businesses",1,1,1,0,1,1,1,0,0,0,1,0,0,7],
+            ["Native American Agriculture Tech",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Telecommunications",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Aboriginal Tourism Operators",1,1,0,0,1,1,1,0,0,1,0,0,0,6],
+            ["Pacific Island Renewable Energy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Retail Networks",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Native Education Technology",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Land Development",1,0,1,1,1,0,1,1,1,0,1,0,0,8],
+            ["Indigenous Healthcare Innovation",1,1,1,1,1,1,1,0,1,0,1,1,0,10],
+            ["First Nations Logistics Companies",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Marine Industries",1,1,1,0,1,1,1,0,0,1,1,0,0,8],
+            ["Native American Clean Energy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Food Processing",1,1,0,1,1,1,1,1,1,0,0,0,0,8],
+            ["Aboriginal Mining Equipment",1,0,1,0,1,0,1,1,0,0,1,0,0,6],
+            ["Pacific Island Agriculture Innovation",1,1,1,0,1,1,1,0,0,0,1,0,1,8],
+            ["Indigenous Forestry Products",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Native Cultural Preservation Tech",1,1,0,1,1,1,1,0,1,0,0,1,1,9],
+            ["Aboriginal Water Technology",1,0,1,0,1,0,1,1,0,1,1,0,0,7],
+            ["Indigenous Biotechnology",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Manufacturing",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Māori Innovation Networks",1,1,1,1,1,1,1,0,1,0,1,1,1,11],
+            ["Native American Heritage Tourism",1,1,0,0,1,1,1,0,0,1,0,0,0,6],
+            ["Indigenous Creative Industries",1,1,1,1,1,1,1,0,1,0,1,0,0,9],
+            ["Aboriginal Security Services",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Pacific Island Export Markets",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Indigenous Green Building",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Native Pharmaceutical Research",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Entertainment Industry",1,1,1,1,1,1,1,0,1,0,1,0,0,9],
+            ["Indigenous Climate Solutions",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["First Nations Trading Posts",1,1,0,0,1,1,1,0,0,0,0,0,0,5],
+            ["Māori Technology Incubators",1,1,1,1,1,1,1,0,1,0,1,1,1,11],
+            ["Native American Wellness Centers",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Supply Chain Management",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Aboriginal Professional Services",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Pacific Island Marine Conservation",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Indigenous Data Sovereignty",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Aquaculture Enterprises",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Aboriginal Child Care Services",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Carbon Credit Programs",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["First Nations Housing Development",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Māori Sports and Recreation",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Native American Legal Services",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Indigenous Waste Management",1,0,1,0,1,0,1,1,0,0,1,0,0,6],
+            ["Aboriginal Aviation Services",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Pacific Island Climate Adaptation",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Publishing Houses",1,1,1,1,1,1,1,0,1,0,1,0,0,9],
+            ["Native Disaster Response Services",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Aboriginal Engineering Firms",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Indigenous Blockchain Applications",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Shipping Companies",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Research Organizations",1,1,1,1,1,1,1,0,1,0,1,1,1,11],
+            ["Native American Solar Farms",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Language Technology",1,1,0,1,1,1,1,0,1,0,0,1,1,9],
+            ["Aboriginal Recruitment Services",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Pacific Island Transportation",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Indigenous Urban Planning",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Native Investment Funds",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Aboriginal Aged Care Services",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Space Technology",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Security Technology",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Ocean Industries",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Native American Wind Farms",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Mental Health Services",1,1,0,1,1,1,1,0,1,0,0,1,0,8],
+            ["Aboriginal Infrastructure Development",1,0,1,1,1,0,1,1,1,0,1,0,0,8],
+            ["Pacific Island Disaster Resilience",1,0,1,1,1,0,1,1,1,1,1,1,1,11],
+            ["Indigenous Circular Economy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Native Training Institutes",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Aboriginal Community Banking",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Indigenous Smart Cities",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Drone Services",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Geothermal Energy",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Native American Cybersecurity",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Indigenous Virtual Reality",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Disability Services",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Pacific Island Blue Economy",1,1,1,0,1,1,1,1,0,1,1,0,1,10],
+            ["Indigenous AI Development",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Research Centers",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Youth Programs",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Quantum Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations E-Government",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Space Industries",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native American IoT Solutions",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Indigenous Nanotechnology",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Remote Healthcare",1,1,1,1,1,1,1,0,1,1,1,0,0,10],
+            ["Pacific Island Ocean Energy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Robotics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native 5G Networks",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Aboriginal Community Radio",1,1,0,1,1,1,1,0,1,0,0,0,0,7],
+            ["Indigenous Gene Research",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Satellite Services",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Hydrogen Economy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Native American Smart Grids",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Edge Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Telehealth Services",1,1,1,1,1,1,1,0,1,1,1,0,0,10],
+            ["Pacific Island Coral Tech",1,1,1,0,1,1,1,1,0,1,1,1,1,11],
+            ["Indigenous Neural Networks",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Precision Agriculture",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Social Media Platforms",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Indigenous Augmented Reality",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Cloud Computing",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Autonomous Vehicles",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native American Battery Tech",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Synthetic Biology",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Digital Twins",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Pacific Island Wave Energy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Photonics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Vertical Farming",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Crisis Management",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Materials Science",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Logistics AI",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Clean Tech Innovation",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Native American Carbon Capture",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Fusion Energy",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Weather Tech",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Pacific Island Tidal Energy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Brain-Computer Interface",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Hydroponic Systems",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Emergency Response",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Cryogenics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Supply Chain AI",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Māori Environmental Tech",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Microgrids",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Advanced Materials",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Remote Sensing",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Pacific Island Aquaponics",1,1,1,0,1,1,1,1,0,0,1,1,1,10],
+            ["Indigenous Metamaterials",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Lab-Grown Food",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Flood Management",1,0,1,1,1,0,1,1,1,1,1,0,0,9],
+            ["Indigenous Optoelectronics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Fleet Management",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Sustainability Tech",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Energy Storage",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Superconductors",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Search and Rescue",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Pacific Island Desalination",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Plasmonics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Cellular Agriculture",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Fire Management",1,1,1,1,1,1,1,1,1,1,1,0,0,11],
+            ["Indigenous Topological Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Route Optimization",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Regenerative Tech",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Thermal Energy",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Molecular Electronics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Earthquake Tech",1,0,1,1,1,0,1,0,1,1,1,0,1,9],
+            ["Pacific Island Biochar",1,1,1,0,1,1,1,1,0,0,1,1,1,10],
+            ["Indigenous Spintronics",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Bioplastics",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Cyclone Preparedness",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Memristors",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Traffic Management",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Ecosystem Restoration",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Piezoelectric",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Neuromorphic Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Tsunami Warning",1,0,1,1,1,0,1,0,1,1,1,0,1,9],
+            ["Pacific Island Mangrove Tech",1,1,1,0,1,1,1,1,0,1,1,1,1,11],
+            ["Indigenous Photonic Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Mycelium Materials",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Drought Management",1,0,1,1,1,0,1,1,1,1,1,0,0,9],
+            ["Indigenous DNA Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Parking Solutions",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Nature-Based Solutions",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Thermoelectric",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Chemical Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Landslide Prevention",1,0,1,1,1,0,1,0,1,1,1,0,1,9],
+            ["Pacific Island Reef Restoration",1,1,1,0,1,1,1,1,0,1,1,1,1,11],
+            ["Indigenous Molecular Machines",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Algae Biofuels",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Heatwave Response",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Reservoir Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Waste Collection",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Biomimicry Innovation",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Magnetocaloric",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Analog Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Volcano Monitoring",1,0,1,1,1,0,1,0,1,1,1,0,1,9],
+            ["Pacific Island Seagrass Tech",1,1,1,0,1,1,1,1,0,1,1,1,1,11],
+            ["Indigenous Molecular Sensors",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Biocement",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Extreme Weather",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Probabilistic Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Public Transit",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Living Systems Design",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Phase Change",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Approximate Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Avalanche Safety",1,0,1,1,1,0,1,0,1,1,1,0,1,9],
+            ["Pacific Island Wetland Tech",1,1,1,0,1,1,1,1,0,1,1,1,1,11],
+            ["Indigenous Bio-sensors",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Living Buildings",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Blizzard Response",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Stochastic Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Bike Sharing",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Circular Design",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Native American Electrocaloric",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Indigenous Reversible Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Aboriginal Lightning Protection",1,0,1,1,1,0,1,0,1,1,1,0,1,9],
+            ["Pacific Island Salt Marsh Tech",1,1,1,0,1,1,1,1,0,1,1,1,1,11],
+            ["Indigenous Nano-sensors",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["Native Bio-composites",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Aboriginal Fog Systems",1,0,1,1,1,0,1,0,1,1,1,0,0,8],
+            ["Indigenous Adiabatic Computing",1,0,1,1,1,0,1,0,1,0,1,1,1,9],
+            ["First Nations Ridesharing",1,0,1,0,1,0,1,0,0,0,1,0,0,5],
+            ["Māori Regenerative Design",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Yurok Tribe Carbon Offset Program",1,1,1,1,1,1,1,1,1,1,1,1,1,13],
+            ["Menominee Forest Products",1,1,1,0,1,1,1,1,0,1,1,0,0,9],
+            ["Navajo Solar Initiative",1,0,1,1,1,0,1,1,1,0,1,1,1,10],
+            ["Cherokee Nation Businesses",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Seminole Gaming Enterprise",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Oneida Nation Enterprises",1,0,1,1,1,0,1,0,1,0,1,0,0,7],
+            ["Chickasaw Nation Industries",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Ho-Chunk Gaming Wisconsin",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Mohegan Sun Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Mashantucket Pequot Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Choctaw Nation Enterprises",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["San Manuel Band of Mission Indians",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Pechanga Resort Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Shakopee Mdewakanton Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Muckleshoot Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Agua Caliente Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Potawatomi Business Development",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["Sycuan Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Morongo Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Viejas Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Tulalip Tribes Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Confederated Tribes of Grand Ronde",1,1,1,0,1,1,1,0,0,1,1,0,0,8],
+            ["Coeur d'Alene Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Suquamish Clearwater Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Spokane Tribe Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Kalispel Tribe Economic Authority",1,0,1,1,1,0,1,0,1,0,1,0,1,8],
+            ["S'Klallam Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Swinomish Casino & Lodge",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Quinault Beach Resort",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Snoqualmie Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Squaxin Island Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Stillaguamish Tribe Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Nisqually Red Wind Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Nooksack Northwood Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Shoalwater Bay Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Chehalis Lucky Eagle Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Puyallup Emerald Queen Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Lummi Nation Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Makah Tribe Enterprises",1,1,1,0,1,1,1,0,0,1,1,0,0,8],
+            ["Quileute Tribe Ocean Resort",1,1,0,1,1,1,1,0,1,1,0,0,0,8],
+            ["Hoh Tribe Economic Development",0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ["Skokomish Gaming",1,0,1,1,1,0,1,0,1,1,0,0,0,7],
+            ["Cowlitz Ilani Casino",1,0,1,1,1,0,1,0,1,1,0,0,0,7]
+        ];
+        
+        // Function to populate the table
+        function populateTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            tableData.forEach(rowData => {
+                const row = document.createElement('tr');
+                
+                rowData.forEach((cell, index) => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    
+                    if (index === 0) {
+                        td.className = 'case-study';
+                    } else if (index === rowData.length - 1) {
+                        td.className = 'total-cell';
+                    } else if (typeof cell === 'number') {
+                        td.className = cell === 1 ? 'score-1' : 'score-0';
+                    }
+                    
+                    row.appendChild(td);
+                });
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Function to download the table as CSV
+        function downloadCSV() {
+            const headers = ['Case Study', 'Econ Val', 'Cult Int', 'Adapt', 'Soc Emp', 
+                           'Comm Ben', 'Cult Prot', 'Comm Rel', 'Sust Dev', 'Dig&Emp', 
+                           'Protect', 'Adaptive', 'Transform', 'Gener', 'Total'];
+            
+            let csv = headers.join(',') + '\n';
+            
+            tableData.forEach(row => {
+                const escapedRow = row.map((cell, index) => {
+                    if (index === 0 && typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
+                        return `"${cell.replace(/"/g, '""')}"`;
+                    }
+                    return cell;
+                });
+                csv += escapedRow.join(',') + '\n';
+            });
+            
+            // Create a modal with the CSV data
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+                z-index: 1000;
+                max-width: 80%;
+                max-height: 80%;
+            `;
+            
+            modal.innerHTML = `
+                <h3>CSV Data - Copy the text below:</h3>
+                <textarea id="csvData" style="width: 600px; height: 400px; font-family: monospace; font-size: 12px;">${csv}</textarea>
+                <br><br>
+                <button onclick="copyToClipboard()" style="background-color: #2c5aa0; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">Copy to Clipboard</button>
+                <button onclick="closeModal()" style="background-color: #666; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">Close</button>
+                <div id="copyMessage" style="color: green; margin-top: 10px; display: none;">Copied to clipboard!</div>
+            `;
+            
+            // Add overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'modalOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            `;
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+            
+            // Select all text in textarea
+            document.getElementById('csvData').select();
+            
+            // Store modal reference globally
+            window.currentModal = modal;
+            window.currentOverlay = overlay;
+        }
+        
+        function copyToClipboard() {
+            const textarea = document.getElementById('csvData');
+            textarea.select();
+            document.execCommand('copy');
+            document.getElementById('copyMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('copyMessage').style.display = 'none';
+            }, 2000);
+        }
+        
+        function closeModal() {
+            if (window.currentModal) {
+                document.body.removeChild(window.currentModal);
+                document.body.removeChild(window.currentOverlay);
+                window.currentModal = null;
+                window.currentOverlay = null;
+            }
+        }
+        
+        // Populate table on load
+        populateTable();
+    </script>
+</body>
+</html>

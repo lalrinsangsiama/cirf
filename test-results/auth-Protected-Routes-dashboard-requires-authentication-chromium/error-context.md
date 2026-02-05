@@ -1,0 +1,79 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - link [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]:
+            - generic [ref=e13]: The Indian Startup
+        - link "Back to home" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e15]
+          - text: Back to home
+    - main [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - heading "Welcome Back, Founder" [level=1] [ref=e21]
+            - paragraph [ref=e22]: Continue building your startup empire
+          - generic [ref=e24]:
+            - generic [ref=e25]:
+              - img [ref=e26]
+              - generic [ref=e31]:
+                - paragraph [ref=e32]: "30"
+                - paragraph [ref=e33]: Courses
+            - generic [ref=e34]:
+              - img [ref=e35]
+              - generic [ref=e37]:
+                - paragraph [ref=e38]: 1000+
+                - paragraph [ref=e39]: Templates
+            - generic [ref=e40]:
+              - img [ref=e41]
+              - generic [ref=e43]:
+                - paragraph [ref=e44]: 450+
+                - paragraph [ref=e45]: Action Items
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - text: Email Address
+              - generic [ref=e48]:
+                - img [ref=e50]
+                - textbox "Email Address" [ref=e53]:
+                  - /placeholder: founder@startup.com
+            - generic [ref=e54]:
+              - generic [ref=e55]:
+                - text: Password
+                - generic [ref=e56]:
+                  - img [ref=e58]
+                  - textbox "Password" [ref=e61]:
+                    - /placeholder: ••••••••
+              - link "Forgot password?" [ref=e63] [cursor=pointer]:
+                - /url: /forgot-password
+            - button "Continue Your Startup Journey" [ref=e64]:
+              - text: Continue Your Startup Journey
+              - img [ref=e65]
+            - generic [ref=e68]:
+              - generic [ref=e69]:
+                - paragraph [ref=e70]: 30 Days
+                - paragraph [ref=e71]: Structured Journey
+              - generic [ref=e72]:
+                - paragraph [ref=e73]: 365 Days
+                - paragraph [ref=e74]: Platform Access
+            - paragraph [ref=e76]:
+              - text: New to The Indian Startup?
+              - link "Start your journey" [ref=e77] [cursor=pointer]:
+                - /url: /signup
+        - paragraph [ref=e79]:
+          - text: By continuing, you agree to our
+          - link "Terms of Service" [ref=e80] [cursor=pointer]:
+            - /url: /terms
+          - text: and
+          - link "Privacy Policy" [ref=e81] [cursor=pointer]:
+            - /url: /privacy
+  - button "Feedback" [ref=e82]:
+    - img [ref=e83]
+    - text: Feedback
+  - region "Notifications alt+T"
+```

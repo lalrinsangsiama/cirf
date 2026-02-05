@@ -1,0 +1,130 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="0" width="1000" height="600" fill="#f9f9f9"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Integration of Cultural Innovation and Economic Resilience</text>
+  
+  <!-- Timeline -->
+  <line x1="50" y1="120" x2="950" y2="120" stroke="#333" stroke-width="2"/>
+  <text x="50" y="140" font-family="Arial" font-size="12" fill="#666">Pre-2008</text>
+  <text x="280" y="140" font-family="Arial" font-size="12" fill="#666">2008-2014</text>
+  <text x="525" y="140" font-family="Arial" font-size="12" fill="#666">2015-2019</text>
+  <text x="770" y="140" font-family="Arial" font-size="12" fill="#666">2020-Present</text>
+  
+  <!-- Separation Lines for Stages -->
+  <line x1="170" y1="120" x2="170" y2="530" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="390" y1="120" x2="390" y2="530" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="650" y1="120" x2="650" y2="530" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  
+  <!-- Stage Labels -->
+  <text x="110" y="160" font-family="Arial" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">Separate Fields</text>
+  <text x="280" y="160" font-family="Arial" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">Initial Connections</text>
+  <text x="520" y="160" font-family="Arial" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">Explicit Integration</text>
+  <text x="800" y="160" font-family="Arial" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">Framework Development</text>
+  
+  <!-- Separate Fields Stage -->
+  <rect x="70" y="180" width="80" height="60" rx="10" fill="#e6f2ff" stroke="#0066cc" stroke-width="2"/>
+  <text x="110" y="210" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Cultural</text>
+  <text x="110" y="225" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Innovation</text>
+  
+  <rect x="70" y="280" width="80" height="60" rx="10" fill="#e8f4e8" stroke="#339933" stroke-width="2"/>
+  <text x="110" y="310" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Economic</text>
+  <text x="110" y="325" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Resilience</text>
+  
+  <text x="110" y="360" font-family="Arial" font-size="11" fill="#666" text-anchor="middle">Bourdieu (1986)</text>
+  <text x="110" y="375" font-family="Arial" font-size="11" fill="#666" text-anchor="middle">Holling (1973)</text>
+  
+  <!-- Initial Connections Stage -->
+  <rect x="200" y="180" width="180" height="70" rx="10" fill="#e6f2ff" stroke="#0066cc" stroke-width="2"/>
+  <text x="290" y="210" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Creative Economy Resilience</text>
+  <text x="290" y="230" font-family="Arial" font-size="10" text-anchor="middle">De Propris (2013), Chapain et al. (2013)</text>
+  
+  <rect x="200" y="270" width="180" height="70" rx="10" fill="#e8f4e8" stroke="#339933" stroke-width="2"/>
+  <text x="290" y="300" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Symbolic Knowledge Value</text>
+  <text x="290" y="320" font-family="Arial" font-size="10" text-anchor="middle">Asheim et al. (2007), Scott (2010)</text>
+  
+  <rect x="200" y="360" width="180" height="70" rx="10" fill="#ffebf5" stroke="#cc6699" stroke-width="2"/>
+  <text x="290" y="390" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Network Market Theory</text>
+  <text x="290" y="410" font-family="Arial" font-size="10" text-anchor="middle">Potts et al. (2008), Comunian (2011)</text>
+  
+  <!-- Explicit Integration Stage -->
+  <rect x="430" y="180" width="180" height="70" rx="10" fill="#fff2cc" stroke="#ffcc00" stroke-width="2"/>
+  <text x="520" y="210" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Cultural Economy Resilience</text>
+  <text x="520" y="230" font-family="Arial" font-size="10" text-anchor="middle">Pratt (2015), Comunian (2015)</text>
+  
+  <rect x="430" y="270" width="180" height="70" rx="10" fill="#e6e6f2" stroke="#6666cc" stroke-width="2"/>
+  <text x="520" y="300" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Evolutionary Resilience</text>
+  <text x="520" y="320" font-family="Arial" font-size="10" text-anchor="middle">Martin & Sunley (2015), Boschma (2015)</text>
+  
+  <rect x="430" y="360" width="180" height="70" rx="10" fill="#ffe6cc" stroke="#ff9933" stroke-width="2"/>
+  <text x="520" y="390" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Cultural Value Frameworks</text>
+  <text x="520" y="410" font-family="Arial" font-size="10" text-anchor="middle">Crossick & Kaszynska (2016)</text>
+  
+  <!-- Framework Development Stage -->
+  <rect x="700" y="180" width="200" height="80" rx="10" fill="#e1d2f9" stroke="#6633cc" stroke-width="2"/>
+  <text x="800" y="210" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Cultural Innovation</text>
+  <text x="800" y="230" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Resilience Framework</text>
+  <text x="800" y="250" font-family="Arial" font-size="12" text-anchor="middle">(CIRF)</text>
+  
+  <rect x="700" y="290" width="200" height="140" rx="10" fill="#fcebeb" stroke="#cc3333" stroke-width="1"/>
+  <text x="800" y="310" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Framework Components</text>
+  
+  <circle cx="720" cy="330" r="4" fill="#cc3333"/>
+  <text x="800" y="330" font-family="Arial" font-size="11" text-anchor="middle">Resilience Capacities</text>
+  
+  <circle cx="720" cy="350" r="4" fill="#cc3333"/>
+  <text x="800" y="350" font-family="Arial" font-size="11" text-anchor="middle">Causal Mechanisms</text>
+  
+  <circle cx="720" cy="370" r="4" fill="#cc3333"/>
+  <text x="800" y="370" font-family="Arial" font-size="11" text-anchor="middle">Contextual Mediators</text>
+  
+  <circle cx="720" cy="390" r="4" fill="#cc3333"/>
+  <text x="800" y="390" font-family="Arial" font-size="11" text-anchor="middle">Temporal Dynamics</text>
+  
+  <circle cx="720" cy="410" r="4" fill="#cc3333"/>
+  <text x="800" y="410" font-family="Arial" font-size="11" text-anchor="middle">Implementation Pathways</text>
+  
+  <!-- Key Influences -->
+  <rect x="180" y="450" width="640" height="70" rx="10" fill="#f0f0f0" stroke="#666666" stroke-width="1"/>
+  <text x="500" y="470" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Key Theoretical Influences on CIRF</text>
+  
+  <text x="280" y="490" font-family="Arial" font-size="11" fill="#333" text-anchor="middle">Symbolic Knowledge (Asheim)</text>
+  <text x="280" y="505" font-family="Arial" font-size="11" fill="#333" text-anchor="middle">Capital Conversion (Bourdieu)</text>
+  
+  <text x="500" y="490" font-family="Arial" font-size="11" fill="#333" text-anchor="middle">Evolutionary Resilience (Martin)</text>
+  <text x="500" y="505" font-family="Arial" font-size="11" fill="#333" text-anchor="middle">Network Markets (Potts)</text>
+  
+  <text x="720" y="490" font-family="Arial" font-size="11" fill="#333" text-anchor="middle">Cultural Economy (Pratt)</text>
+  <text x="720" y="505" font-family="Arial" font-size="11" fill="#333" text-anchor="middle">Value Pluralism (Throsby)</text>
+  
+  <!-- Connection Lines -->
+  <line x1="150" y1="210" x2="200" y2="210" stroke="#0066cc" stroke-width="2"/>
+  <line x1="150" y1="310" x2="200" y2="310" stroke="#339933" stroke-width="2"/>
+  
+  <line x1="380" y1="210" x2="430" y2="210" stroke="#0066cc" stroke-width="2"/>
+  <line x1="380" y1="310" x2="430" y2="310" stroke="#339933" stroke-width="2"/>
+  <line x1="380" y1="390" x2="430" y2="390" stroke="#cc6699" stroke-width="2"/>
+  
+  <line x1="610" y1="210" x2="700" y2="210" stroke="#ffcc00" stroke-width="2"/>
+  <line x1="610" y1="310" x2="700" y2="250" stroke="#6666cc" stroke-width="2"/>
+  <line x1="610" y1="390" x2="700" y2="250" stroke="#ff9933" stroke-width="2"/>
+  
+  <!-- Conceptual Evolution Arrows -->
+  <path d="M110 240 Q 150 260 110 280" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="145" y="270" font-family="Arial" font-size="10" fill="#666">Separate</text>
+  
+  <path d="M290 250 Q 320 285 290 270" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="330" y="270" font-family="Arial" font-size="10" fill="#666">Initial Links</text>
+  
+  <path d="M520 250 Q 550 285 520 270" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="560" y="270" font-family="Arial" font-size="10" fill="#666">Integrated Models</text>
+  
+  <path d="M800 260 Q 830 275 800 290" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="850" y="275" font-family="Arial" font-size="10" fill="#666">Comprehensive Framework</text>
+  
+  <!-- Research Gap Box -->
+  <rect x="650" y="530" width="300" height="50" rx="10" fill="#e8f4e8" stroke="#339933" stroke-width="1"/>
+  <text x="800" y="550" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">Research Frontiers for CIRF</text>
+  <text x="800" y="570" font-family="Arial" font-size="11" text-anchor="middle">Causality, Context, Temporality, Transferability</text>
+</svg>

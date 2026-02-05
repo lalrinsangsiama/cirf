@@ -1,0 +1,117 @@
+# CIRF Framework Analysis - Python Dependencies
+# Core data processing
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Web scraping and requests
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+selenium>=4.15.0
+scrapy>=2.11.0
+
+# Academic paper access
+scholarly>=1.7.0
+
+# Natural Language Processing
+nltk>=3.8.0
+textblob>=0.17.0
+spacy>=3.7.0
+scikit-learn>=1.3.0
+
+# Database
+sqlalchemy>=2.0.0
+sqlite3  # Built-in Python module
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+
+# Web dashboard
+streamlit>=1.28.0
+dash>=2.14.0
+dash-bootstrap-components>=1.5.0
+
+# Statistical analysis
+statsmodels>=0.14.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+schedule>=1.2.0
+
+# Optional: For advanced NLP (requires separate download)
+# python -m spacy download en_core_web_sm
+
+# Optional: For PDF processing
+PyPDF2>=3.0.0
+pdfplumber>=0.9.0
+
+# Optional: For image processing
+Pillow>=10.0.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.7.0
+flake8>=6.0.0
+
+# Documentation
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+
+# Jupyter notebooks for analysis
+jupyter>=1.0.0
+ipykernel>=6.25.0
+
+# For handling different file formats
+openpyxl>=3.1.0
+xlrd>=2.0.0
+
+# For handling dates and times
+python-dateutil>=2.8.0
+
+# For configuration management
+pyyaml>=6.0.0
+configparser>=5.3.0
+
+# For API rate limiting
+ratelimit>=2.2.0
+
+# For progress bars
+rich>=13.5.0
+
+# For logging enhancements
+colorlog>=6.7.0
+
+# For data validation
+pydantic>=2.4.0
+
+# For parallel processing
+joblib>=1.3.0
+multiprocessing-logging>=0.3.0
+
+# For geo-spatial analysis (optional)
+geopandas>=0.14.0
+folium>=0.14.0
+
+# For network analysis (optional)
+networkx>=3.1.0
+
+# For time series analysis (optional)
+prophet>=1.1.0
+
+# For machine learning enhancements (optional)
+xgboost>=1.7.0
+lightgbm>=4.1.0
+
+# For cloud storage (optional)
+boto3>=1.29.0
+google-cloud-storage>=2.10.0
+
+# Version constraints for compatibility
+urllib3>=1.26.0,<2.0.0
+certifi>=2023.7.22
+charset-normalizer>=3.2.0
+idna>=3.4

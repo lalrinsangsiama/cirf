@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Innovation Institute | Where Heritage Meets Future</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@200;300;400;500;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        :root {
+            --ink: #0a0a0a;
+            --pearl: #fdfdfb;
+            --gold: #d4af37;
+            --stone: #7c7c7c;
+            --sand: #f5f0e8;
+            --easing: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        ::selection {
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--pearl);
+            color: var(--ink);
+            overflow-x: hidden;
+            line-height: 1;
+            font-weight: 300;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--ink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.2s var(--easing), width 0.2s var(--easing), height 0.2s var(--easing);
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follow {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--ink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            opacity: 0.5;
+        }
+
+        .cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: transparent;
+            border: 1px solid var(--ink);
+            mix-blend-mode: normal;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 3rem 4rem;
+            mix-blend-mode: difference;
+            transition: all 0.5s var(--easing);
+        }
+
+        header.scrolled {
+            padding: 1.5rem 4rem;
+            background: rgba(253, 253, 251, 0.95);
+            backdrop-filter: blur(20px);
+            mix-blend-mode: normal;
+            border-bottom: 1px solid rgba(10, 10, 10, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--ink);
+            transition: width 0.3s var(--easing);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--pearl);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(90deg, var(--ink) 0, var(--ink) 1px, transparent 1px, transparent 100px),
+                repeating-linear-gradient(0deg, var(--ink) 0, var(--ink) 1px, transparent 1px, transparent 100px);
+        }
+
+        .hero-content {
+            width: 100%;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 12vw, 13rem);
+            font-weight: 300;
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+            mix-blend-mode: difference;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: revealText 1.5s var(--easing) forwards;
+        }
+
+        .hero-title .line:nth-child(2) span {
+            animation-delay: 0.1s;
+        }
+
+        .hero-title .line:nth-child(3) span {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes revealText {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title .italic {
+            font-style: italic;
+            font-weight: 400;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-meta {
+            position: absolute;
+            bottom: 4rem;
+            right: 4rem;
+            text-align: right;
+        }
+
+        .hero-meta p {
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 300;
+            max-width: 400px;
+            margin-left: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s var(--easing) 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Marquee Section */
+        .marquee {
+            padding: 8rem 0;
+            background: var(--ink);
+            color: var(--pearl);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-inner {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-content {
+            display: flex;
+            padding-right: 2rem;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 300;
+            font-style: italic;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .marquee-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 12rem 4rem;
+            background: var(--sand);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 8rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .philosophy-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--stone);
+            margin-bottom: 3rem;
+        }
+
+        .philosophy-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            line-height: 1.1;
+            font-weight: 300;
+        }
+
+        .philosophy-content {
+            padding-top: 4rem;
+        }
+
+        .philosophy-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .philosophy-text:first-child {
+            font-size: 1.8rem;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        /* Visual Break Section */
+        .visual-break {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: var(--ink);
+        }
+
+        .visual-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            padding: 0 2rem;
+        }
+
+        .visual-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 10rem);
+            color: var(--pearl);
+            font-weight: 300;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 2s var(--easing) forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Research Section */
+        .research {
+            padding: 12rem 4rem;
+            background: var(--pearl);
+        }
+
+        .research-header {
+            max-width: 1600px;
+            margin: 0 auto 8rem;
+        }
+
+        .research-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 6rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .research-card {
+            aspect-ratio: 3/4;
+            position: relative;
+            overflow: hidden;
+            background: var(--sand);
+            transition: all 0.6s var(--easing);
+        }
+
+        .research-card:hover {
+            transform: translateY(-20px);
+        }
+
+        .research-card:nth-child(2) {
+            margin-top: 4rem;
+        }
+
+        .research-card:nth-child(3) {
+            margin-top: 8rem;
+        }
+
+        .research-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent);
+            color: var(--pearl);
+            transform: translateY(100%);
+            transition: transform 0.6s var(--easing);
+        }
+
+        .research-card:hover .research-card-content {
+            transform: translateY(0);
+        }
+
+        .research-number {
+            font-size: 4rem;
+            font-weight: 200;
+            opacity: 0.3;
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+        }
+
+        .research-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .research-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Impact Section */
+        .impact {
+            padding: 12rem 4rem;
+            background: linear-gradient(180deg, var(--pearl) 0%, var(--sand) 100%);
+        }
+
+        .impact-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .impact-header {
+            text-align: center;
+            margin-bottom: 8rem;
+        }
+
+        .impact-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 6rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: rgba(10, 10, 10, 0.1);
+        }
+
+        .stat {
+            background: var(--pearl);
+            padding: 4rem;
+            text-align: center;
+            transition: all 0.3s var(--easing);
+        }
+
+        .stat:hover {
+            background: var(--sand);
+            transform: scale(1.02);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 6rem);
+            font-weight: 300;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--stone);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--ink);
+            color: var(--pearl);
+            padding: 8rem 4rem 4rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-column a {
+            color: var(--pearl);
+            text-decoration: none;
+            font-weight: 300;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            padding-top: 3rem;
+            border-top: 1px solid rgba(253, 253, 251, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .research-card:nth-child(2),
+            .research-card:nth-child(3) {
+                margin-top: 0;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: clamp(3rem, 12vw, 6rem);
+            }
+
+            .hero-meta {
+                position: static;
+                padding: 4rem 2rem;
+            }
+
+            .philosophy,
+            .research,
+            .impact {
+                padding: 6rem 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cursor,
+            .cursor-follow {
+                display: none;
+            }
+
+            * {
+                cursor: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pearl);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">Cultural Innovation Institute</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follow"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">CII</div>
+            <ul class="nav-menu">
+                <li><a href="#philosophy">Philosophy</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="line"><span>Cultural</span></span>
+                <span class="line"><span class="italic">Innovation</span></span>
+                <span class="line"><span>Institute</span></span>
+            </h1>
+        </div>
+        <div class="hero-meta">
+            <p>Transforming indigenous wisdom into economic resilience. Where 476 million voices shape tomorrow's economy.</p>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <section class="marquee">
+        <div class="marquee-inner">
+            <div class="marquee-content">
+                <span class="marquee-item">Heritage <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Innovation <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Resilience <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Community <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Future <span class="marquee-dot"></span></span>
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                <span class="marquee-item">Heritage <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Innovation <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Resilience <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Community <span class="marquee-dot"></span></span>
+                <span class="marquee-item">Future <span class="marquee-dot"></span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="philosophy" id="philosophy">
+        <div class="philosophy-grid">
+            <div>
+                <p class="philosophy-label">Our Belief</p>
+                <h2 class="philosophy-title">Culture is not a barrier to development, but its most powerful driver.</h2>
+            </div>
+            <div class="philosophy-content">
+                <p class="philosophy-text">We are rewriting the narrative of indigenous economic development. No longer must communities choose between their ancestral wisdom and economic prosperity.</p>
+                <p class="philosophy-text">Through rigorous research spanning from the Mizo hills to Māori enterprises, we prove that cultural innovation—the creative adaptation of traditional knowledge for contemporary challenges—drives unprecedented economic resilience.</p>
+                <p class="philosophy-text">This is not preservation. This is evolution. This is communities innovating from their foundations, creating economic models that honor the past while building the future.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Break -->
+    <section class="visual-break">
+        <div class="visual-text">
+            <h2>Tradition is Innovation</h2>
+        </div>
+    </section>
+
+    <!-- Research -->
+    <section class="research" id="research">
+        <div class="research-header">
+            <h2>Pioneering Research</h2>
+        </div>
+        <div class="research-grid">
+            <div class="research-card">
+                <span class="research-number">01</span>
+                <div class="research-card-content">
+                    <h3 class="research-title">Economic Frameworks</h3>
+                    <p class="research-desc">Developing new theoretical models that integrate cultural capital into economic resilience theory, challenging Western-centric development paradigms.</p>
+                </div>
+            </div>
+            <div class="research-card">
+                <span class="research-number">02</span>
+                <div class="research-card-content">
+                    <h3 class="research-title">Innovation Systems</h3>
+                    <p class="research-desc">Documenting how traditional knowledge systems generate innovation, from grassroots enterprises to digital transformation of indigenous practices.</p>
+                </div>
+            </div>
+            <div class="research-card">
+                <span class="research-number">03</span>
+                <div class="research-card-content">
+                    <h3 class="research-title">Impact Measurement</h3>
+                    <p class="research-desc">Creating culturally-appropriate metrics that capture value beyond GDP, including social cohesion, ecological stewardship, and intergenerational wealth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="impact" id="impact">
+        <div class="impact-container">
+            <div class="impact-header">
+                <h2>Global Impact</h2>
+            </div>
+            <div class="impact-stats">
+                <div class="stat">
+                    <div class="stat-number">$126B</div>
+                    <div class="stat-label">Māori Economic Contribution</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">476M</div>
+                    <div class="stat-label">Indigenous Peoples Worldwide</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-label">Global Biodiversity Protected</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">35%</div>
+                    <div class="stat-label">Better Recovery Rates</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Cultural Innovation Institute</h3>
+                <p>We envision a world where indigenous communities thrive on their own terms, where cultural heritage drives innovation, and where economic development strengthens rather than erodes identity.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Research</h4>
+                <ul>
+                    <li><a href="#">Publications</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Frameworks</a></li>
+                    <li><a href="#">Data Repository</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Partnership</a></li>
+                    <li><a href="#">Network</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2024 Cultural Innovation Institute. All rights reserved.</div>
+            <div class="footer-copy">Empowering communities worldwide.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollow = document.querySelector('.cursor-follow');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let followX = 0, followY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            // Main cursor
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            // Following cursor
+            followX += (mouseX - followX) * 0.08;
+            followY += (mouseY - followY) * 0.08;
+            cursorFollow.style.left = followX + 'px';
+            cursorFollow.style.top = followY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor hover
+        const hoverElements = document.querySelectorAll('a, button, .stat, .research-card');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -10% 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Trigger counter animation for stats
+                    if (entry.target.classList.contains('stat')) {
+                        const number = entry.target.querySelector('.stat-number');
+                        const finalValue = number.textContent;
+                        const isPercentage = finalValue.includes('%');
+                        const isBillion = finalValue.includes('B');
+                        const isMillion = finalValue.includes('M');
+                        
+                        let numericValue = parseFloat(finalValue.replace(/[^0-9.]/g, ''));
+                        let currentValue = 0;
+                        const increment = numericValue / 50;
+                        
+                        const counter = setInterval(() => {
+                            currentValue += increment;
+                            if (currentValue >= numericValue) {
+                                currentValue = numericValue;
+                                clearInterval(counter);
+                            }
+                            
+                            let display = Math.floor(currentValue);
+                            if (isBillion) display = `$${display}B`;
+                            else if (isMillion) display = `${display}M`;
+                            else if (isPercentage) display = `${display}%`;
+                            
+                            number.textContent = display;
+                        }, 30);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        const animatedElements = document.querySelectorAll('.philosophy-text, .stat, .research-card, .impact-header h2');
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 1s cubic-bezier(0.19, 1, 0.22, 1)';
+            observer.observe(el);
+        });
+
+        // Parallax effect for visual break
+        const visualBreak = document.querySelector('.visual-text h2');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            if (visualBreak) {
+                visualBreak.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Magnetic buttons effect
+        const magneticElements = document.querySelectorAll('.stat');
+        
+        magneticElements.forEach(elem => {
+            elem.addEventListener('mousemove', (e) => {
+                const rect = elem.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                elem.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.02)`;
+            });
+            
+            elem.addEventListener('mouseleave', () => {
+                elem.style.transform = 'translate(0, 0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

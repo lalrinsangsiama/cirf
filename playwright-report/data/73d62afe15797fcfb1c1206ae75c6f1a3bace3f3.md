@@ -1,0 +1,99 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - link [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]:
+            - generic [ref=e13]: The Indian Startup
+        - link "Back to home" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e15]
+          - text: Back to home
+    - main [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - heading "Join India's Fastest Growing Founder Community" [level=1] [ref=e21]
+            - paragraph [ref=e22]: Transform your startup idea into reality with structured, proven playbooks
+          - generic [ref=e24]:
+            - generic [ref=e25]:
+              - img [ref=e26]
+              - generic [ref=e31]:
+                - paragraph [ref=e32]: "30"
+                - paragraph [ref=e33]: Complete Courses
+            - generic [ref=e34]:
+              - img [ref=e35]
+              - generic [ref=e37]:
+                - paragraph [ref=e38]: 1000+
+                - paragraph [ref=e39]: Templates
+            - generic [ref=e40]:
+              - img [ref=e41]
+              - generic [ref=e43]:
+                - paragraph [ref=e44]: 450+
+                - paragraph [ref=e45]: Action Items
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - text: Full Name
+              - generic [ref=e48]:
+                - img [ref=e50]
+                - textbox "Full Name" [ref=e53]:
+                  - /placeholder: Ratan Tata
+            - generic [ref=e54]:
+              - text: Email Address
+              - generic [ref=e55]:
+                - img [ref=e57]
+                - textbox "Email Address" [ref=e60]:
+                  - /placeholder: founder@startup.com
+            - generic [ref=e61]:
+              - text: Password
+              - generic [ref=e62]:
+                - img [ref=e64]
+                - textbox "Password" [ref=e67]:
+                  - /placeholder: ••••••••
+              - paragraph [ref=e68]: At least 8 characters with uppercase, lowercase, and a number
+            - generic [ref=e69]:
+              - paragraph [ref=e70]: Password requirements
+              - generic [ref=e71]:
+                - paragraph [ref=e73]: At least 8 characters
+                - paragraph [ref=e75]: Contains uppercase letter
+                - paragraph [ref=e77]: Contains lowercase letter
+                - paragraph [ref=e79]: Contains number
+            - generic [ref=e80]:
+              - text: Confirm Password
+              - generic [ref=e81]:
+                - img [ref=e83]
+                - textbox "Confirm Password" [ref=e86]:
+                  - /placeholder: ••••••••
+            - generic [ref=e88]:
+              - checkbox [ref=e90]
+              - generic [ref=e91]:
+                - text: I agree to the
+                - link "Terms of Service" [ref=e92] [cursor=pointer]:
+                  - /url: /terms
+                - text: and
+                - link "Privacy Policy" [ref=e93] [cursor=pointer]:
+                  - /url: /privacy
+                - text: . I understand this is an educational platform providing guides and resources only.
+            - button "Start Your Founder Journey" [ref=e94]:
+              - text: Start Your Founder Journey
+              - img [ref=e95]
+            - paragraph [ref=e98]:
+              - text: Already have an account?
+              - link "Sign in" [ref=e99] [cursor=pointer]:
+                - /url: /login
+        - paragraph [ref=e101]:
+          - text: By continuing, you agree to our
+          - link "Terms of Service" [ref=e102] [cursor=pointer]:
+            - /url: /terms
+          - text: and
+          - link "Privacy Policy" [ref=e103] [cursor=pointer]:
+            - /url: /privacy
+  - button "Feedback" [ref=e104]:
+    - img [ref=e105]
+    - text: Feedback
+  - region "Notifications alt+T"
+```

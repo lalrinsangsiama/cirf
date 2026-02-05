@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIRF - Additional Creative Visualizations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        .viz-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .viz-title {
+            font-size: 1.8em;
+            color: #34495e;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .viz-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .chart-container {
+            position: relative;
+            margin: 20px auto;
+        }
+        .insight-box {
+            background: #f0f7ff;
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .key-finding {
+            font-weight: bold;
+            color: #2980b9;
+        }
+        .sankey-link {
+            fill: none;
+            stroke-opacity: 0.5;
+        }
+        .sankey-node {
+            cursor: pointer;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 10px;
+            font: 12px sans-serif;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .component-box {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+        .pillar { background-color: #3498db; }
+        .control { background-color: #e67e22; }
+        .capacity { background-color: #9b59b6; }
+        .success-path {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #95a5a6;
+            margin: 0 10px;
+        }
+        .score-bubble {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .timeline-container {
+            position: relative;
+            padding: 40px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #e74c3c, #f39c12, #2ecc71);
+        }
+        .timeline-event {
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .timeline-event:nth-child(even) {
+            margin-left: 52%;
+        }
+        .timeline-event:nth-child(odd) {
+            margin-right: 52%;
+            text-align: right;
+        }
+        .crisis-radar {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .network-container {
+            text-align: center;
+        }
+        #networkDiagram {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cultural Innovation Resilience Framework</h1>
+        <p class="subtitle">Additional Creative Visualizations</p>
+
+        <!-- Sankey Diagram -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Journey Map: From Score to Destiny</h2>
+            <p class="viz-description">Follow how initial scores flow into final outcomes - revealing pathways to success and failure</p>
+            <div id="sankeyDiagram"></div>
+            <div class="insight-box">
+                <p><span class="key-finding">Critical Insight:</span> Notice how scores 0-7 predominantly flow to Crisis or Closed status, while scores 8+ overwhelmingly lead to Ongoing success. The thickness of flows shows the volume of cases following each path.</p>
+            </div>
+        </div>
+
+        <!-- Success Recipe -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Success Recipe: Minimum Viable Components</h2>
+            <p class="viz-description">What's the bare minimum needed for cultural innovation success?</p>
+            <div style="text-align: center; margin: 30px 0;">
+                <h3 style="color: #2c3e50;">Essential Foundation (Must Have 3+ of 4)</h3>
+                <div>
+                    <span class="component-box pillar">Economic Value Creation</span>
+                    <span class="component-box pillar">Cultural Integrity</span>
+                    <span class="component-box pillar">Adaptability</span>
+                    <span class="component-box pillar">Social Empowerment</span>
+                </div>
+                
+                <div class="arrow">+</div>
+                
+                <h3 style="color: #2c3e50;">Community Control (Must Have 3+ of 5)</h3>
+                <div>
+                    <span class="component-box control">Community Benefit</span>
+                    <span class="component-box control">Cultural Protection</span>
+                    <span class="component-box control">Community Relevance</span>
+                    <span class="component-box control">Sustainable Development</span>
+                    <span class="component-box control">Dignity & Empowerment</span>
+                </div>
+                
+                <div class="arrow">+</div>
+                
+                <h3 style="color: #2c3e50;">At Least One Capacity</h3>
+                <div>
+                    <span class="component-box capacity">Adaptive Capacity</span>
+                    <span class="component-box capacity">Protective Capacity</span>
+                    <span class="component-box capacity">Transformative Capacity</span>
+                    <span class="component-box capacity">Generative Capacity</span>
+                </div>
+                
+                <div class="arrow">=</div>
+                
+                <div class="score-bubble" style="background-color: #2ecc71; width: 100px; height: 100px; font-size: 24px;">
+                    8+ Score<br>(Success)
+                </div>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">The 3-3-1 Rule:</span> Successful initiatives need at least 3 operational pillars, 3 community control filters, and 1 resilience capacity. This creates the minimum score of 7, but data shows 8 is the true sustainability threshold.</p>
+            </div>
+        </div>
+
+        <!-- Component Erosion Timeline -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Erosion Timeline: Early Warning System</h2>
+            <p class="viz-description">Which components disappear first as cultural innovations decline?</p>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-event">
+                    <h4 style="color: #e74c3c;">Phase 1: First to Go (65%+ decline)</h4>
+                    <p><strong>Adaptive Capacity</strong> - Innovation and learning cease<br>
+                    <strong>Sustainable Development</strong> - Long-term thinking abandoned<br>
+                    <strong>Adaptability</strong> - Flexibility lost</p>
+                </div>
+                <div class="timeline-event">
+                    <h4 style="color: #f39c12;">Phase 2: Accelerating Decline (40-60% decline)</h4>
+                    <p><strong>Generative Capacity</strong> - No new opportunities created<br>
+                    <strong>Dignity & Empowerment</strong> - Community voice weakened</p>
+                </div>
+                <div class="timeline-event">
+                    <h4 style="color: #e67e22;">Phase 3: Late Stage (20-40% decline)</h4>
+                    <p><strong>Economic Value Creation</strong> - Revenue streams dry up<br>
+                    <strong>Community Control Filters</strong> - External takeover or abandonment</p>
+                </div>
+                <div class="timeline-event">
+                    <h4 style="color: #2ecc71;">What Remains to the End</h4>
+                    <p><strong>Cultural Integrity</strong> - Still present in 79% of failed cases<br>
+                    <strong>Community Relevance</strong> - May retain local importance<br>
+                    <em>But these alone cannot sustain the initiative</em></p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Early Detection:</span> Monitor Adaptive Capacity and Sustainable Development closely - their decline signals crisis 6-12 months before economic impacts become visible.</p>
+            </div>
+        </div>
+
+        <!-- Crisis Recovery Potential -->
+        <div class="viz-section">
+            <h2 class="viz-title">Crisis Cases: Recovery Potential Analysis</h2>
+            <p class="viz-description">What assets do crisis cases retain that could enable recovery?</p>
+            <div class="chart-container crisis-radar">
+                <canvas id="crisisRadar"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Recovery Strategy:</span> Crisis cases retain cultural foundations (78% integrity, 68% relevance) and some economic activity (54%). Recovery requires urgently rebuilding adaptive capacity (only 22%) and sustainable development (8%) before further erosion occurs.</p>
+            </div>
+        </div>
+
+        <!-- Perfect Score Analysis -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Elite 14%: Anatomy of Perfect Scores</h2>
+            <p class="viz-description">51 cases achieved perfect 13/13 scores - what makes them exceptional?</p>
+            <div class="chart-container">
+                <canvas id="perfectScoreChart"></canvas>
+            </div>
+            <div style="margin-top: 30px;">
+                <h4>Common Characteristics of Perfect Score Cases:</h4>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Strong Leadership + Collective Governance:</strong> Individual champions within community structures</li>
+                    <li><strong>Multiple Revenue Streams:</strong> Never dependent on single income source</li>
+                    <li><strong>Active Innovation Culture:</strong> Continuous experimentation and adaptation</li>
+                    <li><strong>External Partnerships + Internal Control:</strong> Strategic alliances without dependency</li>
+                    <li><strong>Youth Engagement:</strong> Intergenerational knowledge transfer mechanisms</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Component Network -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Component Ecosystem: Network of Dependencies</h2>
+            <p class="viz-description">Visualizing how components support and depend on each other</p>
+            <div class="network-container">
+                <svg id="networkDiagram" width="900" height="600"></svg>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Network Effects:</span> Components don't exist in isolation - they form reinforcing clusters. The adaptive cluster (Adaptability + Adaptive Capacity) and the sustainability cluster (Economic Value + Sustainable Development) are particularly tightly coupled.</p>
+            </div>
+        </div>
+
+        <!-- Score Progression Paths -->
+        <div class="viz-section">
+            <h2 class="viz-title">Evolution Patterns: How Scores Change Over Time</h2>
+            <p class="viz-description">Based on temporal analysis, how do initiatives typically evolve?</p>
+            <div class="chart-container">
+                <canvas id="evolutionPaths"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Growth vs. Decline:</span> Initiatives rarely stay static. Those starting with 6-8 components tend to either grow to 10+ (positive feedback loop) or decline to 3-5 (negative spiral). The direction depends heavily on early adaptive capacity development.</p>
+            </div>
+        </div>
+
+        <!-- Geographic Success Patterns -->
+        <div class="viz-section">
+            <h2 class="viz-title">The Power of Crisis: Turning Challenge into Innovation</h2>
+            <p class="viz-description">How external crises (economic, pandemic, conflict) affect cultural innovation</p>
+            <div class="chart-container">
+                <canvas id="crisisResponse"></canvas>
+            </div>
+            <div class="insight-box">
+                <p><span class="key-finding">Crisis as Catalyst:</span> Initiatives with high adaptive capacity (score 10+) actually strengthened during crises, while those with low adaptive capacity (score <6) showed accelerated decline. The COVID-19 pandemic particularly revealed this divide.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Color palette
+        const colors = {
+            primary: '#3498db',
+            success: '#2ecc71',
+            warning: '#f39c12',
+            danger: '#e74c3c',
+            secondary: '#95a5a6',
+            info: '#9b59b6',
+            dark: '#34495e',
+            light: '#ecf0f1'
+        };
+
+        // 1. Sankey Diagram
+        const sankeyData = {
+            nodes: [
+                // Score ranges
+                {id: 0, name: "Score 0-2", color: colors.danger},
+                {id: 1, name: "Score 3-5", color: colors.warning},
+                {id: 2, name: "Score 6-8", color: colors.secondary},
+                {id: 3, name: "Score 9-11", color: colors.primary},
+                {id: 4, name: "Score 12-13", color: colors.success},
+                // Status
+                {id: 5, name: "Ongoing", color: colors.success},
+                {id: 6, name: "Crisis", color: colors.warning},
+                {id: 7, name: "Closed", color: colors.danger}
+            ],
+            links: [
+                // From score ranges to status
+                {source: 0, target: 5, value: 1},  // 0-2 to Ongoing
+                {source: 0, target: 6, value: 8},  // 0-2 to Crisis
+                {source: 0, target: 7, value: 19}, // 0-2 to Closed
+                
+                {source: 1, target: 5, value: 20}, // 3-5 to Ongoing
+                {source: 1, target: 6, value: 36}, // 3-5 to Crisis
+                {source: 1, target: 7, value: 12}, // 3-5 to Closed
+                
+                {source: 2, target: 5, value: 32}, // 6-8 to Ongoing
+                {source: 2, target: 6, value: 12}, // 6-8 to Crisis
+                {source: 2, target: 7, value: 5},  // 6-8 to Closed
+                
+                {source: 3, target: 5, value: 122}, // 9-11 to Ongoing
+                {source: 3, target: 6, value: 4},   // 9-11 to Crisis
+                {source: 3, target: 7, value: 1},   // 9-11 to Closed
+                
+                {source: 4, target: 5, value: 88},  // 12-13 to Ongoing
+                {source: 4, target: 6, value: 2},   // 12-13 to Crisis
+                {source: 4, target: 7, value: 2}    // 12-13 to Closed
+            ]
+        };
+
+        // Create Sankey diagram
+        const sankeyWidth = 800;
+        const sankeyHeight = 400;
+        const sankeyMargin = {top: 10, right: 10, bottom: 10, left: 10};
+
+        const sankeySvg = d3.select("#sankeyDiagram")
+            .append("svg")
+            .attr("width", sankeyWidth)
+            .attr("height", sankeyHeight);
+
+        const sankeyG = sankeySvg.append("g")
+            .attr("transform", `translate(${sankeyMargin.left},${sankeyMargin.top})`);
+
+        // Manual layout for Sankey (simplified)
+        const nodeWidth = 150;
+        const nodeHeight = 60;
+        const nodeSpacing = 20;
+        
+        // Position nodes
+        sankeyData.nodes.forEach((node, i) => {
+            if (i < 5) { // Score nodes
+                node.x = 50;
+                node.y = i * (nodeHeight + nodeSpacing) + 30;
+            } else { // Status nodes
+                node.x = sankeyWidth - nodeWidth - 50;
+                node.y = (i - 5) * (nodeHeight + nodeSpacing) + 80;
+            }
+        });
+
+        // Draw links
+        sankeyData.links.forEach(link => {
+            const sourceNode = sankeyData.nodes[link.source];
+            const targetNode = sankeyData.nodes[link.target];
+            
+            const path = d3.path();
+            path.moveTo(sourceNode.x + nodeWidth, sourceNode.y + nodeHeight/2);
+            path.bezierCurveTo(
+                sourceNode.x + nodeWidth + 100, sourceNode.y + nodeHeight/2,
+                targetNode.x - 100, targetNode.y + nodeHeight/2,
+                targetNode.x, targetNode.y + nodeHeight/2
+            );
+            
+            sankeyG.append("path")
+                .attr("d", path.toString())
+                .attr("fill", "none")
+                .attr("stroke", sourceNode.color)
+                .attr("stroke-width", Math.sqrt(link.value) * 2)
+                .attr("stroke-opacity", 0.4);
+        });
+
+        // Draw nodes
+        sankeyData.nodes.forEach(node => {
+            const g = sankeyG.append("g");
+            
+            g.append("rect")
+                .attr("x", node.x)
+                .attr("y", node.y)
+                .attr("width", nodeWidth)
+                .attr("height", nodeHeight)
+                .attr("fill", node.color)
+                .attr("rx", 5);
+            
+            g.append("text")
+                .attr("x", node.x + nodeWidth/2)
+                .attr("y", node.y + nodeHeight/2)
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "middle")
+                .attr("fill", "white")
+                .attr("font-weight", "bold")
+                .text(node.name);
+        });
+
+        // 2. Crisis Recovery Radar
+        const crisisRadarCtx = document.getElementById('crisisRadar').getContext('2d');
+        new Chart(crisisRadarCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    'Cultural Integrity', 'Community Relevance', 'Economic Value',
+                    'Cultural Protection', 'Community Benefit', 'Dignity & Empowerment',
+                    'Adaptability', 'Social Empowerment', 'Adaptive Capacity',
+                    'Sustainable Dev.', 'Protective Cap.', 'Generative Cap.'
+                ],
+                datasets: [{
+                    label: 'Crisis Cases Retain',
+                    data: [78, 68, 54, 52, 54, 48, 26, 44, 22, 8, 12, 18],
+                    borderColor: colors.warning,
+                    backgroundColor: colors.warning + '40',
+                    borderWidth: 3,
+                    pointBackgroundColor: colors.warning,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: colors.warning
+                }, {
+                    label: 'Success Threshold',
+                    data: [85, 85, 85, 70, 80, 75, 80, 70, 80, 70, 40, 50],
+                    borderColor: colors.success,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Component Retention in Crisis Cases',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Perfect Score Analysis
+        const perfectCtx = document.getElementById('perfectScoreChart').getContext('2d');
+        new Chart(perfectCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Digital Native Era (2016-2025)',
+                    'Digital Transition (2006-2015)',
+                    'Pre-Digital Era (1995-2005)'
+                ],
+                datasets: [{
+                    data: [28, 16, 7],
+                    backgroundColor: [colors.success, colors.primary, colors.secondary],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Perfect Scores by Era (n=51)',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: { size: 14 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed;
+                                const percentage = ((value / 51) * 100).toFixed(1);
+                                return `${label}: ${value} cases (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 4. Component Network Diagram
+        const networkWidth = 900;
+        const networkHeight = 600;
+        
+        const networkSvg = d3.select("#networkDiagram");
+        
+        // Define nodes
+        const networkNodes = [
+            // Operational Pillars
+            {id: "EV", label: "Economic Value", group: 1, x: 200, y: 150},
+            {id: "CI", label: "Cultural Integrity", group: 1, x: 400, y: 100},
+            {id: "AD", label: "Adaptability", group: 1, x: 600, y: 150},
+            {id: "SE", label: "Social Empowerment", group: 1, x: 450, y: 250},
+            
+            // Community Control
+            {id: "CB", label: "Community Benefit", group: 2, x: 150, y: 350},
+            {id: "CP", label: "Cultural Protection", group: 2, x: 350, y: 400},
+            {id: "CR", label: "Community Relevance", group: 2, x: 550, y: 400},
+            {id: "SD", label: "Sustainable Dev.", group: 2, x: 750, y: 350},
+            {id: "DE", label: "Dignity & Empower.", group: 2, x: 450, y: 450},
+            
+            // Resilience Capacities
+            {id: "PC", label: "Protective Cap.", group: 3, x: 250, y: 500},
+            {id: "AC", label: "Adaptive Cap.", group: 3, x: 650, y: 500},
+            {id: "TC", label: "Transform. Cap.", group: 3, x: 350, y: 550},
+            {id: "GC", label: "Generative Cap.", group: 3, x: 550, y: 550}
+        ];
+        
+        // Define links with strength
+        const networkLinks = [
+            // Strong connections (>90% co-occurrence)
+            {source: "AD", target: "AC", strength: 97},
+            {source: "SD", target: "EV", strength: 97},
+            {source: "CP", target: "CI", strength: 98},
+            {source: "CB", target: "CR", strength: 98},
+            
+            // Medium connections (70-90%)
+            {source: "EV", target: "AD", strength: 88},
+            {source: "CI", target: "CP", strength: 75},
+            {source: "SE", target: "DE", strength: 82},
+            {source: "SD", target: "CB", strength: 78},
+            
+            // Cross-group connections
+            {source: "AD", target: "GC", strength: 72},
+            {source: "CI", target: "PC", strength: 68},
+            {source: "EV", target: "CB", strength: 77},
+            {source: "SE", target: "CR", strength: 75}
+        ];
+        
+        // Draw links
+        const linkGroup = networkSvg.append("g");
+        networkLinks.forEach(link => {
+            const sourceNode = networkNodes.find(n => n.id === link.source);
+            const targetNode = networkNodes.find(n => n.id === link.target);
+            
+            linkGroup.append("line")
+                .attr("x1", sourceNode.x)
+                .attr("y1", sourceNode.y)
+                .attr("x2", targetNode.x)
+                .attr("y2", targetNode.y)
+                .attr("stroke", colors.secondary)
+                .attr("stroke-width", link.strength / 20)
+                .attr("stroke-opacity", link.strength / 100);
+        });
+        
+        // Draw nodes
+        const nodeGroup = networkSvg.append("g");
+        networkNodes.forEach(node => {
+            const g = nodeGroup.append("g");
+            
+            // Node circle
+            g.append("circle")
+                .attr("cx", node.x)
+                .attr("cy", node.y)
+                .attr("r", 40)
+                .attr("fill", node.group === 1 ? colors.primary : 
+                            node.group === 2 ? colors.warning : colors.info)
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 3);
+            
+            // Node label
+            g.append("text")
+                .attr("x", node.x)
+                .attr("y", node.y)
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "middle")
+                .attr("fill", "white")
+                .attr("font-size", "12px")
+                .attr("font-weight", "bold")
+                .text(node.id);
+            
+            // Tooltip
+            g.append("title")
+                .text(node.label);
+        });
+        
+        // Add legend
+        const legendData = [
+            {label: "Operational Pillars", color: colors.primary},
+            {label: "Community Control", color: colors.warning},
+            {label: "Resilience Capacities", color: colors.info}
+        ];
+        
+        const legend = networkSvg.append("g")
+            .attr("transform", "translate(20, 20)");
+        
+        legendData.forEach((item, i) => {
+            const g = legend.append("g")
+                .attr("transform", `translate(0, ${i * 25})`);
+            
+            g.append("circle")
+                .attr("cx", 10)
+                .attr("cy", 10)
+                .attr("r", 8)
+                .attr("fill", item.color);
+            
+            g.append("text")
+                .attr("x", 25)
+                .attr("y", 10)
+                .attr("dominant-baseline", "middle")
+                .text(item.label);
+        });
+
+        // 5. Evolution Paths
+        const evolutionCtx = document.getElementById('evolutionPaths').getContext('2d');
+        new Chart(evolutionCtx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [
+                    {
+                        label: 'Growth Path (Started 6-8)',
+                        data: [7, 8, 9, 10, 11],
+                        borderColor: colors.success,
+                        backgroundColor: colors.success + '20',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Decline Path (Started 6-8)',
+                        data: [7, 6, 5, 4, 3],
+                        borderColor: colors.danger,
+                        backgroundColor: colors.danger + '20',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Stable High (Started 10+)',
+                        data: [11, 11, 12, 12, 13],
+                        borderColor: colors.primary,
+                        backgroundColor: colors.primary + '20',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Recovery Path (Crisis)',
+                        data: [9, 6, 5, 7, 9],
+                        borderColor: colors.warning,
+                        backgroundColor: colors.warning + '20',
+                        borderWidth: 3,
+                        borderDash: [5, 5],
+                        tension: 0.4,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Typical Score Evolution Patterns Over 5 Years',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                yMin: 8,
+                                yMax: 8,
+                                borderColor: colors.danger,
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                label: {
+                                    content: 'Sustainability Threshold',
+                                    enabled: true,
+                                    position: 'start'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 13,
+                        title: {
+                            display: true,
+                            text: 'CIRF Score'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 6. Crisis Response Analysis
+        const crisisResponseCtx = document.getElementById('crisisResponse').getContext('2d');
+        new Chart(crisisResponseCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    {
+                        label: 'Thrived in Crisis',
+                        data: [
+                            {x: 10, y: 12}, {x: 11, y: 13}, {x: 12, y: 13},
+                            {x: 9, y: 11}, {x: 11, y: 12}, {x: 13, y: 13}
+                        ],
+                        backgroundColor: colors.success,
+                        borderColor: colors.success,
+                        borderWidth: 2,
+                        pointRadius: 8
+                    },
+                    {
+                        label: 'Survived Crisis',
+                        data: [
+                            {x: 8, y: 8}, {x: 9, y: 8}, {x: 7, y: 7},
+                            {x: 8, y: 9}, {x: 10, y: 9}, {x: 9, y: 9}
+                        ],
+                        backgroundColor: colors.warning,
+                        borderColor: colors.warning,
+                        borderWidth: 2,
+                        pointRadius: 8
+                    },
+                    {
+                        label: 'Failed in Crisis',
+                        data: [
+                            {x: 6, y: 3}, {x: 5, y: 2}, {x: 4, y: 1},
+                            {x: 7, y: 4}, {x: 6, y: 2}, {x: 5, y: 3}
+                        ],
+                        backgroundColor: colors.danger,
+                        borderColor: colors.danger,
+                        borderWidth: 2,
+                        pointRadius: 8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Crisis Impact: Pre-Crisis Score vs Post-Crisis Score',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 13,
+                        title: {
+                            display: true,
+                            text: 'Pre-Crisis Score'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 13,
+                        title: {
+                            display: true,
+                            text: 'Post-Crisis Score'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

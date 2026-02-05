@@ -1,0 +1,175 @@
+<svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="700" fill="white"/>
+  
+  <!-- Define gradients and patterns -->
+  <defs>
+    <!-- Gradient for gap areas -->
+    <linearGradient id="gap-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffebee;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#ffcdd2;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#ffebee;stop-opacity:1"/>
+    </linearGradient>
+    
+    <!-- Red dashed pattern for gaps -->
+    <pattern id="gap-pattern" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#ffcdd2"/>
+      <path d="M0,4 L8,4" stroke="#d32f2f" stroke-width="1" stroke-dasharray="2,2"/>
+    </pattern>
+    
+    <!-- Arrow markers -->
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#d32f2f"/>
+    </marker>
+    
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1976d2"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#333">Figure 2.2: Five Critical Gaps in Existing Frameworks</text>
+  
+  <!-- Central Cultural Innovation circle -->
+  <circle cx="450" cy="350" r="60" fill="#fff3c4" stroke="#f57f17" stroke-width="3"/>
+  <text x="450" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e65100">CULTURAL</text>
+  <text x="450" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e65100">INNOVATION</text>
+  
+  <!-- GAP 1: Innovation-Preservation Integration Gap (top) -->
+  <g id="gap1">
+    <!-- Innovation side -->
+    <rect x="250" y="80" width="100" height="60" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+    <text x="300" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1976d2">INNOVATION</text>
+    <text x="300" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1976d2">Creative destruction</text>
+    <text x="300" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1976d2">Technological focus</text>
+    
+    <!-- Gap area -->
+    <rect x="350" y="95" width="100" height="30" fill="url(#gap-gradient)" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="400" y="113" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d32f2f">INTEGRATION GAP</text>
+    
+    <!-- Preservation side -->
+    <rect x="450" y="80" width="100" height="60" rx="10" fill="#e8f5e8" stroke="#388e3c" stroke-width="2"/>
+    <text x="500" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#388e3c">PRESERVATION</text>
+    <text x="500" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#388e3c">Cultural continuity</text>
+    <text x="500" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#388e3c">Traditional knowledge</text>
+    
+    <!-- Connecting lines to center -->
+    <line x1="400" y1="140" x2="430" y2="300" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- GAP 2: Individual-Collective Integration Gap (top right) -->
+  <g id="gap2">
+    <!-- Individual side -->
+    <rect x="600" y="150" width="100" height="60" rx="10" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+    <text x="650" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#7b1fa2">INDIVIDUAL</text>
+    <text x="650" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7b1fa2">Entrepreneurial success</text>
+    <text x="650" y="202" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7b1fa2">Profit maximization</text>
+    
+    <!-- Gap area -->
+    <rect x="650" y="220" width="100" height="30" fill="url(#gap-gradient)" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5" transform="rotate(45 700 235)"/>
+    <text x="700" y="238" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d32f2f" transform="rotate(45 700 238)">BALANCE GAP</text>
+    
+    <!-- Collective side -->
+    <rect x="650" y="280" width="100" height="60" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+    <text x="700" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f57c00">COLLECTIVE</text>
+    <text x="700" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f57c00">Community benefit</text>
+    <text x="700" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f57c00">Cultural strengthening</text>
+    
+    <!-- Connecting lines to center -->
+    <line x1="600" y1="250" x2="500" y2="320" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- GAP 3: Community Control Operationalization Gap (left) -->
+  <g id="gap3">
+    <!-- Community side -->
+    <rect x="50" y="250" width="100" height="60" rx="10" fill="#e1f5fe" stroke="#0288d1" stroke-width="2"/>
+    <text x="100" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0288d1">COMMUNITY</text>
+    <text x="100" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#0288d1">Self-determination</text>
+    <text x="100" y="302" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#0288d1">Cultural protocols</text>
+    
+    <!-- Gap area -->
+    <rect x="160" y="265" width="120" height="30" fill="url(#gap-gradient)" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="220" y="283" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d32f2f">OPERATIONALIZATION GAP</text>
+    
+    <!-- External Control side -->
+    <rect x="290" y="250" width="100" height="60" rx="10" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
+    <text x="340" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#c2185b">EXTERNAL</text>
+    <text x="340" y="282" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#c2185b">CONTROL</text>
+    <text x="340" y="297" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#c2185b">Expert-driven</text>
+    <text x="340" y="309" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#c2185b">Market mechanisms</text>
+    
+    <!-- Connecting lines to center -->
+    <line x1="320" y1="320" x2="400" y2="340" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- GAP 4: Multi-dimensional Assessment Gap (bottom) -->
+  <g id="gap4">
+    <!-- Economic -->
+    <circle cx="300" cy="550" r="40" fill="#e8f5e8" stroke="#388e3c" stroke-width="2"/>
+    <text x="300" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#388e3c">ECONOMIC</text>
+    <text x="300" y="558" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#388e3c">GDP, profit,</text>
+    <text x="300" y="570" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#388e3c">efficiency</text>
+    
+    <!-- Cultural -->
+    <circle cx="450" cy="550" r="40" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+    <text x="450" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#7b1fa2">CULTURAL</text>
+    <text x="450" y="558" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#7b1fa2">Identity, meaning,</text>
+    <text x="450" y="570" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#7b1fa2">authenticity</text>
+    
+    <!-- Social -->
+    <circle cx="600" cy="550" r="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+    <text x="600" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1976d2">SOCIAL</text>
+    <text x="600" y="558" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#1976d2">Relationships,</text>
+    <text x="600" y="570" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#1976d2">empowerment</text>
+    
+    <!-- Gap areas between them -->
+    <rect x="340" y="535" width="70" height="30" fill="url(#gap-gradient)" stroke="#d32f2f" stroke-width="1" stroke-dasharray="3,3" rx="15"/>
+    <text x="375" y="552" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#d32f2f">GAP</text>
+    
+    <rect x="490" y="535" width="70" height="30" fill="url(#gap-gradient)" stroke="#d32f2f" stroke-width="1" stroke-dasharray="3,3" rx="15"/>
+    <text x="525" y="552" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#d32f2f">GAP</text>
+    
+    <!-- Assessment Gap label -->
+    <text x="450" y="620" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">MULTI-DIMENSIONAL ASSESSMENT GAP</text>
+    <text x="450" y="635" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d32f2f">Fragmented evaluation approaches</text>
+    
+    <!-- Connecting lines to center -->
+    <line x1="450" y1="500" x2="450" y2="410" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- GAP 5: Protective Innovation Gap (bottom right) -->
+  <g id="gap5">
+    <!-- Market Engagement side -->
+    <rect x="550" y="420" width="100" height="60" rx="10" fill="#fff8e1" stroke="#fbc02d" stroke-width="2"/>
+    <text x="600" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#f57c00">MARKET</text>
+    <text x="600" y="452" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#f57c00">ENGAGEMENT</text>
+    <text x="600" y="467" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f57c00">Economic opportunity</text>
+    <text x="600" y="479" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f57c00">Global reach</text>
+    
+    <!-- Gap area -->
+    <rect x="650" y="400" width="30" height="80" fill="url(#gap-gradient)" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="665" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#d32f2f" transform="rotate(90 665 440)">PROTECTIVE GAP</text>
+    
+    <!-- Cultural Protection side -->
+    <rect x="690" y="420" width="100" height="60" rx="10" fill="#ffebee" stroke="#d32f2f" stroke-width="2"/>
+    <text x="740" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d32f2f">CULTURAL</text>
+    <text x="740" y="452" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d32f2f">PROTECTION</text>
+    <text x="740" y="467" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d32f2f">Anti-appropriation</text>
+    <text x="740" y="479" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d32f2f">Community control</text>
+    
+    <!-- Connecting lines to center -->
+    <line x1="580" y1="420" x2="500" y2="380" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- Central explanation -->
+  <text x="450" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Requires integrated approaches</text>
+  <text x="450" y="404" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">that bridge all gaps simultaneously</text>
+  
+  <!-- Gap labels with arrows pointing to center -->
+  <text x="180" y="60" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">1. Innovation-Preservation Integration Gap</text>
+  <text x="680" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">2. Individual-Collective Balance Gap</text>
+  <text x="50" y="230" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">3. Community Control Operationalization Gap</text>
+  <text x="250" y="650" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">4. Multi-Dimensional Assessment Gap</text>
+  <text x="600" y="520" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">5. Protective Innovation Gap</text>
+  
+</svg>

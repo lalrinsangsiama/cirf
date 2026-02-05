@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Innovation Canvas - Sacred Systems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #0f172a 0%, #1e293b 40%, #334155 100%);
+            color: #f8fafc;
+            padding: 20px;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .cosmos-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Sacred Geometry Base */
+        .sacred-base {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 30%, transparent 70%);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            animation: slowRotate 120s linear infinite;
+        }
+        
+        .sacred-base::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            animation: slowRotate 80s linear infinite reverse;
+        }
+        
+        .sacred-base::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            animation: slowRotate 60s linear infinite;
+        }
+        
+        /* Central Heart - Cultural Value */
+        .cultural-heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 
+                0 0 50px rgba(245, 158, 11, 0.6),
+                inset 0 0 30px rgba(217, 119, 6, 0.3);
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #92400e;
+        }
+        
+        .cultural-heart:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 
+                0 0 80px rgba(245, 158, 11, 0.8),
+                inset 0 0 40px rgba(217, 119, 6, 0.4);
+        }
+        
+        .cultural-heart h3 {
+            font-size: 1rem;
+            color: #451a03;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .cultural-heart .essence {
+            font-size: 0.7rem;
+            color: #78350f;
+            line-height: 1.2;
+            font-style: italic;
+        }
+        
+        /* Four Directions - Operational Pillars */
+        .direction {
+            position: absolute;
+            width: 180px;
+            height: 120px;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+        }
+        
+        .direction:hover {
+            transform: scale(1.1);
+            z-index: 8;
+        }
+        
+        .direction h3 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .direction .description {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            opacity: 0.9;
+        }
+        
+        /* North - Economic Value */
+        .north {
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%);
+            border-color: #10b981;
+            color: #d1fae5;
+        }
+        
+        .north h3 { color: #6ee7b7; }
+        
+        /* East - Cultural Integrity */
+        .east {
+            top: 50%;
+            right: 120px;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(91, 33, 182, 0.3) 100%);
+            border-color: #7c3aed;
+            color: #ede9fe;
+        }
+        
+        .east h3 { color: #c4b5fd; }
+        
+        /* South - Sustainability */
+        .south {
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.2) 0%, rgba(3, 105, 161, 0.3) 100%);
+            border-color: #0284c7;
+            color: #dbeafe;
+        }
+        
+        .south h3 { color: #93c5fd; }
+        
+        /* West - Social Empowerment */
+        .west {
+            top: 50%;
+            left: 120px;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(185, 28, 28, 0.3) 100%);
+            border-color: #dc2626;
+            color: #fecaca;
+        }
+        
+        .west h3 { color: #fca5a5; }
+        
+        /* Spiral Path for Community Control */
+        .spiral-path {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            pointer-events: none;
+        }
+        
+        .control-node {
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background: rgba(245, 158, 11, 0.9);
+            border-radius: 15px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.65rem;
+            line-height: 1.2;
+            color: #451a03;
+            border: 2px solid #f59e0b;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            pointer-events: all;
+            backdrop-filter: blur(5px);
+        }
+        
+        .control-node:hover {
+            transform: scale(1.2);
+            background: rgba(245, 158, 11, 1);
+            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.6);
+            z-index: 9;
+        }
+        
+        .control-node h4 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        /* Fibonacci spiral positioning */
+        .node-1 { top: 10%; left: 65%; } /* Community Benefit */
+        .node-2 { top: 25%; right: 5%; } /* Cultural Protection */
+        .node-3 { bottom: 25%; right: 15%; } /* Community Relevance */
+        .node-4 { bottom: 10%; left: 35%; } /* Sustainable Development */
+        .node-5 { top: 40%; left: 5%; } /* Dignity & Empowerment */
+        
+        /* Outer Constellation - Supporting Elements */
+        .constellation-element {
+            position: absolute;
+            width: 140px;
+            height: 100px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        
+        .constellation-element:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .constellation-element h3 {
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+        
+        .constellation-element .details {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            line-height: 1.3;
+        }
+        
+        /* Positioning constellation elements */
+        .partnerships { top: 50px; left: -60px; }
+        .stakeholders { top: 50px; right: -60px; }
+        .channels { bottom: 50px; right: -60px; }
+        .resources { bottom: 50px; left: -60px; }
+        .activities { top: -40px; left: 50%; transform: translateX(-50%); }
+        .relationships { bottom: -40px; left: 50%; transform: translateX(-50%); }
+        
+        /* Resilience Capacities - Floating Spirits */
+        .resilience-spirit {
+            position: absolute;
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.3) 0%, rgba(67, 56, 202, 0.4) 100%);
+            border: 1px solid rgba(129, 140, 248, 0.5);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #c7d2fe;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+        
+        .resilience-spirit:hover {
+            transform: scale(1.3);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.5) 0%, rgba(67, 56, 202, 0.6) 100%);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+        }
+        
+        .resilience-spirit h4 {
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        /* Floating animation for spirits */
+        .spirit-protective { 
+            top: 80px; 
+            left: 200px; 
+            animation: float 6s ease-in-out infinite;
+        }
+        .spirit-adaptive { 
+            top: 80px; 
+            right: 200px; 
+            animation: float 6s ease-in-out infinite 1.5s;
+        }
+        .spirit-transformative { 
+            bottom: 80px; 
+            left: 200px; 
+            animation: float 6s ease-in-out infinite 3s;
+        }
+        .spirit-generative { 
+            bottom: 80px; 
+            right: 200px; 
+            animation: float 6s ease-in-out infinite 4.5s;
+        }
+        
+        /* Energy Connections */
+        .energy-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(245, 158, 11, 0.6) 50%, transparent 100%);
+            transform-origin: left center;
+            animation: energyFlow 4s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        .energy-1 {
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            animation-delay: 0s;
+        }
+        
+        .energy-2 {
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation-delay: 1s;
+        }
+        
+        .energy-3 {
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            transform: translate(-50%, -50%) rotate(135deg);
+            animation-delay: 2s;
+        }
+        
+        .energy-4 {
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            transform: translate(-50%, -50%) rotate(225deg);
+            animation-delay: 3s;
+        }
+        
+        /* Navigation Header */
+        .cosmic-header {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 15;
+        }
+        
+        .cosmic-header h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+            font-weight: 300;
+            text-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+        }
+        
+        .cosmic-header p {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            opacity: 0.8;
+        }
+        
+        /* Interactive States */
+        .active-element {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        /* Animations */
+        @keyframes slowRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(2deg); }
+            66% { transform: translateY(-5px) rotate(-1deg); }
+        }
+        
+        @keyframes energyFlow {
+            0%, 100% { opacity: 0.3; transform: scaleX(0.5); }
+            50% { opacity: 0.8; transform: scaleX(1.2); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
+            to { box-shadow: 0 0 40px rgba(245, 158, 11, 0.8); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .cosmos-container {
+                transform: scale(0.8);
+            }
+            
+            .constellation-element {
+                width: 120px;
+                height: 80px;
+                padding: 8px;
+            }
+            
+            .control-node {
+                width: 80px;
+                height: 60px;
+                font-size: 0.6rem;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .cosmos-container {
+                transform: scale(0.6);
+            }
+        }
+        
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body { 
+                background: white; 
+                color: black;
+            }
+            .cosmos-container {
+                transform: none;
+                height: auto;
+            }
+            .energy-line { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmos-container">
+        <!-- Cosmic Header -->
+        <div class="cosmic-header">
+            <h1>🌌 Cultural Innovation Canvas</h1>
+            <p>Sacred Systems for Economic Resilience through Cultural Integrity</p>
+        </div>
+        
+        <!-- Sacred Geometry Base -->
+        <div class="sacred-base"></div>
+        
+        <!-- Energy Connection Lines -->
+        <div class="energy-line energy-1"></div>
+        <div class="energy-line energy-2"></div>
+        <div class="energy-line energy-3"></div>
+        <div class="energy-line energy-4"></div>
+        
+        <!-- Central Heart - Cultural Value Proposition -->
+        <div class="cultural-heart" tabindex="0" role="button" aria-label="Cultural Value Proposition - The heart of innovation">
+            <h3>🎯 Cultural Value</h3>
+            <div class="essence">
+                Economic vitality through cultural integrity • Authentic expression serving community
+            </div>
+        </div>
+        
+        <!-- Four Directions - Operational Pillars -->
+        <div class="direction north" tabindex="0" role="button" aria-label="Economic Value Creation">
+            <h3>🌱 Economic Value</h3>
+            <div class="description">Building income, employment, and enterprise rooted in cultural assets</div>
+        </div>
+        
+        <div class="direction east" tabindex="0" role="button" aria-label="Cultural Integrity and Authenticity">
+            <h3>🏛️ Cultural Integrity</h3>
+            <div class="description">Protecting values, expressions, knowledge as collective strength</div>
+        </div>
+        
+        <div class="direction south" tabindex="0" role="button" aria-label="Adaptability and Sustainability">
+            <h3>🌊 Sustainability</h3>
+            <div class="description">Innovation that honors ecological, social, and cultural balance</div>
+        </div>
+        
+        <div class="direction west" tabindex="0" role="button" aria-label="Social Empowerment and Inclusion">
+            <h3>✊ Empowerment</h3>
+            <div class="description">Ensuring participation, voice, dignity, and shared growth</div>
+        </div>
+        
+        <!-- Spiral Path - Community Control Assessments -->
+        <div class="spiral-path">
+            <div class="control-node node-1" tabindex="0" role="button" aria-label="Community Benefit Assessment">
+                <h4>🔐 Benefit</h4>
+                Who benefits and how? Community interests first
+            </div>
+            
+            <div class="control-node node-2" tabindex="0" role="button" aria-label="Cultural Protection Mechanisms">
+                <h4>🔐 Protection</h4>
+                Sacred knowledge and practices safeguarded
+            </div>
+            
+            <div class="control-node node-3" tabindex="0" role="button" aria-label="Community Relevance Assessment">
+                <h4>🔐 Relevance</h4>
+                Meaningful and accepted locally
+            </div>
+            
+            <div class="control-node node-4" tabindex="0" role="button" aria-label="Sustainable Development Assessment">
+                <h4>🔐 Balance</h4>
+                Respects ecology and continuity
+            </div>
+            
+            <div class="control-node node-5" tabindex="0" role="button" aria-label="Dignity and Empowerment Assessment">
+                <h4>🔐 Dignity</h4>
+                Uplifts identity and agency
+            </div>
+        </div>
+        
+        <!-- Outer Constellation - Supporting Elements -->
+        <div class="constellation-element partnerships" tabindex="0" role="button" aria-label="Strategic Partnerships">
+            <h3>🤝 Partnerships</h3>
+            <div class="details">Cultural allies • Economic partners • Advocacy networks</div>
+        </div>
+        
+        <div class="constellation-element stakeholders" tabindex="0" role="button" aria-label="Community Stakeholders">
+            <h3>👥 Stakeholders</h3>
+            <div class="details">Practitioners • Members • Leaders • Ecosystem</div>
+        </div>
+        
+        <div class="constellation-element channels" tabindex="0" role="button" aria-label="Cultural Channels">
+            <h3>🌐 Channels</h3>
+            <div class="details">Gatherings • Markets • Digital • Partnerships</div>
+        </div>
+        
+        <div class="constellation-element resources" tabindex="0" role="button" aria-label="Resource Flows">
+            <h3>💰 Resources</h3>
+            <div class="details">Products • Services • Enterprises • Investments</div>
+        </div>
+        
+        <div class="constellation-element activities" tabindex="0" role="button" aria-label="Key Cultural Activities">
+            <h3>⚡ Activities</h3>
+            <div class="details">Stewardship • Development • Community building</div>
+        </div>
+        
+        <div class="constellation-element relationships" tabindex="0" role="button" aria-label="Community Relationships">
+            <h3>💞 Relationships</h3>
+            <div class="details">Trust • Protocols • Reciprocity • Transparency</div>
+        </div>
+        
+        <!-- Resilience Capacities - Floating Spirits -->
+        <div class="resilience-spirit spirit-protective" tabindex="0" role="button" aria-label="Protective Capacity">
+            <h4>🔄 Protective</h4>
+            Shield systems from harm
+        </div>
+        
+        <div class="resilience-spirit spirit-adaptive" tabindex="0" role="button" aria-label="Adaptive Capacity">
+            <h4>🔄 Adaptive</h4>
+            Change without losing identity
+        </div>
+        
+        <div class="resilience-spirit spirit-transformative" tabindex="0" role="button" aria-label="Transformative Capacity">
+            <h4>🔄 Transform</h4>
+            Shift power toward justice
+        </div>
+        
+        <div class="resilience-spirit spirit-generative" tabindex="0" role="button" aria-label="Generative Capacity">
+            <h4>🔄 Generative</h4>
+            Create new value and meaning
+        </div>
+    </div>
+    
+    <script>
+        // Interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('[tabindex="0"]');
+            
+            elements.forEach(element => {
+                element.addEventListener('click', function() {
+                    // Remove active class from all elements
+                    elements.forEach(el => el.classList.remove('active-element'));
+                    
+                    // Add active class to clicked element
+                    this.classList.add('active-element');
+                    
+                    // Remove active class after 3 seconds
+                    setTimeout(() => {
+                        this.classList.remove('active-element');
+                    }, 3000);
+                });
+                
+                // Keyboard accessibility
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

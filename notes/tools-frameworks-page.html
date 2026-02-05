@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools & Frameworks | Cultural Innovation Institute</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@200;300;400;500;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        :root {
+            --ink: #0a0a0a;
+            --pearl: #fdfdfb;
+            --gold: #d4af37;
+            --stone: #7c7c7c;
+            --sand: #f5f0e8;
+            --sage: #a8b5a0;
+            --terracotta: #c67557;
+            --ocean: #5b8c9e;
+            --lavender: #e8e0f5;
+            --easing: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        ::selection {
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--pearl);
+            color: var(--ink);
+            overflow-x: hidden;
+            line-height: 1;
+            font-weight: 300;
+        }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pearl);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--ink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.2s var(--easing), width 0.2s var(--easing), height 0.2s var(--easing);
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follow {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--ink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            opacity: 0.5;
+        }
+
+        .cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: transparent;
+            border: 1px solid var(--ink);
+            mix-blend-mode: normal;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 3rem 4rem;
+            mix-blend-mode: difference;
+            transition: all 0.5s var(--easing);
+        }
+
+        header.scrolled {
+            padding: 1.5rem 4rem;
+            background: rgba(253, 253, 251, 0.95);
+            backdrop-filter: blur(20px);
+            mix-blend-mode: normal;
+            border-bottom: 1px solid rgba(10, 10, 10, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            font-family: 'Playfair Display', serif;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--ink);
+            transition: width 0.3s var(--easing);
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .tools-hero {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--lavender) 0%, var(--pearl) 100%);
+        }
+
+        .hero-content {
+            width: 100%;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--stone);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 8rem);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -0.03em;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: revealText 1.2s var(--easing) forwards;
+        }
+
+        .hero-title .line:nth-child(2) span {
+            animation-delay: 0.1s;
+            font-style: italic;
+        }
+
+        @keyframes revealText {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-description {
+            max-width: 600px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        /* Categories Navigation */
+        .categories-nav {
+            padding: 4rem;
+            background: var(--sand);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+
+        .categories-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 1rem 2rem;
+            background: var(--pearl);
+            border: 1px solid var(--ink);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--ink);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .category-btn:hover::before,
+        .category-btn.active::before {
+            left: 0;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            color: var(--pearl);
+        }
+
+        .category-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tools Grid Section */
+        .tools-section {
+            padding: 8rem 4rem;
+            background: var(--pearl);
+        }
+
+        .section-header {
+            max-width: 1600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--stone);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            color: var(--stone);
+        }
+
+        /* Framework Cards */
+        .frameworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .framework-card {
+            background: white;
+            border: 1px solid rgba(10, 10, 10, 0.1);
+            padding: 3rem;
+            transition: all 0.5s var(--easing);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .framework-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--ocean) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--easing);
+        }
+
+        .framework-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .framework-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .framework-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--ocean) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .framework-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .framework-subtitle {
+            font-size: 0.9rem;
+            color: var(--stone);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .framework-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .framework-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .framework-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .framework-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .framework-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--ink);
+            background: transparent;
+            border-radius: 25px;
+            text-decoration: none;
+            color: var(--ink);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        .btn.primary {
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        .btn.primary:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--ink);
+        }
+
+        /* Measurement Tools Section */
+        .measurement-tools {
+            padding: 8rem 4rem;
+            background: var(--sand);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: var(--pearl);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-number {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--gold);
+            opacity: 0.3;
+        }
+
+        .tool-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .tool-metric {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--stone);
+            margin-bottom: 1rem;
+        }
+
+        .tool-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-formula {
+            background: rgba(10, 10, 10, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Interactive Calculator Section */
+        .calculator-section {
+            padding: 8rem 4rem;
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        .calculator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .calculator-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .calculator-input {
+            background: rgba(253, 253, 251, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .calculator-input label {
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .calculator-input input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(253, 253, 251, 0.1);
+            border: 1px solid rgba(253, 253, 251, 0.3);
+            border-radius: 8px;
+            color: var(--pearl);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .calculator-result {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--gold);
+            color: var(--ink);
+            border-radius: 12px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 300;
+        }
+
+        /* Downloads Section */
+        .downloads-section {
+            padding: 8rem 4rem;
+            background: var(--pearl);
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .download-card {
+            border: 1px solid rgba(10, 10, 10, 0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            background: var(--sand);
+            transform: translateY(-5px);
+        }
+
+        .download-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-format {
+            font-size: 0.8rem;
+            color: var(--stone);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 10rem 4rem;
+            background: linear-gradient(135deg, var(--ocean) 0%, var(--sage) 100%);
+            color: var(--pearl);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .cta-description {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--pearl);
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--ink);
+            color: var(--pearl);
+            padding: 6rem 4rem 3rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand p {
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-column a {
+            color: var(--pearl);
+            text-decoration: none;
+            font-weight: 300;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(253, 253, 251, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .frameworks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: clamp(2.5rem, 10vw, 5rem);
+            }
+
+            .tools-section,
+            .measurement-tools,
+            .downloads-section {
+                padding: 4rem 2rem;
+            }
+
+            .categories-nav {
+                padding: 2rem;
+            }
+
+            .categories-container {
+                gap: 1rem;
+            }
+
+            .cursor,
+            .cursor-follow {
+                display: none;
+            }
+
+            * {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">Tools & Frameworks</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follow"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <a href="index.html" class="logo">CII</a>
+            <ul class="nav-menu">
+                <li><a href="index.html#philosophy">Philosophy</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="case-studies.html">Case Studies</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="index.html#contact">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="tools-hero">
+        <div class="hero-content">
+            <p class="hero-label">Practical Resources</p>
+            <h1 class="hero-title">
+                <span class="line"><span>Tools &</span></span>
+                <span class="line"><span>Frameworks</span></span>
+            </h1>
+            <p class="hero-description">
+                Evidence-based frameworks and measurement tools for communities to assess, develop, and scale cultural innovation for economic resilience.
+            </p>
+        </div>
+    </section>
+
+    <!-- Categories Navigation -->
+    <section class="categories-nav">
+        <div class="categories-container">
+            <button class="category-btn active"><span>All Tools</span></button>
+            <button class="category-btn"><span>Assessment Frameworks</span></button>
+            <button class="category-btn"><span>Measurement Tools</span></button>
+            <button class="category-btn"><span>Implementation Guides</span></button>
+            <button class="category-btn"><span>Calculators</span></button>
+        </div>
+    </section>
+
+    <!-- Main Frameworks Section -->
+    <section class="tools-section">
+        <div class="section-header">
+            <p class="section-label">Core Frameworks</p>
+            <h2 class="section-title">Comprehensive Assessment Tools</h2>
+            <p class="section-description">
+                Research-validated frameworks for understanding and developing cultural innovation capacity in your community.
+            </p>
+        </div>
+
+        <div class="frameworks-grid">
+            <!-- Framework 1: CIMM -->
+            <article class="framework-card">
+                <div class="framework-icon">CI</div>
+                <h3 class="framework-title">Cultural Innovation Measurement Matrix</h3>
+                <p class="framework-subtitle">CIMM Framework</p>
+                <p class="framework-description">
+                    A comprehensive four-axis framework for measuring the depth, integrity, impact, and velocity of cultural innovations.
+                </p>
+                <ul class="framework-features">
+                    <li>Innovation Depth Spectrum (Surface to Systemic)</li>
+                    <li>Cultural Integrity Index (0-100 scale)</li>
+                    <li>Economic Impact Metrics</li>
+                    <li>Innovation Velocity Tracking</li>
+                </ul>
+                <div class="framework-buttons">
+                    <a href="#" class="btn primary">Download Framework</a>
+                    <a href="#" class="btn">View Guide</a>
+                </div>
+            </article>
+
+            <!-- Framework 2: CIRA -->
+            <article class="framework-card">
+                <div class="framework-icon">RA</div>
+                <h3 class="framework-title">Cultural Innovation Readiness Assessment</h3>
+                <p class="framework-subtitle">CIRA Framework</p>
+                <p class="framework-description">
+                    Evaluate your community's capacity for successful cultural innovation across multiple dimensions.
+                </p>
+                <ul class="framework-features">
+                    <li>Cultural Capital Inventory</li>
+                    <li>Innovation Ecosystem Components</li>
+                    <li>Barriers Assessment Index</li>
+                    <li>Readiness Score Calculation</li>
+                </ul>
+                <div class="framework-buttons">
+                    <a href="#" class="btn primary">Take Assessment</a>
+                    <a href="#" class="btn">Methodology</a>
+                </div>
+            </article>
+
+            <!-- Framework 3: TBL-CI -->
+            <article class="framework-card">
+                <div class="framework-icon">3B</div>
+                <h3 class="framework-title">Triple Bottom Line Cultural Innovation</h3>
+                <p class="framework-subtitle">TBL-CI Framework</p>
+                <p class="framework-description">
+                    Measure economic, social, and environmental returns from cultural innovation initiatives.
+                </p>
+                <ul class="framework-features">
+                    <li>Economic Returns Calculator</li>
+                    <li>Social Impact Metrics</li>
+                    <li>Environmental Sustainability Index</li>
+                    <li>Integrated Reporting Template</li>
+                </ul>
+                <div class="framework-buttons">
+                    <a href="#" class="btn primary">Access Tool</a>
+                    <a href="#" class="btn">Case Studies</a>
+                </div>
+            </article>
+
+            <!-- Framework 4: CIIA -->
+            <article class="framework-card">
+                <div class="framework-icon">IA</div>
+                <h3 class="framework-title">Community Innovation Impact Assessment</h3>
+                <p class="framework-subtitle">CIIA Framework</p>
+                <p class="framework-description">
+                    Analyze differential impacts of cultural innovation across community segments and stakeholders.
+                </p>
+                <ul class="framework-features">
+                    <li>Stakeholder Impact Matrix</li>
+                    <li>Distribution Analysis Tools</li>
+                    <li>Equity Assessment Metrics</li>
+                    <li>Community Feedback Systems</li>
+                </ul>
+                <div class="framework-buttons">
+                    <a href="#" class="btn primary">Download Matrix</a>
+                    <a href="#" class="btn">Examples</a>
+                </div>
+            </article>
+
+            <!-- Framework 5: CISS -->
+            <article class="framework-card">
+                <div class="framework-icon">SS</div>
+                <h3 class="framework-title">Cultural Innovation Sustainability Scorecard</h3>
+                <p class="framework-subtitle">CISS Framework</p>
+                <p class="framework-description">
+                    Evaluate long-term viability of cultural innovation initiatives across four sustainability dimensions.
+                </p>
+                <ul class="framework-features">
+                    <li>Economic Sustainability (25 points)</li>
+                    <li>Cultural Sustainability (25 points)</li>
+                    <li>Social Sustainability (25 points)</li>
+                    <li>Environmental Sustainability (25 points)</li>
+                </ul>
+                <div class="framework-buttons">
+                    <a href="#" class="btn primary">Calculate Score</a>
+                    <a href="#" class="btn">Benchmarks</a>
+                </div>
+            </article>
+
+            <!-- Framework 6: CIT -->
+            <article class="framework-card">
+                <div class="framework-icon">IT</div>
+                <h3 class="framework-title">Cultural Innovation Typology</h3>
+                <p class="framework-subtitle">CIT Framework</p>
+                <p class="framework-description">
+                    Classify and compare innovations by origin, control mechanism, and value creation logic.
+                </p>
+                <ul class="framework-features">
+                    <li>Innovation Origin Classification</li>
+                    <li>Control Mechanism Analysis</li>
+                    <li>Value Creation Models</li>
+                    <li>Comparative Analysis Tools</li>
+                </ul>
+                <div class="framework-buttons">
+                    <a href="#" class="btn primary">Explore Typology</a>
+                    <a href="#" class="btn">Research</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Measurement Tools Section -->
+    <section class="measurement-tools">
+        <div class="section-header">
+            <p class="section-label">Measurement Instruments</p>
+            <h2 class="section-title">Key Performance Indicators</h2>
+            <p class="section-description">
+                Specific metrics and formulas for tracking cultural innovation impact in your community.
+            </p>
+        </div>
+
+        <div class="tools-grid">
+            <article class="tool-card">
+                <span class="tool-number">01</span>
+                <h3 class="tool-title">Innovation Intensity Ratio</h3>
+                <p class="tool-metric">Frequency Metric</p>
+                <p class="tool-description">
+                    Measures the rate of cultural innovation generation in your community.
+                </p>
+                <div class="tool-formula">
+                    IIR = Cultural Innovations / 1000 Population / Year
+                </div>
+                <a href="#" class="btn">Calculate</a>
+            </article>
+
+            <article class="tool-card">
+                <span class="tool-number">02</span>
+                <h3 class="tool-title">Cultural Leverage Index</h3>
+                <p class="tool-metric">Efficiency Metric</p>
+                <p class="tool-description">
+                    Assesses economic value generated per unit of cultural assets employed.
+                </p>
+                <div class="tool-formula">
+                    CLI = Economic Value Generated / Cultural Assets Employed
+                </div>
+                <a href="#" class="btn">Calculate</a>
+            </article>
+
+            <article class="tool-card">
+                <span class="tool-number">03</span>
+                <h3 class="tool-title">Innovation Inclusivity Score</h3>
+                <p class="tool-metric">Equity Metric</p>
+                <p class="tool-description">
+                    Evaluates participation and benefit distribution across marginalized groups.
+                </p>
+                <div class="tool-formula">
+                    IIS = (Marginalized Participants / Total) × Benefit Share
+                </div>
+                <a href="#" class="btn">Calculate</a>
+            </article>
+
+            <article class="tool-card">
+                <span class="tool-number">04</span>
+                <h3 class="tool-title">Cultural Resilience Quotient</h3>
+                <p class="tool-metric">Preservation Metric</p>
+                <p class="tool-description">
+                    Measures balance between innovation and cultural preservation.
+                </p>
+                <div class="tool-formula">
+                    CRQ = (Maintaining + Enhancing) / Total Innovations
+                </div>
+                <a href="#" class="btn">Calculate</a>
+            </article>
+
+            <article class="tool-card">
+                <span class="tool-number">05</span>
+                <h3 class="tool-title">Innovation Efficiency Rate</h3>
+                <p class="tool-metric">Success Metric</p>
+                <p class="tool-description">
+                    Tracks the success rate of cultural innovation attempts.
+                </p>
+                <div class="tool-formula">
+                    IER = Successful Innovations / Total Attempts
+                </div>
+                <a href="#" class="btn">Calculate</a>
+            </article>
+
+            <article class="tool-card">
+                <span class="tool-number">06</span>
+                <h3 class="tool-title">Economic Multiplier Effect</h3>
+                <p class="tool-metric">Impact Metric</p>
+                <p class="tool-description">
+                    Calculates broader economic impact of cultural innovations.
+                </p>
+                <div class="tool-formula">
+                    EME = Total Economic Activity / Direct Investment
+                </div>
+                <a href="#" class="btn">Calculate</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Interactive Calculator -->
+    <section class="calculator-section">
+        <div class="calculator-container">
+            <h2 class="calculator-title">Innovation Readiness Calculator</h2>
+            <p class="section-description" style="color: var(--pearl); opacity: 0.9; margin-bottom: 3rem;">
+                Calculate your community's innovation potential score based on key enabling conditions.
+            </p>
+            
+            <div class="calculator-grid">
+                <div class="calculator-input">
+                    <label>Bridge Leadership (0-10)</label>
+                    <input type="number" min="0" max="10" value="5" id="leadership">
+                </div>
+                <div class="calculator-input">
+                    <label>Identity Security (0-10)</label>
+                    <input type="number" min="0" max="10" value="5" id="identity">
+                </div>
+                <div class="calculator-input">
+                    <label>Institutional Flexibility (0-10)</label>
+                    <input type="number" min="0" max="10" value="5" id="flexibility">
+                </div>
+                <div class="calculator-input">
+                    <label>Economic Safety Nets (0-10)</label>
+                    <input type="number" min="0" max="10" value="5" id="safety">
+                </div>
+            </div>
+            
+            <div class="calculator-result">
+                <p class="result-label">Innovation Readiness Score</p>
+                <p class="result-value" id="score">50</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section class="downloads-section">
+        <div class="section-header">
+            <p class="section-label">Resources</p>
+            <h2 class="section-title">Download Templates & Guides</h2>
+            <p class="section-description">
+                Ready-to-use templates, worksheets, and implementation guides for your community.
+            </p>
+        </div>
+
+        <div class="downloads-grid">
+            <article class="download-card">
+                <div class="download-icon">📊</div>
+                <h3 class="download-title">Assessment Workbook</h3>
+                <p class="download-format">Excel Template</p>
+            </article>
+
+            <article class="download-card">
+                <div class="download-icon">📋</div>
+                <h3 class="download-title">Implementation Checklist</h3>
+                <p class="download-format">PDF Guide</p>
+            </article>
+
+            <article class="download-card">
+                <div class="download-icon">📈</div>
+                <h3 class="download-title">Metrics Dashboard</h3>
+                <p class="download-format">Excel Template</p>
+            </article>
+
+            <article class="download-card">
+                <div class="download-icon">📝</div>
+                <h3 class="download-title">Survey Templates</h3>
+                <p class="download-format">Word Documents</p>
+            </article>
+
+            <article class="download-card">
+                <div class="download-icon">🎯</div>
+                <h3 class="download-title">Strategic Planning Kit</h3>
+                <p class="download-format">Complete Package</p>
+            </article>
+
+            <article class="download-card">
+                <div class="download-icon">📚</div>
+                <h3 class="download-title">Case Study Template</h3>
+                <p class="download-format">Word Template</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Need Custom Tools?</h2>
+        <p class="cta-description">
+            We develop tailored frameworks and measurement tools specific to your community's unique cultural context and economic goals.
+        </p>
+        <a href="#" class="cta-button">Request Consultation</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Cultural Innovation Institute</h3>
+                <p>Empowering communities worldwide with evidence-based tools for cultural innovation and economic resilience.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Tools</h4>
+                <ul>
+                    <li><a href="#">Frameworks</a></li>
+                    <li><a href="#">Calculators</a></li>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">Guides</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Training</a></li>
+                    <li><a href="#">Community Forum</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2024 Cultural Innovation Institute. Open source tools for community empowerment.
+        </div>
+    </footer>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1200);
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollow = document.querySelector('.cursor-follow');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let followX = 0, followY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            followX += (mouseX - followX) * 0.08;
+            followY += (mouseY - followY) * 0.08;
+            cursorFollow.style.left = followX + 'px';
+            cursorFollow.style.top = followY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor hover
+        const hoverElements = document.querySelectorAll('a, button, .btn, .framework-card, .tool-card, .download-card');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Category buttons
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // Here you would filter the tools
+                console.log('Filter by:', this.textContent);
+            });
+        });
+
+        // Innovation Readiness Calculator
+        const inputs = document.querySelectorAll('.calculator-input input');
+        const scoreDisplay = document.getElementById('score');
+
+        function calculateScore() {
+            const weights = {
+                leadership: 0.15,
+                identity: 0.15,
+                flexibility: 0.12,
+                safety: 0.12
+            };
+
+            let totalScore = 0;
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                const weight = weights[input.id] || 0.115; // Default weight for other factors
+                totalScore += value * weight * 10;
+            });
+
+            // Animate score change
+            const currentScore = parseFloat(scoreDisplay.textContent);
+            const targetScore = Math.round(totalScore);
+            const duration = 1000;
+            const startTime = performance.now();
+
+            function animateScore(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
+                
+                const displayScore = Math.round(currentScore + (targetScore - currentScore) * easeProgress);
+                scoreDisplay.textContent = displayScore;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScore);
+                }
+            }
+
+            requestAnimationFrame(animateScore);
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('input', calculateScore);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate elements on scroll
+        const animateElements = document.querySelectorAll('.framework-card, .tool-card, .download-card');
+        animateElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.19, 1, 0.22, 1)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

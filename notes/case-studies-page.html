@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies | Cultural Innovation Institute</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@200;300;400;500;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        :root {
+            --ink: #0a0a0a;
+            --pearl: #fdfdfb;
+            --gold: #d4af37;
+            --stone: #7c7c7c;
+            --sand: #f5f0e8;
+            --sage: #a8b5a0;
+            --terracotta: #c67557;
+            --ocean: #5b8c9e;
+            --easing: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        ::selection {
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--pearl);
+            color: var(--ink);
+            overflow-x: hidden;
+            line-height: 1;
+            font-weight: 300;
+        }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pearl);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--ink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.2s var(--easing), width 0.2s var(--easing), height 0.2s var(--easing);
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follow {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--ink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            opacity: 0.5;
+        }
+
+        .cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: transparent;
+            border: 1px solid var(--ink);
+            mix-blend-mode: normal;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 3rem 4rem;
+            mix-blend-mode: difference;
+            transition: all 0.5s var(--easing);
+        }
+
+        header.scrolled {
+            padding: 1.5rem 4rem;
+            background: rgba(253, 253, 251, 0.95);
+            backdrop-filter: blur(20px);
+            mix-blend-mode: normal;
+            border-bottom: 1px solid rgba(10, 10, 10, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            font-family: 'Playfair Display', serif;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--ink);
+            transition: width 0.3s var(--easing);
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .case-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--sand) 0%, var(--pearl) 100%);
+        }
+
+        .hero-content {
+            width: 100%;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--stone);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 10rem);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -0.03em;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: revealText 1.2s var(--easing) forwards;
+        }
+
+        .hero-title .line:nth-child(2) span {
+            animation-delay: 0.1s;
+            font-style: italic;
+        }
+
+        @keyframes revealText {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-description {
+            max-width: 600px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 8rem 4rem;
+            background: var(--ink);
+            color: var(--pearl);
+            position: relative;
+        }
+
+        .map-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .map-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .map-subtitle {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 4rem;
+        }
+
+        .world-map {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .map-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .map-pin:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
+            }
+        }
+
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            padding: 4rem;
+            background: var(--pearl);
+            border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+
+        .filter-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--ink);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: var(--ink);
+            color: var(--pearl);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 0 1 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--ink);
+            border-radius: 30px;
+            background: transparent;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: var(--sand);
+        }
+
+        /* Case Studies Grid */
+        .cases-section {
+            padding: 8rem 4rem;
+            background: var(--pearl);
+        }
+
+        .cases-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 8rem;
+        }
+
+        .case-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s var(--easing);
+        }
+
+        .case-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .case-card:nth-child(even) {
+            direction: rtl;
+        }
+
+        .case-card:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .case-image-container {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            border-radius: 0;
+        }
+
+        .case-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s var(--easing);
+        }
+
+        .case-card:hover .case-image {
+            transform: scale(1.05);
+        }
+
+        .case-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(10, 10, 10, 0.7) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .case-card:hover .case-overlay {
+            opacity: 1;
+        }
+
+        .case-content {
+            padding: 2rem;
+        }
+
+        .case-region {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--stone);
+            margin-bottom: 1rem;
+        }
+
+        .case-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-stats {
+            display: flex;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--stone);
+        }
+
+        .case-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: var(--ink);
+        }
+
+        .case-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--ink);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .case-link::after {
+            content: '→';
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .case-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Testimonial Section */
+        .testimonial-section {
+            padding: 8rem 4rem;
+            background: var(--sand);
+        }
+
+        .testimonial-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .quote-mark {
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            color: var(--gold);
+            opacity: 0.3;
+            line-height: 0.5;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-author {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: var(--stone);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 10rem 4rem;
+            background: linear-gradient(135deg, var(--ink) 0%, #2a2a2a 100%);
+            color: var(--pearl);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .cta-description {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--gold);
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--ink);
+            color: var(--pearl);
+            padding: 6rem 4rem 3rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand p {
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-column a {
+            color: var(--pearl);
+            text-decoration: none;
+            font-weight: 300;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(253, 253, 251, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .case-card {
+                grid-template-columns: 1fr;
+            }
+
+            .case-card:nth-child(even) {
+                direction: ltr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: clamp(2.5rem, 10vw, 5rem);
+            }
+
+            .cases-section {
+                padding: 4rem 2rem;
+            }
+
+            .case-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                flex: 1;
+                width: 100%;
+            }
+
+            .cursor,
+            .cursor-follow {
+                display: none;
+            }
+
+            * {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">Case Studies</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follow"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <a href="index.html" class="logo">CII</a>
+            <ul class="nav-menu">
+                <li><a href="index.html#philosophy">Philosophy</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="case-studies.html" class="active">Case Studies</a></li>
+                <li><a href="index.html#impact">Impact</a></li>
+                <li><a href="index.html#contact">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="case-hero">
+        <div class="hero-content">
+            <p class="hero-label">Global Impact</p>
+            <h1 class="hero-title">
+                <span class="line"><span>Stories of</span></span>
+                <span class="line"><span>Transformation</span></span>
+            </h1>
+            <p class="hero-description">
+                From the mountains of Mizoram to the markets of Nairobi, witness how communities worldwide are proving that cultural innovation drives economic resilience.
+            </p>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="map-section">
+        <div class="map-container">
+            <h2 class="map-title">Impact Across Continents</h2>
+            <p class="map-subtitle">Click on a location to explore the case study</p>
+            
+            <div class="world-map">
+                <!-- Simplified world map representation -->
+                <svg class="map-svg" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="1200" height="600" fill="transparent"/>
+                    <!-- Simple continent outlines -->
+                    <path d="M200,250 L350,200 L400,220 L380,280 L320,320 L200,300 Z" stroke="#fdfdfb" stroke-width="1" opacity="0.3"/>
+                    <path d="M500,150 L650,140 L700,200 L650,250 L550,240 L500,180 Z" stroke="#fdfdfb" stroke-width="1" opacity="0.3"/>
+                    <path d="M750,220 L850,200 L900,280 L820,350 L750,300 Z" stroke="#fdfdfb" stroke-width="1" opacity="0.3"/>
+                    <path d="M550,320 L650,300 L700,400 L600,420 L550,380 Z" stroke="#fdfdfb" stroke-width="1" opacity="0.3"/>
+                </svg>
+                
+                <!-- Map pins for case studies -->
+                <div class="map-pin" style="top: 45%; left: 25%;" title="Maya Communities, Guatemala"></div>
+                <div class="map-pin" style="top: 35%; left: 52%;" title="Sami Reindeer Herders, Finland"></div>
+                <div class="map-pin" style="top: 48%; left: 72%;" title="Mizo Communities, India"></div>
+                <div class="map-pin" style="top: 65%; left: 55%;" title="Maasai, Kenya"></div>
+                <div class="map-pin" style="top: 40%; left: 85%;" title="Māori Enterprises, New Zealand"></div>
+            </div>
+            
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--gold);"></div>
+                    <span>Active Projects</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--sage);"></div>
+                    <span>Completed</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--ocean);"></div>
+                    <span>In Development</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <div class="filter-group">
+                <button class="filter-chip active">All Regions</button>
+                <button class="filter-chip">Asia Pacific</button>
+                <button class="filter-chip">Africa</button>
+                <button class="filter-chip">Americas</button>
+                <button class="filter-chip">Europe</button>
+            </div>
+            <div class="filter-group">
+                <button class="filter-chip">Indigenous Tech</button>
+                <button class="filter-chip">Crafts & Heritage</button>
+                <button class="filter-chip">Sustainable Agriculture</button>
+                <button class="filter-chip">Social Enterprise</button>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search case studies...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Grid -->
+    <section class="cases-section">
+        <div class="cases-grid">
+            
+            <!-- Case Study 1 -->
+            <article class="case-card">
+                <div class="case-image-container">
+                    <div class="case-overlay"></div>
+                    <div class="case-image" style="background: linear-gradient(135deg, var(--terracotta) 0%, var(--sand) 100%); height: 100%;"></div>
+                </div>
+                <div class="case-content">
+                    <p class="case-region">Northeast India</p>
+                    <h2 class="case-title">The Mizo Bamboo Revolution</h2>
+                    <div class="case-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">3,500</span>
+                            <span class="stat-label">Jobs Created</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">280%</span>
+                            <span class="stat-label">Income Increase</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">$2.4M</span>
+                            <span class="stat-label">Annual Revenue</span>
+                        </div>
+                    </div>
+                    <p class="case-description">
+                        Traditional bamboo craftsmanship meets modern design thinking. Young Mizo entrepreneurs transformed ancestral weaving techniques into a thriving sustainable furniture export business, preserving cultural heritage while accessing global markets.
+                    </p>
+                    <a href="#" class="case-link">Explore Full Story</a>
+                </div>
+            </article>
+
+            <!-- Case Study 2 -->
+            <article class="case-card">
+                <div class="case-image-container">
+                    <div class="case-overlay"></div>
+                    <div class="case-image" style="background: linear-gradient(135deg, var(--ocean) 0%, var(--sage) 100%); height: 100%;"></div>
+                </div>
+                <div class="case-content">
+                    <p class="case-region">New Zealand</p>
+                    <h2 class="case-title">Māori Digital Sovereignty</h2>
+                    <div class="case-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">$126B</span>
+                            <span class="stat-label">Economic Impact</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">8.9%</span>
+                            <span class="stat-label">of National GDP</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">45,000</span>
+                            <span class="stat-label">Enterprises</span>
+                        </div>
+                    </div>
+                    <p class="case-description">
+                        Integrating tikanga (customs) with technology, Māori-owned tech companies are pioneering indigenous data sovereignty models. From language preservation apps to blockchain-based resource management, tradition guides innovation.
+                    </p>
+                    <a href="#" class="case-link">Explore Full Story</a>
+                </div>
+            </article>
+
+            <!-- Case Study 3 -->
+            <article class="case-card">
+                <div class="case-image-container">
+                    <div class="case-overlay"></div>
+                    <div class="case-image" style="background: linear-gradient(135deg, var(--sage) 0%, var(--gold) 100%); height: 100%;"></div>
+                </div>
+                <div class="case-content">
+                    <p class="case-region">East Africa</p>
+                    <h2 class="case-title">Kenya's Maasai Fashion Forward</h2>
+                    <div class="case-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">800</span>
+                            <span class="stat-label">Women Artisans</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">5x</span>
+                            <span class="stat-label">Income Growth</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Global Markets</span>
+                        </div>
+                    </div>
+                    <p class="case-description">
+                        Maasai beadwork traditions, passed through generations, now grace international runways. Through fair trade partnerships and e-commerce platforms, women's cooperatives maintain cultural authenticity while achieving economic independence.
+                    </p>
+                    <a href="#" class="case-link">Explore Full Story</a>
+                </div>
+            </article>
+
+            <!-- Case Study 4 -->
+            <article class="case-card">
+                <div class="case-image-container">
+                    <div class="case-overlay"></div>
+                    <div class="case-image" style="background: linear-gradient(135deg, #8e7cc3 0%, var(--ocean) 100%); height: 100%;"></div>
+                </div>
+                <div class="case-content">
+                    <p class="case-region">Northern Europe</p>
+                    <h2 class="case-title">Sami Reindeer Tech</h2>
+                    <div class="case-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">GPS</span>
+                            <span class="stat-label">Tracking Systems</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">30%</span>
+                            <span class="stat-label">Loss Reduction</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">€4M</span>
+                            <span class="stat-label">Annual Savings</span>
+                        </div>
+                    </div>
+                    <p class="case-description">
+                        Ancient herding wisdom meets satellite technology. Sami reindeer herders combine traditional migration knowledge with GPS tracking and climate data, protecting both livelihoods and Arctic ecosystems in the face of climate change.
+                    </p>
+                    <a href="#" class="case-link">Explore Full Story</a>
+                </div>
+            </article>
+
+            <!-- Case Study 5 -->
+            <article class="case-card">
+                <div class="case-image-container">
+                    <div class="case-overlay"></div>
+                    <div class="case-image" style="background: linear-gradient(135deg, var(--terracotta) 0%, #8e7cc3 100%); height: 100%;"></div>
+                </div>
+                <div class="case-content">
+                    <p class="case-region">Central America</p>
+                    <h2 class="case-title">Maya Cacao Renaissance</h2>
+                    <div class="case-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">2,000</span>
+                            <span class="stat-label">Farming Families</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">400%</span>
+                            <span class="stat-label">Price Premium</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">$8M</span>
+                            <span class="stat-label">Export Value</span>
+                        </div>
+                    </div>
+                    <p class="case-description">
+                        Sacred cacao cultivation practices, refined over millennia, now supply luxury chocolate markets worldwide. Community cooperatives preserve biodiversity and cultural ceremonies while achieving premium pricing through direct trade relationships.
+                    </p>
+                    <a href="#" class="case-link">Explore Full Story</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+        <div class="testimonial-container">
+            <div class="quote-mark">"</div>
+            <p class="testimonial-text">
+                Cultural innovation isn't about choosing between tradition and progress. It's about recognizing that our ancestral wisdom holds the keys to our economic future.
+            </p>
+            <p class="testimonial-author">Dr. Maria Xólotl</p>
+            <p class="testimonial-role">Indigenous Economics Researcher, Guatemala</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Your Story Could Be Next</h2>
+        <p class="cta-description">
+            Are you part of a community innovating from cultural foundations? We're documenting transformative stories of economic resilience worldwide.
+        </p>
+        <a href="#" class="cta-button">Share Your Story</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Cultural Innovation Institute</h3>
+                <p>Documenting and enabling cultural innovation as a driver for economic resilience in indigenous and ethnic communities worldwide.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Research</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Publications</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Partner With Us</a></li>
+                    <li><a href="#">Join Network</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2024 Cultural Innovation Institute. Empowering communities worldwide.
+        </div>
+    </footer>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1200);
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollow = document.querySelector('.cursor-follow');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let followX = 0, followY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            followX += (mouseX - followX) * 0.08;
+            followY += (mouseY - followY) * 0.08;
+            cursorFollow.style.left = followX + 'px';
+            cursorFollow.style.top = followY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor hover
+        const hoverElements = document.querySelectorAll('a, button, .filter-chip, .case-card, .map-pin');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Filter functionality
+        const filterChips = document.querySelectorAll('.filter-chip');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                // Remove active from siblings in same group
+                const parent = this.parentElement;
+                parent.querySelectorAll('.filter-chip').forEach(sibling => {
+                    sibling.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Here you would filter the case studies
+                console.log('Filter:', this.textContent);
+            });
+        });
+
+        // Case cards animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        const caseCards = document.querySelectorAll('.case-card');
+        caseCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Map pins interaction
+        const mapPins = document.querySelectorAll('.map-pin');
+        mapPins.forEach(pin => {
+            pin.addEventListener('click', function() {
+                const location = this.getAttribute('title');
+                console.log('Selected location:', location);
+                // Here you would scroll to or highlight the relevant case study
+                
+                // Visual feedback
+                mapPins.forEach(p => p.style.background = 'var(--gold)');
+                this.style.background = 'var(--sage)';
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                console.log('Searching for:', searchTerm);
+                // Here you would implement search filtering
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrolled * 0.001);
+            }
+        });
+    </script>
+</body>
+</html>

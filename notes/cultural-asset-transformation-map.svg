@@ -1,0 +1,145 @@
+<svg viewBox="0 0 900 750" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="750" rx="10" fill="#f8f9fa" />
+  
+  <!-- Title -->
+  <text x="450" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Cultural Asset Transformation Map</text>
+  <text x="450" y="70" font-family="Arial" font-size="16" font-style="italic" text-anchor="middle">Industrial District Revitalization through Cultural Innovation</text>
+
+  <!-- Left Panel - BEFORE -->
+  <rect x="50" y="90" width="380" height="520" rx="5" fill="#f5f5f5" stroke="#9e9e9e" stroke-width="2" />
+  <rect x="50" y="90" width="380" height="40" rx="5" fill="#eeeeee" stroke="#9e9e9e" stroke-width="2" />
+  <text x="240" y="117" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle">BEFORE</text>
+
+  <!-- Right Panel - AFTER -->
+  <rect x="470" y="90" width="380" height="520" rx="5" fill="#f5f5f5" stroke="#9e9e9e" stroke-width="2" />
+  <rect x="470" y="90" width="380" height="40" rx="5" fill="#eeeeee" stroke="#9e9e9e" stroke-width="2" />
+  <text x="660" y="117" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle">AFTER</text>
+
+  <!-- BEFORE Map -->
+  <circle cx="240" cy="350" r="220" fill="#e0e0e0" stroke="#9e9e9e" stroke-width="1" />
+  
+  <!-- River -->
+  <path d="M 100 240 C 130 280, 160 300, 200 310 C 250 320, 290 320, 340 360 C 380 390, 400 450, 410 500" fill="none" stroke="#90caf9" stroke-width="12" />
+  
+  <!-- Roads -->
+  <line x1="70" y1="200" x2="410" y2="200" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="70" y1="350" x2="410" y2="350" stroke="#9e9e9e" stroke-width="8" />
+  <line x1="70" y1="500" x2="410" y2="500" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="150" y1="150" x2="150" y2="550" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="240" y1="150" x2="240" y2="550" stroke="#9e9e9e" stroke-width="10" />
+  <line x1="330" y1="150" x2="330" y2="550" stroke="#9e9e9e" stroke-width="6" />
+  
+  <!-- Industrial Buildings -->
+  <rect x="160" y="210" width="70" height="30" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="160" y="250" width="70" height="40" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="160" y="300" width="70" height="40" fill="#ef9a9a" stroke="#c62828" stroke-width="2" />
+  <rect x="160" y="360" width="70" height="130" fill="#ef9a9a" stroke="#c62828" stroke-width="2" />
+  
+  <rect x="250" y="210" width="70" height="60" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="250" y="280" width="70" height="60" fill="#ef9a9a" stroke="#c62828" stroke-width="2" />
+  <rect x="250" y="370" width="70" height="120" fill="#ef9a9a" stroke="#c62828" stroke-width="2" />
+  
+  <rect x="110" y="160" width="30" height="30" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="340" y="160" width="30" height="30" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="110" y="370" width="30" height="120" fill="#ef9a9a" stroke="#c62828" stroke-width="2" />
+  <rect x="340" y="370" width="30" height="40" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="340" y="420" width="30" height="70" fill="#ef9a9a" stroke="#c62828" stroke-width="2" />
+  
+  <!-- Legend -->
+  <rect x="90" y="130" width="15" height="15" fill="#e57373" stroke="#c62828" stroke-width="1" />
+  <text x="110" y="142" font-family="Arial" font-size="10" text-anchor="start">Active Industrial Use</text>
+  
+  <rect x="190" y="130" width="15" height="15" fill="#ef9a9a" stroke="#c62828" stroke-width="1" />
+  <text x="210" y="142" font-family="Arial" font-size="10" text-anchor="start">Vacant/Underutilized Industrial</text>
+  
+  <!-- Statistics -->
+  <rect x="100" y="525" width="280" height="65" rx="5" fill="white" stroke="#9e9e9e" stroke-width="1" />
+  <text x="110" y="545" font-family="Arial" font-size="14" font-weight="bold">District Statistics:</text>
+  <text x="110" y="565" font-family="Arial" font-size="12">• 7 active industrial buildings (41%)</text>
+  <text x="110" y="580" font-family="Arial" font-size="12">• 10 vacant/underutilized buildings (59%)</text>
+  
+  <!-- AFTER Map -->
+  <circle cx="660" cy="350" r="220" fill="#e0e0e0" stroke="#9e9e9e" stroke-width="1" />
+  
+  <!-- River with improved banks -->
+  <path d="M 520 240 C 550 280, 580 300, 620 310 C 670 320, 710 320, 760 360 C 800 390, 820 450, 830 500" fill="none" stroke="#64b5f6" stroke-width="12" />
+  <path d="M 520 236 C 550 276, 580 296, 620 306 C 670 316, 710 316, 760 356 C 800 386, 820 446, 830 496" fill="none" stroke="#bbdefb" stroke-width="4" />
+  
+  <!-- Roads with bike lanes -->
+  <line x1="490" y1="200" x2="830" y2="200" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="490" y1="198" x2="830" y2="198" stroke="#81c784" stroke-width="2" />
+  
+  <line x1="490" y1="350" x2="830" y2="350" stroke="#9e9e9e" stroke-width="8" />
+  <line x1="490" y1="346" x2="830" y2="346" stroke="#81c784" stroke-width="2" />
+  <line x1="490" y1="354" x2="830" y2="354" stroke="#81c784" stroke-width="2" />
+  
+  <line x1="490" y1="500" x2="830" y2="500" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="490" y1="498" x2="830" y2="498" stroke="#81c784" stroke-width="2" />
+  
+  <line x1="570" y1="150" x2="570" y2="550" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="568" y1="150" x2="568" y2="550" stroke="#81c784" stroke-width="2" />
+  
+  <line x1="660" y1="150" x2="660" y2="550" stroke="#9e9e9e" stroke-width="10" />
+  <line x1="656" y1="150" x2="656" y2="550" stroke="#81c784" stroke-width="2" />
+  <line x1="664" y1="150" x2="664" y2="550" stroke="#81c784" stroke-width="2" />
+  
+  <line x1="750" y1="150" x2="750" y2="550" stroke="#9e9e9e" stroke-width="6" />
+  <line x1="752" y1="150" x2="752" y2="550" stroke="#81c784" stroke-width="2" />
+  
+  <!-- Transformed Buildings -->
+  <rect x="580" y="210" width="70" height="30" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="580" y="250" width="70" height="40" fill="#90caf9" stroke="#1565c0" stroke-width="2" />
+  <rect x="580" y="300" width="70" height="40" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2" />
+  <rect x="580" y="360" width="70" height="130" fill="#90caf9" stroke="#1565c0" stroke-width="2" />
+  
+  <rect x="670" y="210" width="70" height="60" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="670" y="280" width="70" height="60" fill="#90caf9" stroke="#1565c0" stroke-width="2" />
+  <rect x="670" y="370" width="70" height="120" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2" />
+  
+  <rect x="530" y="160" width="30" height="30" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="760" y="160" width="30" height="30" fill="#ffcc80" stroke="#ef6c00" stroke-width="2" />
+  <rect x="530" y="370" width="30" height="120" fill="#90caf9" stroke="#1565c0" stroke-width="2" />
+  <rect x="760" y="370" width="30" height="40" fill="#e57373" stroke="#c62828" stroke-width="2" />
+  <rect x="760" y="420" width="30" height="70" fill="#ffcc80" stroke="#ef6c00" stroke-width="2" />
+  
+  <!-- Public Spaces -->
+  <circle cx="630" cy="160" r="15" fill="#c5e1a5" stroke="#558b2f" stroke-width="1" />
+  <circle cx="705" cy="160" r="15" fill="#c5e1a5" stroke="#558b2f" stroke-width="1" />
+  <ellipse cx="660" cy="540" rx="40" ry="15" fill="#c5e1a5" stroke="#558b2f" stroke-width="1" />
+  
+  <!-- Legend -->
+  <rect x="510" y="115" width="12" height="12" fill="#e57373" stroke="#c62828" stroke-width="1" />
+  <text x="528" y="125" font-family="Arial" font-size="10" text-anchor="start">Active Industrial Use</text>
+  
+  <rect x="510" y="130" width="12" height="12" fill="#90caf9" stroke="#1565c0" stroke-width="1" />
+  <text x="528" y="140" font-family="Arial" font-size="10" text-anchor="start">Creative Workspaces</text>
+  
+  <rect x="510" y="145" width="12" height="12" fill="#a5d6a7" stroke="#2e7d32" stroke-width="1" />
+  <text x="528" y="155" font-family="Arial" font-size="10" text-anchor="start">Cultural Venues</text>
+  
+  <rect x="650" y="115" width="12" height="12" fill="#ffcc80" stroke="#ef6c00" stroke-width="1" />
+  <text x="668" y="125" font-family="Arial" font-size="10" text-anchor="start">Mixed-Use Development</text>
+  
+  <rect x="650" y="130" width="12" height="12" fill="#c5e1a5" stroke="#558b2f" stroke-width="1" />
+  <text x="668" y="140" font-family="Arial" font-size="10" text-anchor="start">Public Spaces</text>
+  
+  <line x1="650" y1="150" x2="662" y2="150" stroke="#81c784" stroke-width="2" />
+  <text x="668" y="155" font-family="Arial" font-size="10" text-anchor="start">Bike/Pedestrian Infrastructure</text>
+  
+  <!-- Statistics -->
+  <rect x="520" y="505" width="280" height="85" rx="5" fill="white" stroke="#9e9e9e" stroke-width="1" />
+  <text x="530" y="525" font-family="Arial" font-size="14" font-weight="bold">District Statistics:</text>
+  <text x="530" y="545" font-family="Arial" font-size="12">• 4 active industrial buildings (24%)</text>
+  <text x="530" y="560" font-family="Arial" font-size="12">• 7 creative workspaces (41%)</text>
+  <text x="530" y="575" font-family="Arial" font-size="12">• 3 cultural venues (18%)</text>
+  <text x="530" y="590" font-family="Arial" font-size="12">• 3 mixed-use developments (18%)</text>
+
+  <!-- Key Insights -->
+  <rect x="50" y="630" width="800" height="100" rx="5" fill="white" stroke="#9e9e9e" stroke-width="1" />
+  <text x="450" y="655" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">Transformation Impact</text>
+  <text x="100" y="685" font-family="Arial" font-size="14">• Maintained 24% active industrial buildings while adding 76% new uses</text>
+  <text x="100" y="705" font-family="Arial" font-size="14">• Introduced 3 new public spaces and district-wide pedestrian/cycling infrastructure</text>
+  <text x="500" y="685" font-family="Arial" font-size="14">• Reactivated 100% of previously vacant buildings</text>
+  <text x="500" y="705" font-family="Arial" font-size="14">• Created mixed-use ecosystem supporting 24/7 district activity</text>
+</svg>

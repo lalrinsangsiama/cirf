@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIRF - Cultural Innovation Resilience Framework Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #ecf0f1;
+            margin: 20px 30px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            display: none;
+            padding: 30px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pillar-icon {
+            font-size: 1.5em;
+        }
+
+        .question-group {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .rating-scale {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .rating-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .rating-option:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .rating-option input[type="radio"]:checked + label {
+            background: #3498db;
+            color: white;
+        }
+
+        .rating-option.selected {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background: #ecf0f1;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .results {
+            display: none;
+            padding: 30px;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .score-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .score-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-max {
+            font-size: 1em;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .overall-score {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .overall-score h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .overall-score .score {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .recommendations {
+            margin-top: 30px;
+        }
+
+        .recommendation-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .recommendation-card.good {
+            border-left-color: #2ecc71;
+        }
+
+        .recommendation-card.medium {
+            border-left-color: #f39c12;
+        }
+
+        .visual-chart {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .chart-bar {
+            width: 60px;
+            background: linear-gradient(180deg, #3498db, #2980b9);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 1s ease;
+        }
+
+        .chart-bar::after {
+            content: attr(data-score);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .chart-label {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .intro-section {
+            text-align: center;
+            padding: 40px 30px;
+        }
+
+        .intro-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .intro-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #5d6d7e;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .framework-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .framework-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .framework-item:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+        }
+
+        .framework-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .score-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .rating-scale {
+                justify-content: center;
+            }
+            
+            .chart-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .chart-bar {
+                width: 200px;
+                height: 20px !important;
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 CIRF Assessment Tool</h1>
+            <p>Cultural Innovation Resilience Framework for Entrepreneurs</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="section active" id="intro">
+            <div class="intro-section">
+                <h2>Welcome to Your Cultural Business Assessment</h2>
+                <p>
+                    This tool helps you evaluate your cultural business across four key pillars and build resilience for long-term success. 
+                    You'll receive personalized insights and recommendations to strengthen your cultural enterprise while maintaining authenticity and control.
+                </p>
+                
+                <div class="framework-overview">
+                    <div class="framework-item">
+                        <div class="icon">💰</div>
+                        <h3>Economic Value Creation</h3>
+                        <p>Building wealth through cultural innovation</p>
+                    </div>
+                    <div class="framework-item">
+                        <div class="icon">🌿</div>
+                        <h3>Cultural Integrity</h3>
+                        <p>Authenticity as competitive advantage</p>
+                    </div>
+                    <div class="framework-item">
+                        <div class="icon">🔄</div>
+                        <h3>Adaptability</h3>
+                        <p>Flexibility and growth capacity</p>
+                    </div>
+                    <div class="framework-item">
+                        <div class="icon">👤</div>
+                        <h3>Individual Empowerment</h3>
+                        <p>Personal agency and business control</p>
+                    </div>
+                </div>
+                
+                <p><strong>Time required:</strong> 10-15 minutes | <strong>Questions:</strong> 20 items</p>
+            </div>
+        </div>
+
+        <!-- Pillar 1: Economic Value Creation -->
+        <div class="section" id="pillar1">
+            <h2><span class="pillar-icon">💰</span> Pillar 1: Economic Value Creation</h2>
+            
+            <div class="question-group">
+                <div class="question">
+                    <h3>1. I have complete control over my business decisions and strategy</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q1', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q1', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q1', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q1', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q1', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Strongly Disagree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>2. I capture the full financial benefits from my cultural innovations</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q2', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q2', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q2', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q2', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q2', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Strongly Disagree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>3. My cultural authenticity allows me to charge premium prices</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q3', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q3', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q3', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q3', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q3', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Strongly Disagree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>4. I have successfully diversified my income streams from cultural assets</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q4', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q4', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q4', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q4', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q4', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Strongly Disagree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>5. I am building sustainable wealth through my cultural business</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q5', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q5', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q5', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q5', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q5', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Strongly Disagree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 2: Cultural Integrity -->
+        <div class="section" id="pillar2">
+            <h2><span class="pillar-icon">🌿</span> Pillar 2: Cultural Integrity as Personal Strength</h2>
+            
+            <div class="question-group">
+                <div class="question">
+                    <h3>6. My deep cultural knowledge gives me competitive advantages</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q6', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q6', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q6', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q6', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q6', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>7. I can evolve cultural elements creatively while maintaining authenticity</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q7', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q7', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q7', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q7', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q7', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>8. My cultural connection is my strongest business asset</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q8', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q8', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q8', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q8', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q8', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>9. Customers value my products specifically because of their cultural authenticity</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q9', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q9', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q9', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q9', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q9', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>10. I am recognized as a cultural expert in my field</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q10', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q10', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q10', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q10', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q10', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 3: Adaptability -->
+        <div class="section" id="pillar3">
+            <h2><span class="pillar-icon">🔄</span> Pillar 3: Adaptability as Entrepreneurial Advantage</h2>
+            
+            <div class="question-group">
+                <div class="question">
+                    <h3>11. I can quickly adapt my business to market changes</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q11', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q11', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q11', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q11', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q11', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>12. I effectively use technology to enhance my cultural business</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q12', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q12', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q12', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q12', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q12', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>13. I can scale my business while maintaining cultural authenticity</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q13', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q13', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q13', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q13', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q13', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>14. I have successfully expanded into new markets or products</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q14', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q14', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q14', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q14', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q14', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>15. I continuously innovate while respecting cultural traditions</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q15', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q15', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q15', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q15', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q15', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 4: Individual Empowerment -->
+        <div class="section" id="pillar4">
+            <h2><span class="pillar-icon">👤</span> Pillar 4: Individual Empowerment</h2>
+            
+            <div class="question-group">
+                <div class="question">
+                    <h3>16. I feel confident making independent business decisions about cultural elements</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q16', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q16', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q16', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q16', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q16', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>17. My business success has enhanced my cultural pride and identity</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q17', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q17', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q17', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q17', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q17', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>18. I choose my own level of community engagement rather than being required to participate</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q18', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q18', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q18', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q18', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q18', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>19. I have built a strong personal brand around my cultural expertise</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q19', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q19', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q19', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q19', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q19', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>20. I can protect my cultural innovations from appropriation by others</h3>
+                    <div class="rating-scale">
+                        <div class="rating-option" onclick="selectRating(this, 'q20', 1)">
+                            <span>1</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q20', 2)">
+                            <span>2</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q20', 3)">
+                            <span>3</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q20', 4)">
+                            <span>4</span>
+                        </div>
+                        <div class="rating-option" onclick="selectRating(this, 'q20', 5)">
+                            <span>5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results" id="results">
+            <h2>🎯 Your CIRF Assessment Results</h2>
+            
+            <div class="overall-score">
+                <h2>Overall CIRF Score</h2>
+                <div class="score" id="overallScore">0</div>
+                <div class="score-max">out of 100</div>
+            </div>
+
+            <div class="score-dashboard">
+                <div class="score-card">
+                    <h3>💰 Economic Value Creation</h3>
+                    <div class="score-value" id="pillar1Score">0</div>
+                    <div class="score-max">out of 25</div>
+                </div>
+                <div class="score-card">
+                    <h3>🌿 Cultural Integrity</h3>
+                    <div class="score-value" id="pillar2Score">0</div>
+                    <div class="score-max">out of 25</div>
+                </div>
+                <div class="score-card">
+                    <h3>🔄 Adaptability</h3>
+                    <div class="score-value" id="pillar3Score">0</div>
+                    <div class="score-max">out of 25</div>
+                </div>
+                <div class="score-card">
+                    <h3>👤 Individual Empowerment</h3>
+                    <div class="score-value" id="pillar4Score">0</div>
+                    <div class="score-max">out of 25</div>
+                </div>
+            </div>
+
+            <div class="visual-chart">
+                <h3>Visual Score Comparison</h3>
+                <div class="chart-container">
+                    <div>
+                        <div class="chart-bar" id="bar1" data-score="0" style="height: 0px;"></div>
+                        <div class="chart-label">Economic<br>Value</div>
+                    </div>
+                    <div>
+                        <div class="chart-bar" id="bar2" data-score="0" style="height: 0px;"></div>
+                        <div class="chart-label">Cultural<br>Integrity</div>
+                    </div>
+                    <div>
+                        <div class="chart-bar" id="bar3" data-score="0" style="height: 0px;"></div>
+                        <div class="chart-label">Adaptability</div>
+                    </div>
+                    <div>
+                        <div class="chart-bar" id="bar4" data-score="0" style="height: 0px;"></div>
+                        <div class="chart-label">Individual<br>Empowerment</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendations" id="recommendationsContainer">
+                <h3>🎯 Personalized Recommendations</h3>
+                <!-- Recommendations will be generated here -->
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="restartAssessment()">Take Assessment Again</button>
+                <button class="btn btn-secondary" onclick="printResults()" style="margin-left: 10px;">Save Results</button>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousSection()" style="display: none;">Previous</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextSection()">Start Assessment</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let responses = {};
+        const totalSections = 5; // intro + 4 pillars
+        const sectionsIds = ['intro', 'pillar1', 'pillar2', 'pillar3', 'pillar4'];
+
+        function selectRating(element, questionId, value) {
+            // Remove selected class from siblings
+            const siblings = element.parentElement.querySelectorAll('.rating-option');
+            siblings.forEach(sibling => sibling.classList.remove('selected'));
+            
+            // Add selected class to clicked element
+            element.classList.add('selected');
+            
+            // Store response
+            responses[questionId] = value;
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalQuestions = 20;
+            const completedQuestions = Object.keys(responses).length;
+            const progressPercent = (completedQuestions / totalQuestions) * 100;
+            
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                // Hide current section
+                document.getElementById(sectionsIds[currentSection]).classList.remove('active');
+                
+                // Show next section
+                currentSection++;
+                document.getElementById(sectionsIds[currentSection]).classList.add('active');
+                
+                // Update navigation buttons
+                updateNavigationButtons();
+            } else {
+                // Show results
+                calculateAndShowResults();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                // Hide current section
+                document.getElementById(sectionsIds[currentSection]).classList.remove('active');
+                
+                // Show previous section
+                currentSection--;
+                document.getElementById(sectionsIds[currentSection]).classList.add('active');
+                
+                // Update navigation buttons
+                updateNavigationButtons();
+            }
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Show/hide previous button
+            prevBtn.style.display = currentSection > 0 ? 'block' : 'none';
+            
+            // Update next button text
+            if (currentSection === 0) {
+                nextBtn.textContent = 'Start Assessment';
+            } else if (currentSection === totalSections - 1) {
+                nextBtn.textContent = 'View Results';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+
+        function calculateAndShowResults() {
+            // Calculate pillar scores
+            const pillar1Score = (responses.q1 + responses.q2 + responses.q3 + responses.q4 + responses.q5);
+            const pillar2Score = (responses.q6 + responses.q7 + responses.q8 + responses.q9 + responses.q10);
+            const pillar3Score = (responses.q11 + responses.q12 + responses.q13 + responses.q14 + responses.q15);
+            const pillar4Score = (responses.q16 + responses.q17 + responses.q18 + responses.q19 + responses.q20);
+            
+            const totalScore = pillar1Score + pillar2Score + pillar3Score + pillar4Score;
+            const overallScore = Math.round((totalScore / 100) * 100);
+
+            // Hide current section
+            document.getElementById(sectionsIds[currentSection]).classList.remove('active');
+            
+            // Show results
+            document.getElementById('results').classList.add('active');
+            document.querySelector('.navigation').style.display = 'none';
+
+            // Update score displays
+            document.getElementById('overallScore').textContent = overallScore;
+            document.getElementById('pillar1Score').textContent = pillar1Score;
+            document.getElementById('pillar2Score').textContent = pillar2Score;
+            document.getElementById('pillar3Score').textContent = pillar3Score;
+            document.getElementById('pillar4Score').textContent = pillar4Score;
+
+            // Update chart bars with animation
+            setTimeout(() => {
+                updateChartBar('bar1', pillar1Score, 25);
+                updateChartBar('bar2', pillar2Score, 25);
+                updateChartBar('bar3', pillar3Score, 25);
+                updateChartBar('bar4', pillar4Score, 25);
+            }, 500);
+
+            // Generate recommendations
+            generateRecommendations(pillar1Score, pillar2Score, pillar3Score, pillar4Score, overallScore);
+        }
+
+        function updateChartBar(barId, score, maxScore) {
+            const bar = document.getElementById(barId);
+            const height = (score / maxScore) * 200; // Max height 200px
+            bar.style.height = height + 'px';
+            bar.setAttribute('data-score', score);
+        }
+
+        function generateRecommendations(p1, p2, p3, p4, overall) {
+            const container = document.getElementById('recommendationsContainer');
+            let recommendations = '';
+
+            // Overall assessment
+            if (overall >= 80) {
+                recommendations += `
+                    <div class="recommendation-card good">
+                        <h4>🌟 Excellent Cultural Business Foundation!</h4>
+                        <p>You have a strong foundation across all CIRF pillars. Focus on maintaining this excellence while exploring new growth opportunities.</p>
+                    </div>
+                `;
+            } else if (overall >= 60) {
+                recommendations += `
+                    <div class="recommendation-card medium">
+                        <h4>🎯 Good Progress with Room for Growth</h4>
+                        <p>You're on the right track! Focus on strengthening your weaker areas while maintaining your current strengths.</p>
+                    </div>
+                `;
+            } else {
+                recommendations += `
+                    <div class="recommendation-card">
+                        <h4>🚀 Great Potential for Growth</h4>
+                        <p>You have significant opportunities to strengthen your cultural business foundation. Start with your strongest pillar and build from there.</p>
+                    </div>
+                `;
+            }
+
+            // Pillar-specific recommendations
+            if (p1 < 15) {
+                recommendations += `
+                    <div class="recommendation-card">
+                        <h4>💰 Economic Value Creation - Priority Focus</h4>
+                        <p><strong>Action Steps:</strong> Develop clearer pricing strategies, diversify income streams, and establish stronger business controls. Consider premium positioning based on your cultural authenticity.</p>
+                    </div>
+                `;
+            }
+
+            if (p2 < 15) {
+                recommendations += `
+                    <div class="recommendation-card">
+                        <h4>🌿 Cultural Integrity - Strengthen Your Foundation</h4>
+                        <p><strong>Action Steps:</strong> Deepen your cultural knowledge, develop your unique cultural story, and position authenticity as your key competitive advantage.</p>
+                    </div>
+                `;
+            }
+
+            if (p3 < 15) {
+                recommendations += `
+                    <div class="recommendation-card">
+                        <h4>🔄 Adaptability - Build Flexibility</h4>
+                        <p><strong>Action Steps:</strong> Explore new technologies, develop multiple product/service lines, and create systems for rapid market response while maintaining cultural authenticity.</p>
+                    </div>
+                `;
+            }
+
+            if (p4 < 15) {
+                recommendations += `
+                    <div class="recommendation-card">
+                        <h4>👤 Individual Empowerment - Take Control</h4>
+                        <p><strong>Action Steps:</strong> Build confidence in decision-making, establish clear boundaries for community engagement, and develop your personal brand as a cultural expert.</p>
+                    </div>
+                `;
+            }
+
+            // Strength-based recommendations
+            const strengths = [];
+            if (p1 >= 20) strengths.push("Economic Value Creation");
+            if (p2 >= 20) strengths.push("Cultural Integrity");
+            if (p3 >= 20) strengths.push("Adaptability");
+            if (p4 >= 20) strengths.push("Individual Empowerment");
+
+            if (strengths.length > 0) {
+                recommendations += `
+                    <div class="recommendation-card good">
+                        <h4>🏆 Your Strengths: ${strengths.join(", ")}</h4>
+                        <p>Leverage these strong areas to support growth in other pillars. Your strengths can provide the foundation for overall business success.</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = recommendations;
+        }
+
+        function restartAssessment() {
+            // Reset all variables
+            currentSection = 0;
+            responses = {};
+            
+            // Clear all selections
+            document.querySelectorAll('.rating-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Reset progress bar
+            document.getElementById('progressFill').style.width = '0%';
+            
+            // Hide results and show intro
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('intro').classList.add('active');
+            
+            // Show navigation
+            document.querySelector('.navigation').style.display = 'flex';
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+        }
+
+        function printResults() {
+            window.print();
+        }
+
+        // Initialize
+        updateNavigationButtons();
+    </script>
+</body>
+</html>
