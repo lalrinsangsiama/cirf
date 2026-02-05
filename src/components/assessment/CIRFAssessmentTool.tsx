@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -33,7 +33,7 @@ import {
   PolarRadiusAxis,
   ResponsiveContainer,
 } from 'recharts'
-import { LikertScale, CategoricalSelect, SectionProgress } from './LikertScale'
+import { LikertScale, CategoricalSelect, SectionProgress, MultiSelect, TextAreaInput } from './LikertScale'
 import {
   demographicQuestions,
   culturalCapitalQuestions,
@@ -51,8 +51,16 @@ import {
   calculateAssessmentResult,
   DATABASE_STATISTICS,
   type AssessmentResult,
+  generatePersonalizedRecommendations,
+  extractDemographics,
+  generateProfileSummary,
+  getThisWeekActions,
+  getQuickWins,
+  getIndustryTips,
+  type PersonalizedRecommendation,
 } from '@/lib/assessment/scoring'
-import { getMatchingCaseStudies } from '@/lib/data/caseStudies'
+import { getMatchingCaseStudies, getEnhancedMatchingCaseStudies, type EnhancedMatchResult } from '@/lib/data/caseStudies'
+import type { ConstructId } from '@/lib/recommendations/types'
 import { extractProfileDataFromAnswers } from '@/lib/data/assessmentQuestions'
 import { handleAssessmentCompletion } from '@/lib/services/assessmentUnlockService'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
@@ -61,7 +69,7 @@ import UnlockCelebration from './UnlockCelebration'
 type Step = 'overview' | LikertSection | 'results'
 
 interface AssessmentAnswers {
-  [questionId: string]: number | string | null
+  [questionId: string]: number | string | string[] | null
 }
 
 const STORAGE_KEY = 'cil-assessment-v2-progress'
@@ -91,6 +99,17 @@ export function CILAssessmentTool() {
   const [sendingEmail, setSendingEmail] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const [hasDraft, setHasDraft] = useState(false)
+  const [draftLoaded, setDraftLoaded] = useState(false)
+  const [personalizedRecommendations, setPersonalizedRecommendations] = useState<PersonalizedRecommendation[]>([])
+  const [enhancedCaseStudies, setEnhancedCaseStudies] = useState<EnhancedMatchResult[]>([])
+  const [profileSummary, setProfileSummary] = useState<string>('')
+  const [thisWeekActions, setThisWeekActions] = useState<Array<{ area: string; action: string }>>([])
+  const [quickWins, setQuickWins] = useState<Array<{ area: string; action: string; impact: string }>>([])
+  const [industryTips, setIndustryTips] = useState<string[]>([])
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const lastSavedAnswersRef = useRef<string>('')
 
   const supabase = createClient()
 
@@ -121,6 +140,109 @@ export function CILAssessmentTool() {
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   }, [answers, savedResults])
+
+  // Load draft from server on mount (if user is logged in)
+  useEffect(() => {
+    const loadDraft = async () => {
+      if (!user || draftLoaded) return
+
+      try {
+        const response = await fetch('/api/assessments/draft?type=cirf')
+        const result = await response.json()
+
+        if (result.data?.hasDraft && result.data.draft) {
+          const draft = result.data.draft
+          // Merge draft answers with any existing localStorage answers
+          // (prefer draft answers as they are more recent)
+          setAnswers(prev => ({
+            ...prev,
+            ...draft.answers,
+          }))
+          if (draft.currentSection) {
+            setCurrentStep(draft.currentSection as Step)
+          }
+          setHasDraft(true)
+          lastSavedAnswersRef.current = JSON.stringify(draft.answers)
+        }
+      } catch (error) {
+        console.error('Failed to load draft:', error)
+      }
+      setDraftLoaded(true)
+    }
+
+    loadDraft()
+  }, [user, draftLoaded])
+
+  // Auto-save to server (debounced)
+  const saveToServer = useCallback(async (answersToSave: AssessmentAnswers, section: string) => {
+    if (!user) return
+
+    const answersString = JSON.stringify(answersToSave)
+    // Don't save if nothing has changed
+    if (answersString === lastSavedAnswersRef.current) return
+
+    setAutoSaveStatus('saving')
+    try {
+      const response = await fetch('/api/assessments/draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          assessmentType: 'cirf',
+          answers: answersToSave,
+          currentSection: section,
+        }),
+      })
+
+      if (response.ok) {
+        lastSavedAnswersRef.current = answersString
+        setAutoSaveStatus('saved')
+        setHasDraft(true)
+        // Reset status after 2 seconds
+        setTimeout(() => setAutoSaveStatus('idle'), 2000)
+      } else {
+        setAutoSaveStatus('error')
+      }
+    } catch (error) {
+      console.error('Auto-save failed:', error)
+      setAutoSaveStatus('error')
+    }
+  }, [user])
+
+  // Debounced auto-save effect
+  useEffect(() => {
+    if (!user || currentStep === 'overview' || currentStep === 'results') return
+    if (Object.keys(answers).length === 0) return
+
+    // Clear any existing timeout
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current)
+    }
+
+    // Set a new timeout to save after 2 seconds of inactivity
+    autoSaveTimeoutRef.current = setTimeout(() => {
+      saveToServer(answers, currentStep)
+    }, 2000)
+
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current)
+      }
+    }
+  }, [answers, currentStep, user, saveToServer])
+
+  // Delete draft when assessment is completed
+  const deleteDraft = useCallback(async () => {
+    if (!user || !hasDraft) return
+
+    try {
+      await fetch('/api/assessments/draft?type=cirf', {
+        method: 'DELETE',
+      })
+      setHasDraft(false)
+    } catch (error) {
+      console.error('Failed to delete draft:', error)
+    }
+  }, [user, hasDraft])
 
   // Get questions for current section
   const getQuestionsForSection = (section: LikertSection): (LikertQuestion | DemographicQuestion)[] => {
@@ -166,6 +288,16 @@ export function CILAssessmentTool() {
 
   // Handle answer for demographic questions
   const handleDemographicAnswer = (questionId: string, value: string) => {
+    setAnswers(prev => ({ ...prev, [questionId]: value }))
+  }
+
+  // Handle answer for multiselect questions
+  const handleMultiselectAnswer = (questionId: string, value: string[]) => {
+    setAnswers(prev => ({ ...prev, [questionId]: value }))
+  }
+
+  // Handle answer for textarea questions
+  const handleTextareaAnswer = (questionId: string, value: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }))
   }
 
@@ -251,6 +383,31 @@ export function CILAssessmentTool() {
           serverResult.overallScore = score
           setAssessmentResult(serverResult)
 
+          // Generate personalized recommendations
+          const demographics = extractDemographics(answers)
+          const allConstructScores: Record<string, number> = {}
+          serverResult.sectionScores.forEach(s => {
+            Object.entries(s.constructScores).forEach(([k, v]) => {
+              allConstructScores[k] = v
+            })
+          })
+          const personalized = generatePersonalizedRecommendations(allConstructScores, demographics)
+          setPersonalizedRecommendations(personalized)
+          setProfileSummary(generateProfileSummary(demographics))
+          setThisWeekActions(getThisWeekActions(personalized))
+          setQuickWins(getQuickWins(personalized))
+          setIndustryTips(getIndustryTips(demographics.industry))
+
+          // Get enhanced case study matches
+          const weakConstructs = personalized.map(r => r.construct)
+          const enhancedMatches = getEnhancedMatchingCaseStudies(
+            score,
+            demographics,
+            weakConstructs,
+            3
+          )
+          setEnhancedCaseStudies(enhancedMatches)
+
           setAssessmentId(newAssessmentId)
 
           if ((unlocked && unlocked.length > 0) || (tools && tools.length > 0) || (resources && resources.length > 0)) {
@@ -275,6 +432,8 @@ export function CILAssessmentTool() {
 
           setHasUsedCredit(true)
           await refreshProfile()
+          // Delete the draft since assessment is completed
+          await deleteDraft()
         } catch (error) {
           console.error('Error processing assessment:', error)
           alert('Failed to process assessment. Please try again.')
@@ -285,6 +444,31 @@ export function CILAssessmentTool() {
         // Calculate results without saving (for non-authenticated preview)
         const result = calculateAssessmentResult(answers, questionConfig)
         setAssessmentResult(result)
+
+        // Generate personalized recommendations for preview
+        const demographics = extractDemographics(answers)
+        const allConstructScores: Record<string, number> = {}
+        result.sectionScores.forEach(s => {
+          Object.entries(s.constructScores).forEach(([k, v]) => {
+            allConstructScores[k] = v
+          })
+        })
+        const personalized = generatePersonalizedRecommendations(allConstructScores, demographics)
+        setPersonalizedRecommendations(personalized)
+        setProfileSummary(generateProfileSummary(demographics))
+        setThisWeekActions(getThisWeekActions(personalized))
+        setQuickWins(getQuickWins(personalized))
+        setIndustryTips(getIndustryTips(demographics.industry))
+
+        // Get enhanced case study matches
+        const weakConstructs = personalized.map(r => r.construct)
+        const enhancedMatches = getEnhancedMatchingCaseStudies(
+          result.overallScore,
+          demographics,
+          weakConstructs,
+          3
+        )
+        setEnhancedCaseStudies(enhancedMatches)
       }
 
       setCurrentStep('results')
@@ -447,12 +631,37 @@ https://cirf.org/tools
               ~{ASSESSMENT_V2_STATS.estimatedMinutes} minutes • {ASSESSMENT_V2_STATS.totalQuestions} questions
             </p>
           </div>
-          {user && profile && (
-            <div className="flex items-center gap-2 text-pearl/70 text-sm">
-              <CreditCard className="w-4 h-4" />
-              {profile.credits} credits
-            </div>
-          )}
+          <div className="flex items-center gap-4">
+            {/* Auto-save status indicator */}
+            {user && currentStep !== 'overview' && currentStep !== 'results' && (
+              <div className="flex items-center gap-2 text-pearl/70 text-xs">
+                {autoSaveStatus === 'saving' && (
+                  <>
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                    <span>Saving...</span>
+                  </>
+                )}
+                {autoSaveStatus === 'saved' && (
+                  <>
+                    <CheckCircle2 className="w-3 h-3 text-sage" />
+                    <span>Saved</span>
+                  </>
+                )}
+                {autoSaveStatus === 'error' && (
+                  <>
+                    <AlertTriangle className="w-3 h-3 text-terracotta" />
+                    <span>Save failed</span>
+                  </>
+                )}
+              </div>
+            )}
+            {user && profile && (
+              <div className="flex items-center gap-2 text-pearl/70 text-sm">
+                <CreditCard className="w-4 h-4" />
+                {profile.credits} credits
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -516,12 +725,41 @@ https://cirf.org/tools
         {currentStep === 'overview' && (
           <div className="space-y-6">
             <h3 className="font-serif text-2xl">Cultural Innovation Resilience Assessment</h3>
-            <p className="text-stone leading-relaxed">
-              This comprehensive assessment measures how cultural innovation drives economic resilience
-              in your organization or initiative. Based on the CI-ER (Cultural Innovation → Economic Resilience)
-              framework and validated across 362 case studies, your results will provide actionable insights
-              for strengthening your cultural innovation capacity.
+            <p className="text-stone leading-relaxed mb-4">
+              <strong>For Cultural Entrepreneurs:</strong> This survey is part of research examining how cultural
+              innovation can build economic resilience while maintaining community sovereignty. Your insights
+              will help develop practical tools for cultural entrepreneurs.
             </p>
+            <p className="text-stone leading-relaxed">
+              Based on the CI-ER (Cultural Innovation → Economic Resilience) framework and validated across
+              362 case studies, your results will provide actionable insights for strengthening your cultural
+              innovation capacity.
+            </p>
+            <div className="flex flex-wrap gap-4 text-sm text-stone mt-4">
+              <span className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                Time Required: 3-7 minutes
+              </span>
+              <span className="flex items-center gap-2">
+                <Lock className="w-4 h-4" />
+                Confidentiality: Your responses will be anonymized
+              </span>
+            </div>
+
+            {/* Resume Draft Notice */}
+            {user && hasDraft && (
+              <div className="p-4 rounded-lg border border-ocean/30 bg-ocean/10">
+                <div className="flex items-start gap-3">
+                  <Save className="w-5 h-5 text-ocean flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-medium mb-1">You have saved progress</h4>
+                    <p className="text-sm text-stone">
+                      Your previous answers have been saved. Click &quot;Start Assessment&quot; to continue where you left off.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Auth Status Card */}
             {!authLoading && (
@@ -675,13 +913,37 @@ https://cirf.org/tools
                   </div>
 
                   {'type' in question ? (
-                    // Demographic question
-                    <CategoricalSelect
-                      value={answers[question.id] as string | null}
-                      onChange={(value) => handleDemographicAnswer(question.id, value)}
-                      options={question.options || []}
-                      placeholder="Select an option..."
-                    />
+                    // Demographic question - render based on type
+                    question.type === 'multiselect' ? (
+                      <MultiSelect
+                        value={answers[question.id] as string[] | null}
+                        onChange={(value) => handleMultiselectAnswer(question.id, value)}
+                        options={question.options || []}
+                        placeholder="Select all that apply"
+                      />
+                    ) : question.type === 'textarea' ? (
+                      <TextAreaInput
+                        value={answers[question.id] as string | null}
+                        onChange={(value) => handleTextareaAnswer(question.id, value)}
+                        placeholder="Enter your response..."
+                        rows={4}
+                      />
+                    ) : question.type === 'text' ? (
+                      <input
+                        type="text"
+                        value={(answers[question.id] as string) || ''}
+                        onChange={(e) => handleDemographicAnswer(question.id, e.target.value)}
+                        placeholder="Enter your response..."
+                        className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-white text-ink focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold transition-all duration-200"
+                      />
+                    ) : (
+                      <CategoricalSelect
+                        value={answers[question.id] as string | null}
+                        onChange={(value) => handleDemographicAnswer(question.id, value)}
+                        options={question.options || []}
+                        placeholder="Select an option..."
+                      />
+                    )
                   ) : (
                     // Likert question
                     <LikertScale
@@ -853,8 +1115,103 @@ https://cirf.org/tools
               </div>
             )}
 
-            {/* Priority Recommendations */}
-            {assessmentResult.recommendations.length > 0 && (
+            {/* Personalized Profile Context */}
+            {profileSummary && (
+              <div className="bg-ocean/10 border border-ocean/30 p-6 rounded-lg">
+                <h4 className="font-medium mb-2 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-ocean" />
+                  Personalized Insights
+                </h4>
+                <p className="text-sm text-stone">{profileSummary}</p>
+              </div>
+            )}
+
+            {/* This Week's Quick Wins */}
+            {quickWins.length > 0 && (
+              <div className="bg-sage/10 border border-sage/30 p-6 rounded-lg">
+                <h4 className="font-medium mb-4 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-sage" />
+                  This Week&apos;s Quick Wins
+                </h4>
+                <p className="text-sm text-stone mb-4">
+                  Start with these high-impact actions you can complete this week:
+                </p>
+                <div className="space-y-3">
+                  {quickWins.map((win, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded-lg">
+                      <span className="w-6 h-6 rounded-full bg-sage/20 text-sage text-xs flex items-center justify-center font-medium flex-shrink-0">
+                        {idx + 1}
+                      </span>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{win.action}</p>
+                        <p className="text-xs text-stone mt-1">{win.area} • {win.impact}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Personalized Priority Recommendations */}
+            {personalizedRecommendations.length > 0 && (
+              <div className="bg-gold/10 p-6 rounded-lg">
+                <h4 className="font-medium mb-4">Personalized Recommendations</h4>
+                <p className="text-sm text-stone mb-4">
+                  {personalizedRecommendations[0]?.contextLabel || 'Based on your profile, focus on these areas:'}
+                </p>
+                <div className="space-y-6">
+                  {personalizedRecommendations.slice(0, 5).map(rec => (
+                    <div key={rec.area} className="border-b border-gold/20 pb-6 last:border-0">
+                      <div className="flex items-start gap-3">
+                        <span className="font-serif text-xl text-gold">{rec.priority}</span>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="font-medium">{rec.title}</p>
+                            <span className="text-sm text-stone">
+                              {rec.currentScore}% → {rec.targetScore}%
+                            </span>
+                          </div>
+                          <p className="text-sm text-stone mb-3">{rec.description}</p>
+
+                          {/* Action Steps */}
+                          {rec.actionSteps.length > 0 && (
+                            <div className="bg-white rounded-lg p-4 mb-3">
+                              <p className="text-xs font-medium text-stone uppercase tracking-wider mb-2">Action Steps</p>
+                              <div className="space-y-2">
+                                {rec.actionSteps.map((step, stepIdx) => (
+                                  <div key={stepIdx} className="flex items-start gap-2 text-sm">
+                                    <CheckCircle2 className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+                                    <div className="flex-1">
+                                      <span>{step.action}</span>
+                                      {step.timeframe && (
+                                        <span className={cn(
+                                          'ml-2 text-xs px-2 py-0.5 rounded-full',
+                                          step.timeframe === 'this-week' && 'bg-sage/20 text-sage',
+                                          step.timeframe === 'this-month' && 'bg-ocean/20 text-ocean',
+                                          step.timeframe === 'this-quarter' && 'bg-gold/20 text-gold',
+                                          step.timeframe === 'ongoing' && 'bg-stone/20 text-stone'
+                                        )}>
+                                          {step.timeframe.replace('-', ' ')}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          <p className="text-xs text-gold">{rec.impact}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Fallback to generic recommendations if no personalized */}
+            {personalizedRecommendations.length === 0 && assessmentResult.recommendations.length > 0 && (
               <div className="bg-gold/10 p-6 rounded-lg">
                 <h4 className="font-medium mb-4">Priority Recommendations</h4>
                 <p className="text-sm text-stone mb-4">
@@ -882,8 +1239,69 @@ https://cirf.org/tools
               </div>
             )}
 
-            {/* Matched Case Studies */}
-            {(() => {
+            {/* Industry-Specific Tips */}
+            {industryTips.length > 0 && (
+              <div className="bg-sand/50 p-6 rounded-lg">
+                <h4 className="font-medium mb-4">Industry Tips</h4>
+                <p className="text-sm text-stone mb-4">
+                  Specific guidance for your sector:
+                </p>
+                <ul className="space-y-2">
+                  {industryTips.map((tip, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm">
+                      <span className="text-gold">•</span>
+                      <span>{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Enhanced Case Study Matching */}
+            {enhancedCaseStudies.length > 0 && (
+              <div className="bg-sand/50 p-6 rounded-lg">
+                <h4 className="font-medium mb-4">Learn From Similar Initiatives</h4>
+                <p className="text-sm text-stone mb-4">
+                  These case studies are matched to your profile and challenges:
+                </p>
+                <div className="space-y-4">
+                  {enhancedCaseStudies.map(({ caseStudy, matchScore, matchReasons }) => (
+                    <div key={caseStudy.id} className="p-4 bg-white rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <p className="font-medium">{caseStudy.title}</p>
+                          <p className="text-sm text-stone">{caseStudy.country} - {caseStudy.category}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-serif text-xl text-gold">{caseStudy.cilScore}/13</p>
+                          <p className="text-xs text-sage">{caseStudy.outcome}</p>
+                        </div>
+                      </div>
+                      {/* Match reasons */}
+                      {matchReasons.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {matchReasons.map((reason, idx) => (
+                            <span key={idx} className="text-xs bg-ocean/10 text-ocean px-2 py-1 rounded-full">
+                              {reason}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/case-studies"
+                  className="mt-4 inline-flex items-center gap-2 text-sm text-gold font-medium hover:underline"
+                >
+                  View all case studies
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
+
+            {/* Fallback to simple case study matching if no enhanced matches */}
+            {enhancedCaseStudies.length === 0 && (() => {
               const matchingCases = getMatchingCaseStudies(Math.round(assessmentResult.overallScore / 100 * 13))
               return matchingCases.length > 0 && (
                 <div className="bg-sand/50 p-6 rounded-lg">

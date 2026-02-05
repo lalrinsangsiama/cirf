@@ -1,3 +1,14 @@
+import type {
+  Industry,
+  OrganizationType,
+  ConstructId,
+  Region,
+  BusinessStage,
+  CaseStudyMatchingCriteria,
+  MatchedCaseStudy,
+  CASE_STUDY_MATCH_WEIGHTS,
+} from '@/lib/recommendations/types'
+
 export interface Citation {
   author: string
   year: number | string
@@ -30,6 +41,8 @@ export interface CaseStudy {
   verifiedDate: string
   confidenceLevel: 'high' | 'medium' | 'low'
   unescoRecognition?: string
+  // New matching criteria for personalized recommendations
+  matchingCriteria?: CaseStudyMatchingCriteria
 }
 
 export const verifiedCaseStudies: CaseStudy[] = [
@@ -91,6 +104,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'high',
+    matchingCriteria: {
+      industries: ['crafts', 'fashion-textiles', 'heritage-tourism'],
+      orgTypes: ['cooperative', 'community-org', 'craft-guild'],
+      challengesOvercome: ['traditionalKnowledge', 'communityInvolvement', 'intergenerationalPlanning', 'digitalDistribution'],
+      regions: ['asia-pacific'],
+      businessStages: ['established'],
+    },
   },
   {
     id: 'nunavut-indigenous-enterprises',
@@ -149,6 +169,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'high',
+    matchingCriteria: {
+      industries: ['crafts', 'food-beverage', 'heritage-tourism'],
+      orgTypes: ['indigenous-enterprise', 'cooperative', 'community-org'],
+      challengesOvercome: ['communityDecisionMaking', 'benefitDistribution', 'communityOwnership', 'financialReserves'],
+      regions: ['north-america'],
+      businessStages: ['established', 'scaling'],
+    },
   },
   {
     id: 'palestinian-tatreez',
@@ -207,6 +234,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     verifiedDate: '2024-12-01',
     confidenceLevel: 'high',
     unescoRecognition: 'Inscribed 2021 - Intangible Cultural Heritage',
+    matchingCriteria: {
+      industries: ['crafts', 'fashion-textiles'],
+      orgTypes: ['cooperative', 'community-org', 'individual'],
+      challengesOvercome: ['financialReserves', 'adaptiveResponse', 'culturalAuthenticity', 'ipProtection'],
+      regions: ['middle-east'],
+      businessStages: ['startup', 'growth', 'established'],
+    },
   },
   {
     id: 'korean-hanji',
@@ -264,6 +298,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'medium',
+    matchingCriteria: {
+      industries: ['crafts', 'design', 'fashion-textiles'],
+      orgTypes: ['craft-guild', 'cultural-institution', 'for-profit'],
+      challengesOvercome: ['traditionalKnowledge', 'productDevelopment', 'marketExpansion', 'ipProtection'],
+      regions: ['asia-pacific'],
+      businessStages: ['growth', 'scaling', 'established'],
+    },
   },
   {
     id: 'mikmaq-clearwater',
@@ -322,6 +363,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'high',
+    matchingCriteria: {
+      industries: ['food-beverage', 'crafts'],
+      orgTypes: ['indigenous-enterprise', 'cooperative'],
+      challengesOvercome: ['communityOwnership', 'financialReserves', 'communityDecisionMaking', 'allianceNetworks'],
+      regions: ['north-america'],
+      businessStages: ['scaling', 'established'],
+    },
   },
   {
     id: 'bangladeshi-nakshi-kantha',
@@ -380,6 +428,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'medium',
+    matchingCriteria: {
+      industries: ['crafts', 'fashion-textiles'],
+      orgTypes: ['cooperative', 'community-org', 'individual'],
+      challengesOvercome: ['financialReserves', 'digitalDistribution', 'marketExpansion', 'benefitDistribution'],
+      regions: ['asia-pacific'],
+      businessStages: ['startup', 'growth', 'established'],
+    },
   },
   {
     id: 'moroccan-fes-pottery',
@@ -438,6 +493,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'high',
+    matchingCriteria: {
+      industries: ['crafts', 'heritage-tourism'],
+      orgTypes: ['cooperative', 'craft-guild'],
+      challengesOvercome: ['traditionalKnowledge', 'practitionerAccess', 'communityDecisionMaking', 'intergenerationalPlanning'],
+      regions: ['africa'],
+      businessStages: ['growth', 'scaling', 'established'],
+    },
   },
   {
     id: 'jamaican-cultural-industries',
@@ -496,6 +558,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
     ],
     verifiedDate: '2024-12-01',
     confidenceLevel: 'medium',
+    matchingCriteria: {
+      industries: ['music', 'performing-arts', 'fashion-textiles', 'visual-arts'],
+      orgTypes: ['for-profit', 'individual', 'cooperative'],
+      challengesOvercome: ['productDevelopment', 'digitalDistribution', 'ipProtection', 'marketExpansion'],
+      regions: ['latin-america'],
+      businessStages: ['growth', 'scaling', 'established'],
+    },
   },
 ]
 
@@ -519,6 +588,127 @@ export const getMatchingCaseStudies = (userScore: number): CaseStudy[] => {
   return verifiedCaseStudies.filter(cs =>
     Math.abs(cs.cilScore - userScore) <= 2
   ).slice(0, 3)
+}
+
+/**
+ * Enhanced case study matching with multi-factor scoring
+ *
+ * Scoring weights:
+ * - Same industry: +30 points
+ * - Similar org type: +25 points
+ * - Same region: +20 points
+ * - Overcame similar challenges: +25 points
+ * - Similar CIL score: +15 points (scales with proximity)
+ */
+export interface EnhancedMatchResult {
+  caseStudy: CaseStudy
+  matchScore: number
+  matchReasons: string[]
+  matchDetails: {
+    industryMatch: boolean
+    orgTypeMatch: boolean
+    regionMatch: boolean
+    challengeMatch: boolean
+    scoreProximity: number
+  }
+}
+
+// Map continents to regions for matching
+const continentToRegion: Record<string, Region> = {
+  'Asia Pacific': 'asia-pacific',
+  'Americas': 'north-america', // Also covers latin-america
+  'Middle East': 'middle-east',
+  'Africa': 'africa',
+  'Europe': 'europe',
+}
+
+export function getEnhancedMatchingCaseStudies(
+  userScore: number,
+  demographics: {
+    orgType: OrganizationType
+    industry: Industry
+    region: Region
+  },
+  weakConstructs: ConstructId[] = [],
+  maxResults: number = 3
+): EnhancedMatchResult[] {
+  const results: EnhancedMatchResult[] = []
+
+  for (const caseStudy of verifiedCaseStudies) {
+    const criteria = caseStudy.matchingCriteria
+    const matchReasons: string[] = []
+    let matchScore = 0
+
+    const matchDetails = {
+      industryMatch: false,
+      orgTypeMatch: false,
+      regionMatch: false,
+      challengeMatch: false,
+      scoreProximity: 0,
+    }
+
+    // Industry match (+30)
+    if (criteria?.industries?.includes(demographics.industry)) {
+      matchScore += 30
+      matchDetails.industryMatch = true
+      matchReasons.push(`Same sector (${demographics.industry})`)
+    }
+
+    // Org type match (+25)
+    if (criteria?.orgTypes?.includes(demographics.orgType)) {
+      matchScore += 25
+      matchDetails.orgTypeMatch = true
+      matchReasons.push(`Similar organization type`)
+    }
+
+    // Region match (+20)
+    const caseRegion = continentToRegion[caseStudy.continent] || 'global'
+    if (demographics.region === caseRegion || criteria?.regions?.includes(demographics.region)) {
+      matchScore += 20
+      matchDetails.regionMatch = true
+      matchReasons.push(`Same region`)
+    }
+
+    // Challenge overlap (+25)
+    if (criteria?.challengesOvercome && weakConstructs.length > 0) {
+      const challengeOverlap = weakConstructs.filter(c =>
+        criteria.challengesOvercome.includes(c)
+      )
+      if (challengeOverlap.length > 0) {
+        matchScore += 25
+        matchDetails.challengeMatch = true
+        matchReasons.push(`Overcame similar challenges`)
+      }
+    }
+
+    // Score proximity (+15 max, scales with closeness)
+    // Convert user score (0-100) to CIL score (0-13)
+    const userCilScore = Math.round((userScore / 100) * 13)
+    const scoreDiff = Math.abs(caseStudy.cilScore - userCilScore)
+    if (scoreDiff <= 2) {
+      const proximityScore = Math.round((1 - scoreDiff / 3) * 15)
+      matchScore += proximityScore
+      matchDetails.scoreProximity = proximityScore
+      if (scoreDiff <= 1) {
+        matchReasons.push(`Similar resilience profile`)
+      }
+    }
+
+    // Only include cases with meaningful match
+    if (matchScore > 0 || matchReasons.length > 0) {
+      results.push({
+        caseStudy,
+        matchScore,
+        matchReasons,
+        matchDetails,
+      })
+    }
+  }
+
+  // Sort by match score (highest first)
+  results.sort((a, b) => b.matchScore - a.matchScore)
+
+  return results.slice(0, maxResults)
 }
 
 export const getCaseStudiesByConfidence = (level: 'high' | 'medium' | 'low'): CaseStudy[] => {

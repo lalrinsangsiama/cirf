@@ -19,9 +19,9 @@ export type AssessmentSection =
   | 'organizationalCapacities'
   | 'economicResilience'
 
-// Answer type for Likert scale (1-7) or categorical responses
+// Answer type for Likert scale (1-7), categorical responses, or multi-select arrays
 export interface AssessmentAnswers {
-  [questionId: string]: number | string | null
+  [questionId: string]: number | string | string[] | null
 }
 
 // Section weights based on CI-ER theoretical framework
@@ -238,7 +238,7 @@ export interface ScoreInterpretation {
 }
 
 /**
- * Recommendation based on scores
+ * Recommendation based on scores (legacy interface)
  */
 export interface Recommendation {
   priority: number
@@ -248,6 +248,9 @@ export interface Recommendation {
   impact: string
   action: string
 }
+
+// Re-export personalized recommendation types for convenience
+export type { PersonalizedRecommendation, Demographics, ConstructId } from '@/lib/recommendations/types'
 
 /**
  * Get score interpretation based on overall score
@@ -299,7 +302,8 @@ export function getScoreInterpretation(score: number): ScoreInterpretation {
 }
 
 /**
- * Generate recommendations based on section scores
+ * Generate recommendations based on section scores (legacy function)
+ * For personalized recommendations, use generatePersonalizedRecommendations from @/lib/recommendations/engine
  */
 export function generateRecommendations(
   sectionScores: SectionScore[],
@@ -382,6 +386,16 @@ export function generateRecommendations(
 
   return recommendations
 }
+
+// Re-export the personalization engine functions
+export {
+  generatePersonalizedRecommendations,
+  extractDemographics,
+  generateProfileSummary,
+  getThisWeekActions,
+  getQuickWins,
+  getIndustryTips,
+} from '@/lib/recommendations/engine'
 
 /**
  * Generate radar chart data from section scores
