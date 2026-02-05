@@ -3,7 +3,19 @@ import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import { getWelcomeEmailHtml, getWelcomeEmailText } from './templates/welcome'
 import { getPasswordResetEmailHtml, getPasswordResetEmailText } from './templates/password-reset'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization to avoid build-time errors when API key is not available
+let resendClient: Resend | null = null
+
+function getResend(): Resend {
+  if (!resendClient) {
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY is not configured')
+    }
+    resendClient = new Resend(apiKey)
+  }
+  return resendClient
+}
 
 const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@cirf-framework.org'
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://cirf-framework.org'
@@ -27,7 +39,7 @@ async function sendEmailWithRetry(
 
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      const { data, error } = await resend.emails.send({
+      const { data, error } = await getResend().emails.send({
         from: `CIRF <${fromEmail}>`,
         to: Array.isArray(options.to) ? options.to : [options.to],
         subject: options.subject,
