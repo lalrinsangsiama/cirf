@@ -34,7 +34,7 @@ export interface DemographicQuestion {
   section: 'demographics'
   question: string
   helpText?: string
-  type: 'select' | 'text' | 'number'
+  type: 'select' | 'text' | 'number' | 'multiselect' | 'textarea'
   options?: { value: string; label: string }[]
   required?: boolean
 }
@@ -57,25 +57,25 @@ export const SECTION_META: Record<LikertSection, {
   culturalCapital: {
     label: 'Cultural Capital',
     shortLabel: 'Cultural',
-    description: 'Assess your cultural assets and authenticity',
+    description: 'How deep are your cultural roots? Let\'s explore your connection to tradition and community.',
     estimatedMinutes: 3,
   },
   innovationActivities: {
     label: 'Innovation Activities',
     shortLabel: 'Innovation',
-    description: 'Evaluate your innovation and market activities',
+    description: 'How are you adapting tradition for today\'s world? Let\'s see what\'s working.',
     estimatedMinutes: 3,
   },
   organizationalCapacities: {
     label: 'Organizational Capacities',
     shortLabel: 'Capacity',
-    description: 'Measure your organizational resilience and governance',
+    description: 'Can your team weather storms and bounce back? Let\'s check your support systems.',
     estimatedMinutes: 4,
   },
   economicResilience: {
     label: 'Economic Resilience Outcomes',
     shortLabel: 'Resilience',
-    description: 'Assess your economic resilience and recovery outcomes',
+    description: 'How did you handle tough times? Let\'s see how your finances held up.',
     estimatedMinutes: 3,
   },
 }
@@ -205,9 +205,137 @@ export const REVENUE_RANGES = [
   { value: '500k+', label: '$500,000+ USD' },
 ]
 
-// Demographic questions (Section A: 6 core questions + profile questions)
+// Age group options
+export const AGE_GROUPS = [
+  { value: '18-25', label: '18-25' },
+  { value: '26-35', label: '26-35' },
+  { value: '36-45', label: '36-45' },
+  { value: '46-55', label: '46-55' },
+  { value: '56+', label: '56+' },
+]
+
+// Gender options
+export const GENDERS = [
+  { value: 'female', label: 'Female' },
+  { value: 'male', label: 'Male' },
+  { value: 'non-binary', label: 'Non-binary' },
+  { value: 'prefer-not-to-say', label: 'Prefer not to say' },
+]
+
+// Types of cultural innovation
+export const CULTURAL_INNOVATION_TYPES = [
+  { value: 'traditional-crafts', label: 'Traditional crafts/textiles' },
+  { value: 'music-performing-arts', label: 'Music/performing arts' },
+  { value: 'food-culinary', label: 'Food/culinary traditions' },
+  { value: 'digital-content', label: 'Digital content creation' },
+  { value: 'cultural-tourism', label: 'Cultural tourism' },
+  { value: 'traditional-medicine', label: 'Traditional medicine/wellness' },
+  { value: 'language-literature', label: 'Language/literature' },
+  { value: 'visual-arts', label: 'Visual arts' },
+  { value: 'fashion-design', label: 'Fashion/design' },
+  { value: 'mobility', label: 'Mobility' },
+  { value: 'other', label: 'Other' },
+]
+
+// Revenue sources for cultural entrepreneurs
+export const REVENUE_SOURCES = [
+  { value: 'direct-sales', label: 'Direct sales of cultural products' },
+  { value: 'services', label: 'Services (performances, workshops, etc.)' },
+  { value: 'tourism', label: 'Tourism-related activities' },
+  { value: 'digital-monetization', label: 'Digital content monetization' },
+  { value: 'licensing-royalties', label: 'Licensing/royalties' },
+  { value: 'grants-donations', label: 'Grants/donations' },
+  { value: 'teaching-training', label: 'Teaching/training' },
+  { value: 'other', label: 'Other' },
+]
+
+// Indian states/regions
+export const INDIAN_STATES = [
+  { value: 'andhra-pradesh', label: 'Andhra Pradesh' },
+  { value: 'arunachal-pradesh', label: 'Arunachal Pradesh' },
+  { value: 'assam', label: 'Assam' },
+  { value: 'bihar', label: 'Bihar' },
+  { value: 'chhattisgarh', label: 'Chhattisgarh' },
+  { value: 'goa', label: 'Goa' },
+  { value: 'gujarat', label: 'Gujarat' },
+  { value: 'haryana', label: 'Haryana' },
+  { value: 'himachal-pradesh', label: 'Himachal Pradesh' },
+  { value: 'jharkhand', label: 'Jharkhand' },
+  { value: 'karnataka', label: 'Karnataka' },
+  { value: 'kerala', label: 'Kerala' },
+  { value: 'madhya-pradesh', label: 'Madhya Pradesh' },
+  { value: 'maharashtra', label: 'Maharashtra' },
+  { value: 'manipur', label: 'Manipur' },
+  { value: 'meghalaya', label: 'Meghalaya' },
+  { value: 'mizoram', label: 'Mizoram' },
+  { value: 'nagaland', label: 'Nagaland' },
+  { value: 'odisha', label: 'Odisha' },
+  { value: 'punjab', label: 'Punjab' },
+  { value: 'rajasthan', label: 'Rajasthan' },
+  { value: 'sikkim', label: 'Sikkim' },
+  { value: 'tamil-nadu', label: 'Tamil Nadu' },
+  { value: 'telangana', label: 'Telangana' },
+  { value: 'tripura', label: 'Tripura' },
+  { value: 'uttar-pradesh', label: 'Uttar Pradesh' },
+  { value: 'uttarakhand', label: 'Uttarakhand' },
+  { value: 'west-bengal', label: 'West Bengal' },
+  { value: 'andaman-nicobar', label: 'Andaman and Nicobar Islands' },
+  { value: 'chandigarh', label: 'Chandigarh' },
+  { value: 'dadra-nagar-haveli', label: 'Dadra and Nagar Haveli and Daman and Diu' },
+  { value: 'delhi', label: 'Delhi' },
+  { value: 'jammu-kashmir', label: 'Jammu and Kashmir' },
+  { value: 'ladakh', label: 'Ladakh' },
+  { value: 'lakshadweep', label: 'Lakshadweep' },
+  { value: 'puducherry', label: 'Puducherry' },
+  { value: 'other', label: 'Other' },
+]
+
+// Demographic questions (Section A: Background Information for Cultural Entrepreneurs)
 export const demographicQuestions: DemographicQuestion[] = [
-  // Core demographics (required for assessment)
+  // Personal Information
+  {
+    id: 'demo-name',
+    section: 'demographics',
+    question: 'Name (Optional)',
+    helpText: 'Your name will help us personalize your results',
+    type: 'text',
+    required: false,
+  },
+  {
+    id: 'demo-age-group',
+    section: 'demographics',
+    question: 'Age Group',
+    type: 'select',
+    options: AGE_GROUPS,
+    required: true,
+  },
+  {
+    id: 'demo-gender',
+    section: 'demographics',
+    question: 'Gender',
+    type: 'select',
+    options: GENDERS,
+    required: true,
+  },
+  {
+    id: 'demo-state-region',
+    section: 'demographics',
+    question: 'State/Region',
+    helpText: 'Select your state or region',
+    type: 'select',
+    options: INDIAN_STATES,
+    required: true,
+  },
+  {
+    id: 'demo-cultural-innovation-type',
+    section: 'demographics',
+    question: 'Type of Cultural Innovation (Select all that apply)',
+    helpText: 'Select all the areas where you are innovating culturally',
+    type: 'multiselect',
+    options: CULTURAL_INNOVATION_TYPES,
+    required: true,
+  },
+  // Organization type (kept from original)
   {
     id: 'demo-org-type',
     section: 'demographics',
@@ -221,6 +349,7 @@ export const demographicQuestions: DemographicQuestion[] = [
       { value: 'craft-guild', label: 'Craft Guild / Artisan Collective' },
       { value: 'for-profit', label: 'For-Profit Cultural Business' },
       { value: 'government', label: 'Government / Public Agency' },
+      { value: 'individual', label: 'Individual Cultural Entrepreneur' },
       { value: 'other', label: 'Other' },
     ],
     required: true,
@@ -272,6 +401,24 @@ export const demographicQuestions: DemographicQuestion[] = [
       { value: 'oceania', label: 'Oceania' },
       { value: 'global', label: 'Global / Multiple Regions' },
     ],
+    required: true,
+  },
+  // Economic Value Creation section
+  {
+    id: 'demo-revenue-sources',
+    section: 'demographics',
+    question: 'What are your main sources of revenue? (Select all that apply)',
+    helpText: 'Select all revenue sources that apply to your cultural enterprise',
+    type: 'multiselect',
+    options: REVENUE_SOURCES,
+    required: true,
+  },
+  {
+    id: 'demo-income-challenges',
+    section: 'demographics',
+    question: 'What are your biggest challenges in generating income?',
+    helpText: 'Describe the main obstacles you face in creating sustainable income from your cultural work',
+    type: 'textarea',
     required: true,
   },
 ]
@@ -372,6 +519,12 @@ export function extractProfileDataFromAnswers(answers: Record<string, unknown>):
     'demo-stage': 'business_stage',
     'demo-team-size': 'team_size',
     'demo-revenue': 'revenue_range',
+    'demo-age-group': 'age_group',
+    'demo-gender': 'gender',
+    'demo-state-region': 'state_region',
+    'demo-cultural-innovation-type': 'cultural_innovation_types',
+    'demo-revenue-sources': 'revenue_sources',
+    'demo-income-challenges': 'income_challenges',
   }
 
   // Extract from demographic questions
@@ -398,7 +551,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'traditionalKnowledge',
     question: 'Our organization has documented traditional knowledge relevant to our activities',
-    helpText: 'Consider formal documentation, oral histories, and recorded practices',
+    helpText: 'Examples: recipe books, technique guides, video tutorials, recorded interviews with elders',
     weight: 1.0,
   },
   {
@@ -406,7 +559,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'practitionerAccess',
     question: 'We have access to skilled practitioners of traditional techniques',
-    helpText: 'Think about master artisans, knowledge keepers, and trained practitioners',
+    helpText: 'Examples: master weavers, traditional chefs, elder craftspeople, trained apprentices',
     weight: 1.2,
   },
   {
@@ -414,7 +567,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalAuthenticity',
     question: 'Our cultural practices have recognized authenticity within source communities',
-    helpText: 'Consider community validation and recognition of your work',
+    helpText: 'Examples: community endorsements, cultural council approval, elder recognition',
     weight: 1.3,
   },
   {
@@ -422,7 +575,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'communityInvolvement',
     question: 'Cultural practitioners from source communities are involved in development decisions',
-    helpText: 'Think about advisory roles, governance participation, and input mechanisms',
+    helpText: 'Examples: advisory board seats, design review panels, regular community consultations',
     weight: 1.4,
   },
   {
@@ -430,7 +583,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalPreservation',
     question: 'Our innovations build upon (rather than replace) traditional practices',
-    helpText: 'Consider whether traditional methods are enhanced or displaced',
+    helpText: 'Examples: adding new colorways to traditional patterns vs. replacing handwork with machines',
     weight: 1.1,
   },
   {
@@ -438,7 +591,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalMeaning',
     question: 'Cultural meanings and values are preserved in our commercial activities',
-    helpText: 'Think about whether spiritual, social, or cultural significance is maintained',
+    helpText: 'Examples: keeping ceremonial items separate from commercial, explaining symbolism to buyers',
     weight: 1.0,
   },
   {
@@ -446,7 +599,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'practitionerRelationships',
     question: 'We have strong relationships with cultural knowledge holders',
-    helpText: 'Consider ongoing partnerships, respect, and reciprocity',
+    helpText: 'Examples: regular visits, fair compensation, sharing profits, co-authoring work',
     weight: 1.0,
   },
   {
@@ -454,7 +607,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalMembership',
     question: 'Our team includes members from the source culture community',
-    helpText: 'Think about representation in leadership and decision-making roles',
+    helpText: 'Examples: founders from the community, cultural advisors, community members on staff',
     weight: 0.9,
   },
 ]
@@ -466,7 +619,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'productDevelopment',
     question: 'We regularly develop new products/services based on cultural assets',
-    helpText: 'Consider the frequency and success of new offerings',
+    helpText: 'Examples: new product lines each season, limited editions, custom offerings',
     weight: 1.2,
   },
   {
@@ -474,7 +627,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'techniqueCombination',
     question: 'We experiment with combining traditional and modern techniques',
-    helpText: 'Think about hybrid approaches that honor tradition while embracing innovation',
+    helpText: 'Examples: hand-dyed fabric with modern cuts, traditional recipes with new presentations',
     weight: 1.1,
   },
   {
@@ -482,7 +635,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'innovationLeadership',
     question: 'We have introduced innovations that others in our sector have adopted',
-    helpText: 'Consider whether you are a leader or follower in innovation',
+    helpText: 'Examples: your packaging style got copied, you pioneered a new product category',
     weight: 1.3,
   },
   {
@@ -490,7 +643,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'marketExpansion',
     question: 'We have successfully entered new geographic markets',
-    helpText: 'Think about expansion beyond your original market area',
+    helpText: 'Examples: selling abroad, opening in new cities, reaching customers in new regions',
     weight: 1.0,
   },
   {
@@ -498,7 +651,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'digitalDistribution',
     question: 'We use digital channels effectively for cultural product distribution',
-    helpText: 'Consider e-commerce, social media, and online platforms',
+    helpText: 'Examples: Etsy/Amazon store, Instagram shopping, your own website with checkout',
     weight: 0.9,
   },
   {
@@ -506,7 +659,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'efficiencyImprovement',
     question: 'We have improved efficiency while maintaining cultural authenticity',
-    helpText: 'Think about process improvements that did not compromise quality',
+    helpText: 'Examples: better tools that speed up work, streamlined ordering, improved workspace layout',
     weight: 1.0,
   },
   {
@@ -514,7 +667,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'externalCollaboration',
     question: 'We collaborate with external partners on innovation projects',
-    helpText: 'Consider partnerships with researchers, designers, or other organizations',
+    helpText: 'Examples: working with designers, universities, NGOs, or other artisan groups',
     weight: 1.1,
   },
   {
@@ -522,7 +675,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'feedbackIteration',
     question: 'We actively seek feedback and iterate on our offerings',
-    helpText: 'Think about customer feedback loops and continuous improvement',
+    helpText: 'Examples: customer surveys, testing prototypes, adjusting based on reviews',
     weight: 1.2,
   },
 ]
@@ -534,7 +687,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'adaptiveResponse',
     question: 'We have successfully adjusted operations in response to past disruptions',
-    helpText: 'Think about how you responded to crises like COVID-19, economic downturns, etc.',
+    helpText: 'Examples: pivoted to online sales during COVID, found new suppliers when old ones closed',
     weight: 1.5,
   },
   {
@@ -542,7 +695,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'learningFromSetbacks',
     question: 'We have systematic processes for learning from setbacks',
-    helpText: 'Consider after-action reviews, documentation, and knowledge sharing',
+    helpText: 'Examples: team debriefs after failed projects, documenting lessons learned',
     weight: 1.3,
   },
   {
@@ -550,7 +703,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'skillDiversity',
     question: 'Our team has diverse skills that allow flexibility',
-    helpText: 'Think about cross-training, multiple competencies, and adaptable roles',
+    helpText: 'Examples: artisans who can also do sales, staff trained on multiple crafts',
     weight: 1.2,
   },
   {
@@ -558,7 +711,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'externalResources',
     question: 'We can access external resources and expertise when needed',
-    helpText: 'Consider networks, advisors, and support organizations',
+    helpText: 'Examples: business mentors, NGO support, government programs, university partnerships',
     weight: 1.1,
   },
   {
@@ -566,7 +719,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'ipProtection',
     question: 'We have legal protections for our cultural intellectual property',
-    helpText: 'Think about trademarks, copyrights, geographical indications, or community protocols',
+    helpText: 'Examples: registered trademark, GI certification, copyright on designs, community protocols',
     weight: 1.0,
   },
   {
@@ -574,7 +727,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'financialReserves',
     question: 'We maintain financial reserves for unexpected challenges',
-    helpText: 'Consider cash reserves, credit access, or emergency funds',
+    helpText: 'Examples: 3+ months operating expenses saved, access to emergency loans or credit',
     weight: 1.2,
   },
   {
@@ -582,7 +735,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'communityDecisionMaking',
     question: 'Community members make key strategic decisions',
-    helpText: 'Think about governance structures and decision-making authority',
+    helpText: 'Examples: elected board, community voting on major decisions, regular community meetings',
     weight: 1.4,
   },
   {
@@ -590,7 +743,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'benefitDistribution',
     question: 'Benefits flow primarily to community members',
-    helpText: 'Consider profit sharing, wage levels, and reinvestment in community',
+    helpText: 'Examples: profit-sharing with artisans, above-market wages, community development fund',
     weight: 1.3,
   },
   {
@@ -598,7 +751,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'communityOwnership',
     question: 'Community members have ownership stakes in our enterprise',
-    helpText: 'Think about cooperative shares, community trusts, or equity participation',
+    helpText: 'Examples: cooperative membership, community trust ownership, artisan equity shares',
     weight: 1.4,
   },
   {
@@ -606,7 +759,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'allianceNetworks',
     question: 'We have alliance networks we can call on for support',
-    helpText: 'Consider industry associations, peer networks, and mutual aid relationships',
+    helpText: 'Examples: craft associations, fair trade networks, other cooperatives, industry groups',
     weight: 1.1,
   },
 ]
@@ -618,7 +771,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'revenueRetention',
     question: 'During the most recent economic shock, we maintained at least 70% of revenue',
-    helpText: 'Think about your financial performance during COVID-19 or other crises',
+    helpText: 'Examples: kept most sales during COVID, weathered a major competitor entering your market',
     weight: 1.3,
   },
   {
@@ -626,7 +779,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'teamRetention',
     question: 'We retained at least 80% of our team during the last disruption',
-    helpText: 'Consider employment continuity during difficult periods',
+    helpText: 'Examples: kept artisans employed during slow seasons, no layoffs during the pandemic',
     weight: 1.2,
   },
   {
@@ -634,7 +787,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'recoverySpeed',
     question: 'We recovered to pre-shock performance levels within 12 months',
-    helpText: 'Think about how quickly you bounced back from disruptions',
+    helpText: 'Examples: back to normal sales within a year, regained lost customers quickly',
     weight: 1.4,
   },
   {
@@ -642,7 +795,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'opportunityDiscovery',
     question: 'Disruptions have led us to discover new market opportunities',
-    helpText: 'Consider whether crises opened new doors or revenue streams',
+    helpText: 'Examples: started online sales during lockdown, found new customer segments',
     weight: 1.1,
   },
   {
@@ -650,7 +803,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'postShockStrength',
     question: 'Our organization is stronger now than before the last major shock',
-    helpText: 'Think about overall organizational health and capability',
+    helpText: 'Examples: better systems, stronger team, more diverse customers than before the crisis',
     weight: 1.5,
   },
   {
@@ -658,7 +811,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'communitySpillover',
     question: 'Our success has spawned new initiatives in the community',
-    helpText: 'Consider spin-offs, inspired projects, or ecosystem development',
+    helpText: 'Examples: inspired others to start businesses, created a local craft cluster',
     weight: 1.0,
   },
   {
@@ -666,7 +819,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'jobCreation',
     question: 'We have created new jobs beyond our core team',
-    helpText: 'Think about supply chain employment, indirect jobs, and multiplier effects',
+    helpText: 'Examples: suppliers hired more people, packaging business grew, transport jobs created',
     weight: 1.1,
   },
   {
@@ -674,7 +827,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'intergenerationalPlanning',
     question: 'We have viable plans for intergenerational continuity',
-    helpText: 'Consider succession planning, youth training, and long-term sustainability',
+    helpText: 'Examples: training young apprentices, documented succession plan, next-gen leaders identified',
     weight: 1.2,
   },
 ]
@@ -717,8 +870,8 @@ export const questionConfig = {
 
 // Total question counts
 export const ASSESSMENT_V2_STATS = {
-  totalQuestions: 40,
-  demographicQuestions: 6,
+  totalQuestions: 48,
+  demographicQuestions: 14,
   likertQuestions: 34,
   estimatedMinutes: 15,
   sections: 5,

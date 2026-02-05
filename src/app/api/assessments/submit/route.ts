@@ -29,7 +29,7 @@ import { pricingQuestions } from '@/lib/data/pricingQuestions'
 // Request schema for assessment submission
 const assessmentSubmitSchema = z.object({
   assessmentType: z.enum(['cirf', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
-  answers: z.record(z.string(), z.union([z.number(), z.string()])), // Question ID -> answer (number for Likert, string for demographics)
+  answers: z.record(z.string(), z.union([z.number(), z.string(), z.array(z.string())])), // Question ID -> answer (number for Likert, string for demographics, array for multiselect)
 })
 
 // Question interface for scoring
@@ -73,7 +73,7 @@ function getQuestionsForType(type: AssessmentType): QuestionWithSection[] {
  * This ensures scores cannot be manipulated by clients
  */
 function calculateScore(
-  answers: Record<string, number | string>,
+  answers: Record<string, number | string | string[]>,
   assessmentType: AssessmentType
 ): {
   overallScore: number
@@ -141,7 +141,7 @@ function calculateScore(
  * Validate that answers contain expected question IDs
  */
 function validateAnswers(
-  answers: Record<string, number | string>,
+  answers: Record<string, number | string | string[]>,
   assessmentType: AssessmentType
 ): { valid: boolean; error?: string } {
   const questions = getQuestionsForType(assessmentType)

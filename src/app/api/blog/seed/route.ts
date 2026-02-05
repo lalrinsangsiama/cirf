@@ -26,7 +26,14 @@ export async function POST(request: Request) {
   try {
     // Check for admin secret in header for basic protection
     const authHeader = request.headers.get('Authorization')
-    const adminSecret = process.env.ADMIN_SECRET_KEY || 'seed-blog-posts-2026'
+    const adminSecret = process.env.ADMIN_SECRET_KEY
+
+    if (!adminSecret) {
+      return NextResponse.json(
+        { error: 'Admin secret key not configured' },
+        { status: 500 }
+      )
+    }
 
     if (authHeader !== `Bearer ${adminSecret}`) {
       return NextResponse.json(

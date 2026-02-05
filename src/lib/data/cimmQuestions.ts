@@ -26,25 +26,25 @@ export const CIMM_SECTION_META: Record<CIMMSection, {
   innovationDepth: {
     label: 'Innovation Depth',
     shortLabel: 'Depth',
-    description: 'Measure how deeply your innovations integrate cultural knowledge',
+    description: 'Are you scratching the surface or going deep? Let\'s measure.',
     estimatedMinutes: 2,
   },
   culturalIntegrity: {
     label: 'Cultural Integrity',
     shortLabel: 'Integrity',
-    description: 'Assess the authenticity and respect for cultural sources',
+    description: 'Is your community proud of what you\'re creating? Let\'s check.',
     estimatedMinutes: 2,
   },
   economicImpact: {
     label: 'Economic Impact',
     shortLabel: 'Economic',
-    description: 'Evaluate the economic outcomes of your cultural innovations',
+    description: 'Is your innovation paying off financially? Let\'s see the numbers.',
     estimatedMinutes: 2,
   },
   innovationVelocity: {
     label: 'Innovation Velocity',
     shortLabel: 'Velocity',
-    description: 'Measure the speed and efficiency of your innovation processes',
+    description: 'How fast can you bring new ideas to market? Let\'s find out.',
     estimatedMinutes: 2,
   },
 }
@@ -56,7 +56,7 @@ export const innovationDepthQuestions: CIMMLikertQuestion[] = [
     section: 'innovationDepth',
     construct: 'knowledgeIntegration',
     question: 'Our innovations incorporate deep traditional knowledge, not just surface aesthetics',
-    helpText: 'Consider whether innovations use underlying principles, techniques, or philosophies',
+    helpText: 'Examples: using ancestral fermentation methods vs. just putting a traditional pattern on packaging',
     weight: 1.4,
   },
   {
@@ -64,7 +64,7 @@ export const innovationDepthQuestions: CIMMLikertQuestion[] = [
     section: 'innovationDepth',
     construct: 'techniqueTransformation',
     question: 'We have developed new applications for traditional techniques',
-    helpText: 'Think about traditional methods applied to new products or contexts',
+    helpText: 'Examples: traditional weaving techniques used for modern furniture, ancestral dyes for fashion',
     weight: 1.3,
   },
   {
@@ -72,7 +72,7 @@ export const innovationDepthQuestions: CIMMLikertQuestion[] = [
     section: 'innovationDepth',
     construct: 'crossCulturalSynthesis',
     question: 'Our innovations meaningfully bridge cultural traditions with contemporary needs',
-    helpText: 'Consider how traditional knowledge solves modern problems',
+    helpText: 'Examples: traditional medicine for modern wellness, heritage cooking for meal delivery',
     weight: 1.2,
   },
   {
@@ -80,7 +80,7 @@ export const innovationDepthQuestions: CIMMLikertQuestion[] = [
     section: 'innovationDepth',
     construct: 'materialInnovation',
     question: 'We have innovated with traditional materials in new ways',
-    helpText: 'Think about new uses, combinations, or treatments of traditional materials',
+    helpText: 'Examples: bamboo for tech accessories, natural dyes for sustainable fashion',
     weight: 1.1,
   },
   {
@@ -88,7 +88,7 @@ export const innovationDepthQuestions: CIMMLikertQuestion[] = [
     section: 'innovationDepth',
     construct: 'processInnovation',
     question: 'We have improved traditional processes while maintaining their essence',
-    helpText: 'Consider efficiency improvements that preserve cultural integrity',
+    helpText: 'Examples: better tools that speed up handwork, improved workspace without mechanizing',
     weight: 1.2,
   },
 ]
@@ -100,7 +100,7 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
     section: 'culturalIntegrity',
     construct: 'sourceAuthenticity',
     question: 'Our innovations are recognized as authentic by source communities',
-    helpText: 'Consider validation from cultural knowledge holders',
+    helpText: 'Examples: elders approve our work, community members buy our products proudly',
     weight: 1.5,
   },
   {
@@ -108,7 +108,7 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
     section: 'culturalIntegrity',
     construct: 'meaningPreservation',
     question: 'Cultural meanings and symbolism are preserved in our innovations',
-    helpText: 'Think about whether spiritual or cultural significance is maintained',
+    helpText: 'Examples: sacred symbols not used commercially, ceremonial items kept separate',
     weight: 1.4,
   },
   {
@@ -116,7 +116,7 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
     section: 'culturalIntegrity',
     construct: 'storyTelling',
     question: 'We communicate the cultural stories behind our innovations',
-    helpText: 'Consider how cultural context is shared with customers',
+    helpText: 'Examples: product cards explain origins, website tells the tradition\'s story',
     weight: 1.1,
   },
   {
@@ -124,7 +124,7 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
     section: 'culturalIntegrity',
     construct: 'communityConsent',
     question: 'We have explicit consent from communities for our use of cultural knowledge',
-    helpText: 'Think about formal agreements or community endorsements',
+    helpText: 'Examples: signed agreements, community council approval, documented permissions',
     weight: 1.5,
   },
   {
@@ -132,7 +132,7 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
     section: 'culturalIntegrity',
     construct: 'culturalRespect',
     question: 'We actively avoid cultural misrepresentation or exploitation',
-    helpText: 'Consider safeguards against inappropriate use',
+    helpText: 'Examples: review board checks new designs, refuse requests that feel wrong',
     weight: 1.3,
   },
 ]
@@ -144,7 +144,7 @@ export const economicImpactQuestions: CIMMLikertQuestion[] = [
     section: 'economicImpact',
     construct: 'revenueGrowth',
     question: 'Our cultural innovations have driven significant revenue growth',
-    helpText: 'Consider year-over-year revenue changes from cultural products',
+    helpText: 'Examples: sales up 20%+ after launching new products, growing faster than before',
     weight: 1.3,
   },
   {
@@ -152,7 +152,7 @@ export const economicImpactQuestions: CIMMLikertQuestion[] = [
     section: 'economicImpact',
     construct: 'marketPremium',
     question: 'Our products command a premium price due to cultural value',
-    helpText: 'Think about pricing compared to non-cultural alternatives',
+    helpText: 'Examples: charge 2-3x more than factory-made alternatives, customers pay for authenticity',
     weight: 1.4,
   },
   {
@@ -160,7 +160,7 @@ export const economicImpactQuestions: CIMMLikertQuestion[] = [
     section: 'economicImpact',
     construct: 'communityIncome',
     question: 'Our innovations have increased income for community members',
-    helpText: 'Consider wages, profit sharing, or indirect economic benefits',
+    helpText: 'Examples: artisan wages up 30%, more families can send kids to school',
     weight: 1.5,
   },
   {
@@ -168,7 +168,7 @@ export const economicImpactQuestions: CIMMLikertQuestion[] = [
     section: 'economicImpact',
     construct: 'marketExpansion',
     question: 'We have successfully accessed new markets through cultural innovations',
-    helpText: 'Think about new geographic or demographic markets reached',
+    helpText: 'Examples: now selling to Europe, reached urban millennials, got into retail stores',
     weight: 1.2,
   },
   {
@@ -176,7 +176,7 @@ export const economicImpactQuestions: CIMMLikertQuestion[] = [
     section: 'economicImpact',
     construct: 'investmentReturn',
     question: 'Our innovation investments have generated positive returns',
-    helpText: 'Consider ROI on R&D, training, or development costs',
+    helpText: 'Examples: new product line paid for itself, training investment led to better sales',
     weight: 1.1,
   },
 ]
@@ -188,7 +188,7 @@ export const innovationVelocityQuestions: CIMMLikertQuestion[] = [
     section: 'innovationVelocity',
     construct: 'developmentSpeed',
     question: 'We can develop new cultural products faster than 12 months ago',
-    helpText: 'Consider improvements in time-to-market',
+    helpText: 'Examples: used to take 6 months to launch, now takes 3 months',
     weight: 1.2,
   },
   {
@@ -196,7 +196,7 @@ export const innovationVelocityQuestions: CIMMLikertQuestion[] = [
     section: 'innovationVelocity',
     construct: 'ideaPipeline',
     question: 'We have a pipeline of innovation ideas waiting for development',
-    helpText: 'Think about your backlog of potential innovations',
+    helpText: 'Examples: list of 10+ product ideas, sketches waiting to be made',
     weight: 1.1,
   },
   {
@@ -204,7 +204,7 @@ export const innovationVelocityQuestions: CIMMLikertQuestion[] = [
     section: 'innovationVelocity',
     construct: 'iterationCycles',
     question: 'We iterate and improve products based on market feedback quickly',
-    helpText: 'Consider how fast you incorporate feedback into improvements',
+    helpText: 'Examples: fixed sizing issues within a month, updated designs after customer complaints',
     weight: 1.3,
   },
   {
@@ -212,7 +212,7 @@ export const innovationVelocityQuestions: CIMMLikertQuestion[] = [
     section: 'innovationVelocity',
     construct: 'launchFrequency',
     question: 'We launch new products or services at least quarterly',
-    helpText: 'Think about your release cadence',
+    helpText: 'Examples: seasonal collections, monthly limited editions, regular new offerings',
     weight: 1.0,
   },
   {
@@ -220,7 +220,7 @@ export const innovationVelocityQuestions: CIMMLikertQuestion[] = [
     section: 'innovationVelocity',
     construct: 'scalingEfficiency',
     question: 'We can scale successful innovations efficiently',
-    helpText: 'Consider how quickly you can increase production of hits',
+    helpText: 'Examples: when a product sells well, can quickly make more without quality dropping',
     weight: 1.2,
   },
 ]

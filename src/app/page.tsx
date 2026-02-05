@@ -226,26 +226,50 @@ export default function HomePage() {
           </div>
 
           <div className="lg:col-span-2 pt-8 lg:pt-16">
-            <div className="animate-on-scroll mb-12">
-              <p className="text-lg md:text-xl leading-relaxed font-light mb-4">
-                <span className="text-gold font-medium">476 million indigenous people. Countless ethnic communities.</span> One impossible choice:
-                abandon your culture to participate in the modern economy, or preserve your identity while remaining poor.
+            <div className="animate-on-scroll mb-8">
+              <p className="text-xl md:text-2xl leading-relaxed font-light mb-6">
+                Millions of cultural entrepreneurs face the same impossible choice every day:
               </p>
-              <p className="text-base leading-relaxed font-light text-ink/70 mb-6">
-                This is the development world&apos;s most destructive false dichotomy. Conventional economics treats traditional knowledge,
-                ancestral practices, and indigenous governance systems as obstacles to progress — relics to be replaced by modern alternatives.
+              <p className="text-lg leading-relaxed font-light text-ink/80 mb-4">
+                Abandon your culture to succeed in the modern economy.
+              </p>
+              <p className="text-lg leading-relaxed font-light text-ink/80 mb-8">
+                Or preserve your identity while watching opportunities pass you by.
+              </p>
+            </div>
+
+            {/* Stat Callout */}
+            <div className="animate-on-scroll bg-sand border border-gold/40 rounded-lg p-6 mb-8">
+              <div className="flex items-start gap-4">
+                <div className="bg-gold/20 rounded-full p-2 flex-shrink-0">
+                  <TrendingUp className="w-5 h-5 text-gold" />
+                </div>
+                <div>
+                  <p className="font-serif text-3xl text-gold mb-1">$1.2 trillion</p>
+                  <p className="text-sm text-ink/70">in traditional knowledge commercialised — without the communities who created it seeing a fair share.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="animate-on-scroll mb-8 space-y-4">
+              <p className="text-base leading-relaxed font-light text-ink/70">
+                Languages disappearing every two weeks. Youth forced to leave their communities.
               </p>
               <p className="text-base leading-relaxed font-light text-ink/70">
-                The result: languages disappearing every two weeks, youth forced to migrate from their communities,
-                and $1.2 trillion in traditional knowledge commercialised without community benefit.
+                The mainstream message? Your traditions are obstacles. Replace them with &quot;modern&quot; alternatives.
               </p>
             </div>
 
             <div className="animate-on-scroll bg-pearl p-6 rounded-lg border-l-4 border-gold">
               <h3 className="font-serif text-xl mb-3 font-normal">There is a third path.</h3>
+              <p className="text-base leading-relaxed font-light mb-2">
+                Not preservation as a museum exercise.
+              </p>
+              <p className="text-base leading-relaxed font-light mb-2">
+                Not modernisation as cultural erasure.
+              </p>
               <p className="text-base leading-relaxed font-light">
-                Not preservation as a museum exercise. Not modernisation as cultural erasure. But <span className="font-medium">cultural innovation</span> —
-                the creative adaptation of traditional knowledge, practices, and social systems for contemporary economic challenges.
+                <span className="font-medium">Cultural innovation</span> — where your traditions become your competitive advantage.
               </p>
             </div>
           </div>

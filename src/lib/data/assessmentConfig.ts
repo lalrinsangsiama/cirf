@@ -28,7 +28,7 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     id: 'cirf',
     name: 'CIRF',
     fullName: 'Cultural Innovation Resilience Framework',
-    description: 'Comprehensive assessment of your cultural innovation resilience across cultural capital, innovation activities, organizational capacities, and economic resilience.',
+    description: 'Discover your strengths and growth areas across 4 key dimensions. Get personalized insights to build a more sustainable cultural business.',
     questionCount: 40,
     estimatedMinutes: 15,
     creditCost: 1,
@@ -50,7 +50,7 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     id: 'cimm',
     name: 'CIMM',
     fullName: 'Cultural Innovation Measurement Matrix',
-    description: 'Measure your innovation depth, cultural integrity, economic impact, and innovation velocity to understand your innovation performance.',
+    description: 'See how well you\'re balancing tradition with innovation, and where you can increase impact.',
     questionCount: 20,
     estimatedMinutes: 8,
     creditCost: 0, // Free after CIRF unlock
@@ -71,7 +71,7 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     id: 'cira',
     name: 'CIRA',
     fullName: 'Cultural Innovation Readiness Assessment',
-    description: 'Evaluate your readiness for cultural innovation through analysis of cultural capital, ecosystem support, barriers, and readiness indicators.',
+    description: 'Find out if you\'re ready to scale. Identify what\'s helping you grow and what\'s holding you back.',
     questionCount: 20,
     estimatedMinutes: 8,
     creditCost: 0, // Free after CIRF unlock
@@ -92,7 +92,7 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     id: 'tbl',
     name: 'TBL-CI',
     fullName: 'Triple Bottom Line Cultural Innovation',
-    description: 'Assess your triple bottom line impact across economic returns, social impact, and environmental sustainability.',
+    description: 'See how your work creates value across three dimensions: profit, people, and planet.',
     questionCount: 20,
     estimatedMinutes: 8,
     creditCost: 0, // Free after CIRF unlock
@@ -112,7 +112,7 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     id: 'ciss',
     name: 'CISS',
     fullName: 'Cultural Innovation Sustainability Scorecard',
-    description: 'Measure your long-term sustainability across economic, cultural, social, and environmental dimensions.',
+    description: 'Check if your cultural enterprise can thrive for generations, not just years.',
     questionCount: 18,
     estimatedMinutes: 7,
     creditCost: 0, // Free after CIRF unlock
@@ -133,7 +133,7 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     id: 'pricing',
     name: 'Pricing',
     fullName: 'Cultural Product Pricing Assessment',
-    description: 'Develop an optimal pricing strategy for your cultural products through cost analysis, value proposition, market positioning, and price optimization.',
+    description: 'Find the right price for your work. Stop undercharging and start capturing the true value you create.',
     questionCount: 15,
     estimatedMinutes: 6,
     creditCost: 0, // Free after CIRF unlock

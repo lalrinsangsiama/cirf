@@ -25,19 +25,19 @@ export const TBL_SECTION_META: Record<TBLSection, {
   economicReturns: {
     label: 'Economic Returns',
     shortLabel: 'Economic',
-    description: 'Measure the financial sustainability and economic impact',
+    description: 'Is your business financially healthy? Let\'s check the profit side.',
     estimatedMinutes: 3,
   },
   socialImpact: {
     label: 'Social Impact',
     shortLabel: 'Social',
-    description: 'Assess community and social well-being outcomes',
+    description: 'Are you making life better for people? Let\'s measure the human impact.',
     estimatedMinutes: 3,
   },
   environmentalImpact: {
     label: 'Environmental Impact',
     shortLabel: 'Environment',
-    description: 'Evaluate environmental sustainability practices',
+    description: 'Are you being kind to the planet? Let\'s assess your footprint.',
     estimatedMinutes: 2,
   },
 }
@@ -49,7 +49,7 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     section: 'economicReturns',
     construct: 'profitability',
     question: 'Our cultural enterprise is financially profitable or on track to profitability',
-    helpText: 'Consider net income, profit margins, or break-even timeline',
+    helpText: 'Examples: making profit each month, expect to break even within 2 years',
     weight: 1.3,
   },
   {
@@ -57,7 +57,7 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     section: 'economicReturns',
     construct: 'revenueGrowth',
     question: 'Our revenue has grown consistently over the past year',
-    helpText: 'Think about year-over-year revenue trends',
+    helpText: 'Examples: sales up 15% from last year, more customers each quarter',
     weight: 1.2,
   },
   {
@@ -65,7 +65,7 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     section: 'economicReturns',
     construct: 'localEconomicImpact',
     question: 'We contribute significantly to the local economy through purchases and payments',
-    helpText: 'Consider local suppliers, wages paid, and local spending',
+    helpText: 'Examples: buy materials locally, hire from the community, use local services',
     weight: 1.4,
   },
   {
@@ -73,7 +73,7 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     section: 'economicReturns',
     construct: 'livelihoodSupport',
     question: 'We provide sustainable livelihoods for practitioners and team members',
-    helpText: 'Think about fair wages, job security, and income stability',
+    helpText: 'Examples: artisans can support families, workers have steady income year-round',
     weight: 1.5,
   },
   {
@@ -81,7 +81,7 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     section: 'economicReturns',
     construct: 'economicMultiplier',
     question: 'Our activities create indirect economic benefits beyond direct employment',
-    helpText: 'Consider supply chain jobs, tourism, or related business growth',
+    helpText: 'Examples: local restaurant busier because of our visitors, suppliers grew their business',
     weight: 1.2,
   },
   {
@@ -89,7 +89,7 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     section: 'economicReturns',
     construct: 'financialResilience',
     question: 'We have financial reserves and diverse revenue streams',
-    helpText: 'Think about cash reserves, multiple products, or varied markets',
+    helpText: 'Examples: 3+ months of expenses saved, income from multiple product lines',
     weight: 1.3,
   },
 ]
@@ -101,7 +101,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'culturalPreservation',
     question: 'Our work actively preserves and transmits cultural traditions',
-    helpText: 'Consider apprenticeship programs, documentation, or cultural events',
+    helpText: 'Examples: apprenticeship programs, cultural workshops, documenting techniques',
     weight: 1.5,
   },
   {
@@ -109,7 +109,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'communityEmpowerment',
     question: 'Community members have meaningful decision-making power in our organization',
-    helpText: 'Think about governance structures and community voice',
+    helpText: 'Examples: community-elected board, regular town halls, veto power on key decisions',
     weight: 1.4,
   },
   {
@@ -117,7 +117,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'skillDevelopment',
     question: 'We invest in developing skills and capabilities of community members',
-    helpText: 'Consider training programs, mentorship, or education support',
+    helpText: 'Examples: paid training programs, scholarships, mentorship matching',
     weight: 1.3,
   },
   {
@@ -125,7 +125,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'inclusiveEmployment',
     question: 'We provide employment opportunities to marginalized or vulnerable groups',
-    helpText: 'Think about women, youth, disabled, or economically disadvantaged',
+    helpText: 'Examples: hiring single mothers, youth apprenticeships, accessible workplace',
     weight: 1.4,
   },
   {
@@ -133,7 +133,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'communityBenefits',
     question: 'We share benefits with the broader community beyond direct participants',
-    helpText: 'Consider community programs, infrastructure, or public goods',
+    helpText: 'Examples: community fund contributions, free cultural events, shared infrastructure',
     weight: 1.2,
   },
   {
@@ -141,7 +141,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'culturalPride',
     question: 'Our work increases community pride in cultural heritage',
-    helpText: 'Think about recognition, celebration, and cultural identity',
+    helpText: 'Examples: young people want to learn traditions, media coverage, community celebrations',
     weight: 1.3,
   },
   {
@@ -149,7 +149,7 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     section: 'socialImpact',
     construct: 'intergenerationalTransfer',
     question: 'We actively facilitate knowledge transfer between generations',
-    helpText: 'Consider elder-youth connections and succession planning',
+    helpText: 'Examples: elders teaching youth, family craft days, documented oral histories',
     weight: 1.5,
   },
 ]
@@ -161,7 +161,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'sustainableMaterials',
     question: 'We source materials sustainably and responsibly',
-    helpText: 'Consider renewable, recycled, or ethically sourced materials',
+    helpText: 'Examples: certified sustainable wood, organic cotton, recycled metals',
     weight: 1.4,
   },
   {
@@ -169,7 +169,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'wasteReduction',
     question: 'We minimize waste in our production processes',
-    helpText: 'Think about material efficiency, recycling, and upcycling',
+    helpText: 'Examples: use fabric scraps for small items, compost organic waste, recycle packaging',
     weight: 1.2,
   },
   {
@@ -177,7 +177,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'energyEfficiency',
     question: 'We use energy efficiently and seek renewable sources',
-    helpText: 'Consider energy consumption patterns and clean energy use',
+    helpText: 'Examples: solar panels, LED lighting, energy-efficient equipment',
     weight: 1.1,
   },
   {
@@ -185,7 +185,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'traditionalEcoPractices',
     question: 'We employ traditional practices that are inherently sustainable',
-    helpText: 'Think about traditional methods that respect natural cycles',
+    helpText: 'Examples: natural dyes, hand tools instead of machines, seasonal harvesting',
     weight: 1.5,
   },
   {
@@ -193,7 +193,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'biodiversityProtection',
     question: 'Our activities support or protect local biodiversity',
-    helpText: 'Consider impact on local species, habitats, or ecosystems',
+    helpText: 'Examples: plant native species, protect forest areas, don\'t over-harvest',
     weight: 1.3,
   },
   {
@@ -201,7 +201,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'carbonFootprint',
     question: 'We actively work to minimize our carbon footprint',
-    helpText: 'Think about transportation, production, and offset efforts',
+    helpText: 'Examples: ship by sea not air, source locally, plant trees to offset',
     weight: 1.2,
   },
   {
@@ -209,7 +209,7 @@ export const environmentalImpactQuestions: TBLLikertQuestion[] = [
     section: 'environmentalImpact',
     construct: 'environmentalEducation',
     question: 'We educate customers and community about environmental sustainability',
-    helpText: 'Consider awareness campaigns, product information, or programs',
+    helpText: 'Examples: packaging explains eco-practices, workshops on sustainability',
     weight: 1.0,
   },
 ]

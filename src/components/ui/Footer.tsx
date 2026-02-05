@@ -11,7 +11,7 @@ const footerLinks = {
     { name: 'Assessment Tool', href: '/tools' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Templates', href: '/resources' },
-    { name: 'Calculators', href: '/tools#calculators' },
+    { name: 'Calculators', href: '/tools' },
   ],
   connect: [
     { name: 'About', href: '/about' },

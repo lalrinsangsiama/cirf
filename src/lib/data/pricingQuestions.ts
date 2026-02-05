@@ -26,25 +26,25 @@ export const PRICING_SECTION_META: Record<PricingSection, {
   costAnalysis: {
     label: 'Cost Analysis',
     shortLabel: 'Costs',
-    description: 'Understand your true costs of production and operation',
+    description: 'Do you know what it really costs to make your products? Let\'s find out.',
     estimatedMinutes: 2,
   },
   valueProposition: {
     label: 'Value Proposition',
     shortLabel: 'Value',
-    description: 'Assess the unique value your products provide',
+    description: 'What makes your work worth more than the alternatives? Let\'s capture it.',
     estimatedMinutes: 2,
   },
   marketPositioning: {
     label: 'Market Positioning',
     shortLabel: 'Position',
-    description: 'Evaluate your competitive position and target market',
+    description: 'Are you reaching the customers who will pay what you\'re worth? Let\'s see.',
     estimatedMinutes: 1,
   },
   priceOptimization: {
     label: 'Price Optimization',
     shortLabel: 'Pricing',
-    description: 'Optimize pricing strategies for maximum value capture',
+    description: 'Are you leaving money on the table? Let\'s check your strategy.',
     estimatedMinutes: 1,
   },
 }
@@ -56,7 +56,7 @@ export const costAnalysisQuestions: PricingLikertQuestion[] = [
     section: 'costAnalysis',
     construct: 'costClarity',
     question: 'We have clear visibility into all direct costs of producing our cultural products',
-    helpText: 'Consider materials, labor, packaging, and direct expenses',
+    helpText: 'Examples: know exactly what materials cost per item, track labor hours, calculate shipping',
     weight: 1.4,
   },
   {
@@ -64,7 +64,7 @@ export const costAnalysisQuestions: PricingLikertQuestion[] = [
     section: 'costAnalysis',
     construct: 'overheadAllocation',
     question: 'We accurately allocate overhead and indirect costs to products',
-    helpText: 'Think about rent, utilities, administration, marketing costs',
+    helpText: 'Examples: workshop rent split across products, marketing budget allocated',
     weight: 1.2,
   },
   {
@@ -72,7 +72,7 @@ export const costAnalysisQuestions: PricingLikertQuestion[] = [
     section: 'costAnalysis',
     construct: 'laborValuation',
     question: 'Our pricing accounts for fair wages including time for mastering traditional skills',
-    helpText: 'Consider whether skilled labor is adequately compensated',
+    helpText: 'Examples: artisans paid living wages, training time factored into costs',
     weight: 1.5,
   },
   {
@@ -80,7 +80,7 @@ export const costAnalysisQuestions: PricingLikertQuestion[] = [
     section: 'costAnalysis',
     construct: 'culturalCostInclusion',
     question: 'We include costs of cultural preservation and knowledge transfer in pricing',
-    helpText: 'Think about training, documentation, and community obligations',
+    helpText: 'Examples: apprenticeship costs built into prices, documentation time included',
     weight: 1.3,
   },
 ]
@@ -92,7 +92,7 @@ export const valuePropositionQuestions: PricingLikertQuestion[] = [
     section: 'valueProposition',
     construct: 'uniquenessRecognition',
     question: 'Customers recognize and value the uniqueness of our cultural products',
-    helpText: 'Consider customer feedback about distinctiveness',
+    helpText: 'Examples: "I can\'t find this anywhere else" comments, customers collect your work',
     weight: 1.4,
   },
   {
@@ -100,7 +100,7 @@ export const valuePropositionQuestions: PricingLikertQuestion[] = [
     section: 'valueProposition',
     construct: 'storyValue',
     question: 'We effectively communicate the cultural story and provenance of our products',
-    helpText: 'Think about storytelling in marketing and product presentation',
+    helpText: 'Examples: product cards tell the story, website explains traditions, videos show artisans',
     weight: 1.3,
   },
   {
@@ -108,7 +108,7 @@ export const valuePropositionQuestions: PricingLikertQuestion[] = [
     section: 'valueProposition',
     construct: 'qualityPerception',
     question: 'Our products are perceived as high quality and artisanally crafted',
-    helpText: 'Consider customer reviews, feedback, and market reputation',
+    helpText: 'Examples: 5-star reviews mention quality, customers say products last for years',
     weight: 1.4,
   },
   {
@@ -116,7 +116,7 @@ export const valuePropositionQuestions: PricingLikertQuestion[] = [
     section: 'valueProposition',
     construct: 'impactValue',
     question: 'Customers value knowing their purchase supports cultural preservation',
-    helpText: 'Think about whether social/cultural impact influences buying decisions',
+    helpText: 'Examples: customers mention supporting tradition, impact story increases sales',
     weight: 1.2,
   },
 ]
@@ -128,7 +128,7 @@ export const marketPositioningQuestions: PricingLikertQuestion[] = [
     section: 'marketPositioning',
     construct: 'targetSegment',
     question: 'We have identified and focus on customer segments willing to pay for cultural value',
-    helpText: 'Consider whether you target value-conscious customers',
+    helpText: 'Examples: target ethical consumers, design-conscious buyers, collectors',
     weight: 1.4,
   },
   {
@@ -136,7 +136,7 @@ export const marketPositioningQuestions: PricingLikertQuestion[] = [
     section: 'marketPositioning',
     construct: 'competitiveDifferentiation',
     question: 'Our products are clearly differentiated from mass-produced alternatives',
-    helpText: 'Think about what makes you different from industrial competitors',
+    helpText: 'Examples: handmade vs factory, unique designs, authentic materials',
     weight: 1.3,
   },
   {
@@ -144,7 +144,7 @@ export const marketPositioningQuestions: PricingLikertQuestion[] = [
     section: 'marketPositioning',
     construct: 'pricePerception',
     question: 'Our prices are perceived as fair relative to the value provided',
-    helpText: 'Consider customer feedback on price-value relationship',
+    helpText: 'Examples: customers say "worth every penny", rarely get price complaints',
     weight: 1.2,
   },
   {
@@ -152,7 +152,7 @@ export const marketPositioningQuestions: PricingLikertQuestion[] = [
     section: 'marketPositioning',
     construct: 'premiumJustification',
     question: 'We can justify premium prices through demonstrable quality and authenticity',
-    helpText: 'Think about certifications, testimonials, or quality markers',
+    helpText: 'Examples: certifications, meet-the-maker stories, quality guarantees',
     weight: 1.4,
   },
 ]
@@ -164,7 +164,7 @@ export const priceOptimizationQuestions: PricingLikertQuestion[] = [
     section: 'priceOptimization',
     construct: 'pricingStrategy',
     question: 'We have a deliberate pricing strategy rather than reactive or cost-plus pricing',
-    helpText: 'Consider whether pricing is strategic or ad-hoc',
+    helpText: 'Examples: value-based pricing, competitive analysis, tested price points',
     weight: 1.5,
   },
   {
@@ -172,7 +172,7 @@ export const priceOptimizationQuestions: PricingLikertQuestion[] = [
     section: 'priceOptimization',
     construct: 'priceVariation',
     question: 'We use different price points for different markets or product tiers',
-    helpText: 'Think about tiered pricing, market-specific pricing, or product lines',
+    helpText: 'Examples: premium line and everyday line, higher prices for export, volume discounts',
     weight: 1.2,
   },
   {
@@ -180,7 +180,7 @@ export const priceOptimizationQuestions: PricingLikertQuestion[] = [
     section: 'priceOptimization',
     construct: 'priceReview',
     question: 'We regularly review and adjust prices based on costs, competition, and demand',
-    helpText: 'Consider how often you evaluate pricing effectiveness',
+    helpText: 'Examples: annual price review, adjust when costs rise, test price changes',
     weight: 1.3,
   },
 ]

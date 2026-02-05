@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { createServiceClient } from '@/lib/supabase/server'
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf-framework.org'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages

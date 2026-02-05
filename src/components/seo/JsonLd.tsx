@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf-framework.org'
 
 interface JsonLdProps {
   data: Record<string, unknown>

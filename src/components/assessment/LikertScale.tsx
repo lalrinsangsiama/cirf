@@ -272,4 +272,133 @@ export function SectionProgress({
   )
 }
 
+// Multi-select for questions that allow multiple answers
+export interface MultiSelectProps {
+  value: string[] | null
+  onChange: (value: string[]) => void
+  options: { value: string; label: string }[]
+  disabled?: boolean
+  placeholder?: string
+}
+
+export function MultiSelect({
+  value,
+  onChange,
+  options,
+  disabled = false,
+  placeholder = 'Select all that apply',
+}: MultiSelectProps) {
+  const selectedValues = value || []
+
+  const toggleOption = (optionValue: string) => {
+    if (disabled) return
+
+    if (selectedValues.includes(optionValue)) {
+      onChange(selectedValues.filter((v) => v !== optionValue))
+    } else {
+      onChange([...selectedValues, optionValue])
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      {placeholder && selectedValues.length === 0 && (
+        <p className="text-sm text-stone mb-2">{placeholder}</p>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {options.map((option) => {
+          const isSelected = selectedValues.includes(option.value)
+          return (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => toggleOption(option.value)}
+              disabled={disabled}
+              className={cn(
+                'flex items-center gap-3 px-4 py-3 rounded-lg border text-left transition-all duration-200',
+                isSelected
+                  ? 'border-gold bg-gold/10 text-ink'
+                  : 'border-ink/20 bg-white text-ink hover:border-gold/50 hover:bg-gold/5',
+                disabled && 'opacity-50 cursor-not-allowed'
+              )}
+            >
+              <span
+                className={cn(
+                  'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors',
+                  isSelected
+                    ? 'border-gold bg-gold text-white'
+                    : 'border-ink/30 bg-white'
+                )}
+              >
+                {isSelected && (
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </span>
+              <span className="text-sm">{option.label}</span>
+            </button>
+          )
+        })}
+      </div>
+      {selectedValues.length > 0 && (
+        <p className="text-xs text-stone mt-2">
+          {selectedValues.length} selected
+        </p>
+      )}
+    </div>
+  )
+}
+
+// Text area for open-ended questions
+export interface TextAreaInputProps {
+  value: string | null
+  onChange: (value: string) => void
+  disabled?: boolean
+  placeholder?: string
+  rows?: number
+  maxLength?: number
+}
+
+export function TextAreaInput({
+  value,
+  onChange,
+  disabled = false,
+  placeholder = 'Enter your response...',
+  rows = 4,
+  maxLength = 2000,
+}: TextAreaInputProps) {
+  return (
+    <div className="space-y-2">
+      <textarea
+        value={value || ''}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        placeholder={placeholder}
+        rows={rows}
+        maxLength={maxLength}
+        className={cn(
+          'w-full px-4 py-3 rounded-lg border border-ink/20 bg-white text-ink resize-none',
+          'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
+          'transition-all duration-200',
+          disabled && 'opacity-50 cursor-not-allowed'
+        )}
+      />
+      {maxLength && (
+        <p className="text-xs text-stone text-right">
+          {(value || '').length}/{maxLength} characters
+        </p>
+      )}
+    </div>
+  )
+}
+
 export default LikertScale

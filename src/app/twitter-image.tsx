@@ -97,7 +97,7 @@ export default function TwitterImage() {
               marginTop: '48px',
             }}
           >
-            cirf.org
+            cirf-framework.org
           </span>
         </div>
 
