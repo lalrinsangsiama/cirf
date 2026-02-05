@@ -133,7 +133,8 @@ export default function DashboardPage() {
     }
 
     fetchData()
-  }, [user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, supabase])
 
   if (loading) {
     return (

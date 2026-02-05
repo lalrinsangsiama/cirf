@@ -52,7 +52,8 @@ export default function AdminDashboardPage() {
     if (user && profile?.role === 'admin') {
       fetchStats()
     }
-  }, [user, profile, authLoading])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, profile, authLoading, router])
 
   const fetchStats = async () => {
     setLoading(true)

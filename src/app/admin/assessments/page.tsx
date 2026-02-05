@@ -70,7 +70,8 @@ export default function AdminAssessmentsPage() {
     if (user && profile?.role === 'admin') {
       fetchAssessments()
     }
-  }, [user, profile, authLoading])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, profile, authLoading, router])
 
   const fetchAssessments = async () => {
     setLoading(true)

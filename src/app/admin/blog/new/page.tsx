@@ -63,7 +63,7 @@ function NewBlogPostContent() {
     if (!authLoading && (!user || profile?.role !== 'admin')) {
       router.push('/dashboard')
     }
-  }, [user, profile, authLoading])
+  }, [user, profile, authLoading, router])
 
   const generateSlug = (title: string) => {
     return title
@@ -171,7 +171,7 @@ function NewBlogPostContent() {
     const postData = {
       ...formData,
       author_id: user?.id,
-      author_name: profile?.full_name || 'CIL Team',
+      author_name: profile?.full_name || 'CIRF Team',
       status: publish ? 'published' : formData.status,
       published_at: publish ? new Date().toISOString() : null,
     }

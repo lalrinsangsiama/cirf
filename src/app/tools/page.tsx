@@ -388,26 +388,26 @@ export default function ToolsPage() {
                     </ul>
                   )}
 
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 relative z-10">
                     {isCIRF ? (
                       <>
                         <button
                           onClick={() => setShowAssessment(true)}
-                          className="btn-primary text-sm"
+                          className="btn-primary text-sm cursor-pointer"
                           data-assessment-trigger
                         >
                           {isCompleted ? 'Take Again' : 'Start Assessment'}
                         </button>
-                        <Link href="/framework" className="btn-secondary text-sm">
+                        <Link href="/framework" className="btn-secondary text-sm cursor-pointer">
                           About CIRF
                         </Link>
                       </>
                     ) : isUnlocked ? (
                       <>
-                        <Link href={`/assessments/${framework.id}`} className="btn-primary text-sm">
+                        <Link href={`/assessments/${framework.id}`} className="btn-primary text-sm cursor-pointer">
                           {isCompleted ? 'Take Again' : 'Start Assessment'}
                         </Link>
-                        <Link href={`/framework/${framework.id}`} className="btn-secondary text-sm">
+                        <Link href={`/framework/${framework.id}`} className="btn-secondary text-sm cursor-pointer">
                           View Details
                         </Link>
                       </>
@@ -415,13 +415,13 @@ export default function ToolsPage() {
                       <>
                         <button
                           onClick={() => setShowAssessment(true)}
-                          className="btn-primary text-sm"
+                          className="btn-primary text-sm cursor-pointer"
                         >
                           Unlock with CIRF
                         </button>
-                        <Link href={`/framework/${framework.id}`} className="btn-secondary text-sm">
+                        <a href={`/framework/${framework.id}`} className="btn-secondary text-sm cursor-pointer">
                           Learn More
-                        </Link>
+                        </a>
                       </>
                     )}
                   </div>

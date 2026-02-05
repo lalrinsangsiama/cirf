@@ -277,9 +277,9 @@ export function CILAssessmentTool() {
   }
 
   // Get total answered count
-  const getAnsweredCount = (): number => {
+  const getAnsweredCount = useCallback((): number => {
     return Object.values(answers).filter(v => v != null).length
-  }
+  }, [answers])
 
   // Handle answer for Likert questions
   const handleLikertAnswer = (questionId: string, value: number) => {
@@ -543,7 +543,7 @@ export function CILAssessmentTool() {
   const previewResult = useMemo(() => {
     if (getAnsweredCount() < 10) return null
     return calculateAssessmentResult(answers, questionConfig)
-  }, [answers])
+  }, [answers, getAnsweredCount])
 
   // Export results
   const exportReport = () => {

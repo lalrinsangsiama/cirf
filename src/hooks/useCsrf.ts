@@ -29,26 +29,7 @@ const CSRF_HEADER_NAME = 'x-csrf-token'
 export function useCsrf() {
   const [csrfToken, setCsrfToken] = useState<string | null>(null)
 
-  // Get CSRF token from cookie on mount
-  useEffect(() => {
-    const getToken = () => {
-      // Parse cookies to find CSRF token
-      const cookies = document.cookie.split(';')
-      for (const cookie of cookies) {
-        const [name, value] = cookie.trim().split('=')
-        if (name === CSRF_TOKEN_NAME) {
-          setCsrfToken(decodeURIComponent(value))
-          return
-        }
-      }
-      // If no token found, trigger a refresh by calling an endpoint
-      refreshToken()
-    }
-
-    getToken()
-  }, [])
-
-  // Refresh CSRF token
+  // Refresh CSRF token - defined first so it can be used in useEffect
   const refreshToken = useCallback(async () => {
     try {
       // Call an endpoint that will set the CSRF cookie
@@ -72,6 +53,25 @@ export function useCsrf() {
       console.warn('Failed to refresh CSRF token:', error)
     }
   }, [])
+
+  // Get CSRF token from cookie on mount
+  useEffect(() => {
+    const getToken = () => {
+      // Parse cookies to find CSRF token
+      const cookies = document.cookie.split(';')
+      for (const cookie of cookies) {
+        const [name, value] = cookie.trim().split('=')
+        if (name === CSRF_TOKEN_NAME) {
+          setCsrfToken(decodeURIComponent(value))
+          return
+        }
+      }
+      // If no token found, trigger a refresh by calling an endpoint
+      refreshToken()
+    }
+
+    getToken()
+  }, [refreshToken])
 
   // Get headers object with CSRF token
   const getCsrfHeaders = useCallback((): Record<string, string> => {

@@ -57,7 +57,8 @@ export default function AdminBlogPage() {
     if (user && profile?.role === 'admin') {
       fetchPosts()
     }
-  }, [user, profile, authLoading])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, profile, authLoading, router])
 
   const fetchPosts = async () => {
     setLoading(true)

@@ -24,10 +24,27 @@ function PricingContent() {
   // Auto-detect currency based on user location
   useEffect(() => {
     const detectCurrency = async () => {
+      // Set a timeout to ensure we don't hang on geolocation
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+
       try {
-        // Use a free IP geolocation API
-        const response = await fetch('https://ipapi.co/json/')
+        // Use a free IP geolocation API with timeout
+        const response = await fetch('https://ipapi.co/json/', {
+          signal: controller.signal,
+        })
+        clearTimeout(timeoutId)
+
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`)
+        }
+
         const data = await response.json()
+
+        // Validate response has expected data
+        if (!data || typeof data.country_code !== 'string') {
+          throw new Error('Invalid response from geolocation API')
+        }
 
         // Default to INR for India, USD for others
         if (data.country_code === 'IN') {
@@ -36,9 +53,11 @@ function PricingContent() {
           setCurrency('USD')
         }
       } catch (error) {
-        // Default to INR if detection fails
-        console.warn('IP geolocation failed, defaulting to INR:', error)
-        setCurrency('INR')
+        clearTimeout(timeoutId)
+        // Default to USD for international users if detection fails
+        // This is a safer default for a global audience
+        console.warn('IP geolocation failed, defaulting to USD:', error)
+        setCurrency('USD')
       } finally {
         setIsDetectingLocation(false)
       }
