@@ -1,16 +1,29 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import { sendAssessmentResults } from '@/lib/email/resend'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import { SECTION_META } from '@/lib/data/assessmentQuestions'
-import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
+import { checkRateLimit } from '@/lib/rateLimit'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { Errors } from '@/lib/api/errors'
+import { logger } from '@/lib/logger'
 
-// Create admin client for server-side operations
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// Lazy-initialize admin client to avoid build-time errors when env vars are missing
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let supabaseAdmin: any = null
+
+function getSupabaseAdmin() {
+  if (!supabaseAdmin) {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (!url || !key) {
+      throw new Error('Missing Supabase admin credentials')
+    }
+    supabaseAdmin = createClient(url, key)
+  }
+  return supabaseAdmin
+}
 
 interface AssessmentEmailRequest {
   assessmentId: string
@@ -27,9 +40,9 @@ export async function POST(request: NextRequest) {
     })
 
     if (!rateLimitResult.allowed) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
+      return rateLimitErrorResponse(
+        Date.now() + 15 * 60 * 1000,
+        'Too many email requests. Please try again later.'
       )
     }
 
@@ -38,32 +51,25 @@ export async function POST(request: NextRequest) {
     const { data: { user: currentUser }, error: authError } = await supabase.auth.getUser()
 
     if (authError || !currentUser) {
-      return NextResponse.json(
-        { error: 'Unauthorized - please log in' },
-        { status: 401 }
-      )
+      return errorResponse(Errors.unauthorized('Unauthorized - please log in'))
     }
 
     const body: AssessmentEmailRequest = await request.json()
     const { assessmentId, userId } = body
 
     if (!assessmentId || !userId) {
-      return NextResponse.json(
-        { error: 'Missing required fields: assessmentId and userId' },
-        { status: 400 }
-      )
+      return validationErrorResponse('Missing required fields: assessmentId and userId')
     }
 
     // Verify the requesting user owns this assessment
     if (currentUser.id !== userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized - you can only email your own assessment results' },
-        { status: 403 }
-      )
+      return errorResponse(Errors.forbidden('You can only email your own assessment results'))
     }
 
+    const admin = getSupabaseAdmin()
+
     // Fetch the assessment to verify ownership
-    const { data: assessment, error: assessmentError } = await supabaseAdmin
+    const { data: assessment, error: assessmentError } = await admin
       .from('assessments')
       .select('*')
       .eq('id', assessmentId)
@@ -71,24 +77,18 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (assessmentError || !assessment) {
-      return NextResponse.json(
-        { error: 'Assessment not found or access denied' },
-        { status: 404 }
-      )
+      return errorResponse(Errors.notFound('Assessment'))
     }
 
     // Fetch user profile
-    const { data: profile, error: profileError } = await supabaseAdmin
+    const { data: profile, error: profileError } = await admin
       .from('profiles')
       .select('email, full_name')
       .eq('id', userId)
       .single()
 
     if (profileError || !profile?.email) {
-      return NextResponse.json(
-        { error: 'User profile not found or no email available' },
-        { status: 404 }
-      )
+      return errorResponse(Errors.notFound('User profile or email'))
     }
 
     // Parse assessment data
@@ -108,13 +108,13 @@ export async function POST(request: NextRequest) {
     const recommendations = generateRecommendations(sectionScores, assessmentType)
 
     // Check for newly unlocked assessments
-    const { data: unlocks } = await supabaseAdmin
+    const { data: unlocks } = await admin
       .from('assessment_unlocks')
       .select('assessment_type')
       .eq('user_id', userId)
       .eq('unlocked_by_assessment_id', assessmentId)
 
-    const unlockedAssessments = unlocks?.map(u => u.assessment_type as AssessmentType) || []
+    const unlockedAssessments = unlocks?.map((u: { assessment_type: string }) => u.assessment_type as AssessmentType) || []
 
     // Send the email
     const emailResult = await sendAssessmentResults({
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
 
     if (!emailResult.success) {
       // Log the failure
-      await supabaseAdmin.from('email_logs').insert({
+      await admin.from('email_logs').insert({
         user_id: userId,
         email_type: 'assessment_results',
         recipient_email: profile.email,
@@ -141,14 +141,17 @@ export async function POST(request: NextRequest) {
         metadata: { error: emailResult.error },
       })
 
-      return NextResponse.json(
-        { error: 'Failed to send email', details: emailResult.error },
-        { status: 500 }
-      )
+      logger.error('Failed to send assessment results email', {
+        userId,
+        assessmentId,
+        error: emailResult.error,
+      })
+
+      return errorResponse(Errors.emailFailed('Failed to send assessment results email'))
     }
 
     // Log successful send
-    await supabaseAdmin.from('email_logs').insert({
+    await admin.from('email_logs').insert({
       user_id: userId,
       email_type: 'assessment_results',
       recipient_email: profile.email,
@@ -158,15 +161,19 @@ export async function POST(request: NextRequest) {
       metadata: { score, interpretation: interpretation.level },
     })
 
-    return NextResponse.json({
-      success: true,
-      message: 'Assessment results email sent successfully',
-    })
+    logger.email('Assessment results sent', { userId, assessmentId, assessmentType })
+
+    return successResponse(
+      { sent: true },
+      'Assessment results email sent successfully'
+    )
   } catch (error) {
-    console.error('Error sending assessment results email:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+    logger.error('Error sending assessment results email', {
+      path: '/api/email/assessment-results',
+    }, error instanceof Error ? error : undefined)
+
+    return errorResponse(
+      error instanceof Error ? error : Errors.internal('Failed to send assessment results email')
     )
   }
 }

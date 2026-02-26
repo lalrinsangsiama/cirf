@@ -412,43 +412,39 @@ export default function FrameworkDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Resources Section */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-sand">
-        <div className="max-w-[1600px] mx-auto">
-          <p className="section-label">Resources</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">
-            Downloads & Templates
-          </h2>
-          <p className="text-stone text-lg max-w-3xl mb-12">
-            Supporting materials to help you implement the {framework.subtitle}.
-          </p>
+      {/* Resources Section — only shown if at least one resource is available */}
+      {framework.relatedResources.some(r => r.available) && (
+        <section className="py-16 md:py-24 px-6 md:px-16 bg-sand">
+          <div className="max-w-[1600px] mx-auto">
+            <p className="section-label">Resources</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">
+              Downloads & Templates
+            </h2>
+            <p className="text-stone text-lg max-w-3xl mb-12">
+              Supporting materials to help you implement the {framework.subtitle}.
+            </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {framework.relatedResources.map((resource) => (
-              <div
-                key={resource.title}
-                className={`bg-pearl p-6 rounded-lg border ${resource.available ? 'border-gold' : 'border-ink/10'}`}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <Download className={`w-8 h-8 ${resource.available ? 'text-gold' : 'text-stone/40'}`} strokeWidth={1.5} />
-                  {resource.available ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {framework.relatedResources.filter(r => r.available).map((resource) => (
+                <div
+                  key={resource.title}
+                  className="bg-pearl p-6 rounded-lg border border-gold"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <Download className="w-8 h-8 text-gold" strokeWidth={1.5} />
                     <span className="text-xs bg-gold/20 text-gold px-2 py-1 rounded-full">Available</span>
-                  ) : (
-                    <span className="text-xs bg-ink/10 text-stone px-2 py-1 rounded-full">Coming Soon</span>
-                  )}
-                </div>
-                <h3 className="font-medium mb-1">{resource.title}</h3>
-                <p className="text-sm text-stone">{resource.type}</p>
-                {resource.available && (
-                  <button className="mt-4 text-sm text-gold font-medium hover:underline">
+                  </div>
+                  <h3 className="font-medium mb-1">{resource.title}</h3>
+                  <p className="text-sm text-stone">{resource.type}</p>
+                  <Link href="/resources" className="mt-4 inline-block text-sm text-gold font-medium hover:underline">
                     Download
-                  </button>
-                )}
-              </div>
-            ))}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ocean to-sage text-pearl text-center">

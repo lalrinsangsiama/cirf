@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
-import { Calendar, User, ArrowRight, Tag, BookOpen } from 'lucide-react'
+import { Calendar, User, ArrowRight, BookOpen } from 'lucide-react'
 import { BlogNewsletterForm } from '@/components/blog/BlogNewsletterForm'
+import { BLOG_CATEGORIES } from '@/lib/data/blogCategories'
 
 interface BlogPost {
   id: string
@@ -15,19 +16,6 @@ interface BlogPost {
   published_at: string
   view_count: number
 }
-
-const CATEGORIES = [
-  { id: 'all', name: 'All Posts', color: 'bg-stone/10 text-stone' },
-  { id: 'resources', name: 'Resources', color: 'bg-gold/10 text-gold' },
-  { id: 'education', name: 'Education', color: 'bg-ocean/10 text-ocean' },
-  { id: 'series', name: 'World Series', color: 'bg-sage/10 text-sage' },
-  { id: 'playlist', name: 'Playlists', color: 'bg-terracotta/10 text-terracotta' },
-  { id: 'research', name: 'Research Insights', color: 'bg-ocean/10 text-ocean' },
-  { id: 'case-study', name: 'Case Studies', color: 'bg-gold/10 text-gold' },
-  { id: 'practitioner-tips', name: 'Practitioner Tips', color: 'bg-sage/10 text-sage' },
-  { id: 'news', name: 'News', color: 'bg-terracotta/10 text-terracotta' },
-  { id: 'framework-updates', name: 'Framework Updates', color: 'bg-lavender/10 text-ink' },
-]
 
 export default async function BlogPage({
   searchParams,
@@ -60,7 +48,7 @@ export default async function BlogPage({
   }
 
   const getCategoryColor = (category: string) => {
-    const cat = CATEGORIES.find(c => c.id === category)
+    const cat = BLOG_CATEGORIES.find(c => c.id === category)
     return cat?.color || 'bg-stone/10 text-stone'
   }
 
@@ -80,7 +68,7 @@ export default async function BlogPage({
 
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {CATEGORIES.map((category) => (
+          {BLOG_CATEGORIES.map((category) => (
             <Link
               key={category.id}
               href={category.id === 'all' ? '/blog' : `/blog?category=${category.id}`}
@@ -99,55 +87,57 @@ export default async function BlogPage({
         {posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post: BlogPost) => (
-              <article
-                key={post.id}
-                className="bg-white rounded-2xl shadow-sm border border-stone/10 overflow-hidden hover:shadow-md transition-shadow group"
-              >
-                {/* Featured Image */}
-                <div className="aspect-[16/9] bg-gradient-to-br from-sand to-pearl relative overflow-hidden">
-                  {post.featured_image ? (
-                    <Image
-                      src={post.featured_image}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <BookOpen className="w-12 h-12 text-stone/30" />
+              <Link key={post.id} href={`/blog/${post.slug}`} className="group">
+                <article
+                  className="bg-white rounded-2xl shadow-sm border border-stone/10 overflow-hidden hover:shadow-md transition-shadow h-full"
+                >
+                  {/* Featured Image */}
+                  <div className="aspect-[16/9] bg-gradient-to-br from-sand to-pearl relative overflow-hidden">
+                    {post.featured_image ? (
+                      <Image
+                        src={post.featured_image}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <BookOpen className="w-12 h-12 text-stone/30" />
+                      </div>
+                    )}
+                    <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(post.category)}`}>
+                      {BLOG_CATEGORIES.find(c => c.id === post.category)?.name || post.category}
                     </div>
-                  )}
-                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(post.category)}`}>
-                    {CATEGORIES.find(c => c.id === post.category)?.name || post.category}
                   </div>
-                </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <Link href={`/blog/${post.slug}`}>
+                  {/* Content */}
+                  <div className="p-6">
                     <h2 className="text-xl font-semibold text-ink mb-2 group-hover:text-gold transition-colors line-clamp-2">
                       {post.title}
                     </h2>
-                  </Link>
-                  <p className="text-stone text-sm mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                    <p className="text-stone text-sm mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
 
-                  <div className="flex items-center justify-between text-xs text-stone">
-                    <div className="flex items-center gap-4">
-                      <span className="flex items-center gap-1">
-                        <User className="w-3 h-3" />
-                        {post.author_name || 'CIL Team'}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {formatDate(post.published_at)}
+                    <div className="flex items-center justify-between text-xs text-stone">
+                      <div className="flex items-center gap-4">
+                        <span className="flex items-center gap-1">
+                          <User className="w-3 h-3" />
+                          {post.author_name || 'CIL Team'}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {formatDate(post.published_at)}
+                        </span>
+                      </div>
+                      <span className="text-gold font-medium group-hover:underline">
+                        Read more →
                       </span>
                     </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
         ) : (

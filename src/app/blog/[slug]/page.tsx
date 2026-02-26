@@ -6,6 +6,7 @@ import { Calendar, User, ArrowLeft, BookOpen, ExternalLink, Tag } from 'lucide-r
 import type { Metadata } from 'next'
 import { MarkdownContent } from '@/components/ui/MarkdownContent'
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd'
+import { BLOG_CATEGORIES_MAP } from '@/lib/data/blogCategories'
 
 interface Citation {
   author: string
@@ -72,17 +73,7 @@ export async function generateMetadata({
   }
 }
 
-const CATEGORIES: Record<string, { name: string; color: string }> = {
-  resources: { name: 'Resources', color: 'bg-gold/10 text-gold' },
-  education: { name: 'Education', color: 'bg-ocean/10 text-ocean' },
-  series: { name: 'World Series', color: 'bg-sage/10 text-sage' },
-  playlist: { name: 'Playlists', color: 'bg-terracotta/10 text-terracotta' },
-  research: { name: 'Research Insights', color: 'bg-ocean/10 text-ocean' },
-  'case-study': { name: 'Case Studies', color: 'bg-gold/10 text-gold' },
-  'practitioner-tips': { name: 'Practitioner Tips', color: 'bg-sage/10 text-sage' },
-  news: { name: 'News', color: 'bg-terracotta/10 text-terracotta' },
-  'framework-updates': { name: 'Framework Updates', color: 'bg-lavender/10 text-ink' },
-}
+const CATEGORIES = BLOG_CATEGORIES_MAP
 
 export default async function BlogPostPage({
   params,

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { CILAssessmentTool } from '@/components/assessment/CIRFAssessmentTool'
 import { cn } from '@/lib/utils'
 import { Calculator, FileText, BarChart3, ClipboardList, Target, BookOpen, Lock, Unlock, CheckCircle2, Loader2 } from 'lucide-react'
@@ -22,8 +23,8 @@ const frameworks = [
     id: 'cil',
     category: 'assessment',
     icon: 'CI',
-    title: 'CIL Assessment Tool',
-    subtitle: 'Cultural Innovation Impact Scale (CIIS)',
+    title: 'CIRF Assessment',
+    subtitle: 'Cultural Innovation Resilience Framework',
     description: 'A comprehensive multi-step assessment tool for measuring economic impact, cultural integrity, innovation degree, and resilience contribution.',
     features: ['Economic Impact Measurement', 'Cultural Integrity Index', 'Innovation Assessment', 'Personalized Recommendations'],
     primary: true,
@@ -131,6 +132,7 @@ const downloadResources = [
 
 export default function ToolsPage() {
   const { user } = useAuth()
+  const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState('all')
   const [showAssessment, setShowAssessment] = useState(false)
   const [calculatorValues, setCalculatorValues] = useState({
@@ -146,6 +148,13 @@ export default function ToolsPage() {
     assessmentStatuses: Record<AssessmentType, { isUnlocked: boolean; isCompleted: boolean; latestScore?: number }>
   } | null>(null)
   const [loadingStatus, setLoadingStatus] = useState(false)
+
+  // Auto-trigger CIRF assessment when ?start=cirf is present
+  useEffect(() => {
+    if (searchParams.get('start') === 'cirf') {
+      setShowAssessment(true)
+    }
+  }, [searchParams])
 
   // Fetch unlock status when user is available
   useEffect(() => {
@@ -518,14 +527,15 @@ export default function ToolsPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {downloadResources.map((resource) => (
-              <article
-                key={resource.title}
-                className="border border-ink/10 p-6 text-center transition-all duration-300 hover:bg-sand hover:-translate-y-1 cursor-pointer"
-              >
-                <resource.icon className="w-10 h-10 mx-auto mb-4 text-gold" strokeWidth={1.5} />
-                <h3 className="text-sm font-medium mb-1">{resource.title}</h3>
-                <p className="text-xs text-stone uppercase tracking-wider">{resource.format}</p>
-              </article>
+              <Link key={resource.title} href="/resources">
+                <article
+                  className="border border-ink/10 p-6 text-center transition-all duration-300 hover:bg-sand hover:-translate-y-1 cursor-pointer h-full"
+                >
+                  <resource.icon className="w-10 h-10 mx-auto mb-4 text-gold" strokeWidth={1.5} />
+                  <h3 className="text-sm font-medium mb-1">{resource.title}</h3>
+                  <p className="text-xs text-stone uppercase tracking-wider">{resource.format}</p>
+                </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -540,9 +550,9 @@ export default function ToolsPage() {
           We develop tailored frameworks and measurement tools specific to your community&apos;s
           unique cultural context and economic goals.
         </p>
-        <button className="bg-pearl text-ink px-8 py-4 rounded-full font-medium hover:-translate-y-1 transition-transform duration-300">
+        <Link href="/about#contact" className="bg-pearl text-ink px-8 py-4 rounded-full font-medium hover:-translate-y-1 transition-transform duration-300 inline-block">
           Request Consultation
-        </button>
+        </Link>
       </section>
     </>
   )

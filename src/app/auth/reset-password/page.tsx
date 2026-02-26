@@ -151,8 +151,13 @@ function ResetPasswordForm() {
     <div className="w-full max-w-md">
       {/* Header */}
       <div className="text-center mb-8">
-        <Link href="/" className="inline-block mb-6">
-          <span className="text-2xl font-serif font-bold text-ink">CIL</span>
+        <Link href="/" className="inline-flex flex-col items-center leading-none mb-6">
+          <span className="text-[0.55rem] md:text-[0.6rem] tracking-[0.25em] uppercase font-sans font-medium text-ink">
+            Cultural Innovation
+          </span>
+          <span className="font-serif text-xl md:text-2xl font-extralight tracking-tight leading-none -mt-[1px] text-ink">
+            Lab
+          </span>
         </Link>
         <h1 className="text-3xl font-serif font-bold text-ink mb-2">Set new password</h1>
         <p className="text-stone">

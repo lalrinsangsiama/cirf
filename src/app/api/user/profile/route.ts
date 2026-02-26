@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
-import { validateInput } from '@/lib/validation'
+import { validateInput, sanitizeString } from '@/lib/validation'
 import { successResponse, errorResponse, validationErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
@@ -113,8 +113,7 @@ export async function PATCH(request: NextRequest) {
     const sanitizedUpdates = Object.fromEntries(
       Object.entries(updates).map(([key, value]) => {
         if (typeof value === 'string') {
-          // Basic sanitization: trim whitespace and limit length
-          return [key, value.trim()]
+          return [key, sanitizeString(value.trim())]
         }
         return [key, value]
       })

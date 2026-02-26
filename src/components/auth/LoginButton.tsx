@@ -11,7 +11,9 @@ export function LoginButton() {
 
   if (loading) {
     return (
-      <div className="w-20 h-10 bg-stone/20 rounded-full animate-pulse" />
+      <span aria-label="Loading authentication">
+        <div className="w-20 h-10 bg-stone/20 rounded-full animate-pulse" aria-hidden="true" />
+      </span>
     )
   }
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { useToast } from '@/components/ui/ToastProvider'
 import { createClient } from '@/lib/supabase/client'
 import {
   ArrowRight,
@@ -85,6 +86,7 @@ const SECTION_ORDER: LikertSection[] = [
 export function CILAssessmentTool() {
   const router = useRouter()
   const { user, profile, loading: authLoading, refreshProfile } = useAuth()
+  const { success: toastSuccess, error: toastError, warning: toastWarning } = useToast()
   const [currentStep, setCurrentStep] = useState<Step>('overview')
   const [answers, setAnswers] = useState<AssessmentAnswers>({})
   const [savedResults, setSavedResults] = useState<{ date: string; score: number }[]>([])
@@ -127,6 +129,7 @@ export function CILAssessmentTool() {
         }
       } catch {
         console.error('Failed to load saved progress')
+        toastWarning('Could not load your saved progress.')
       }
     }
   }, [])
@@ -166,6 +169,7 @@ export function CILAssessmentTool() {
         }
       } catch (error) {
         console.error('Failed to load draft:', error)
+        toastWarning('Could not restore your draft.')
       }
       setDraftLoaded(true)
     }
@@ -368,7 +372,7 @@ export function CILAssessmentTool() {
               return
             }
             console.error('Failed to submit assessment:', result.error?.message || result.message)
-            alert('Failed to process assessment. Please try again.')
+            toastError('Failed to process assessment. Please try again.')
             setSaving(false)
             setIsSubmitting(false)
             return
@@ -436,7 +440,7 @@ export function CILAssessmentTool() {
           await deleteDraft()
         } catch (error) {
           console.error('Error processing assessment:', error)
-          alert('Failed to process assessment. Please try again.')
+          toastError('Failed to process assessment. Please try again.')
         }
         setSaving(false)
         setIsSubmitting(false)
@@ -522,11 +526,11 @@ export function CILAssessmentTool() {
         setEmailSent(true)
       } else {
         const data = await response.json()
-        alert(data.error || 'Failed to send email')
+        toastError(data.error || 'Failed to send results email. Please try again.')
       }
     } catch (error) {
       console.error('Error sending email:', error)
-      alert('Failed to send email. Please try again.')
+      toastError('Failed to send results email. Please try again.')
     }
     setSendingEmail(false)
   }
@@ -603,7 +607,7 @@ https://cirf.org/tools
       navigator.share({ title: 'CI Resilience Assessment Results', text })
     } else {
       navigator.clipboard.writeText(text)
-      alert('Results copied to clipboard!')
+      toastSuccess('Results copied to clipboard!')
     }
   }
 

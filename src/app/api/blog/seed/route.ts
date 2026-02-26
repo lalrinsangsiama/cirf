@@ -119,7 +119,16 @@ export async function POST(request: Request) {
 // GET /api/blog/seed - Check seed status
 export async function GET() {
   try {
-    const supabase = createAdminClient()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let supabase: any
+    try {
+      supabase = createAdminClient()
+    } catch {
+      return NextResponse.json(
+        { error: 'Admin credentials not configured' },
+        { status: 401 }
+      )
+    }
 
     // Get count of posts in database
     const { count, error } = await supabase

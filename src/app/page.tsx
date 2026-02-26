@@ -59,22 +59,23 @@ export default function HomePage() {
         />
 
         <div className="w-full px-6 md:px-16 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="font-serif text-[clamp(3rem,10vw,9rem)] font-light leading-[0.85] tracking-tight text-ink">
-                <span className="hero-line">
-                  <span>Unlock Your</span>
-                </span>
-                <span className="hero-line">
-                  <span className="italic text-gold">Cultural Innovation</span>
-                </span>
-                <span className="hero-line">
-                  <span>Potential</span>
-                </span>
-              </h1>
+          {/* Full-width heading */}
+          <h1 className="font-serif text-[clamp(3rem,10vw,9rem)] font-light leading-[0.85] tracking-tight text-ink">
+            <span className="hero-line">
+              <span>Unlock Your</span>
+            </span>
+            <span className="hero-line">
+              <span className="italic text-gold">Cultural Innovation</span>
+            </span>
+            <span className="hero-line">
+              <span>Potential</span>
+            </span>
+          </h1>
 
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mt-10 lg:mt-16">
+            <div>
               <p
-                className="text-base md:text-lg leading-relaxed font-light max-w-[500px] mt-8 text-ink/80 animate-fade-in-up"
+                className="text-base md:text-lg leading-relaxed font-light max-w-[500px] text-ink/80 animate-fade-in-up"
                 style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
               >
                 Take the free CIRF Assessment to discover your strengths and unlock exclusive tools, frameworks, and funding guides designed for cultural entrepreneurs.
@@ -87,7 +88,7 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-2 text-sm">
                   <Unlock className="w-4 h-4 text-sage" />
-                  <span>6 specialized assessments (5 free after CIRF)</span>
+                  <span>6 assessments & tools — complete CIRF to unlock 5 more free</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Unlock className="w-4 h-4 text-sage" />
@@ -103,12 +104,12 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in-up"
                 style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
               >
-                <Link href="/tools" className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
+                <Link href="/tools?start=cirf" className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
                   Take the Free Assessment
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link href="/framework" className="btn-secondary inline-flex items-center justify-center gap-2">
-                  Learn About CIL
+                  Explore the Framework
                 </Link>
               </div>
             </div>
@@ -185,7 +186,7 @@ export default function HomePage() {
               )}
 
               <Link
-                href="/tools"
+                href="/tools?start=cirf"
                 className="mt-6 w-full bg-ink text-pearl py-3 rounded-full font-medium hover:bg-gold hover:text-ink transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Continue to Full Assessment
@@ -244,10 +245,10 @@ export default function HomePage() {
                 <div className="bg-gold/20 rounded-full p-2 flex-shrink-0">
                   <TrendingUp className="w-5 h-5 text-gold" />
                 </div>
-                <div>
+                <Link href="/blog/traditional-knowledge-trillion-dollar-economy" className="group block">
                   <p className="font-serif text-3xl text-gold mb-1">$1.2 trillion</p>
-                  <p className="text-sm text-ink/70">in traditional knowledge commercialised — without the communities who created it seeing a fair share.</p>
-                </div>
+                  <p className="text-sm text-ink/70">in traditional knowledge commercialised — without the communities who created it seeing a fair share. <span className="underline group-hover:text-gold transition-colors">Read our methodology →</span></p>
+                </Link>
               </div>
             </div>
 
@@ -277,7 +278,7 @@ export default function HomePage() {
       </section>
 
       {/* Visual Break */}
-      <section className="h-screen relative bg-ink flex items-center justify-center">
+      <section className="py-32 md:py-48 relative bg-ink flex items-center justify-center">
         <h2 className="font-serif text-[clamp(2.5rem,8vw,10rem)] text-pearl font-light italic text-center px-4 animate-fade-in">
           Culture is Capital
         </h2>
@@ -505,9 +506,10 @@ export default function HomePage() {
                 color: 'from-sage to-gold',
               },
             ].map((study, i) => (
-              <div
+              <Link
                 key={study.title}
-                className="animate-on-scroll group aspect-[3/4] relative overflow-hidden card-hover"
+                href="/case-studies"
+                className="animate-on-scroll group aspect-[3/4] relative overflow-hidden card-hover block"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${study.color}`} />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
@@ -524,7 +526,7 @@ export default function HomePage() {
                   <p className="text-gold font-medium">{study.stat}</p>
                   <p className="text-pearl/70 text-sm">{study.subtitle}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

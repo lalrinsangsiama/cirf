@@ -6,12 +6,14 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Menu, X } from 'lucide-react'
 import { LoginButton } from '@/components/auth/LoginButton'
+import { useAuth } from '@/components/auth/AuthProvider'
 
 const navigation = [
   { name: 'Framework', href: '/framework' },
   { name: 'Research', href: '/research' },
   { name: 'Case Studies', href: '/case-studies' },
   { name: 'Tools', href: '/tools' },
+  { name: 'Resources', href: '/resources' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Blog', href: '/blog' },
   { name: 'About', href: '/about' },
@@ -21,6 +23,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { user, signOut } = useAuth()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null)
@@ -112,12 +115,17 @@ export function Header() {
         <Link
           href="/"
           className={cn(
-            'font-serif text-2xl md:text-3xl font-extralight tracking-tight',
+            'flex flex-col leading-none',
             isScrolled ? 'text-ink' : 'text-pearl'
           )}
-          aria-label="CIL - Home"
+          aria-label="Cultural Innovation Lab - Home"
         >
-          CIL
+          <span className="text-[0.55rem] md:text-[0.6rem] tracking-[0.25em] uppercase font-sans font-medium">
+            Cultural Innovation
+          </span>
+          <span className="font-serif text-xl md:text-2xl font-extralight tracking-tight leading-none -mt-[1px]">
+            Lab
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -129,7 +137,8 @@ export function Header() {
                 role="menuitem"
                 className={cn(
                   'nav-link text-sm font-normal tracking-wide transition-colors duration-300',
-                  isScrolled ? 'text-ink' : 'text-pearl',
+                  'focus-visible:outline-none focus-visible:text-gold focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 rounded-sm',
+                  isScrolled ? 'text-ink focus-visible:ring-offset-pearl' : 'text-pearl focus-visible:ring-offset-ink',
                   pathname === item.href && 'active'
                 )}
                 aria-current={pathname === item.href ? 'page' : undefined}
@@ -141,20 +150,8 @@ export function Header() {
         </ul>
 
         {/* Auth Buttons - Desktop */}
-        <div className={cn(
-          'hidden lg:block',
-          !isScrolled && 'mix-blend-normal'
-        )}>
-          {isScrolled ? (
-            <LoginButton />
-          ) : (
-            <Link
-              href="/auth/login"
-              className="text-sm font-normal tracking-wide text-pearl hover:text-gold transition-colors"
-            >
-              Sign in
-            </Link>
-          )}
+        <div className="hidden lg:block">
+          <LoginButton />
         </div>
 
         {/* Mobile Menu Button */}
@@ -225,7 +222,7 @@ export function Header() {
                     className={cn(
                       'block py-3 px-4 text-lg text-ink rounded-lg transition-colors',
                       'hover:bg-sand focus:bg-sand focus:outline-none',
-                      pathname === item.href && 'font-medium bg-sand'
+                      pathname === item.href && 'font-medium bg-sand border-l-4 border-gold'
                     )}
                     onClick={closeMobileMenu}
                     aria-current={pathname === item.href ? 'page' : undefined}
@@ -240,20 +237,43 @@ export function Header() {
           {/* Auth Section */}
           <div className="px-6 mt-8 pt-6 border-t border-ink/10">
             <div className="flex flex-col gap-3">
-              <Link
-                href="/auth/login"
-                className="block py-3 px-4 text-center text-ink text-lg rounded-lg hover:bg-sand transition-colors"
-                onClick={closeMobileMenu}
-              >
-                Log in
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="block py-3 px-4 text-center bg-ink text-pearl text-lg font-medium rounded-full hover:bg-ink/90 transition-colors"
-                onClick={closeMobileMenu}
-              >
-                Sign up free
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    className="block py-3 px-4 text-center text-ink text-lg rounded-lg hover:bg-sand transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      closeMobileMenu()
+                      signOut()
+                    }}
+                    className="block py-3 px-4 text-center text-terracotta text-lg rounded-lg hover:bg-sand transition-colors w-full"
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/login"
+                    className="block py-3 px-4 text-center text-ink text-lg rounded-lg hover:bg-sand transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="block py-3 px-4 text-center bg-ink text-pearl text-lg font-medium rounded-full hover:bg-ink/90 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Sign up free
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
