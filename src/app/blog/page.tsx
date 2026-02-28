@@ -1,9 +1,19 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
 import { Calendar, User, ArrowRight, BookOpen } from 'lucide-react'
 import { BlogNewsletterForm } from '@/components/blog/BlogNewsletterForm'
 import { BLOG_CATEGORIES } from '@/lib/data/blogCategories'
+
+export const metadata: Metadata = {
+  title: 'Blog - Cultural Innovation Insights',
+  description: 'Insights, research findings, and practical guidance on cultural innovation and economic resilience from the CIL framework.',
+  openGraph: {
+    title: 'Blog - Cultural Innovation Insights',
+    description: 'Insights, research findings, and practical guidance on cultural innovation and economic resilience from the CIL framework.',
+  },
+}
 
 interface BlogPost {
   id: string
@@ -141,22 +151,35 @@ export default async function BlogPage({
             ))}
           </div>
         ) : (
-          <div className="text-center py-16">
-            <BookOpen className="w-16 h-16 text-stone/30 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-ink mb-2">No posts yet</h3>
-            <p className="text-stone mb-6">
-              {selectedCategory !== 'all'
-                ? `No posts in this category yet. Check back soon!`
-                : `We're working on our first articles. Check back soon!`}
-            </p>
-            {selectedCategory !== 'all' && (
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 text-gold font-medium hover:underline"
-              >
-                View all posts
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+          <div className="max-w-lg mx-auto text-center py-16">
+            <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <BookOpen className="w-8 h-8 text-gold" />
+            </div>
+            {selectedCategory !== 'all' ? (
+              <>
+                <h3 className="text-xl font-semibold text-ink mb-2">No posts in this category yet</h3>
+                <p className="text-stone mb-6">
+                  Check back soon — new articles are on the way.
+                </p>
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 text-gold font-medium hover:underline"
+                >
+                  View all posts
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <h3 className="text-xl font-semibold text-ink mb-2">Blog Coming Soon</h3>
+                <p className="text-stone mb-4">
+                  We&apos;re preparing articles on cultural innovation, community resilience,
+                  and practical frameworks for cultural entrepreneurs.
+                </p>
+                <p className="text-stone text-sm mb-6">
+                  Subscribe below to be the first to know when we publish.
+                </p>
+              </>
             )}
           </div>
         )}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/components/auth/AuthProvider'
@@ -8,6 +8,8 @@ import { createClient } from '@/lib/supabase/client'
 import {
   AssessmentType,
   ASSESSMENT_CONFIGS,
+  TOOL_CONFIGS,
+  SCORE_THRESHOLDS,
   getAssessmentConfig,
   getScoreInterpretation,
 } from '@/lib/data/assessmentConfig'
@@ -22,6 +24,7 @@ import {
   ArrowLeft,
   Lock,
   CheckCircle2,
+  ClipboardCheck,
   Clock,
   Info,
   Loader2,
@@ -30,6 +33,8 @@ import {
   Share2,
   Mail,
   Sparkles,
+  Save,
+  Lightbulb,
 } from 'lucide-react'
 import {
   Radar,
@@ -41,6 +46,7 @@ import {
 } from 'recharts'
 import { LikertScale } from '@/components/assessment/LikertScale'
 import UnlockCelebration from '@/components/assessment/UnlockCelebration'
+import { getSectionRecommendation } from '@/lib/data/secondaryRecommendations'
 
 // Import question sets
 import { cimmQuestions, CIMM_SECTION_META } from '@/lib/data/cimmQuestions'
@@ -110,13 +116,13 @@ interface QuestionWithSection {
 
 // Calculate score for secondary assessments
 function calculateSecondaryAssessmentScore(
-  answers: Record<string, number>,
+  answers: Record<string, number | string>,
   questions: QuestionWithSection[]
 ): {
   overallScore: number
   sectionScores: Record<string, number>
 } {
-  const answeredQuestions = questions.filter(q => answers[q.id] != null)
+  const answeredQuestions = questions.filter(q => typeof answers[q.id] === 'number')
 
   if (answeredQuestions.length === 0) {
     return { overallScore: 0, sectionScores: {} }
@@ -128,7 +134,7 @@ function calculateSecondaryAssessmentScore(
   const sectionSums: Record<string, { sum: number; count: number }> = {}
 
   for (const q of answeredQuestions) {
-    let rawScore = answers[q.id]
+    let rawScore = answers[q.id] as number
     if (q.reverse) {
       rawScore = 8 - rawScore // Reverse 1-7 scale
     }
@@ -164,7 +170,7 @@ export default function AssessmentPage({ params }: PageProps) {
   const { user, profile, loading: authLoading } = useAuth()
   const [hasAccess, setHasAccess] = useState<boolean | null>(null)
   const [currentSection, setCurrentSection] = useState(0)
-  const [answers, setAnswers] = useState<Record<string, number>>({})
+  const [answers, setAnswers] = useState<Record<string, number | string>>({})
   const [showResults, setShowResults] = useState(false)
   const [saving, setSaving] = useState(false)
   const [assessmentId, setAssessmentId] = useState<string | null>(null)
@@ -173,8 +179,16 @@ export default function AssessmentPage({ params }: PageProps) {
   const [grantedResources, setGrantedResources] = useState<string[]>([])
   const [sendingEmail, setSendingEmail] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
+  const [cooldownSeconds, setCooldownSeconds] = useState(0)
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const [hasDraft, setHasDraft] = useState(false)
+  const [draftLoaded, setDraftLoaded] = useState(false)
+  const autoSaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastSavedAnswersRef = useRef<string>('')
 
   const supabase = createClient()
 
@@ -204,6 +218,104 @@ export default function AssessmentPage({ params }: PageProps) {
     }
   }, [user, authLoading, assessmentType])
 
+  // Auto-save to server (debounced)
+  const saveToServer = useCallback(async () => {
+    if (!user || !config) return
+
+    const answersString = JSON.stringify(answers)
+    if (answersString === lastSavedAnswersRef.current) return
+
+    setAutoSaveStatus('saving')
+    try {
+      const response = await fetch('/api/assessments/draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          assessmentType,
+          answers,
+          currentSection: config.sections[currentSection]?.id,
+        }),
+      })
+
+      if (response.ok) {
+        lastSavedAnswersRef.current = answersString
+        setAutoSaveStatus('saved')
+        setHasDraft(true)
+        setTimeout(() => setAutoSaveStatus('idle'), 2000)
+      } else {
+        setAutoSaveStatus('error')
+      }
+    } catch (error) {
+      console.error('Auto-save failed:', error)
+      setAutoSaveStatus('error')
+    }
+  }, [user, answers, assessmentType, currentSection, config])
+
+  // Load draft on mount
+  useEffect(() => {
+    const loadDraft = async () => {
+      if (!user || draftLoaded || !config) return
+
+      try {
+        const response = await fetch(`/api/assessments/draft?type=${assessmentType}`)
+        const result = await response.json()
+
+        if (result.data?.hasDraft && result.data.draft) {
+          const draft = result.data.draft
+          setAnswers(draft.answers)
+          if (draft.currentSection) {
+            const sectionIndex = config.sections.findIndex(
+              (s: { id: string }) => s.id === draft.currentSection
+            )
+            if (sectionIndex >= 0) {
+              setCurrentSection(sectionIndex)
+            }
+          }
+          setHasDraft(true)
+          lastSavedAnswersRef.current = JSON.stringify(draft.answers)
+        }
+      } catch (error) {
+        console.error('Failed to load draft:', error)
+      }
+      setDraftLoaded(true)
+    }
+
+    loadDraft()
+  }, [user, draftLoaded, assessmentType, config])
+
+  // Auto-save on answer/section change (2s debounce)
+  useEffect(() => {
+    if (!user || Object.keys(answers).length === 0 || showResults) return
+
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current)
+    }
+
+    autoSaveTimeoutRef.current = setTimeout(() => {
+      saveToServer()
+    }, 2000)
+
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current)
+      }
+    }
+  }, [answers, currentSection, user, showResults, saveToServer])
+
+  // Delete draft
+  const deleteDraft = useCallback(async () => {
+    if (!user || !hasDraft) return
+
+    try {
+      await fetch(`/api/assessments/draft?type=${assessmentType}`, {
+        method: 'DELETE',
+      })
+      setHasDraft(false)
+    } catch (error) {
+      console.error('Failed to delete draft:', error)
+    }
+  }, [user, hasDraft, assessmentType])
+
   if (!config) {
     return null
   }
@@ -221,7 +333,7 @@ export default function AssessmentPage({ params }: PageProps) {
   const totalQuestions = questions.length
 
   // Handle answer
-  const handleAnswer = (questionId: string, value: number) => {
+  const handleAnswer = (questionId: string, value: number | string) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }))
   }
 
@@ -229,6 +341,7 @@ export default function AssessmentPage({ params }: PageProps) {
   const handleNext = async () => {
     if (currentSection < sections.length - 1) {
       setCurrentSection(prev => prev + 1)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       // Complete assessment
       if (!user) {
@@ -284,6 +397,9 @@ export default function AssessmentPage({ params }: PageProps) {
         }
 
         setShowResults(true)
+
+        // Delete draft after successful submission
+        await deleteDraft()
       } catch (err) {
         console.error('Error completing assessment:', err)
         setError(err instanceof Error ? err.message : 'Failed to complete assessment. Please try again.')
@@ -297,20 +413,30 @@ export default function AssessmentPage({ params }: PageProps) {
   const handlePrev = () => {
     if (currentSection > 0) {
       setCurrentSection(prev => prev - 1)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
   const handleReset = () => {
+    setShowResetConfirm(true)
+  }
+
+  const confirmReset = () => {
     setAnswers({})
     setCurrentSection(0)
     setShowResults(false)
     setAssessmentId(null)
     setEmailSent(false)
+    setCooldownSeconds(0)
+    setShowIntro(true)
+    deleteDraft()
+    lastSavedAnswersRef.current = ''
+    setShowResetConfirm(false)
   }
 
-  // Email results
+  // Email results with cooldown
   const handleEmailResults = async () => {
-    if (!user || !assessmentId || sendingEmail || emailSent) return
+    if (!user || !assessmentId || sendingEmail || cooldownSeconds > 0) return
 
     setSendingEmail(true)
     try {
@@ -325,6 +451,16 @@ export default function AssessmentPage({ params }: PageProps) {
 
       if (response.ok) {
         setEmailSent(true)
+        setCooldownSeconds(60)
+        const interval = setInterval(() => {
+          setCooldownSeconds(prev => {
+            if (prev <= 1) {
+              clearInterval(interval)
+              return 0
+            }
+            return prev - 1
+          })
+        }, 1000)
       }
     } catch (error) {
       console.error('Error sending email:', error)
@@ -405,9 +541,43 @@ export default function AssessmentPage({ params }: PageProps) {
     }
   })
 
+  // Determine if this is a secondary assessment (needs intro screen)
+  const isSecondary = assessmentType !== 'cil'
+  const showIntroScreen = isSecondary && showIntro && !showResults && Object.keys(answers).length === 0
+
   return (
     <div className="min-h-screen bg-pearl py-8">
       <div className="max-w-4xl mx-auto px-4">
+        {/* Reset Confirmation Dialog */}
+        {showResetConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div
+              className="fixed inset-0 bg-ink/50 backdrop-blur-sm"
+              onClick={() => setShowResetConfirm(false)}
+            />
+            <div className="relative bg-white rounded-2xl p-8 max-w-md w-full shadow-xl">
+              <h3 className="text-lg font-serif font-medium mb-2">Reset Assessment?</h3>
+              <p className="text-stone mb-6">
+                Are you sure? This will clear all your answers and you&apos;ll need to start over.
+              </p>
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  className="px-4 py-2 text-sm text-stone hover:text-ink transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmReset}
+                  className="px-4 py-2 bg-terracotta text-pearl text-sm rounded-full hover:bg-terracotta/90 transition-colors"
+                >
+                  Reset Assessment
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="bg-ink rounded-t-2xl py-6 px-8">
           <div className="flex items-center justify-between">
@@ -433,7 +603,7 @@ export default function AssessmentPage({ params }: PageProps) {
         </div>
 
         {/* Progress bar */}
-        {!showResults && (
+        {!showResults && !showIntroScreen && (
           <div className="bg-white border-b border-ink/10 px-8 py-4">
             <div className="flex items-center gap-2 mb-2">
               {sections.map((section, i) => (
@@ -452,7 +622,27 @@ export default function AssessmentPage({ params }: PageProps) {
             </div>
             <div className="flex justify-between text-xs text-stone">
               <span>{sectionMeta[sections[currentSection]?.id]?.label || sections[currentSection]?.name}</span>
-              <span>{answeredCount}/{totalQuestions} questions answered</span>
+              <div className="flex items-center gap-3">
+                {user && autoSaveStatus === 'saving' && (
+                  <span className="flex items-center gap-1 text-stone">
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                    Saving...
+                  </span>
+                )}
+                {user && autoSaveStatus === 'saved' && (
+                  <span className="flex items-center gap-1 text-sage">
+                    <CheckCircle2 className="w-3 h-3" />
+                    Saved
+                  </span>
+                )}
+                {user && autoSaveStatus === 'error' && (
+                  <span className="flex items-center gap-1 text-terracotta">
+                    <Info className="w-3 h-3" />
+                    Save failed
+                  </span>
+                )}
+                <span>{answeredCount}/{totalQuestions} questions answered</span>
+              </div>
             </div>
           </div>
         )}
@@ -467,8 +657,51 @@ export default function AssessmentPage({ params }: PageProps) {
             </div>
           )}
 
-          {!showResults ? (
+          {/* Secondary Assessment Intro Screen */}
+          {showIntroScreen ? (
+            <div className="p-8 text-center">
+              <div className="max-w-lg mx-auto">
+                <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <ClipboardCheck className="w-8 h-8 text-gold" />
+                </div>
+                <h2 className="text-2xl font-serif mb-3">{config.fullName}</h2>
+                <p className="text-stone mb-6">{config.description}</p>
+                <div className="flex items-center justify-center gap-6 text-sm text-stone mb-8">
+                  <span className="flex items-center gap-1.5">
+                    <ClipboardCheck className="w-4 h-4" />
+                    {config.questionCount} questions
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="w-4 h-4" />
+                    ~{config.estimatedMinutes} minutes
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowIntro(false)}
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  Begin Assessment
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ) : !showResults ? (
             <div className="p-8">
+              {/* Resume Draft Notice */}
+              {user && hasDraft && draftLoaded && (
+                <div className="mb-6 p-4 rounded-lg border border-ocean/30 bg-ocean/10">
+                  <div className="flex items-start gap-3">
+                    <Save className="w-5 h-5 text-ocean flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-medium mb-1">You have saved progress</h4>
+                      <p className="text-sm text-stone">
+                        Your previous answers have been restored. You can continue where you left off.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Section header */}
               <div className="mb-8">
                 <h2 className="text-xl font-serif mb-2">
@@ -575,6 +808,91 @@ export default function AssessmentPage({ params }: PageProps) {
                   {interpretation.level}
                 </p>
                 <p className="text-sm text-stone mt-4">{interpretation.description}</p>
+
+                {/* Score Context Bar */}
+                <div className="mt-6 max-w-md mx-auto">
+                  <div className="relative h-3 rounded-full overflow-hidden flex">
+                    {Object.values(SCORE_THRESHOLDS).map((tier) => (
+                      <div
+                        key={tier.label}
+                        className={cn(
+                          'h-full',
+                          `bg-${tier.color}`
+                        )}
+                        style={{ width: `${tier.max - tier.min}%` }}
+                      />
+                    ))}
+                    {/* Score marker */}
+                    <div
+                      className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-ink rounded-full border-2 border-white shadow"
+                      style={{ left: `${Math.min(overallScore, 100)}%`, transform: 'translate(-50%, -50%)' }}
+                    />
+                  </div>
+                  <div className="flex justify-between mt-1.5">
+                    {Object.values(SCORE_THRESHOLDS).map((tier) => (
+                      <span key={tier.label} className={cn('text-[10px]', `text-${tier.color}`)}>
+                        {tier.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* What's Next? Section — positioned early for immediate actionable direction */}
+              <div className="bg-ocean/10 border border-ocean/20 p-6 rounded-lg">
+                <h4 className="font-medium mb-3">What&apos;s Next?</h4>
+                <div className="space-y-3">
+                  {grantedTools.length > 0 && (
+                    <Link
+                      href="/tools/calculators"
+                      className="flex items-center gap-3 p-3 bg-white rounded-lg hover:bg-ocean/10 transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <CheckCircle2 className="w-4 h-4 text-gold" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">Try Your New Tools</p>
+                        <p className="text-xs text-stone">Use the calculators you just unlocked</p>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-stone" />
+                    </Link>
+                  )}
+                  {(['cimm', 'cira', 'tbl', 'ciss', 'pricing'] as AssessmentType[])
+                    .filter(type => type !== assessmentType)
+                    .slice(0, 2)
+                    .map(type => {
+                      const assessmentConfig = ASSESSMENT_CONFIGS[type]
+                      return (
+                        <Link
+                          key={type}
+                          href={`/assessments/${type}`}
+                          className="flex items-center gap-3 p-3 bg-white rounded-lg hover:bg-ocean/10 transition-colors"
+                        >
+                          <div className="w-8 h-8 bg-sage/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <ClipboardCheck className="w-4 h-4 text-sage" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Take {assessmentConfig.name}</p>
+                            <p className="text-xs text-stone">{assessmentConfig.questionCount} questions • Free</p>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-stone" />
+                        </Link>
+                      )
+                    })}
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center gap-3 p-3 bg-white rounded-lg hover:bg-ocean/10 transition-colors"
+                  >
+                    <div className="w-8 h-8 bg-ocean/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <ArrowRight className="w-4 h-4 text-ocean" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">Return to Dashboard</p>
+                      <p className="text-xs text-stone">View your progress and all results</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-stone" />
+                  </Link>
+                </div>
               </div>
 
               {/* Radar Chart */}
@@ -626,26 +944,77 @@ export default function AssessmentPage({ params }: PageProps) {
                 </div>
               </div>
 
+              {/* Section Recommendations */}
+              <div className="bg-gold/5 border border-gold/20 p-6 rounded-lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <Lightbulb className="w-5 h-5 text-gold" />
+                  <h3 className="font-medium">Recommendations</h3>
+                </div>
+                <div className="space-y-4">
+                  {sections.map(section => {
+                    const score = sectionScores[section.id] || 0
+                    const rec = getSectionRecommendation(assessmentType, section.id, score)
+                    if (!rec) return null
+                    return (
+                      <div key={section.id} className="bg-white p-4 rounded-lg">
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <h4 className="text-sm font-medium">{section.name}</h4>
+                          <span className={cn(
+                            'text-xs px-2 py-0.5 rounded-full whitespace-nowrap',
+                            rec.level === 'thriving' && 'bg-sage/20 text-sage',
+                            rec.level === 'established' && 'bg-ocean/20 text-ocean',
+                            rec.level === 'developing' && 'bg-gold/20 text-gold',
+                            rec.level === 'emerging' && 'bg-terracotta/20 text-terracotta',
+                          )}>
+                            {rec.level.charAt(0).toUpperCase() + rec.level.slice(1)}
+                          </span>
+                        </div>
+                        <p className="text-sm text-ink/70 mb-2">{rec.summary}</p>
+                        <ul className="space-y-1">
+                          {rec.actions.map((action, i) => (
+                            <li key={i} className="text-sm text-ink/60 flex items-start gap-2">
+                              <ArrowRight className="w-3 h-3 mt-1 flex-shrink-0 text-gold" />
+                              <span>{action}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
               {/* Tools Unlocked */}
               {grantedTools.length > 0 && (
                 <div className="bg-sage/10 border border-sage/30 p-6 rounded-lg">
                   <div className="flex items-start gap-3">
                     <Sparkles className="w-6 h-6 text-sage flex-shrink-0" />
-                    <div>
+                    <div className="flex-1">
                       <h4 className="font-medium mb-2">New Tools Unlocked!</h4>
                       <p className="text-sm text-stone mb-4">
                         By completing this assessment, you&apos;ve unlocked these tools:
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        {grantedTools.map(tool => (
-                          <span
-                            key={tool}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-white text-sage border border-sage/20 text-sm rounded-full"
-                          >
-                            <CheckCircle2 className="w-3 h-3" />
-                            {tool.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                          </span>
-                        ))}
+                      <div className="space-y-3">
+                        {grantedTools.map(tool => {
+                          const toolConfig = TOOL_CONFIGS[tool]
+                          return (
+                            <Link
+                              key={tool}
+                              href={`/tools/${tool}`}
+                              className="flex items-start gap-3 p-3 bg-white rounded-lg border border-sage/20 hover:bg-sage/5 transition-colors"
+                            >
+                              <CheckCircle2 className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium">
+                                  {toolConfig?.name || tool.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                </p>
+                                {toolConfig?.description && (
+                                  <p className="text-xs text-stone mt-0.5">{toolConfig.description}</p>
+                                )}
+                              </div>
+                            </Link>
+                          )
+                        })}
                       </div>
                     </div>
                   </div>
@@ -657,10 +1026,10 @@ export default function AssessmentPage({ params }: PageProps) {
                 {user && assessmentId && (
                   <button
                     onClick={handleEmailResults}
-                    disabled={sendingEmail || emailSent}
+                    disabled={sendingEmail || cooldownSeconds > 0}
                     className={cn(
                       'flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-colors',
-                      emailSent
+                      cooldownSeconds > 0
                         ? 'bg-sage/20 text-sage'
                         : 'bg-gold text-ink hover:bg-gold/80'
                     )}
@@ -670,15 +1039,15 @@ export default function AssessmentPage({ params }: PageProps) {
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Sending...
                       </>
-                    ) : emailSent ? (
+                    ) : cooldownSeconds > 0 ? (
                       <>
                         <CheckCircle2 className="w-4 h-4" />
-                        Email Sent!
+                        Sent! Resend in {cooldownSeconds}s
                       </>
                     ) : (
                       <>
                         <Mail className="w-4 h-4" />
-                        Email My Results
+                        {emailSent ? 'Resend Results' : 'Email My Results'}
                       </>
                     )}
                   </button>

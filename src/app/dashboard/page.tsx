@@ -24,9 +24,13 @@ import {
   Linkedin,
   Twitter,
   Sparkles,
+  Calculator,
 } from 'lucide-react'
 import { getAssessmentProgressSummary, getUserUnlockStatus, type UserUnlocks } from '@/lib/services/assessmentUnlockService'
-import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
+import { AssessmentType, ASSESSMENT_CONFIGS, TOOL_CONFIGS } from '@/lib/data/assessmentConfig'
+import { getAssessmentRecommendations, getRecommendationBadge, type AssessmentRecommendation } from '@/lib/data/assessmentRecommendations'
+import { calculateAssessmentResult } from '@/lib/assessment/scoring'
+import { questionConfig } from '@/lib/data/assessmentQuestions'
 import { cn } from '@/lib/utils'
 
 interface Assessment {
@@ -37,6 +41,7 @@ interface Assessment {
     level: string
     successRate: string
     description: string
+    constructScores?: Record<string, number>
   }
   created_at: string
 }
@@ -68,6 +73,8 @@ export default function DashboardPage() {
   } | null>(null)
   const [unlockStatus, setUnlockStatus] = useState<UserUnlocks | null>(null)
   const [dataError, setDataError] = useState<string | null>(null)
+  const [recommendations, setRecommendations] = useState<AssessmentRecommendation[]>([])
+  const [unlockedToolIds, setUnlockedToolIds] = useState<Set<string>>(new Set())
 
   const supabase = createClient()
 
@@ -106,20 +113,55 @@ export default function DashboardPage() {
 
         if (transactionError) {
           console.error('Error fetching transactions:', transactionError)
-          // Don't throw - transactions are less critical
         }
 
         if (transactionsData) {
           setTransactions(transactionsData)
         }
 
-        // Fetch progress summary and unlock status
+        // Fetch progress summary, unlock status, and tool access
         const [progress, unlocks] = await Promise.all([
           getAssessmentProgressSummary(user.id),
           getUserUnlockStatus(user.id),
         ])
         setProgressSummary(progress)
         setUnlockStatus(unlocks)
+
+        // Fetch tool access
+        const { data: toolAccess } = await supabase
+          .from('tool_access')
+          .select('tool_id')
+          .eq('user_id', user.id)
+
+        if (toolAccess) {
+          setUnlockedToolIds(new Set(toolAccess.map(t => t.tool_id)))
+        }
+
+        // Fetch CIL construct scores for recommendations
+        if (progress.assessmentStatuses.cil?.isCompleted) {
+          const { data: cilAssessment } = await supabase
+            .from('assessments')
+            .select('interpretation, answers')
+            .eq('user_id', user.id)
+            .eq('assessment_type', 'cil')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single()
+
+          if (cilAssessment) {
+            let constructScores = cilAssessment.interpretation?.constructScores
+            if (!constructScores && cilAssessment.answers) {
+              const result = calculateAssessmentResult(cilAssessment.answers, questionConfig)
+              constructScores = {}
+              for (const section of result.sectionScores) {
+                Object.assign(constructScores, section.constructScores)
+              }
+            }
+            if (constructScores) {
+              setRecommendations(getAssessmentRecommendations(constructScores))
+            }
+          }
+        }
       } catch (error) {
         console.error('Error fetching dashboard data:', error)
         setDataError(
@@ -187,8 +229,16 @@ export default function DashboardPage() {
 
   const getAssessmentName = (type: string) => {
     const config = ASSESSMENT_CONFIGS[type as AssessmentType]
-    return config?.name || 'CIRF'
+    return config?.name || 'CIL'
   }
+
+  const allTools = Object.values(TOOL_CONFIGS)
+
+  // Top 1-2 recommendations (CIL done, secondaries remaining)
+  const topRecommendations = recommendations
+    .filter(r => r.level !== 'optional')
+    .filter(r => !progressSummary?.assessmentStatuses[r.assessmentType]?.isCompleted)
+    .slice(0, 2)
 
   return (
     <main className="min-h-screen bg-sand pt-24 pb-12">
@@ -199,7 +249,7 @@ export default function DashboardPage() {
             Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}
           </h1>
           <p className="text-stone">
-            Manage your assessments and credits
+            Manage your assessments, tools, and credits
           </p>
         </div>
 
@@ -253,26 +303,24 @@ export default function DashboardPage() {
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-stone/10">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-ocean/10 rounded-xl flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-ocean" />
+                <Calculator className="w-6 h-6 text-ocean" />
               </div>
             </div>
             <p className="text-3xl font-bold text-ink mb-1">
-              {progressSummary?.assessmentStatuses?.cirf?.latestScore !== undefined
-                ? `${progressSummary.assessmentStatuses.cirf.latestScore}`
-                : '--'}
+              {unlockedToolIds.size}/{allTools.length}
             </p>
-            <p className="text-sm text-stone">Latest CIRF score</p>
+            <p className="text-sm text-stone">Tools unlocked</p>
           </div>
         </div>
 
-        {/* Assessment Progress Tracker */}
+        {/* Journey Visualization */}
         <div className="bg-white rounded-2xl shadow-sm border border-stone/10 overflow-hidden mb-8">
           <div className="p-6 border-b border-stone/10">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-ink">Assessment Progress</h2>
+                <h2 className="text-lg font-semibold text-ink">Your Journey</h2>
                 <p className="text-sm text-stone">
-                  Complete CIRF to unlock 5 specialized assessments
+                  CIL Assessment → 5 Specialized Assessments → 10 Interactive Tools
                 </p>
               </div>
               <Link
@@ -286,76 +334,139 @@ export default function DashboardPage() {
           </div>
 
           <div className="p-6">
-            {/* Progress bar */}
-            <div className="mb-6">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-stone">Overall Progress</span>
-                <span className="font-medium text-ink">
-                  {progressSummary?.completionPercentage || 0}%
-                </span>
-              </div>
-              <div className="h-3 bg-sand rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-sage to-gold rounded-full transition-all duration-500"
-                  style={{ width: `${progressSummary?.completionPercentage || 0}%` }}
-                />
-              </div>
-            </div>
+            {/* Journey Pipeline */}
+            <div className="relative">
+            <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+              {/* CIL */}
+              {(() => {
+                const cilStatus = progressSummary?.assessmentStatuses?.cil
+                return (
+                  <Link
+                    href="/tools?start=cil"
+                    className={cn(
+                      'flex-shrink-0 px-4 py-3 rounded-xl border-2 transition-all min-w-[100px] text-center',
+                      cilStatus?.isCompleted
+                        ? 'bg-sage/10 border-sage/30'
+                        : 'bg-gold/5 border-gold/30 hover:border-gold'
+                    )}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wide text-stone">CIL</p>
+                    {cilStatus?.latestScore !== undefined ? (
+                      <p className={cn('text-xl font-bold', getScoreColor(cilStatus.latestScore))}>{cilStatus.latestScore}</p>
+                    ) : (
+                      <p className="text-xs text-gold mt-1">Start here</p>
+                    )}
+                  </Link>
+                )
+              })()}
 
-            {/* Assessment grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {(['cirf', 'cimm', 'cira', 'tbl', 'ciss', 'pricing'] as AssessmentType[]).map((type) => {
+              <ChevronRight className="w-5 h-5 text-stone/40 flex-shrink-0" />
+
+              {/* Secondary assessments */}
+              {(['cimm', 'cira', 'tbl', 'ciss', 'pricing'] as AssessmentType[]).map((type, i) => {
                 const config = ASSESSMENT_CONFIGS[type]
                 const status = progressSummary?.assessmentStatuses?.[type]
-                const isUnlocked = status?.isUnlocked ?? (type === 'cirf')
+                const isUnlocked = status?.isUnlocked ?? false
                 const isCompleted = status?.isCompleted ?? false
 
                 return (
+                  <div key={type} className="flex items-center gap-2 flex-shrink-0">
+                    <Link
+                      href={isUnlocked ? `/assessments/${type}` : '/tools'}
+                      className={cn(
+                        'px-3 py-3 rounded-xl border transition-all min-w-[80px] text-center',
+                        isCompleted
+                          ? 'bg-sage/10 border-sage/30'
+                          : isUnlocked
+                            ? 'bg-gold/5 border-gold/30 hover:border-gold'
+                            : 'bg-sand/50 border-stone/20 opacity-60'
+                      )}
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-wide text-stone">{config.name}</p>
+                      {status?.latestScore !== undefined ? (
+                        <p className={cn('text-lg font-bold', getScoreColor(status.latestScore))}>{status.latestScore}</p>
+                      ) : isUnlocked ? (
+                        <p className="text-xs text-gold mt-1">Ready</p>
+                      ) : (
+                        <Lock className="w-3 h-3 text-stone/50 mx-auto mt-1" />
+                      )}
+                    </Link>
+                    {i < 4 && <ChevronRight className="w-4 h-4 text-stone/30 flex-shrink-0" />}
+                  </div>
+                )
+              })}
+            </div>
+            {/* Scroll fade indicator */}
+            <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden" />
+            </div>
+
+            {/* Tools Summary */}
+            <div className="border-t border-stone/10 pt-4">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-medium text-stone">Tools Unlocked</p>
+                <Link href="/tools/calculators" className="text-sm text-gold hover:underline">
+                  View All →
+                </Link>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {allTools.map((tool) => {
+                  const isUnlocked = unlockedToolIds.has(tool.id)
+                  return (
+                    <Link
+                      key={tool.id}
+                      href={isUnlocked ? `/tools/${tool.id}` : '/tools/calculators'}
+                      className={cn(
+                        'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs transition-colors',
+                        isUnlocked
+                          ? 'bg-sage/10 text-sage hover:bg-sage/20'
+                          : 'bg-sand text-stone/50'
+                      )}
+                    >
+                      {isUnlocked ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                      {tool.name}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recommended Next - shown when CIL done but secondaries remain */}
+        {topRecommendations.length > 0 && (
+          <div className="bg-gradient-to-r from-gold/10 to-ocean/10 border border-gold/20 rounded-2xl p-6 mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="w-5 h-5 text-gold" />
+              <h3 className="font-semibold text-ink">Recommended Next</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {topRecommendations.map((rec) => {
+                const config = ASSESSMENT_CONFIGS[rec.assessmentType]
+                const badge = getRecommendationBadge(rec.level)
+                return (
                   <Link
-                    key={type}
-                    href={type === 'cirf' ? '/tools' : `/assessments/${type}`}
-                    className={cn(
-                      'p-4 rounded-xl border transition-all hover:shadow-md',
-                      isCompleted
-                        ? 'bg-sage/10 border-sage/30'
-                        : isUnlocked
-                          ? 'bg-gold/5 border-gold/30 hover:border-gold'
-                          : 'bg-sand/50 border-stone/20 opacity-60'
-                    )}
+                    key={rec.assessmentType}
+                    href={`/assessments/${rec.assessmentType}`}
+                    className="bg-white rounded-xl p-4 hover:shadow-md transition-all border border-stone/10"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-stone">
-                        {config.name}
+                      <h4 className="font-medium">{config.name}</h4>
+                      <span className={cn('text-xs px-2 py-0.5 rounded-full border', badge.className)}>
+                        {badge.label}
                       </span>
-                      {isCompleted ? (
-                        <CheckCircle2 className="w-4 h-4 text-sage" />
-                      ) : isUnlocked ? (
-                        <Unlock className="w-4 h-4 text-gold" />
-                      ) : (
-                        <Lock className="w-4 h-4 text-stone/50" />
-                      )}
                     </div>
-                    {status?.latestScore !== undefined && (
-                      <p className={cn(
-                        'text-2xl font-bold',
-                        getScoreColor(status.latestScore)
-                      )}>
-                        {status.latestScore}
-                      </p>
-                    )}
-                    <p className="text-xs text-stone mt-1">
-                      {isCompleted
-                        ? `${status?.completionCount || 1}x completed`
-                        : isUnlocked
-                          ? 'Ready to take'
-                          : 'Complete CIRF'}
-                    </p>
+                    <p className="text-sm text-stone mb-2">{rec.forYouIf}</p>
+                    <p className="text-xs text-gold">{rec.benefit}</p>
+                    <div className="flex items-center gap-1 mt-3 text-sm text-gold font-medium">
+                      Start Assessment
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
                   </Link>
                 )
               })}
             </div>
           </div>
-        </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Assessments */}
@@ -379,21 +490,51 @@ export default function DashboardPage() {
                 </div>
               </div>
             ) : assessments.length === 0 ? (
-              <div className="p-8 text-center">
-                <FileText className="w-12 h-12 text-stone/40 mx-auto mb-4" />
-                <p className="text-stone mb-4">No assessments yet</p>
-                <Link
-                  href="/tools"
-                  className="inline-flex items-center gap-2 bg-ink text-pearl px-4 py-2 rounded-full text-sm font-medium hover:bg-ink/90 transition-colors"
-                >
-                  Take your first assessment
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+              <div className="p-8">
+                <div className="text-center mb-6">
+                  <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-7 h-7 text-gold" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-ink mb-2">Welcome to CIL!</h3>
+                  <p className="text-stone text-sm max-w-md mx-auto">
+                    Start your journey by taking the CIL Assessment — it takes about 10 minutes and unlocks personalized tools and insights.
+                  </p>
+                </div>
+
+                {/* 3-step journey visual */}
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  {[
+                    { step: '1', label: 'Assess', desc: 'Take CIL Assessment' },
+                    { step: '2', label: 'Unlock', desc: 'Get tools & resources' },
+                    { step: '3', label: 'Apply', desc: 'Grow your initiative' },
+                  ].map((item, i) => (
+                    <div key={item.step} className="flex items-center gap-3">
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-1">
+                          <span className="text-sm font-bold text-gold">{item.step}</span>
+                        </div>
+                        <p className="text-xs font-medium text-ink">{item.label}</p>
+                        <p className="text-[10px] text-stone">{item.desc}</p>
+                      </div>
+                      {i < 2 && <ChevronRight className="w-4 h-4 text-stone/30 mt-[-16px]" />}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-center">
+                  <Link
+                    href="/tools?start=cil"
+                    className="inline-flex items-center gap-2 bg-ink text-pearl px-6 py-3 rounded-full font-medium hover:bg-ink/90 transition-colors"
+                  >
+                    Take CIL Assessment
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             ) : (
               <div className="divide-y divide-stone/10">
                 {assessments.slice(0, 5).map((assessment) => {
-                  const assessmentType = assessment.assessment_type || 'cirf'
+                  const assessmentType = assessment.assessment_type || 'cil'
                   return (
                     <div key={assessment.id} className="p-4 hover:bg-sand/50 transition-colors">
                       <div className="flex items-center justify-between">
@@ -461,18 +602,22 @@ export default function DashboardPage() {
                     <Mail className="w-4 h-4 text-stone" />
                     <span className="text-ink">{user.email}</span>
                   </div>
-                  {profile?.organization && (
-                    <div className="flex items-center gap-3 text-sm">
-                      <Building2 className="w-4 h-4 text-stone" />
+                  <div className="flex items-center gap-3 text-sm">
+                    <Building2 className="w-4 h-4 text-stone" />
+                    {profile?.organization ? (
                       <span className="text-ink">{profile.organization}</span>
-                    </div>
-                  )}
-                  {profile?.phone && (
-                    <div className="flex items-center gap-3 text-sm">
-                      <Phone className="w-4 h-4 text-stone" />
+                    ) : (
+                      <span className="text-stone/50 italic">Not set</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Phone className="w-4 h-4 text-stone" />
+                    {profile?.phone ? (
                       <span className="text-ink">{profile.phone}</span>
-                    </div>
-                  )}
+                    ) : (
+                      <span className="text-stone/50 italic">Not set</span>
+                    )}
+                  </div>
                   {profile?.website && (
                     <div className="flex items-center gap-3 text-sm">
                       <Globe className="w-4 h-4 text-stone" />
@@ -494,6 +639,14 @@ export default function DashboardPage() {
                       <Twitter className="w-4 h-4 text-stone" />
                       <span className="text-ink">@{profile.twitter_handle}</span>
                     </div>
+                  )}
+                  {!profile?.organization && !profile?.phone && (
+                    <Link
+                      href="/dashboard/profile"
+                      className="text-xs text-gold hover:underline mt-1 inline-block"
+                    >
+                      Complete your profile →
+                    </Link>
                   )}
                 </div>
 
@@ -596,26 +749,26 @@ export default function DashboardPage() {
           </Link>
 
           <Link
-            href="/case-studies"
+            href="/tools/calculators"
             className="bg-white rounded-xl p-4 shadow-sm border border-stone/10 hover:border-gold/50 transition-colors group"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-ink">Case Studies</p>
-                <p className="text-sm text-stone">Learn from success stories</p>
+                <p className="font-medium text-ink">Calculators</p>
+                <p className="text-sm text-stone">Use your unlocked tools</p>
               </div>
               <ChevronRight className="w-5 h-5 text-stone group-hover:text-gold transition-colors" />
             </div>
           </Link>
 
           <Link
-            href="/blog"
+            href="/framework"
             className="bg-white rounded-xl p-4 shadow-sm border border-stone/10 hover:border-gold/50 transition-colors group"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-ink">Blog & Research</p>
-                <p className="text-sm text-stone">Latest insights</p>
+                <p className="font-medium text-ink">Framework</p>
+                <p className="text-sm text-stone">Explore the CIL framework</p>
               </div>
               <ChevronRight className="w-5 h-5 text-stone group-hover:text-gold transition-colors" />
             </div>

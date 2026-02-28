@@ -6,7 +6,13 @@ import crypto from 'crypto'
 const CSRF_TOKEN_NAME = 'csrf_token'
 const CSRF_HEADER_NAME = 'x-csrf-token'
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000 // 24 hours
-const SECRET_KEY = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || 'fallback-secret-change-in-production'
+const SECRET_KEY = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || (() => {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('CSRF_SECRET must be set in production. Set CSRF_SECRET in your environment variables.')
+  }
+  console.warn('[SECURITY] CSRF_SECRET not set — using dev-only fallback. Set CSRF_SECRET before deploying.')
+  return 'dev-only-csrf-secret'
+})()
 
 /**
  * Routes that are exempt from CSRF validation

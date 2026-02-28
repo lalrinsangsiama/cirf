@@ -5,160 +5,11 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { createBrowserClient } from '@supabase/ssr'
-import { FileText, Download, BookOpen, Database, BarChart3, ClipboardList, FileSpreadsheet, File, Lock, AlertCircle, CheckCircle, Loader2, Unlock, Sparkles, ArrowRight, X } from 'lucide-react'
+import { FileText, Download, BookOpen, Lock, AlertCircle, CheckCircle, Loader2, Unlock, Sparkles, ArrowRight, X, Bell } from 'lucide-react'
 import { UNLOCKABLE_RESOURCES, type ResourceConfig } from '@/lib/data/resourcesConfig'
-
-interface Resource {
-  id: string
-  category: string
-  title: string
-  description: string
-  format: string
-  size: string
-  icon: typeof FileText
-  requiresAuth?: boolean
-  storagePath?: string // Path in Supabase storage
-}
-
-const categories = [
-  { id: 'all', label: 'All Resources' },
-  { id: 'frameworks', label: 'Frameworks & Templates' },
-  { id: 'research', label: 'Research Documents' },
-  { id: 'data', label: 'Data & Repositories' },
-  { id: 'guides', label: 'Implementation Guides' },
-]
-
-const resources: Resource[] = [
-  {
-    id: 'cirf-assessment-workbook',
-    category: 'frameworks',
-    title: 'CIL Assessment Workbook',
-    description: 'Complete workbook for conducting CIL assessments with scoring guides and benchmarks.',
-    format: 'Excel',
-    size: '2.4 MB',
-    icon: FileSpreadsheet,
-    requiresAuth: true,
-    storagePath: 'cirf-assessment-workbook.xlsx',
-  },
-  {
-    id: 'implementation-checklist',
-    category: 'guides',
-    title: 'Implementation Checklist',
-    description: 'Step-by-step checklist for implementing cultural innovation strategies based on CIL.',
-    format: 'PDF',
-    size: '1.2 MB',
-    icon: ClipboardList,
-    storagePath: 'implementation-checklist.pdf',
-  },
-  {
-    id: 'metrics-dashboard',
-    category: 'frameworks',
-    title: 'Metrics Dashboard Template',
-    description: 'Pre-built dashboard for tracking cultural innovation metrics and resilience indicators.',
-    format: 'Excel',
-    size: '3.1 MB',
-    icon: BarChart3,
-    requiresAuth: true,
-    storagePath: 'metrics-dashboard-template.xlsx',
-  },
-  {
-    id: 'survey-templates',
-    category: 'frameworks',
-    title: 'Survey Templates Package',
-    description: 'Collection of validated survey instruments for assessing cultural innovation capacity.',
-    format: 'Word',
-    size: '856 KB',
-    icon: FileText,
-    storagePath: 'survey-templates.docx',
-  },
-  {
-    id: 'strategic-planning-kit',
-    category: 'guides',
-    title: 'Strategic Planning Kit',
-    description: 'Complete toolkit for developing cultural innovation strategies aligned with CIL.',
-    format: 'ZIP',
-    size: '8.7 MB',
-    icon: BookOpen,
-    requiresAuth: true,
-    storagePath: 'strategic-planning-kit.zip',
-  },
-  {
-    id: 'case-study-template',
-    category: 'frameworks',
-    title: 'Case Study Documentation Template',
-    description: 'Standardized template for documenting cultural innovation case studies.',
-    format: 'Word',
-    size: '456 KB',
-    icon: FileText,
-    storagePath: 'case-study-template.docx',
-  },
-  {
-    id: 'methodology-documentation',
-    category: 'research',
-    title: 'Research Methodology Documentation',
-    description: 'Complete documentation of the CIL research methodology and analytical approach.',
-    format: 'PDF',
-    size: '4.2 MB',
-    icon: BookOpen,
-    storagePath: 'research-methodology.pdf',
-  },
-  {
-    id: 'literature-review',
-    category: 'research',
-    title: 'Literature Review Summary',
-    description: 'Comprehensive summary of 230+ academic papers informing the CIL framework.',
-    format: 'PDF',
-    size: '2.8 MB',
-    icon: BookOpen,
-    storagePath: 'literature-review-summary.pdf',
-  },
-  {
-    id: 'case-database',
-    category: 'data',
-    title: 'Case Studies Database',
-    description: 'Anonymized database of 362 case studies with CIL scores and outcome data.',
-    format: 'Excel',
-    size: '5.4 MB',
-    icon: Database,
-    requiresAuth: true,
-    storagePath: 'case-studies-database.xlsx',
-  },
-  {
-    id: 'statistical-models',
-    category: 'data',
-    title: 'Statistical Models Documentation',
-    description: 'Technical documentation of regression models and multiplicative effects analysis.',
-    format: 'PDF',
-    size: '1.8 MB',
-    icon: BarChart3,
-    storagePath: 'statistical-models.pdf',
-  },
-  {
-    id: 'pricing-framework',
-    category: 'guides',
-    title: 'Cultural Product Pricing Framework',
-    description: 'Step-by-step guide for pricing cultural products for global markets.',
-    format: 'PDF',
-    size: '1.5 MB',
-    icon: File,
-    storagePath: 'pricing-framework.pdf',
-  },
-  {
-    id: 'business-model-canvas',
-    category: 'frameworks',
-    title: 'Cultural Innovation Business Model Canvas',
-    description: 'Adapted business model canvas template for cultural innovation ventures.',
-    format: 'PDF',
-    size: '892 KB',
-    icon: ClipboardList,
-    storagePath: 'business-model-canvas.pdf',
-  },
-]
 
 export default function ResourcesPage() {
   const { user, loading: authLoading } = useAuth()
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [searchQuery, setSearchQuery] = useState('')
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [downloadingId, setDownloadingId] = useState<string | null>(null)
   const [downloadError, setDownloadError] = useState<string | null>(null)
@@ -202,15 +53,6 @@ export default function ResourcesPage() {
     checkResourceAccess()
   }, [user, supabase])
 
-  const filteredResources = resources.filter((resource) => {
-    const matchesCategory = activeCategory === 'all' || resource.category === activeCategory
-    const matchesSearch =
-      searchQuery === '' ||
-      resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      resource.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
-
   // Clear messages after 5 seconds
   useEffect(() => {
     if (downloadError || downloadSuccess) {
@@ -222,72 +64,6 @@ export default function ResourcesPage() {
     }
   }, [downloadError, downloadSuccess])
 
-  const handleDownload = async (resource: Resource) => {
-    if (resource.requiresAuth && !user) {
-      setShowAuthPrompt(true)
-      return
-    }
-
-    if (!resource.storagePath) {
-      setDownloadError('This resource is not yet available for download.')
-      return
-    }
-
-    setDownloadingId(resource.id)
-    setDownloadError(null)
-    setDownloadSuccess(null)
-
-    try {
-      // Get public URL or signed URL from Supabase Storage
-      const { data, error } = await supabase.storage
-        .from('resources')
-        .createSignedUrl(resource.storagePath, 60 * 5) // 5 minute expiry
-
-      if (error) {
-        // Try public URL as fallback
-        const { data: publicData } = supabase.storage
-          .from('resources')
-          .getPublicUrl(resource.storagePath)
-
-        if (publicData?.publicUrl) {
-          // Trigger download
-          const link = document.createElement('a')
-          link.href = publicData.publicUrl
-          link.download = resource.storagePath
-          link.target = '_blank'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          setDownloadSuccess(`Starting download: ${resource.title}`)
-          return
-        }
-
-        throw new Error('Resource not found. Please try again later.')
-      }
-
-      if (data?.signedUrl) {
-        // Trigger download
-        const link = document.createElement('a')
-        link.href = data.signedUrl
-        link.download = resource.storagePath
-        link.target = '_blank'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        setDownloadSuccess(`Starting download: ${resource.title}`)
-      }
-    } catch (error) {
-      console.error('Download error:', error)
-      setDownloadError(
-        error instanceof Error
-          ? error.message
-          : 'Failed to download. Please try again.'
-      )
-    } finally {
-      setDownloadingId(null)
-    }
-  }
-
   const handleUnlockableDownload = async (resource: ResourceConfig) => {
     if (!user) {
       setShowAuthPrompt(true)
@@ -295,7 +71,7 @@ export default function ResourcesPage() {
     }
 
     if (!unlockedResources.has(resource.toolAccessId)) {
-      setDownloadError('You need to complete the CIRF Assessment to unlock this resource.')
+      setDownloadError('You need to complete the CIL Assessment to unlock this resource.')
       return
     }
 
@@ -383,41 +159,6 @@ export default function ResourcesPage() {
         </section>
       )}
 
-      {/* Filters */}
-      <section className="sticky top-20 z-40 py-6 px-6 md:px-16 bg-sand border-b border-ink/10">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={cn(
-                  'px-4 py-2 rounded-full text-sm transition-all',
-                  activeCategory === cat.id
-                    ? 'bg-ink text-pearl'
-                    : 'bg-pearl border border-ink/30 hover:border-ink'
-                )}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-          <div className="relative">
-            <label htmlFor="resource-search" className="sr-only">
-              Search resources
-            </label>
-            <input
-              id="resource-search"
-              type="text"
-              placeholder="Search resources..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-64 px-4 py-2 border border-ink/30 rounded-full text-sm bg-pearl"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Premium Unlockable Resources */}
       <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-sage/10 to-gold/10">
         <div className="max-w-[1600px] mx-auto">
@@ -429,7 +170,7 @@ export default function ResourcesPage() {
             Exclusive Guides & Frameworks
           </h2>
           <p className="text-stone text-lg max-w-3xl mb-8">
-            Complete the CIRF Assessment to unlock these premium resources designed specifically for cultural entrepreneurs.
+            Complete the CIL Assessment to unlock these premium resources designed specifically for cultural entrepreneurs.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -540,7 +281,7 @@ export default function ResourcesPage() {
                       href="/tools"
                       className="w-full btn-secondary flex items-center justify-center gap-2"
                     >
-                      Complete CIRF to Unlock
+                      Complete CIL to Unlock
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   )}
@@ -558,7 +299,7 @@ export default function ResourcesPage() {
               <div className="flex-1">
                 <h4 className="font-medium mb-1">Unlock Premium Resources for Free</h4>
                 <p className="text-sm text-stone">
-                  Sign up and complete the CIRF Assessment to unlock these exclusive guides and frameworks at no cost.
+                  Sign up and complete the CIL Assessment to unlock these exclusive guides and frameworks at no cost.
                 </p>
               </div>
               <Link href="/auth/signup" className="btn-primary flex-shrink-0">
@@ -569,162 +310,27 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      {/* Resources Grid */}
+      {/* More Resources Coming Soon */}
       <section className="py-16 md:py-24 px-6 md:px-16 bg-pearl">
         <div className="max-w-[1600px] mx-auto">
-          <p className="text-stone mb-8">{filteredResources.length} resources available</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredResources.map((resource) => (
-              <article
-                key={resource.id}
-                className="bg-sand p-6 rounded-lg card-hover group"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <resource.icon className="w-10 h-10 text-gold" strokeWidth={1.5} />
-                  <div className="flex items-center gap-2">
-                    {resource.requiresAuth && !user && (
-                      <Lock className="w-4 h-4 text-stone" />
-                    )}
-                    <span className="text-xs uppercase tracking-[0.1em] text-stone bg-pearl px-2 py-1 rounded">
-                      {resource.format}
-                    </span>
-                  </div>
-                </div>
-                <h3 className="font-medium text-lg mb-2">{resource.title}</h3>
-                <p className="text-stone text-sm mb-4">{resource.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-stone">{resource.size}</span>
-                  <button
-                    onClick={() => handleDownload(resource)}
-                    disabled={downloadingId === resource.id}
-                    className="flex items-center gap-2 text-sm text-gold hover:text-ink transition-colors group-hover:translate-x-1 duration-300 disabled:opacity-50"
-                  >
-                    {downloadingId === resource.id ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Preparing...
-                      </>
-                    ) : (
-                      <>
-                        <Download className="w-4 h-4" />
-                        {resource.requiresAuth && !user ? 'Sign in to download' : 'Download'}
-                      </>
-                    )}
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {filteredResources.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-stone text-lg">No resources match your search.</p>
-              <button
-                onClick={() => {
-                  setActiveCategory('all')
-                  setSearchQuery('')
-                }}
-                className="mt-4 text-gold hover:text-ink transition-colors"
-              >
-                Clear filters
-              </button>
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Bell className="w-7 h-7 text-gold" />
             </div>
-          )}
-        </div>
-      </section>
-
-      {/* Data Repositories */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-sand">
-        <div className="max-w-[1600px] mx-auto">
-          <p className="section-label">Open Data</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">
-            Data Repositories
-          </h2>
-          <p className="text-stone text-lg max-w-3xl mb-12">
-            Access the underlying data that powers the CIL framework for your own research and analysis.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-pearl p-8 rounded-lg">
-              <Database className="w-12 h-12 text-gold mb-6" strokeWidth={1.5} />
-              <h3 className="font-serif text-xl mb-3">Case Studies Database</h3>
-              <p className="text-stone mb-6">
-                Complete anonymized dataset of 362 cultural innovation case studies including
-                CIL scores, outcome data, and contextual variables.
-              </p>
-              <ul className="space-y-2 mb-6 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  362 case studies (2010-2024)
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  47 countries represented
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  13 CIL dimensions scored
-                </li>
-              </ul>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => handleDownload(resources.find(r => r.id === 'case-database')!)}
-                  disabled={downloadingId === 'case-database'}
-                  className="btn-primary text-sm flex items-center gap-2 disabled:opacity-50"
-                >
-                  {downloadingId === 'case-database' ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Preparing...
-                    </>
-                  ) : (
-                    user ? 'Download (Excel)' : 'Sign in to download'
-                  )}
-                </button>
-                <Link href="/research" className="btn-secondary text-sm">Documentation</Link>
-              </div>
-            </div>
-
-            <div className="bg-pearl p-8 rounded-lg">
-              <BarChart3 className="w-12 h-12 text-gold mb-6" strokeWidth={1.5} />
-              <h3 className="font-serif text-xl mb-3">Hard Data Sources</h3>
-              <p className="text-stone mb-6">
-                Curated collection of publicly available data sources used in CIL research,
-                including links to UNESCO, World Bank, and national statistical databases.
-              </p>
-              <ul className="space-y-2 mb-6 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  45+ data sources documented
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  Access instructions included
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  Regular updates maintained
-                </li>
-              </ul>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => handleDownload(resources.find(r => r.id === 'statistical-models')!)}
-                  disabled={downloadingId === 'statistical-models'}
-                  className="btn-primary text-sm flex items-center gap-2 disabled:opacity-50"
-                >
-                  {downloadingId === 'statistical-models' ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Preparing...
-                    </>
-                  ) : (
-                    'Download Guide'
-                  )}
-                </button>
-                <Link href="/research" className="btn-secondary text-sm">View Sources</Link>
-              </div>
-            </div>
+            <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">
+              More Resources Coming Soon
+            </h2>
+            <p className="text-stone text-lg mb-8">
+              We&apos;re developing additional guides, templates, data repositories, and toolkits
+              to support your cultural innovation work. Subscribe to be notified when new resources launch.
+            </p>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 bg-ink text-pearl px-6 py-3 rounded-full font-medium hover:-translate-y-1 transition-transform duration-300"
+            >
+              Subscribe for Updates
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -745,12 +351,12 @@ export default function ResourcesPage() {
             <div className="bg-pearl p-6 rounded font-mono text-sm leading-relaxed">
               <p>Cultural Innovation Lab (CIL). (2024).</p>
               <p>A framework for understanding how cultural innovation generates economic resilience.</p>
-              <p className="mt-2">Available at: https://cirf-framework.org</p>
+              <p className="mt-2">Available at: https://cil-framework.org</p>
             </div>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  'Cultural Innovation Lab (CIL). (2024). A framework for understanding how cultural innovation generates economic resilience. Available at: https://cirf-framework.org'
+                  'Cultural Innovation Lab (CIL). (2024). A framework for understanding how cultural innovation generates economic resilience. Available at: https://cil-framework.org'
                 )
                 setDownloadSuccess('Citation copied to clipboard!')
               }}
@@ -763,7 +369,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ocean to-sage text-pearl text-center">
+      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ink to-ink/90 text-pearl text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-light mb-6">
             Need Custom Resources?
