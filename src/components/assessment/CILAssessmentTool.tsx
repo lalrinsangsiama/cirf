@@ -35,6 +35,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { LikertScale, CategoricalSelect, SectionProgress, MultiSelect, TextAreaInput } from './LikertScale'
+import AssessmentRecommendationPanel from './AssessmentRecommendationPanel'
 import {
   demographicQuestions,
   culturalCapitalQuestions,
@@ -60,9 +61,8 @@ import {
   getIndustryTips,
   type PersonalizedRecommendation,
 } from '@/lib/assessment/scoring'
-import { getMatchingCaseStudies, getEnhancedMatchingCaseStudies, type EnhancedMatchResult } from '@/lib/data/caseStudies'
 import type { ConstructId } from '@/lib/recommendations/types'
-import { extractProfileDataFromAnswers } from '@/lib/data/assessmentQuestions'
+import { extractProfileDataFromAnswers, INDIAN_STATES } from '@/lib/data/assessmentQuestions'
 import { handleAssessmentCompletion } from '@/lib/services/assessmentUnlockService'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import UnlockCelebration from './UnlockCelebration'
@@ -105,7 +105,6 @@ export function CILAssessmentTool() {
   const [hasDraft, setHasDraft] = useState(false)
   const [draftLoaded, setDraftLoaded] = useState(false)
   const [personalizedRecommendations, setPersonalizedRecommendations] = useState<PersonalizedRecommendation[]>([])
-  const [enhancedCaseStudies, setEnhancedCaseStudies] = useState<EnhancedMatchResult[]>([])
   const [profileSummary, setProfileSummary] = useState<string>('')
   const [thisWeekActions, setThisWeekActions] = useState<Array<{ area: string; action: string }>>([])
   const [quickWins, setQuickWins] = useState<Array<{ area: string; action: string; impact: string }>>([])
@@ -150,7 +149,7 @@ export function CILAssessmentTool() {
       if (!user || draftLoaded) return
 
       try {
-        const response = await fetch('/api/assessments/draft?type=cirf')
+        const response = await fetch('/api/assessments/draft?type=cil')
         const result = await response.json()
 
         if (result.data?.hasDraft && result.data.draft) {
@@ -191,7 +190,7 @@ export function CILAssessmentTool() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          assessmentType: 'cirf',
+          assessmentType: 'cil',
           answers: answersToSave,
           currentSection: section,
         }),
@@ -239,7 +238,7 @@ export function CILAssessmentTool() {
     if (!user || !hasDraft) return
 
     try {
-      await fetch('/api/assessments/draft?type=cirf', {
+      await fetch('/api/assessments/draft?type=cil', {
         method: 'DELETE',
       })
       setHasDraft(false)
@@ -285,14 +284,21 @@ export function CILAssessmentTool() {
     return Object.values(answers).filter(v => v != null).length
   }, [answers])
 
-  // Handle answer for Likert questions
-  const handleLikertAnswer = (questionId: string, value: number) => {
+  // Handle answer for Likert questions (number for 1-7, string 'na' for N/A)
+  const handleLikertAnswer = (questionId: string, value: number | string) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }))
   }
 
   // Handle answer for demographic questions
   const handleDemographicAnswer = (questionId: string, value: string) => {
-    setAnswers(prev => ({ ...prev, [questionId]: value }))
+    setAnswers(prev => {
+      const next = { ...prev, [questionId]: value }
+      // Clear state/region when country changes
+      if (questionId === 'demo-country' && prev['demo-country'] !== value) {
+        delete next['demo-state-region']
+      }
+      return next
+    })
   }
 
   // Handle answer for multiselect questions
@@ -336,146 +342,87 @@ export function CILAssessmentTool() {
     if (currentSectionIndex < SECTION_ORDER.length - 1) {
       setCurrentStep(SECTION_ORDER[currentSectionIndex + 1])
     } else {
-      // Moving to results
-      if (user && !hasUsedCredit) {
-        // Race condition protection: prevent multiple simultaneous submissions
-        if (isSubmitting) return
-        setIsSubmitting(true)
+      // Moving to results — always calculate locally first for instant display
+      const result = calculateAssessmentResult(answers, questionConfig)
+      setAssessmentResult(result)
 
-        if (!profile || profile.credits <= 0) {
-          setIsSubmitting(false)
-          router.push('/pricing?need_credits=true')
+      // Generate personalized recommendations
+      const demographics = extractDemographics(answers)
+      const allConstructScores: Record<string, number> = {}
+      result.sectionScores.forEach(s => {
+        Object.entries(s.constructScores).forEach(([k, v]) => {
+          allConstructScores[k] = v
+        })
+      })
+      const personalized = generatePersonalizedRecommendations(allConstructScores, demographics)
+      setPersonalizedRecommendations(personalized)
+      setProfileSummary(generateProfileSummary(demographics))
+      setThisWeekActions(getThisWeekActions(personalized))
+      setQuickWins(getQuickWins(personalized))
+      setIndustryTips(getIndustryTips(demographics.industry))
+
+      // Show results immediately
+      setCurrentStep('results')
+
+      // Save to server in background if logged in
+      if (user && !hasUsedCredit) {
+        const cilConfig = ASSESSMENT_CONFIGS.cil
+        const requiresCredit = cilConfig.creditCost > 0
+        if (requiresCredit && (!profile || profile.credits <= 0)) {
+          // No credits for paid assessment — don't save but results are already shown
           return
         }
 
-        setSaving(true)
-        try {
-          // Submit assessment via atomic API endpoint
-          // This handles credit deduction and assessment saving in a single transaction
-          const response = await fetch('/api/assessments/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              assessmentType: 'cirf',
-              answers,
-            }),
-          })
-
-          const result = await response.json()
-
-          if (!response.ok) {
-            // Handle specific error cases
-            if (result.error?.code === 'INSUFFICIENT_CREDITS') {
-              setSaving(false)
-              setIsSubmitting(false)
-              router.push('/pricing?need_credits=true')
-              return
-            }
-            console.error('Failed to submit assessment:', result.error?.message || result.message)
-            toastError('Failed to process assessment. Please try again.')
-            setSaving(false)
-            setIsSubmitting(false)
-            return
-          }
-
-          // Extract results from API response
-          const { assessmentId: newAssessmentId, score, interpretation, sectionScores, unlockedAssessments: unlocked, grantedTools: tools, grantedResources: resources } = result.data
-
-          // Build assessment result for display using server-calculated data
-          const serverResult = calculateAssessmentResult(answers, questionConfig)
-          // Override with server-calculated score for accuracy
-          serverResult.overallScore = score
-          setAssessmentResult(serverResult)
-
-          // Generate personalized recommendations
-          const demographics = extractDemographics(answers)
-          const allConstructScores: Record<string, number> = {}
-          serverResult.sectionScores.forEach(s => {
-            Object.entries(s.constructScores).forEach(([k, v]) => {
-              allConstructScores[k] = v
+        // Background save — don't block the UI
+        ;(async () => {
+          try {
+            const response = await fetch('/api/assessments/submit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                assessmentType: 'cil',
+                answers,
+              }),
             })
-          })
-          const personalized = generatePersonalizedRecommendations(allConstructScores, demographics)
-          setPersonalizedRecommendations(personalized)
-          setProfileSummary(generateProfileSummary(demographics))
-          setThisWeekActions(getThisWeekActions(personalized))
-          setQuickWins(getQuickWins(personalized))
-          setIndustryTips(getIndustryTips(demographics.industry))
 
-          // Get enhanced case study matches
-          const weakConstructs = personalized.map(r => r.construct)
-          const enhancedMatches = getEnhancedMatchingCaseStudies(
-            score,
-            demographics,
-            weakConstructs,
-            3
-          )
-          setEnhancedCaseStudies(enhancedMatches)
+            const apiResult = await response.json()
 
-          setAssessmentId(newAssessmentId)
+            if (response.ok && apiResult.data) {
+              const { assessmentId: newAssessmentId, unlockedAssessments: unlocked, grantedTools: tools, grantedResources: resources } = apiResult.data
+              setAssessmentId(newAssessmentId)
 
-          if ((unlocked && unlocked.length > 0) || (tools && tools.length > 0) || (resources && resources.length > 0)) {
-            setUnlockedAssessments(unlocked || [])
-            setGrantedTools(tools || [])
-            setGrantedResources(resources || [])
-            setShowUnlockCelebration(true)
+              if ((unlocked && unlocked.length > 0) || (tools && tools.length > 0) || (resources && resources.length > 0)) {
+                setUnlockedAssessments(unlocked || [])
+                setGrantedTools(tools || [])
+                setGrantedResources(resources || [])
+                setShowUnlockCelebration(true)
+              }
+            } else {
+              console.error('Failed to save assessment:', apiResult.error?.message || apiResult.message)
+            }
+
+            // Save profile data from demographics
+            const profileData = extractProfileDataFromAnswers(answers)
+            if (Object.keys(profileData).length > 0) {
+              await supabase
+                .from('profiles')
+                .update({
+                  ...profileData,
+                  profile_completed: true,
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', user.id)
+            }
+
+            setHasUsedCredit(true)
+            await refreshProfile()
+            await deleteDraft()
+            toastSuccess('Your results have been saved')
+          } catch (error) {
+            console.error('Error saving assessment to server:', error)
           }
-
-          // Save profile data from demographics (this is additional to the assessment)
-          const profileData = extractProfileDataFromAnswers(answers)
-          if (Object.keys(profileData).length > 0) {
-            await supabase
-              .from('profiles')
-              .update({
-                ...profileData,
-                profile_completed: true,
-                updated_at: new Date().toISOString(),
-              })
-              .eq('id', user.id)
-          }
-
-          setHasUsedCredit(true)
-          await refreshProfile()
-          // Delete the draft since assessment is completed
-          await deleteDraft()
-        } catch (error) {
-          console.error('Error processing assessment:', error)
-          toastError('Failed to process assessment. Please try again.')
-        }
-        setSaving(false)
-        setIsSubmitting(false)
-      } else {
-        // Calculate results without saving (for non-authenticated preview)
-        const result = calculateAssessmentResult(answers, questionConfig)
-        setAssessmentResult(result)
-
-        // Generate personalized recommendations for preview
-        const demographics = extractDemographics(answers)
-        const allConstructScores: Record<string, number> = {}
-        result.sectionScores.forEach(s => {
-          Object.entries(s.constructScores).forEach(([k, v]) => {
-            allConstructScores[k] = v
-          })
-        })
-        const personalized = generatePersonalizedRecommendations(allConstructScores, demographics)
-        setPersonalizedRecommendations(personalized)
-        setProfileSummary(generateProfileSummary(demographics))
-        setThisWeekActions(getThisWeekActions(personalized))
-        setQuickWins(getQuickWins(personalized))
-        setIndustryTips(getIndustryTips(demographics.industry))
-
-        // Get enhanced case study matches
-        const weakConstructs = personalized.map(r => r.construct)
-        const enhancedMatches = getEnhancedMatchingCaseStudies(
-          result.overallScore,
-          demographics,
-          weakConstructs,
-          3
-        )
-        setEnhancedCaseStudies(enhancedMatches)
+        })()
       }
-
-      setCurrentStep('results')
     }
   }
 
@@ -526,7 +473,8 @@ export function CILAssessmentTool() {
         setEmailSent(true)
       } else {
         const data = await response.json()
-        toastError(data.error || 'Failed to send results email. Please try again.')
+        const errorMsg = typeof data.error === 'string' ? data.error : data.error?.message || 'Failed to send results email. Please try again.'
+        toastError(errorMsg)
       }
     } catch (error) {
       console.error('Error sending email:', error)
@@ -554,11 +502,11 @@ export function CILAssessmentTool() {
     if (!assessmentResult) return
 
     const content = `
-Cultural Innovation Resilience Assessment Results
+CIL Assessment Results
 ==================================================
 
 Date: ${new Date().toLocaleDateString()}
-Resilience Index: ${assessmentResult.overallScore}/100
+CIL Score: ${assessmentResult.overallScore}/100
 Level: ${assessmentResult.interpretation.level}
 Predicted Success Rate: ${assessmentResult.interpretation.successRate}%
 
@@ -584,7 +532,7 @@ ${assessmentResult.recommendations.slice(0, 5).map((r, i) =>
 
 ---
 Generated by Cultural Innovation Lab
-https://cirf.org/tools
+https://cil.org/tools
     `.trim()
 
     const blob = new Blob([content], { type: 'text/plain' })
@@ -601,10 +549,10 @@ https://cirf.org/tools
   const shareResults = () => {
     if (!assessmentResult) return
 
-    const text = `My Cultural Innovation Resilience Index: ${assessmentResult.overallScore}/100 (${assessmentResult.interpretation.level}) - ${assessmentResult.interpretation.successRate}% predicted success rate. Take the assessment at ${window.location.origin}/tools`
+    const text = `My CIL Score: ${assessmentResult.overallScore}/100 (${assessmentResult.interpretation.level}) - ${assessmentResult.interpretation.successRate}% predicted success rate. Take the assessment at ${window.location.origin}/tools`
 
     if (navigator.share) {
-      navigator.share({ title: 'CI Resilience Assessment Results', text })
+      navigator.share({ title: 'CIL Assessment Results', text })
     } else {
       navigator.clipboard.writeText(text)
       toastSuccess('Results copied to clipboard!')
@@ -620,8 +568,9 @@ https://cirf.org/tools
     setSavedResults(prev => [...prev, newResult])
   }
 
-  // Check if login is required
-  const needsLogin = currentStep === SECTION_ORDER[SECTION_ORDER.length - 1] && !user && !authLoading
+  // Check if login is required (not required for free assessments)
+  const isFreeAssessment = ASSESSMENT_CONFIGS.cil.creditCost === 0
+  const needsLogin = !isFreeAssessment && currentStep === SECTION_ORDER[SECTION_ORDER.length - 1] && !user && !authLoading
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -629,7 +578,7 @@ https://cirf.org/tools
       <div className="bg-ink py-4 px-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-serif text-pearl">Cultural Innovation Resilience Assessment</h2>
+            <h2 className="text-xl font-serif text-pearl">CIL Assessment</h2>
             <p className="text-pearl/70 text-sm flex items-center gap-2">
               <Clock className="w-3 h-3" />
               ~{ASSESSMENT_V2_STATS.estimatedMinutes} minutes • {ASSESSMENT_V2_STATS.totalQuestions} questions
@@ -695,7 +644,7 @@ https://cirf.org/tools
 
       {/* Content */}
       <div className="p-6 md:p-8 min-h-[500px]">
-        {/* Login Required Notice */}
+        {/* Login Required Notice (paid assessments) */}
         {needsLogin && (
           <div className="mb-6 bg-gold/10 border border-gold/30 p-6 rounded-lg">
             <div className="flex items-start gap-3">
@@ -724,20 +673,32 @@ https://cirf.org/tools
             </div>
           </div>
         )}
+        {/* Sign-up suggestion for free assessments (non-blocking) */}
+        {isFreeAssessment && !user && !authLoading && currentStep === SECTION_ORDER[SECTION_ORDER.length - 1] && (
+          <div className="mb-6 bg-sage/10 border border-sage/30 p-4 rounded-lg">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-ink">
+                  <Link href="/auth/signup?redirectTo=/tools" className="font-medium text-sage hover:underline">Sign up free</Link> to save your results and unlock additional assessments. You can still view results without signing in.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Overview Step */}
         {currentStep === 'overview' && (
           <div className="space-y-6">
-            <h3 className="font-serif text-2xl">Cultural Innovation Resilience Assessment</h3>
+            <h3 className="font-serif text-2xl">CIL Assessment</h3>
             <p className="text-stone leading-relaxed mb-4">
               <strong>For Cultural Entrepreneurs:</strong> This survey is part of research examining how cultural
               innovation can build economic resilience while maintaining community sovereignty. Your insights
               will help develop practical tools for cultural entrepreneurs.
             </p>
             <p className="text-stone leading-relaxed">
-              Based on the CI-ER (Cultural Innovation → Economic Resilience) framework and validated across
-              362 case studies, your results will provide actionable insights for strengthening your cultural
-              innovation capacity.
+              Based on the CI-ER (Cultural Innovation → Economic Resilience) framework, your results will
+              provide actionable insights for strengthening your cultural innovation capacity.
             </p>
             <div className="flex flex-wrap gap-4 text-sm text-stone mt-4">
               <span className="flex items-center gap-2">
@@ -828,36 +789,23 @@ https://cirf.org/tools
             <div className="bg-gold/10 border border-gold/30 p-6 rounded-lg">
               <h4 className="font-medium mb-2 flex items-center gap-2">
                 <Target className="w-4 h-4 text-gold" />
-                Research-Validated Scoring (0-100)
+                Scoring (0-100)
               </h4>
               <p className="text-sm text-stone mb-4">
-                Your responses generate a Cultural Innovation Resilience Index from 0-100.
-                Based on our database of {DATABASE_STATISTICS.sampleSize} cases:
+                Your responses generate a CIL Score from 0-100.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <p className="font-medium">Score 0-24</p>
-                  <p className="text-red-600">15.7% success rate</p>
+                  <p className="font-medium">Score 0-39</p>
+                  <p className="text-red-600">At Risk — needs focused intervention</p>
                 </div>
                 <div>
-                  <p className="font-medium">Score 25-39</p>
-                  <p className="text-orange-600">28.2% success rate</p>
+                  <p className="font-medium">Score 40-69</p>
+                  <p className="text-yellow-600">Moderate Resilience — room to grow</p>
                 </div>
                 <div>
-                  <p className="font-medium">Score 40-54</p>
-                  <p className="text-yellow-600">51.2% success rate</p>
-                </div>
-                <div>
-                  <p className="font-medium">Score 55-69</p>
-                  <p className="text-lime-600">78.4% success rate</p>
-                </div>
-                <div>
-                  <p className="font-medium">Score 70-84</p>
-                  <p className="text-green-600">92.3% success rate</p>
-                </div>
-                <div>
-                  <p className="font-medium">Score 85-100</p>
-                  <p className="text-emerald-600">98.6% success rate</p>
+                  <p className="font-medium">Score 70-100</p>
+                  <p className="text-green-600">High Resilience — strong foundation</p>
                 </div>
               </div>
             </div>
@@ -932,6 +880,18 @@ https://cirf.org/tools
                         placeholder="Enter your response..."
                         rows={4}
                       />
+                    ) : question.type === 'checkbox' ? (
+                      <label className="flex items-start gap-3 cursor-pointer group">
+                        <input
+                          type="checkbox"
+                          checked={answers[question.id] === 'yes'}
+                          onChange={(e) => handleDemographicAnswer(question.id, e.target.checked ? 'yes' : 'no')}
+                          className="mt-1 h-5 w-5 rounded border-ink/20 text-gold focus:ring-gold cursor-pointer"
+                        />
+                        <span className="text-sm text-ink/70 group-hover:text-ink transition-colors">
+                          {question.helpText}
+                        </span>
+                      </label>
                     ) : question.type === 'text' ? (
                       <input
                         type="text"
@@ -940,6 +900,32 @@ https://cirf.org/tools
                         placeholder="Enter your response..."
                         className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-white text-ink focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold transition-all duration-200"
                       />
+                    ) : question.id === 'demo-state-region' ? (
+                      // Conditional: show Indian states dropdown for India, text input for others
+                      answers['demo-country'] === 'IN' ? (
+                        <CategoricalSelect
+                          value={answers[question.id] as string | null}
+                          onChange={(value) => handleDemographicAnswer(question.id, value)}
+                          options={INDIAN_STATES}
+                          placeholder="Select your state..."
+                        />
+                      ) : answers['demo-country'] ? (
+                        <input
+                          type="text"
+                          value={(answers[question.id] as string) || ''}
+                          onChange={(e) => handleDemographicAnswer(question.id, e.target.value)}
+                          placeholder="Enter your state or region..."
+                          className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-white text-ink focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold transition-all duration-200"
+                        />
+                      ) : (
+                        <CategoricalSelect
+                          value={null}
+                          onChange={() => {}}
+                          options={[]}
+                          disabled
+                          placeholder="Select a country first"
+                        />
+                      )
                     ) : (
                       <CategoricalSelect
                         value={answers[question.id] as string | null}
@@ -951,10 +937,11 @@ https://cirf.org/tools
                   ) : (
                     // Likert question
                     <LikertScale
-                      value={answers[question.id] as number | null}
+                      value={answers[question.id] as number | string | null}
                       onChange={(value) => handleLikertAnswer(question.id, value)}
                       variant="horizontal"
                       size="md"
+                      showNA={'allowNA' in question && question.allowNA}
                     />
                   )}
                 </div>
@@ -969,7 +956,7 @@ https://cirf.org/tools
             {/* Score Summary */}
             <div className="text-center p-8 bg-gradient-to-br from-sand to-pearl rounded-lg">
               <p className="text-sm uppercase tracking-[0.2em] text-stone mb-2">
-                Cultural Innovation Resilience Index
+                CIL Score
               </p>
               <p className={cn('font-serif text-7xl mb-2', assessmentResult.interpretation.color)}>
                 {assessmentResult.overallScore}
@@ -1261,115 +1248,18 @@ https://cirf.org/tools
               </div>
             )}
 
-            {/* Enhanced Case Study Matching */}
-            {enhancedCaseStudies.length > 0 && (
-              <div className="bg-sand/50 p-6 rounded-lg">
-                <h4 className="font-medium mb-4">Learn From Similar Initiatives</h4>
-                <p className="text-sm text-stone mb-4">
-                  These case studies are matched to your profile and challenges:
-                </p>
-                <div className="space-y-4">
-                  {enhancedCaseStudies.map(({ caseStudy, matchScore, matchReasons }) => (
-                    <div key={caseStudy.id} className="p-4 bg-white rounded-lg">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <p className="font-medium">{caseStudy.title}</p>
-                          <p className="text-sm text-stone">{caseStudy.country} - {caseStudy.category}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-serif text-xl text-gold">{caseStudy.cilScore}/13</p>
-                          <p className="text-xs text-sage">{caseStudy.outcome}</p>
-                        </div>
-                      </div>
-                      {/* Match reasons */}
-                      {matchReasons.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {matchReasons.map((reason, idx) => (
-                            <span key={idx} className="text-xs bg-ocean/10 text-ocean px-2 py-1 rounded-full">
-                              {reason}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  href="/case-studies"
-                  className="mt-4 inline-flex items-center gap-2 text-sm text-gold font-medium hover:underline"
-                >
-                  View all case studies
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            )}
 
-            {/* Fallback to simple case study matching if no enhanced matches */}
-            {enhancedCaseStudies.length === 0 && (() => {
-              const matchingCases = getMatchingCaseStudies(Math.round(assessmentResult.overallScore / 100 * 13))
-              return matchingCases.length > 0 && (
-                <div className="bg-sand/50 p-6 rounded-lg">
-                  <h4 className="font-medium mb-4">Similar Case Studies</h4>
-                  <p className="text-sm text-stone mb-4">
-                    Learn from initiatives with similar profiles:
-                  </p>
-                  <div className="space-y-4">
-                    {matchingCases.map(caseStudy => (
-                      <div key={caseStudy.id} className="flex items-center justify-between p-4 bg-white rounded-lg">
-                        <div>
-                          <p className="font-medium">{caseStudy.title}</p>
-                          <p className="text-sm text-stone">{caseStudy.country} - {caseStudy.category}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-serif text-xl text-gold">{caseStudy.cilScore}/13</p>
-                          <p className="text-xs text-sage">{caseStudy.outcome}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <Link
-                    href="/case-studies"
-                    className="mt-4 inline-flex items-center gap-2 text-sm text-gold font-medium hover:underline"
-                  >
-                    View all case studies
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              )
+            {/* Prioritized Assessment Recommendations */}
+            {assessmentResult && unlockedAssessments.length > 0 && (() => {
+              // Collect construct scores from section scores
+              const allConstructScores: Record<string, number> = {}
+              for (const section of assessmentResult.sectionScores) {
+                Object.assign(allConstructScores, section.constructScores)
+              }
+              return Object.keys(allConstructScores).length > 0
+                ? <AssessmentRecommendationPanel constructScores={allConstructScores} />
+                : null
             })()}
-
-            {/* Unlocked Assessments Banner */}
-            {unlockedAssessments.length > 0 && (
-              <div className="bg-sage/10 border border-sage/30 p-6 rounded-lg">
-                <div className="flex items-start gap-3">
-                  <Sparkles className="w-6 h-6 text-sage flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium mb-2">New Assessments Unlocked!</h4>
-                    <p className="text-sm text-stone mb-4">
-                      By completing the CIRF assessment, you&apos;ve unlocked {unlockedAssessments.length} specialized assessments:
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {unlockedAssessments.map(type => {
-                        const config = ASSESSMENT_CONFIGS[type]
-                        return (
-                          <Link
-                            key={type}
-                            href={`/assessments/${type}`}
-                            className="flex items-center gap-2 p-3 bg-white rounded-lg hover:bg-sage/10 transition-colors"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-sage" />
-                            <div>
-                              <p className="font-medium text-sm">{config.name}</p>
-                              <p className="text-xs text-stone">{config.questionCount} questions • Free</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-4">
@@ -1470,9 +1360,11 @@ https://cirf.org/tools
                 </>
               ) : currentStep === SECTION_ORDER[SECTION_ORDER.length - 1] ? (
                 <>
-                  {user ? (
+                  {isFreeAssessment ? (
+                    <>View Results</>
+                  ) : user ? (
                     profile && profile.credits > 0 ? (
-                      <>View Results (1 credit)</>
+                      <>View Results ({ASSESSMENT_CONFIGS.cil.creditCost} credit)</>
                     ) : (
                       <>Need Credits</>
                     )

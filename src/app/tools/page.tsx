@@ -1,37 +1,31 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { CILAssessmentTool } from '@/components/assessment/CIRFAssessmentTool'
+import { CILAssessmentTool } from '@/components/assessment/CILAssessmentTool'
 import { cn } from '@/lib/utils'
-import { Calculator, FileText, BarChart3, ClipboardList, Target, BookOpen, Lock, Unlock, CheckCircle2, Loader2 } from 'lucide-react'
+import { Lock, Unlock, CheckCircle2, Calculator, ArrowRight } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { getUserUnlockStatus, getAssessmentProgressSummary, type UserUnlocks } from '@/lib/services/assessmentUnlockService'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
-
-const categories = [
-  { id: 'all', label: 'All Tools' },
-  { id: 'assessment', label: 'Assessment Frameworks' },
-  { id: 'measurement', label: 'Measurement Tools' },
-  { id: 'implementation', label: 'Implementation Guides' },
-  { id: 'calculators', label: 'Calculators' },
-]
+import { getAssessmentRecommendations, getRecommendationBadge, type AssessmentRecommendation } from '@/lib/data/assessmentRecommendations'
+import { createClient } from '@/lib/supabase/client'
+import { calculateAssessmentResult } from '@/lib/assessment/scoring'
+import { questionConfig } from '@/lib/data/assessmentQuestions'
 
 const frameworks = [
   {
     id: 'cil',
-    category: 'assessment',
     icon: 'CI',
-    title: 'CIRF Assessment',
-    subtitle: 'Cultural Innovation Resilience Framework',
+    title: 'CIL Assessment',
+    subtitle: 'Cultural Innovation Lab',
     description: 'A comprehensive multi-step assessment tool for measuring economic impact, cultural integrity, innovation degree, and resilience contribution.',
     features: ['Economic Impact Measurement', 'Cultural Integrity Index', 'Innovation Assessment', 'Personalized Recommendations'],
     primary: true,
   },
   {
     id: 'cimm',
-    category: 'assessment',
     icon: 'CM',
     title: 'Cultural Innovation Measurement Matrix',
     subtitle: 'CIMM Framework',
@@ -40,7 +34,6 @@ const frameworks = [
   },
   {
     id: 'cira',
-    category: 'assessment',
     icon: 'RA',
     title: 'Cultural Innovation Readiness Assessment',
     subtitle: 'CIRA Framework',
@@ -49,7 +42,6 @@ const frameworks = [
   },
   {
     id: 'tbl',
-    category: 'measurement',
     icon: '3B',
     title: 'Triple Bottom Line Cultural Innovation',
     subtitle: 'TBL-CI Framework',
@@ -58,7 +50,6 @@ const frameworks = [
   },
   {
     id: 'ciss',
-    category: 'measurement',
     icon: 'SS',
     title: 'Cultural Innovation Sustainability Scorecard',
     subtitle: 'CISS Framework',
@@ -67,7 +58,6 @@ const frameworks = [
   },
   {
     id: 'pricing',
-    category: 'implementation',
     icon: '$',
     title: 'Cultural Product Pricing Framework',
     subtitle: 'Step-by-Step Pricing Tool',
@@ -76,107 +66,76 @@ const frameworks = [
   },
 ]
 
-const measurementTools = [
-  {
-    number: '01',
-    title: 'Innovation Intensity Ratio',
-    metric: 'Frequency Metric',
-    description: 'Measures the rate of cultural innovation generation in your community.',
-    formula: 'IIR = Cultural Innovations / 1000 Population / Year',
-  },
-  {
-    number: '02',
-    title: 'Cultural Leverage Index',
-    metric: 'Efficiency Metric',
-    description: 'Assesses economic value generated per unit of cultural assets employed.',
-    formula: 'CLI = Economic Value Generated / Cultural Assets Employed',
-  },
-  {
-    number: '03',
-    title: 'Innovation Inclusivity Score',
-    metric: 'Equity Metric',
-    description: 'Evaluates participation and benefit distribution across marginalized groups.',
-    formula: 'IIS = (Marginalized Participants / Total) × Benefit Share',
-  },
-  {
-    number: '04',
-    title: 'Cultural Resilience Quotient',
-    metric: 'Preservation Metric',
-    description: 'Measures balance between innovation and cultural preservation.',
-    formula: 'CRQ = (Maintaining + Enhancing) / Total Innovations',
-  },
-  {
-    number: '05',
-    title: 'Innovation Efficiency Rate',
-    metric: 'Success Metric',
-    description: 'Tracks the success rate of cultural innovation attempts.',
-    formula: 'IER = Successful Innovations / Total Attempts',
-  },
-  {
-    number: '06',
-    title: 'Economic Multiplier Effect',
-    metric: 'Impact Metric',
-    description: 'Calculates broader economic impact of cultural innovations.',
-    formula: 'EME = Total Economic Activity / Direct Investment',
-  },
-]
-
-const downloadResources = [
-  { icon: BarChart3, title: 'Assessment Workbook', format: 'Excel Template' },
-  { icon: ClipboardList, title: 'Implementation Checklist', format: 'PDF Guide' },
-  { icon: Calculator, title: 'Metrics Dashboard', format: 'Excel Template' },
-  { icon: FileText, title: 'Survey Templates', format: 'Word Documents' },
-  { icon: Target, title: 'Strategic Planning Kit', format: 'Complete Package' },
-  { icon: BookOpen, title: 'Case Study Template', format: 'Word Template' },
-]
-
 export default function ToolsPage() {
   const { user } = useAuth()
   const searchParams = useSearchParams()
-  const [activeCategory, setActiveCategory] = useState('all')
   const [showAssessment, setShowAssessment] = useState(false)
-  const [calculatorValues, setCalculatorValues] = useState({
-    leadership: 5,
-    identity: 5,
-    flexibility: 5,
-    safety: 5,
-  })
   const [unlockStatus, setUnlockStatus] = useState<UserUnlocks | null>(null)
   const [progressSummary, setProgressSummary] = useState<{
     completedAssessments: number
     unlockedAssessments: number
     assessmentStatuses: Record<AssessmentType, { isUnlocked: boolean; isCompleted: boolean; latestScore?: number }>
   } | null>(null)
-  const [loadingStatus, setLoadingStatus] = useState(false)
+  const [recommendations, setRecommendations] = useState<AssessmentRecommendation[]>([])
 
-  // Auto-trigger CIRF assessment when ?start=cirf is present
+  // Auto-trigger CIL assessment when ?start=cil is present
   useEffect(() => {
-    if (searchParams.get('start') === 'cirf') {
+    if (searchParams.get('start') === 'cil') {
       setShowAssessment(true)
     }
   }, [searchParams])
 
-  // Fetch unlock status when user is available
+  // Fetch unlock status and construct scores when user is available
   useEffect(() => {
     async function fetchStatus() {
       if (!user) {
         setUnlockStatus(null)
         setProgressSummary(null)
+        setRecommendations([])
         return
       }
 
-      setLoadingStatus(true)
       try {
+        const supabase = createClient()
+
         const [unlocks, progress] = await Promise.all([
           getUserUnlockStatus(user.id),
           getAssessmentProgressSummary(user.id),
         ])
         setUnlockStatus(unlocks)
         setProgressSummary(progress)
+
+        // Fetch latest CIL assessment for construct scores
+        if (progress.assessmentStatuses.cil?.isCompleted) {
+          const { data: cilAssessment } = await supabase
+            .from('assessments')
+            .select('interpretation, answers')
+            .eq('user_id', user.id)
+            .eq('assessment_type', 'cil')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single()
+
+          if (cilAssessment) {
+            let constructScores = cilAssessment.interpretation?.constructScores
+
+            // Fallback: recompute from answers if constructScores not stored
+            if (!constructScores && cilAssessment.answers) {
+              const result = calculateAssessmentResult(cilAssessment.answers, questionConfig)
+              constructScores = {}
+              for (const section of result.sectionScores) {
+                Object.assign(constructScores, section.constructScores)
+              }
+            }
+
+            if (constructScores) {
+              setRecommendations(getAssessmentRecommendations(constructScores))
+            }
+          }
+        }
       } catch (error) {
         console.error('Error fetching unlock status:', error)
       }
-      setLoadingStatus(false)
     }
 
     fetchStatus()
@@ -184,7 +143,7 @@ export default function ToolsPage() {
 
   // Helper to check if an assessment is unlocked
   const isAssessmentUnlocked = (id: string): boolean => {
-    if (id === 'cil' || id === 'cirf') return true // CIRF is always unlocked
+    if (id === 'cil') return true
     if (!unlockStatus) return false
     return unlockStatus.assessments[id as AssessmentType]?.isUnlocked || false
   }
@@ -192,27 +151,18 @@ export default function ToolsPage() {
   // Helper to check if an assessment is completed
   const isAssessmentCompleted = (id: string): boolean => {
     if (!progressSummary) return false
-    const assessmentType = id === 'cil' ? 'cirf' : id as AssessmentType
-    return progressSummary.assessmentStatuses[assessmentType]?.isCompleted || false
+    return progressSummary.assessmentStatuses[id as AssessmentType]?.isCompleted || false
   }
 
   // Helper to get latest score
   const getLatestScore = (id: string): number | undefined => {
     if (!progressSummary) return undefined
-    const assessmentType = id === 'cil' ? 'cirf' : id as AssessmentType
-    return progressSummary.assessmentStatuses[assessmentType]?.latestScore
+    return progressSummary.assessmentStatuses[id as AssessmentType]?.latestScore
   }
 
-  const filteredFrameworks = activeCategory === 'all'
-    ? frameworks
-    : frameworks.filter((f) => f.category === activeCategory)
-
-  const calculateReadinessScore = () => {
-    const weights = { leadership: 0.3, identity: 0.3, flexibility: 0.2, safety: 0.2 }
-    const total = Object.entries(calculatorValues).reduce((acc, [key, value]) => {
-      return acc + value * (weights[key as keyof typeof weights] || 0.25)
-    }, 0)
-    return Math.round(total * 10)
+  // Get recommendation for a specific assessment
+  const getRecommendation = (id: string): AssessmentRecommendation | undefined => {
+    return recommendations.find(r => r.assessmentType === id)
   }
 
   if (showAssessment) {
@@ -250,26 +200,6 @@ export default function ToolsPage() {
         </div>
       </section>
 
-      {/* Category Navigation */}
-      <section className="sticky top-20 z-40 bg-sand py-6 px-6 md:px-16 border-b border-ink/10">
-        <div className="max-w-[1600px] mx-auto flex flex-wrap justify-center gap-3">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={cn(
-                'px-4 py-2 rounded-full text-sm font-normal transition-all duration-300',
-                activeCategory === cat.id
-                  ? 'bg-ink text-pearl'
-                  : 'bg-pearl border border-ink hover:bg-ink hover:text-pearl'
-              )}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
       {/* Core Frameworks */}
       <section className="py-16 md:py-24 px-6 md:px-16 bg-pearl">
         <div className="max-w-[1600px] mx-auto">
@@ -292,7 +222,7 @@ export default function ToolsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-1">
-                    {(['cirf', 'cimm', 'cira', 'tbl', 'ciss', 'pricing'] as AssessmentType[]).map((type) => {
+                    {(['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing'] as AssessmentType[]).map((type) => {
                       const status = progressSummary.assessmentStatuses[type]
                       return (
                         <div
@@ -327,11 +257,13 @@ export default function ToolsPage() {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredFrameworks.map((framework) => {
+            {frameworks.map((framework) => {
               const isUnlocked = isAssessmentUnlocked(framework.id)
               const isCompleted = isAssessmentCompleted(framework.id)
               const latestScore = getLatestScore(framework.id)
-              const isCIRF = framework.id === 'cil'
+              const isCIL = framework.id === 'cil'
+              const recommendation = getRecommendation(framework.id)
+              const badge = recommendation ? getRecommendationBadge(recommendation.level) : null
 
               return (
                 <article
@@ -353,7 +285,7 @@ export default function ToolsPage() {
                       ) : isUnlocked ? (
                         <span className="inline-flex items-center gap-1 px-2 py-1 bg-gold/10 text-gold text-xs font-medium rounded-full">
                           <Unlock className="w-3 h-3" />
-                          {!isCIRF && 'FREE'}
+                          {!isCIL && 'FREE'}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 px-2 py-1 bg-sand text-stone text-xs font-medium rounded-full">
@@ -374,19 +306,39 @@ export default function ToolsPage() {
                   </div>
                   <h3 className="font-serif text-xl mb-1">{framework.title}</h3>
                   <p className="text-sm text-stone mb-4">{framework.subtitle}</p>
-                  <p className="text-base leading-relaxed mb-6">{framework.description}</p>
+
+                  {/* Score-aware recommendation badge */}
+                  {!isCIL && recommendation && isUnlocked && !isCompleted && badge && (
+                    <div className={cn('inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full border mb-4', badge.className)}>
+                      {badge.label}
+                    </div>
+                  )}
+
+                  <p className="text-base leading-relaxed mb-4">{framework.description}</p>
+
+                  {/* Recommendation messaging */}
+                  {!isCIL && recommendation && isUnlocked && !isCompleted && (
+                    <div className="mb-4">
+                      {recommendation.level !== 'optional' ? (
+                        <p className="text-sm text-stone italic">{recommendation.forYouIf}</p>
+                      ) : (
+                        <p className="text-sm text-stone/70 italic">{recommendation.notForYouIf}</p>
+                      )}
+                      <p className="text-xs text-gold mt-2">{recommendation.benefit}</p>
+                    </div>
+                  )}
 
                   {/* Lock message for locked assessments */}
                   {!isUnlocked && user && (
                     <div className="bg-sand/50 border border-sand rounded-lg p-4 mb-6">
                       <p className="text-sm text-stone">
                         <Lock className="w-4 h-4 inline mr-2" />
-                        Complete the CIRF assessment to unlock this assessment for free.
+                        Complete the CIL assessment to unlock this assessment for free.
                       </p>
                     </div>
                   )}
 
-                  {isUnlocked && (
+                  {isUnlocked && !recommendation && (
                     <ul className="space-y-2 mb-6">
                       {framework.features.map((feature) => (
                         <li key={feature} className="text-sm flex items-start gap-2">
@@ -398,7 +350,7 @@ export default function ToolsPage() {
                   )}
 
                   <div className="flex gap-3 relative z-10">
-                    {isCIRF ? (
+                    {isCIL ? (
                       <>
                         <button
                           onClick={() => setShowAssessment(true)}
@@ -408,7 +360,7 @@ export default function ToolsPage() {
                           {isCompleted ? 'Take Again' : 'Start Assessment'}
                         </button>
                         <Link href="/framework" className="btn-secondary text-sm cursor-pointer">
-                          About CIRF
+                          About CIL
                         </Link>
                       </>
                     ) : isUnlocked ? (
@@ -426,7 +378,7 @@ export default function ToolsPage() {
                           onClick={() => setShowAssessment(true)}
                           className="btn-primary text-sm cursor-pointer"
                         >
-                          Unlock with CIRF
+                          Unlock with CIL
                         </button>
                         <a href={`/framework/${framework.id}`} className="btn-secondary text-sm cursor-pointer">
                           Learn More
@@ -441,108 +393,31 @@ export default function ToolsPage() {
         </div>
       </section>
 
-      {/* Measurement Tools */}
+      {/* Calculators Link Section */}
       <section className="py-16 md:py-24 px-6 md:px-16 bg-sand">
         <div className="max-w-[1600px] mx-auto">
-          <p className="section-label">Measurement Instruments</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">Key Performance Indicators</h2>
-          <p className="text-stone text-lg max-w-3xl mb-12">
-            Specific metrics and formulas for tracking cultural innovation impact in your community.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {measurementTools.map((tool) => (
-              <article
-                key={tool.title}
-                className="bg-pearl p-8 relative transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-              >
-                <span className="absolute top-4 right-6 font-serif text-5xl font-light text-gold/30">
-                  {tool.number}
-                </span>
-                <h3 className="text-lg font-medium mb-1">{tool.title}</h3>
-                <p className="text-xs uppercase tracking-[0.15em] text-stone mb-4">{tool.metric}</p>
-                <p className="text-base leading-relaxed mb-4">{tool.description}</p>
-                <div className="bg-ink/5 p-3 rounded-lg font-mono text-sm">
-                  {tool.formula}
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Calculator */}
-      <section id="calculators" className="py-16 md:py-24 px-6 md:px-16 bg-ink text-pearl">
-        <div className="max-w-[1000px] mx-auto text-center">
-          <h2 className="font-serif text-3xl md:text-4xl font-light italic mb-4">
-            Innovation Readiness Calculator
-          </h2>
-          <p className="text-pearl/80 mb-12">
-            Calculate your community&apos;s innovation potential score based on key enabling conditions.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {[
-              { key: 'leadership', label: 'Bridge Leadership' },
-              { key: 'identity', label: 'Identity Security' },
-              { key: 'flexibility', label: 'Institutional Flexibility' },
-              { key: 'safety', label: 'Economic Safety Nets' },
-            ].map((item) => (
-              <div key={item.key} className="bg-pearl/10 p-6 rounded-xl">
-                <label className="block text-sm uppercase tracking-wider mb-4 opacity-80">
-                  {item.label} (0-10)
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  max="10"
-                  value={calculatorValues[item.key as keyof typeof calculatorValues]}
-                  onChange={(e) =>
-                    setCalculatorValues((prev) => ({
-                      ...prev,
-                      [item.key]: Math.min(10, Math.max(0, parseInt(e.target.value) || 0)),
-                    }))
-                  }
-                  className="w-full p-3 bg-pearl/10 border border-pearl/30 rounded-lg text-pearl text-center text-xl"
-                />
+          <div className="bg-pearl border border-ink/10 rounded-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-gold/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Calculator className="w-8 h-8 text-gold" />
               </div>
-            ))}
-          </div>
-
-          <div className="bg-gold text-ink py-8 px-12 rounded-xl inline-block">
-            <p className="text-sm uppercase tracking-wider mb-2">Innovation Readiness Score</p>
-            <p className="font-serif text-6xl font-light">{calculateReadinessScore()}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Downloads Section */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-pearl">
-        <div className="max-w-[1600px] mx-auto">
-          <p className="section-label">Resources</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">Download Templates & Guides</h2>
-          <p className="text-stone text-lg max-w-3xl mb-12">
-            Ready-to-use templates, worksheets, and implementation guides for your community.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {downloadResources.map((resource) => (
-              <Link key={resource.title} href="/resources">
-                <article
-                  className="border border-ink/10 p-6 text-center transition-all duration-300 hover:bg-sand hover:-translate-y-1 cursor-pointer h-full"
-                >
-                  <resource.icon className="w-10 h-10 mx-auto mb-4 text-gold" strokeWidth={1.5} />
-                  <h3 className="text-sm font-medium mb-1">{resource.title}</h3>
-                  <p className="text-xs text-stone uppercase tracking-wider">{resource.format}</p>
-                </article>
-              </Link>
-            ))}
+              <div>
+                <h3 className="font-serif text-2xl font-light mb-2">Calculators & KPI Tools</h3>
+                <p className="text-stone max-w-lg">
+                  Interactive calculators and measurement formulas for tracking cultural innovation impact. Complete assessments to unlock specialized tools.
+                </p>
+              </div>
+            </div>
+            <Link href="/tools/calculators" className="btn-primary flex items-center gap-2 whitespace-nowrap">
+              View Calculators
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ocean to-sage text-pearl text-center">
+      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ink to-ink/90 text-pearl text-center">
         <h2 className="font-serif text-3xl md:text-4xl font-light mb-6">
           Need Custom Tools?
         </h2>

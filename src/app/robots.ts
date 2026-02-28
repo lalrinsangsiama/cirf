@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf-framework.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'
 
 export default function robots(): MetadataRoute.Robots {
   return {

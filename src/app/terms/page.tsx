@@ -33,7 +33,7 @@ export default function TermsOfServicePage() {
             <div className="mb-12">
               <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">1. Acceptance of Terms</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
-                By accessing or using the Cultural Innovation Lab website (cirf-framework.org) and services, you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree to these Terms, please do not use our services.
+                By accessing or using the Cultural Innovation Lab website (cil-framework.org) and services, you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree to these Terms, please do not use our services.
               </p>
               <p className="text-lg leading-relaxed text-stone">
                 We reserve the right to modify these Terms at any time. Your continued use of the services after any changes constitutes acceptance of the modified Terms.
@@ -263,7 +263,7 @@ export default function TermsOfServicePage() {
               </p>
               <div className="bg-pearl p-6 rounded-lg">
                 <p className="text-stone">
-                  Email: <a href="mailto:contact@cirf-framework.org" className="text-ocean hover:underline">contact@cirf-framework.org</a><br />
+                  Email: <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a><br />
                   Website: <Link href="/about#contact" className="text-ocean hover:underline">Contact Form</Link>
                 </p>
               </div>

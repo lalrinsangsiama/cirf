@@ -10,8 +10,6 @@ import { useAuth } from '@/components/auth/AuthProvider'
 
 const navigation = [
   { name: 'Framework', href: '/framework' },
-  { name: 'Research', href: '/research' },
-  { name: 'Case Studies', href: '/case-studies' },
   { name: 'Tools', href: '/tools' },
   { name: 'Resources', href: '/resources' },
   { name: 'Pricing', href: '/pricing' },
@@ -147,6 +145,23 @@ export function Header() {
               </Link>
             </li>
           ))}
+          {user && (
+            <li role="none">
+              <Link
+                href="/dashboard"
+                role="menuitem"
+                className={cn(
+                  'nav-link text-sm font-normal tracking-wide transition-colors duration-300',
+                  'focus-visible:outline-none focus-visible:text-gold focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 rounded-sm',
+                  isScrolled ? 'text-ink focus-visible:ring-offset-pearl' : 'text-pearl focus-visible:ring-offset-ink',
+                  pathname === '/dashboard' && 'active'
+                )}
+                aria-current={pathname === '/dashboard' ? 'page' : undefined}
+              >
+                Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Auth Buttons - Desktop */}

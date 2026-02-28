@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf-framework.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'
 
 interface JsonLdProps {
   data: Record<string, unknown>
@@ -25,13 +25,13 @@ export function OrganizationJsonLd() {
     description:
       'Transforming indigenous wisdom into economic resilience. A comprehensive framework for understanding how cultural innovation drives sustainable development.',
     sameAs: [
-      'https://twitter.com/cirframework',
-      'https://linkedin.com/company/cirf',
+      'https://twitter.com/cilframework',
+      'https://linkedin.com/company/cil',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: 'contact@cirf-framework.org',
+      email: 'contact@cil-framework.org',
       url: `${baseUrl}/about#contact`,
     },
   }
@@ -64,7 +64,7 @@ export function ArticleJsonLd({
     '@type': 'Article',
     headline: title,
     description: description,
-    image: image || `${baseUrl}/og-image.png`,
+    image: image || `${baseUrl}/opengraph-image`,
     author: {
       '@type': 'Person',
       name: author,
@@ -151,14 +151,6 @@ export function WebsiteJsonLd() {
     url: baseUrl,
     description:
       'Transforming indigenous wisdom into economic resilience. A comprehensive framework for understanding how cultural innovation drives sustainable development.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${baseUrl}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
   }
 
   return <JsonLd data={data} />
@@ -193,42 +185,6 @@ export function ProductJsonLd({
         name: 'CIL',
       },
     },
-  }
-
-  return <JsonLd data={data} />
-}
-
-// Research/ScholarlyArticle schema
-interface ResearchJsonLdProps {
-  title: string
-  description: string
-  authors: string[]
-  publishedAt: string
-  url: string
-}
-
-export function ResearchJsonLd({
-  title,
-  description,
-  authors,
-  publishedAt,
-  url,
-}: ResearchJsonLdProps) {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'ScholarlyArticle',
-    headline: title,
-    description: description,
-    author: authors.map((author) => ({
-      '@type': 'Person',
-      name: author,
-    })),
-    datePublished: publishedAt,
-    publisher: {
-      '@type': 'Organization',
-      name: 'CIL Research',
-    },
-    url: url,
   }
 
   return <JsonLd data={data} />

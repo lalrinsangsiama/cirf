@@ -16,6 +16,7 @@ import type {
   OrganizationType,
   Industry,
   BusinessStage,
+  Region,
 } from './types'
 import {
   CONSTRUCT_LABELS,
@@ -24,17 +25,56 @@ import {
 import { RECOMMENDATION_LIBRARY, getDefaultRecommendation } from './content'
 
 /**
+ * Map ISO country codes to region values
+ */
+function countryToRegion(countryCode: string): Region {
+  const regionMap: Record<string, Region> = {
+    // Africa
+    DZ: 'africa', EG: 'africa', ET: 'africa', GH: 'africa', KE: 'africa',
+    MA: 'africa', NG: 'africa', ZA: 'africa', TZ: 'africa', UG: 'africa', ZW: 'africa',
+    // Asia-Pacific
+    BD: 'asia-pacific', CN: 'asia-pacific', HK: 'asia-pacific', IN: 'asia-pacific',
+    ID: 'asia-pacific', JP: 'asia-pacific', KR: 'asia-pacific', MY: 'asia-pacific',
+    PK: 'asia-pacific', PH: 'asia-pacific', SG: 'asia-pacific', LK: 'asia-pacific',
+    TW: 'asia-pacific', TH: 'asia-pacific', VN: 'asia-pacific',
+    // Europe
+    AL: 'europe', AT: 'europe', BE: 'europe', HR: 'europe', CZ: 'europe',
+    DK: 'europe', FI: 'europe', FR: 'europe', DE: 'europe', GR: 'europe',
+    HU: 'europe', IE: 'europe', IT: 'europe', NL: 'europe', NO: 'europe',
+    PL: 'europe', PT: 'europe', RO: 'europe', RU: 'europe', ES: 'europe',
+    SE: 'europe', CH: 'europe', UA: 'europe', GB: 'europe',
+    // Latin America
+    AR: 'latin-america', BR: 'latin-america', CL: 'latin-america',
+    CO: 'latin-america', CR: 'latin-america', EC: 'latin-america',
+    GT: 'latin-america', MX: 'latin-america', PE: 'latin-america',
+    // Middle East
+    IL: 'middle-east', SA: 'middle-east', TR: 'middle-east', AE: 'middle-east',
+    // North America
+    CA: 'north-america', US: 'north-america',
+    // Oceania
+    AU: 'oceania', NZ: 'oceania',
+  }
+  return regionMap[countryCode] || 'global'
+}
+
+/**
  * Extract demographics from assessment answers
  */
 export function extractDemographics(
   answers: Record<string, number | string | string[] | null>
 ): Demographics {
+  // demo-sector is multiselect — use first selection as primary industry
+  const sectorAnswer = answers['demo-sector']
+  const primaryIndustry: Industry = Array.isArray(sectorAnswer)
+    ? (sectorAnswer[0] as Industry) || 'multi-sector'
+    : (sectorAnswer as Industry) || 'multi-sector'
+
   return {
     orgType: (answers['demo-org-type'] as OrganizationType) || 'other',
-    industry: (answers['demo-sector'] as Industry) || 'multi-sector',
+    industry: primaryIndustry,
     businessStage: (answers['demo-stage'] as BusinessStage) || 'startup',
     teamSize: (answers['demo-team-size'] as Demographics['teamSize']) || '2-5',
-    region: (answers['demo-region'] as Demographics['region']) || 'global',
+    region: countryToRegion(answers['demo-country'] as string) || 'global',
     revenueRange: (answers['demo-revenue'] as string) || undefined,
   }
 }
@@ -180,13 +220,13 @@ export function generatePersonalizedRecommendations(
         currentScore: Math.round((constructScores[construct] || 0) * 100),
         targetScore: 70,
         title: `Improve ${CONSTRUCT_LABELS[construct] || construct}`,
-        description: 'Focus on strengthening this area to improve your overall resilience.',
+        description: 'Focus on strengthening this area to improve your overall performance.',
         actionSteps: [
           { action: 'Assess your current situation in this area', timeframe: 'this-week' },
           { action: 'Identify specific improvement opportunities', timeframe: 'this-month' },
           { action: 'Implement changes and track progress', timeframe: 'ongoing' },
         ],
-        impact: 'Will contribute to overall resilience improvement',
+        impact: 'Will contribute to overall performance improvement',
         contextLabel,
         relatedCaseStudies: [],
       })
@@ -248,15 +288,21 @@ export function generateProfileSummary(demographics: Demographics): string {
     crafts: 'the crafts sector',
     'performing-arts': 'performing arts',
     'visual-arts': 'visual arts',
-    music: 'music',
-    'food-beverage': 'food & beverage',
+    'food-beverage': 'food & culinary traditions',
     'fashion-textiles': 'fashion & textiles',
     'heritage-tourism': 'heritage tourism',
-    'publishing-media': 'publishing & media',
+    'digital-film-media': 'digital content & media',
+    'ar-vr-xr': 'AR/VR/XR & immersive experiences',
+    'gaming-interactive': 'gaming & interactive media',
+    mobility: 'mobility & cultural transport',
+    'language-literature': 'language & storytelling',
+    'festivals-ceremonies': 'festivals & events',
+    'traditional-medicine': 'traditional medicine & wellness',
     design: 'design',
     education: 'cultural education',
-    wellness: 'traditional wellness',
+    'community-development': 'community cultural development',
     agriculture: 'cultural agriculture',
+    other: 'the cultural sector',
     'multi-sector': 'multiple cultural sectors',
   }
 
@@ -272,7 +318,7 @@ export function generateProfileSummary(demographics: Demographics): string {
   const industry = industryLabels[demographics.industry] || 'the cultural sector'
   const stage = stageLabels[demographics.businessStage] || 'at your current stage'
 
-  return `Based on your profile as ${org} in ${industry}, ${stage}, here are personalized recommendations for strengthening your cultural innovation resilience:`
+  return `Based on your profile as ${org} in ${industry}, ${stage}, here are personalized recommendations for strengthening your cultural innovation:`
 }
 
 /**
@@ -339,7 +385,7 @@ export function hasIndustrySpecificGuidance(industry: Industry): boolean {
  * Get industry-specific tips based on user's sector
  */
 export function getIndustryTips(industry: Industry): string[] {
-  const tips: Record<Industry, string[]> = {
+  const tips: Partial<Record<Industry, string[]>> = {
     crafts: [
       'Document your techniques with video - customers love seeing the process',
       'Consider seasonal product lines to create buying urgency',
@@ -354,11 +400,6 @@ export function getIndustryTips(industry: Industry): string[] {
       'Build a strong online portfolio with professional photography',
       'Consider limited editions and prints for broader market access',
       'Partner with cultural institutions for exhibitions',
-    ],
-    music: [
-      'Diversify income across recordings, live performance, and licensing',
-      'Build direct fan relationships through email and social media',
-      'Consider sync licensing for film, TV, and advertising',
     ],
     'food-beverage': [
       'Document traditional recipes with cultural context',
@@ -375,10 +416,40 @@ export function getIndustryTips(industry: Industry): string[] {
       'Partner with travel platforms while building direct booking',
       'Train community members as guides and storytellers',
     ],
-    'publishing-media': [
+    'digital-film-media': [
       'Build audience through consistent content creation',
-      'Diversify across formats (print, digital, audio)',
+      'Diversify across formats (print, digital, audio, video)',
       'Consider community-supported models for niche content',
+    ],
+    'ar-vr-xr': [
+      'Start with low-cost 360° content before investing in full XR',
+      'Partner with cultural institutions for immersive heritage experiences',
+      'Document traditional spaces and practices for virtual preservation',
+    ],
+    'gaming-interactive': [
+      'Collaborate with cultural elders to ensure authentic representation',
+      'Consider educational gaming as a gateway to cultural engagement',
+      'Build community-driven content that players help shape',
+    ],
+    mobility: [
+      'Map cultural routes and heritage trails with digital guides',
+      'Partner with tourism boards for cultural transport experiences',
+      'Develop multi-modal cultural journey packages',
+    ],
+    'language-literature': [
+      'Create digital language learning tools alongside traditional teaching',
+      'Build an audience through serialized storytelling on social media',
+      'Partner with schools and libraries for cultural literacy programs',
+    ],
+    'festivals-ceremonies': [
+      'Develop hybrid in-person and virtual event experiences',
+      'Build year-round engagement beyond the event dates',
+      'Create tiered sponsorship and participation packages',
+    ],
+    'traditional-medicine': [
+      'Ensure proper credentialing and cultural authorization',
+      'Develop both in-person and remote service options',
+      'Build trust through transparency about your training',
     ],
     design: [
       'Build a portfolio showcasing cultural design principles',
@@ -390,10 +461,10 @@ export function getIndustryTips(industry: Industry): string[] {
       'Build credentialing or certification programs',
       'Partner with schools and cultural institutions',
     ],
-    wellness: [
-      'Ensure proper credentialing and cultural authorization',
-      'Develop both in-person and remote service options',
-      'Build trust through transparency about your training',
+    'community-development': [
+      'Document outcomes and impact stories for funding applications',
+      'Build coalitions with other community organizations',
+      'Develop sustainable revenue models beyond grant dependency',
     ],
     agriculture: [
       'Tell the story of your traditional growing practices',

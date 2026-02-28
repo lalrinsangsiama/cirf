@@ -1,5 +1,5 @@
 // CIRA - Cultural Innovation Readiness Assessment
-// 20 questions across 4 sections: Cultural Capital Inventory, Innovation Ecosystem, Barriers Assessment, Readiness Indicators
+// 18 questions across 4 sections: Cultural Capital Inventory, Innovation Ecosystem, Barriers Assessment, Readiness Indicators
 
 export type CIRASection =
   | 'culturalCapitalInventory'
@@ -49,24 +49,8 @@ export const CIRA_SECTION_META: Record<CIRASection, {
   },
 }
 
-// Cultural Capital Inventory questions (5 questions)
+// Cultural Capital Inventory questions (3 questions)
 export const culturalCapitalInventoryQuestions: CIRALikertQuestion[] = [
-  {
-    id: 'cira-cci-1',
-    section: 'culturalCapitalInventory',
-    construct: 'knowledgeDocumentation',
-    question: 'We have documented our traditional knowledge and practices comprehensively',
-    helpText: 'Examples: recipe books, technique videos, written guides, photo archives',
-    weight: 1.3,
-  },
-  {
-    id: 'cira-cci-2',
-    section: 'culturalCapitalInventory',
-    construct: 'practitionerNetwork',
-    question: 'We have access to a network of skilled traditional practitioners',
-    helpText: 'Examples: 3+ master craftspeople you can call on, trained apprentices ready to work',
-    weight: 1.4,
-  },
   {
     id: 'cira-cci-3',
     section: 'culturalCapitalInventory',
@@ -258,7 +242,7 @@ export const ciraQuestionConfig = {
 
 // Stats
 export const CIRA_STATS = {
-  totalQuestions: 20,
+  totalQuestions: 18,
   sections: 4,
-  estimatedMinutes: 8,
+  estimatedMinutes: 7,
 }

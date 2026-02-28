@@ -120,7 +120,7 @@ export default function RefundPolicyPage() {
                   <span className="flex-shrink-0 w-8 h-8 bg-gold text-ink rounded-full flex items-center justify-center font-medium">1</span>
                   <div>
                     <h4 className="font-medium mb-1">Contact Us</h4>
-                    <p className="text-stone">Email us at <a href="mailto:contact@cirf-framework.org" className="text-ocean hover:underline">contact@cirf-framework.org</a> with the subject line &quot;Refund Request&quot;</p>
+                    <p className="text-stone">Email us at <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a> with the subject line &quot;Refund Request&quot;</p>
                   </div>
                 </div>
 
@@ -236,7 +236,7 @@ export default function RefundPolicyPage() {
               </p>
               <div className="bg-pearl p-6 rounded-lg">
                 <p className="text-stone">
-                  <strong>Email:</strong> <a href="mailto:contact@cirf-framework.org" className="text-ocean hover:underline">contact@cirf-framework.org</a><br />
+                  <strong>Email:</strong> <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a><br />
                   <strong>Subject Line:</strong> Refund Request<br />
                   <strong>Response Time:</strong> 3-5 business days<br /><br />
                   <Link href="/about#contact" className="text-ocean hover:underline">Contact Form →</Link>

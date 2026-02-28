@@ -3,12 +3,13 @@
 import { cn } from '@/lib/utils'
 
 export interface LikertScaleProps {
-  value: number | null
-  onChange: (value: number) => void
+  value: number | string | null
+  onChange: (value: number | string) => void
   disabled?: boolean
   showLabels?: boolean
   size?: 'sm' | 'md' | 'lg'
   variant?: 'default' | 'compact' | 'horizontal'
+  showNA?: boolean
 }
 
 const LIKERT_LABELS = [
@@ -28,7 +29,9 @@ export function LikertScale({
   showLabels = true,
   size = 'md',
   variant = 'default',
+  showNA = false,
 }: LikertScaleProps) {
+  const isNA = value === 'na'
   const sizeClasses = {
     sm: 'w-8 h-8 text-xs',
     md: 'w-10 h-10 text-sm',
@@ -86,7 +89,7 @@ export function LikertScale({
               disabled={disabled}
               className={cn(
                 'flex-1 rounded-lg py-3 px-2 flex flex-col items-center gap-1 transition-all duration-200 border-2',
-                value === item.value
+                value === item.value && !isNA
                   ? 'border-gold bg-gold/10'
                   : 'border-transparent bg-sand hover:bg-ink/10',
                 disabled && 'opacity-50 cursor-not-allowed'
@@ -97,7 +100,7 @@ export function LikertScale({
                 className={cn(
                   'rounded-full flex items-center justify-center font-medium',
                   size === 'sm' ? 'w-6 h-6 text-xs' : size === 'lg' ? 'w-10 h-10 text-base' : 'w-8 h-8 text-sm',
-                  getButtonColor(item.value, value === item.value)
+                  getButtonColor(item.value, value === item.value && !isNA)
                 )}
               >
                 {item.short}
@@ -110,12 +113,31 @@ export function LikertScale({
             </button>
           ))}
         </div>
-        {showLabels && (
-          <div className="flex justify-between mt-2 text-xs text-stone sm:hidden">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
-          </div>
-        )}
+        <div className="flex justify-between mt-2">
+          {showLabels && (
+            <div className="flex justify-between flex-1 text-xs text-stone sm:hidden">
+              <span>Strongly Disagree</span>
+              <span>Strongly Agree</span>
+            </div>
+          )}
+          {showNA && (
+            <button
+              type="button"
+              onClick={() => !disabled && onChange('na')}
+              disabled={disabled}
+              className={cn(
+                'ml-auto px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 border',
+                isNA
+                  ? 'border-stone bg-stone/20 text-ink'
+                  : 'border-ink/15 text-stone hover:border-stone hover:text-ink',
+                disabled && 'opacity-50 cursor-not-allowed'
+              )}
+              aria-label="Not applicable"
+            >
+              N/A — haven&apos;t experienced this
+            </button>
+          )}
+        </div>
       </div>
     )
   }

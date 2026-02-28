@@ -1,4 +1,4 @@
--- CIRF Admin User Setup
+-- CIL Admin User Setup
 -- Run this in your Supabase SQL Editor after creating the user via the Auth dashboard
 
 -- ============================================

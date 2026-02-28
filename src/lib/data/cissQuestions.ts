@@ -1,5 +1,5 @@
 // CISS - Cultural Innovation Sustainability Scorecard
-// 18 questions across 4 sections: Economic, Cultural, Social, Environmental Sustainability
+// 15 questions across 4 sections: Economic, Cultural, Social, Environmental Sustainability
 
 export type CISSSection =
   | 'economicSustainability'
@@ -49,7 +49,7 @@ export const CISS_SECTION_META: Record<CISSSection, {
   },
 }
 
-// Economic Sustainability questions (5 questions)
+// Economic Sustainability questions (4 questions)
 export const economicSustainabilityQuestions: CISSLikertQuestion[] = [
   {
     id: 'ciss-es-1',
@@ -58,14 +58,6 @@ export const economicSustainabilityQuestions: CISSLikertQuestion[] = [
     question: 'Our business model generates sufficient revenue to cover all costs',
     helpText: 'Examples: profitable without grants, can pay all bills from sales alone',
     weight: 1.5,
-  },
-  {
-    id: 'ciss-es-2',
-    section: 'economicSustainability',
-    construct: 'diversification',
-    question: 'We have diversified revenue streams that reduce dependency risk',
-    helpText: 'Examples: 3+ product lines, sell to multiple markets, mix of wholesale/retail',
-    weight: 1.3,
   },
   {
     id: 'ciss-es-3',
@@ -93,7 +85,7 @@ export const economicSustainabilityQuestions: CISSLikertQuestion[] = [
   },
 ]
 
-// Cultural Sustainability questions (5 questions)
+// Cultural Sustainability questions (4 questions)
 export const culturalSustainabilityQuestions: CISSLikertQuestion[] = [
   {
     id: 'ciss-cs-1',
@@ -120,14 +112,6 @@ export const culturalSustainabilityQuestions: CISSLikertQuestion[] = [
     weight: 1.5,
   },
   {
-    id: 'ciss-cs-4',
-    section: 'culturalSustainability',
-    construct: 'documentationPractice',
-    question: 'We systematically document techniques and knowledge for preservation',
-    helpText: 'Examples: video library of techniques, written recipe books, photo archives',
-    weight: 1.2,
-  },
-  {
     id: 'ciss-cs-5',
     section: 'culturalSustainability',
     construct: 'communityRelevance',
@@ -137,7 +121,7 @@ export const culturalSustainabilityQuestions: CISSLikertQuestion[] = [
   },
 ]
 
-// Social Sustainability questions (4 questions)
+// Social Sustainability questions (3 questions)
 export const socialSustainabilityQuestions: CISSLikertQuestion[] = [
   {
     id: 'ciss-ss-1',
@@ -146,14 +130,6 @@ export const socialSustainabilityQuestions: CISSLikertQuestion[] = [
     question: 'Our activities contribute to overall community well-being',
     helpText: 'Examples: reduced poverty, better health outcomes, stronger social ties',
     weight: 1.4,
-  },
-  {
-    id: 'ciss-ss-2',
-    section: 'socialSustainability',
-    construct: 'equitableDistribution',
-    question: 'Benefits from our work are distributed equitably across the community',
-    helpText: 'Examples: profits shared fairly, women earn as much as men, all families benefit',
-    weight: 1.5,
   },
   {
     id: 'ciss-ss-3',
@@ -237,9 +213,9 @@ export const cissQuestionConfig = {
 
 // Stats
 export const CISS_STATS = {
-  totalQuestions: 18,
+  totalQuestions: 15,
   sections: 4,
-  estimatedMinutes: 7,
+  estimatedMinutes: 6,
 }
 
 // CISS specific scoring weights

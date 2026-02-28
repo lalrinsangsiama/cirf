@@ -58,13 +58,13 @@ export const verifiedCaseStudies: CaseStudy[] = [
       { value: '1000+', label: 'Years of Tradition' },
       { value: '2,000+', label: 'Craft Villages' },
     ],
-    description: 'Historic craft villages like Bat Trang (ceramics) and Hoi An (silk, lanterns) demonstrate perfect cultural innovation resilience through community-controlled, sustainable development models.',
+    description: 'Historic craft villages like Bat Trang (ceramics) and Hoi An (silk, lanterns) demonstrate perfect cultural innovation through community-controlled, sustainable development models.',
     color: 'from-terracotta to-gold',
     location: { lat: 21.0, lng: 105.8 },
     period: '2017-2024',
     cilScore: 13,
     outcome: 'success',
-    fullDescription: 'Vietnamese traditional craft villages represent the gold standard for cultural innovation resilience. These communities have maintained authentic practices for over a millennium while successfully adapting to modern markets. Bat Trang ceramics village near Hanoi and the artisan communities of Hoi An exemplify how cultural integrity, community control, and economic value creation can coexist and reinforce each other.',
+    fullDescription: 'Vietnamese traditional craft villages represent the gold standard for cultural innovation. These communities have maintained authentic practices for over a millennium while successfully adapting to modern markets. Bat Trang ceramics village near Hanoi and the artisan communities of Hoi An exemplify how cultural integrity, community control, and economic value creation can coexist and reinforce each other.',
     innovations: [
       'Community-controlled tourism and export models',
       'Intergenerational knowledge transfer systems',
@@ -172,7 +172,7 @@ export const verifiedCaseStudies: CaseStudy[] = [
     matchingCriteria: {
       industries: ['crafts', 'food-beverage', 'heritage-tourism'],
       orgTypes: ['indigenous-enterprise', 'cooperative', 'community-org'],
-      challengesOvercome: ['communityDecisionMaking', 'benefitDistribution', 'communityOwnership', 'financialReserves'],
+      challengesOvercome: ['communityDecisionMaking', 'benefitDistribution', 'financialReserves'],
       regions: ['north-america'],
       businessStages: ['established', 'scaling'],
     },
@@ -366,7 +366,7 @@ export const verifiedCaseStudies: CaseStudy[] = [
     matchingCriteria: {
       industries: ['food-beverage', 'crafts'],
       orgTypes: ['indigenous-enterprise', 'cooperative'],
-      challengesOvercome: ['communityOwnership', 'financialReserves', 'communityDecisionMaking', 'allianceNetworks'],
+      challengesOvercome: ['benefitDistribution', 'financialReserves', 'communityDecisionMaking', 'allianceNetworks'],
       regions: ['north-america'],
       businessStages: ['scaling', 'established'],
     },
@@ -559,7 +559,7 @@ export const verifiedCaseStudies: CaseStudy[] = [
     verifiedDate: '2024-12-01',
     confidenceLevel: 'medium',
     matchingCriteria: {
-      industries: ['music', 'performing-arts', 'fashion-textiles', 'visual-arts'],
+      industries: ['performing-arts', 'fashion-textiles', 'visual-arts'],
       orgTypes: ['for-profit', 'individual', 'cooperative'],
       challengesOvercome: ['productDevelopment', 'digitalDistribution', 'ipProtection', 'marketExpansion'],
       regions: ['latin-america'],
@@ -571,8 +571,7 @@ export const verifiedCaseStudies: CaseStudy[] = [
 // Statistics note for transparency
 export const CASE_STUDY_STATS = {
   totalFeatured: 8,
-  databaseSize: 362,
-  disclaimer: 'Research based on 362 case studies analyzed. 8 featured cases with full documentation and verified sources.',
+  disclaimer: '8 featured cases with full documentation and verified sources.',
 } as const
 
 export const getCaseStudiesByScore = (minScore: number): CaseStudy[] => {

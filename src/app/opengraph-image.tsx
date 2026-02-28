@@ -71,7 +71,7 @@ export default function OGImage() {
               marginTop: '8px',
             }}
           >
-            Resilience Framework
+            Lab
           </span>
 
           {/* Tagline */}
@@ -97,7 +97,7 @@ export default function OGImage() {
               marginTop: '48px',
             }}
           >
-            cirf-framework.org
+            cil-framework.org
           </span>
         </div>
 

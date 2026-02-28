@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   Users,
@@ -9,6 +10,15 @@ import {
   Globe,
   HandHeart,
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'CIL for Communities',
+  description: 'How the Cultural Innovation Lab framework helps indigenous and heritage communities protect their heritage while building sustainable economic futures.',
+  openGraph: {
+    title: 'CIL for Communities',
+    description: 'How the Cultural Innovation Lab framework helps indigenous and heritage communities protect their heritage while building sustainable economic futures.',
+  },
+}
 
 export default function ForCommunitiesPage() {
   return (
@@ -38,10 +48,10 @@ export default function ForCommunitiesPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/case-studies"
+              href="/framework"
               className="inline-flex items-center gap-2 border border-ink px-6 py-3 rounded-full font-medium hover:bg-sand transition-colors"
             >
-              See community successes
+              Explore the framework
             </Link>
           </div>
         </div>
@@ -136,7 +146,7 @@ export default function ForCommunitiesPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link
-              href="/case-studies"
+              href="/framework"
               className="bg-white rounded-2xl p-6 border border-stone/10 hover:border-gold/50 transition-colors"
             >
               <Globe className="w-8 h-8 text-ocean mb-3" />
@@ -149,7 +159,7 @@ export default function ForCommunitiesPage() {
             </Link>
 
             <Link
-              href="/case-studies"
+              href="/framework"
               className="bg-white rounded-2xl p-6 border border-stone/10 hover:border-gold/50 transition-colors"
             >
               <HandHeart className="w-8 h-8 text-terracotta mb-3" />
@@ -162,7 +172,7 @@ export default function ForCommunitiesPage() {
             </Link>
 
             <Link
-              href="/case-studies"
+              href="/framework"
               className="bg-white rounded-2xl p-6 border border-stone/10 hover:border-gold/50 transition-colors"
             >
               <Users className="w-8 h-8 text-sage mb-3" />
@@ -183,7 +193,7 @@ export default function ForCommunitiesPage() {
           </h2>
           <div className="space-y-6">
             <div className="flex gap-4">
-              <div className="w-8 h-8 bg-gold text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+              <div className="w-8 h-8 bg-gold text-ink rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
                 1
               </div>
               <div>
@@ -196,7 +206,7 @@ export default function ForCommunitiesPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-8 h-8 bg-gold text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+              <div className="w-8 h-8 bg-gold text-ink rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
                 2
               </div>
               <div>
@@ -209,7 +219,7 @@ export default function ForCommunitiesPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-8 h-8 bg-gold text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+              <div className="w-8 h-8 bg-gold text-ink rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
                 3
               </div>
               <div>
@@ -222,7 +232,7 @@ export default function ForCommunitiesPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-8 h-8 bg-gold text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+              <div className="w-8 h-8 bg-gold text-ink rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
                 4
               </div>
               <div>
@@ -274,17 +284,17 @@ export default function ForCommunitiesPage() {
         </div>
 
         {/* CTA */}
-        <div className="bg-gradient-to-r from-terracotta to-terracotta/80 rounded-2xl p-8 md:p-12 text-center">
-          <h3 className="text-2xl font-serif font-bold text-white mb-4">
+        <div className="bg-gradient-to-r from-ink to-ink/90 rounded-2xl p-8 md:p-12 text-center">
+          <h3 className="text-2xl font-serif font-bold text-pearl mb-4">
             Ready to evaluate your community&apos;s initiatives?
           </h3>
-          <p className="text-white/80 mb-6 max-w-xl mx-auto">
+          <p className="text-pearl/80 mb-6 max-w-xl mx-auto">
             Start with a free assessment to see how CIL can help your community
             build sustainable, culturally-grounded development.
           </p>
           <Link
             href="/auth/signup"
-            className="inline-flex items-center gap-2 bg-white text-terracotta px-8 py-3 rounded-full font-medium hover:bg-white/90 transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-ink px-8 py-3 rounded-full font-medium hover:bg-white/90 transition-colors"
           >
             Get started free
             <ArrowRight className="w-4 h-4" />

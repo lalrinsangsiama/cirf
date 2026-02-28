@@ -26,7 +26,7 @@
   <circle cx="1010" cy="375" r="4" fill="#C9A227" opacity="0.8"/>
 
   <!-- Main title -->
-  <text x="80" y="260" font-family="Georgia, serif" font-size="120" font-weight="200" fill="#FAFAFA" letter-spacing="-2">CIRF</text>
+  <text x="80" y="260" font-family="Georgia, serif" font-size="120" font-weight="200" fill="#FAFAFA" letter-spacing="-2">CIL</text>
 
   <!-- Gold accent line -->
   <rect x="80" y="280" width="200" height="4" fill="url(#goldGradient)" rx="2"/>
@@ -39,5 +39,5 @@
   <text x="80" y="470" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#C9A227" opacity="0.9">Transforming indigenous wisdom into economic resilience</text>
 
   <!-- Website -->
-  <text x="80" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#FAFAFA" opacity="0.6">cirf.org</text>
+  <text x="80" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#FAFAFA" opacity="0.6">cil.org</text>
 </svg>

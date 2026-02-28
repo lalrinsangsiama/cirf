@@ -21,7 +21,7 @@ const features = [
   {
     icon: Globe2,
     title: 'Case Study Library',
-    description: 'Access our complete database of 362+ analyzed case studies with detailed CIL breakdowns.',
+    description: 'Access our database of analyzed case studies with detailed CIL breakdowns.',
     details: ['Advanced filtering', 'Comparative analysis', 'Downloadable reports', 'Regular updates'],
   },
   {
@@ -59,18 +59,6 @@ const roadmap = [
   },
 ]
 
-const testimonials = [
-  {
-    quote: 'CultureBridge Global transformed how we approach cultural development planning. The CIL framework gave us a common language.',
-    author: 'Community Development Officer',
-    organization: 'Indigenous Tourism Association',
-  },
-  {
-    quote: 'The assessment tool helped us identify blind spots in our resilience strategy we hadn\'t considered before.',
-    author: 'Program Director',
-    organization: 'Heritage Foundation',
-  },
-]
 
 export default function PlatformPage() {
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -140,7 +128,7 @@ export default function PlatformPage() {
             <span className="hero-line"><span>CultureBridge</span></span>
             <span className="hero-line"><span className="italic text-gold">Global</span></span>
           </h1>
-          <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl opacity-90 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
+          <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
             A comprehensive digital platform bringing the CIL framework to life—empowering communities
             worldwide to assess, plan, and scale cultural innovation for economic resilience.
           </p>
@@ -193,7 +181,7 @@ export default function PlatformPage() {
               >
                 <feature.icon className="w-10 h-10 text-gold mb-6" strokeWidth={1.5} />
                 <h3 className="font-serif text-xl mb-3">{feature.title}</h3>
-                <p className="text-stone mb-6">{feature.description}</p>
+                <p className="text-ink/70 mb-6">{feature.description}</p>
                 <ul className="space-y-2">
                   {feature.details.map((detail) => (
                     <li key={detail} className="flex items-center gap-2 text-sm">
@@ -334,26 +322,6 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-sand">
-        <div className="max-w-[1200px] mx-auto">
-          <p className="section-label text-center">Early Feedback</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light text-center mb-16">
-            What Practitioners Say
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, i) => (
-              <div key={i} className="bg-pearl p-8 rounded-lg">
-                <p className="text-lg leading-relaxed italic mb-6">&ldquo;{testimonial.quote}&rdquo;</p>
-                <p className="font-medium">{testimonial.author}</p>
-                <p className="text-stone text-sm">{testimonial.organization}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Pricing Teaser */}
       <section className="py-16 md:py-24 px-6 md:px-16 bg-ink text-pearl">
         <div className="max-w-[1200px] mx-auto text-center">
@@ -390,7 +358,7 @@ export default function PlatformPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ocean to-sage text-pearl text-center">
+      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ink to-ink/90 text-pearl text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-light mb-6">
             Be Part of the Movement

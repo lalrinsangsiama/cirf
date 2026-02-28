@@ -7,8 +7,8 @@
   </defs>
   <!-- Background -->
   <rect width="180" height="180" rx="40" fill="#1A1A1A"/>
-  <!-- CIRF text -->
-  <text x="90" y="105" font-family="Georgia, serif" font-size="52" font-weight="200" fill="#FAFAFA" text-anchor="middle" letter-spacing="-1">CIRF</text>
+  <!-- CIL text -->
+  <text x="90" y="105" font-family="Georgia, serif" font-size="52" font-weight="200" fill="#FAFAFA" text-anchor="middle" letter-spacing="-1">CIL</text>
   <!-- Gold accent line -->
   <rect x="45" y="115" width="90" height="3" fill="url(#goldGradient)" rx="1.5"/>
 </svg>

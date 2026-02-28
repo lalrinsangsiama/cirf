@@ -11,7 +11,7 @@ export interface AssessmentQuestion {
   discriminatoryPower: number // Percentage points advantage
 }
 
-// New Likert-scale question interface for 40-question assessment
+// New Likert-scale question interface for 49-question assessment
 export type LikertSection =
   | 'demographics'
   | 'culturalCapital'
@@ -27,6 +27,7 @@ export interface LikertQuestion {
   helpText?: string
   weight: number // Discriminatory power weight (0.5-2.0)
   reverse?: boolean // True if scoring should be reversed
+  allowNA?: boolean // True if "Not Applicable" is a valid response (e.g., no disruption experienced)
 }
 
 export interface DemographicQuestion {
@@ -34,7 +35,7 @@ export interface DemographicQuestion {
   section: 'demographics'
   question: string
   helpText?: string
-  type: 'select' | 'text' | 'number' | 'multiselect' | 'textarea'
+  type: 'select' | 'text' | 'number' | 'multiselect' | 'textarea' | 'checkbox'
   options?: { value: string; label: string }[]
   required?: boolean
 }
@@ -162,18 +163,34 @@ export const COUNTRIES = [
 // Industry/sector options
 export const INDUSTRIES = [
   { value: 'crafts', label: 'Crafts & Artisanal Products' },
-  { value: 'performing-arts', label: 'Performing Arts' },
-  { value: 'visual-arts', label: 'Visual Arts' },
-  { value: 'music', label: 'Music & Audio' },
-  { value: 'food-beverage', label: 'Food & Beverage' },
+  { value: 'performing-arts', label: 'Performing Arts (music, dance, theater)' },
+  { value: 'visual-arts', label: 'Visual Arts & Photography' },
+  { value: 'food-beverage', label: 'Food & Culinary Traditions' },
   { value: 'fashion-textiles', label: 'Fashion & Textiles' },
-  { value: 'heritage-tourism', label: 'Heritage Tourism' },
-  { value: 'publishing-media', label: 'Publishing & Media' },
+  { value: 'heritage-tourism', label: 'Cultural & Heritage Tourism' },
+  { value: 'digital-film-media', label: 'Digital Content, Film & Media' },
+  { value: 'ar-vr-xr', label: 'AR/VR/XR & Immersive Experiences' },
+  { value: 'gaming-interactive', label: 'Gaming & Interactive Media' },
+  { value: 'mobility', label: 'Mobility & Cultural Transport' },
+  { value: 'language-literature', label: 'Language, Literature & Storytelling' },
+  { value: 'festivals-ceremonies', label: 'Festivals, Ceremonies & Events' },
+  { value: 'traditional-medicine', label: 'Traditional Medicine & Wellness' },
   { value: 'design', label: 'Design & Creative Services' },
   { value: 'education', label: 'Cultural Education' },
-  { value: 'wellness', label: 'Traditional Wellness & Medicine' },
+  { value: 'community-development', label: 'Community Cultural Development' },
   { value: 'agriculture', label: 'Cultural Agriculture & Farming' },
-  { value: 'multi-sector', label: 'Multiple Sectors' },
+  { value: 'other', label: 'Other' },
+]
+
+// Years operating options
+export const YEARS_OPERATING = [
+  { value: 'not-started', label: 'Not yet started' },
+  { value: '<1', label: 'Less than 1 year' },
+  { value: '1-2', label: '1-2 years' },
+  { value: '3-5', label: '3-5 years' },
+  { value: '6-10', label: '6-10 years' },
+  { value: '11-20', label: '11-20 years' },
+  { value: '20+', label: '20+ years' },
 ]
 
 // Business stage options
@@ -183,6 +200,17 @@ export const BUSINESS_STAGES = [
   { value: 'growth', label: 'Growth Stage (2-5 years)' },
   { value: 'scaling', label: 'Scaling (5-10 years)' },
   { value: 'established', label: 'Established (10+ years)' },
+]
+
+// Total employee count options
+export const EMPLOYEE_COUNTS = [
+  { value: '0', label: 'None (just me)' },
+  { value: '1-5', label: '1-5 employees' },
+  { value: '6-15', label: '6-15 employees' },
+  { value: '16-30', label: '16-30 employees' },
+  { value: '31-50', label: '31-50 employees' },
+  { value: '51-100', label: '51-100 employees' },
+  { value: '100+', label: '100+ employees' },
 ]
 
 // Team size options
@@ -198,8 +226,11 @@ export const TEAM_SIZES = [
 // Revenue range options
 export const REVENUE_RANGES = [
   { value: 'pre-revenue', label: 'Pre-revenue / No income yet' },
-  { value: '<10k', label: 'Less than $10,000 USD' },
-  { value: '10k-50k', label: '$10,000 - $50,000 USD' },
+  { value: '<1k', label: 'Less than $1,000 USD' },
+  { value: '1k-5k', label: '$1,000 - $5,000 USD' },
+  { value: '5k-10k', label: '$5,000 - $10,000 USD' },
+  { value: '10k-25k', label: '$10,000 - $25,000 USD' },
+  { value: '25k-50k', label: '$25,000 - $50,000 USD' },
   { value: '50k-100k', label: '$50,000 - $100,000 USD' },
   { value: '100k-500k', label: '$100,000 - $500,000 USD' },
   { value: '500k+', label: '$500,000+ USD' },
@@ -224,16 +255,17 @@ export const GENDERS = [
 
 // Types of cultural innovation
 export const CULTURAL_INNOVATION_TYPES = [
-  { value: 'traditional-crafts', label: 'Traditional crafts/textiles' },
-  { value: 'music-performing-arts', label: 'Music/performing arts' },
-  { value: 'food-culinary', label: 'Food/culinary traditions' },
-  { value: 'digital-content', label: 'Digital content creation' },
-  { value: 'cultural-tourism', label: 'Cultural tourism' },
-  { value: 'traditional-medicine', label: 'Traditional medicine/wellness' },
-  { value: 'language-literature', label: 'Language/literature' },
-  { value: 'visual-arts', label: 'Visual arts' },
-  { value: 'fashion-design', label: 'Fashion/design' },
-  { value: 'mobility', label: 'Mobility' },
+  { value: 'traditional-crafts', label: 'Traditional crafts & textiles' },
+  { value: 'performing-arts', label: 'Performing arts (music, dance, theater)' },
+  { value: 'visual-arts', label: 'Visual arts & photography' },
+  { value: 'food-culinary', label: 'Food & culinary traditions' },
+  { value: 'digital-film-media', label: 'Digital content, film & media' },
+  { value: 'cultural-tourism', label: 'Cultural & heritage tourism' },
+  { value: 'traditional-medicine', label: 'Traditional medicine & wellness' },
+  { value: 'language-literature', label: 'Language, literature & storytelling' },
+  { value: 'festivals-ceremonies', label: 'Festivals, ceremonies & events' },
+  { value: 'community-development', label: 'Community cultural development' },
+  { value: 'fashion-design', label: 'Fashion & design' },
   { value: 'other', label: 'Other' },
 ]
 
@@ -302,6 +334,30 @@ export const demographicQuestions: DemographicQuestion[] = [
     required: false,
   },
   {
+    id: 'demo-business-name',
+    section: 'demographics',
+    question: 'Business or initiative name (optional)',
+    helpText: 'The name of your cultural enterprise, collective, or project',
+    type: 'text',
+    required: false,
+  },
+  {
+    id: 'demo-website',
+    section: 'demographics',
+    question: 'Website (optional)',
+    helpText: 'Your business or project website URL',
+    type: 'text',
+    required: false,
+  },
+  {
+    id: 'demo-instagram',
+    section: 'demographics',
+    question: 'Instagram username (optional)',
+    helpText: 'Your Instagram handle (without @)',
+    type: 'text',
+    required: false,
+  },
+  {
     id: 'demo-age-group',
     section: 'demographics',
     question: 'Age Group',
@@ -318,6 +374,15 @@ export const demographicQuestions: DemographicQuestion[] = [
     required: true,
   },
   {
+    id: 'demo-country',
+    section: 'demographics',
+    question: 'Country',
+    helpText: 'Select your country',
+    type: 'select',
+    options: COUNTRIES,
+    required: true,
+  },
+  {
     id: 'demo-state-region',
     section: 'demographics',
     question: 'State/Region',
@@ -327,13 +392,12 @@ export const demographicQuestions: DemographicQuestion[] = [
     required: true,
   },
   {
-    id: 'demo-cultural-innovation-type',
+    id: 'demo-community-identity',
     section: 'demographics',
-    question: 'Type of Cultural Innovation (Select all that apply)',
-    helpText: 'Select all the areas where you are innovating culturally',
-    type: 'multiselect',
-    options: CULTURAL_INNOVATION_TYPES,
-    required: true,
+    question: 'Community or cultural heritage (optional)',
+    helpText: 'The cultural community you identify with. Examples: Mizo, Maori, Yoruba, Navajo Nation, Tamil, Sami, Igbo, Quechua, Basque, Balinese, Okinawan, or any community you belong to.',
+    type: 'text',
+    required: false,
   },
   // Organization type (kept from original)
   {
@@ -357,8 +421,9 @@ export const demographicQuestions: DemographicQuestion[] = [
   {
     id: 'demo-sector',
     section: 'demographics',
-    question: 'Which cultural sector best describes your primary focus?',
-    type: 'select',
+    question: 'Which cultural sectors are you active in? (Select all that apply)',
+    helpText: 'Select all sectors where you are innovating culturally',
+    type: 'multiselect',
     options: INDUSTRIES,
     required: true,
   },
@@ -379,28 +444,20 @@ export const demographicQuestions: DemographicQuestion[] = [
     required: true,
   },
   {
+    id: 'demo-total-employees',
+    section: 'demographics',
+    question: 'How many total employees does your organization have?',
+    helpText: 'Include full-time, part-time, and regular contract workers',
+    type: 'select',
+    options: EMPLOYEE_COUNTS,
+    required: true,
+  },
+  {
     id: 'demo-revenue',
     section: 'demographics',
     question: 'What is your approximate annual revenue/budget?',
     type: 'select',
     options: REVENUE_RANGES,
-    required: true,
-  },
-  {
-    id: 'demo-region',
-    section: 'demographics',
-    question: 'In which region is your initiative primarily based?',
-    type: 'select',
-    options: [
-      { value: 'africa', label: 'Africa' },
-      { value: 'asia-pacific', label: 'Asia Pacific' },
-      { value: 'europe', label: 'Europe' },
-      { value: 'latin-america', label: 'Latin America & Caribbean' },
-      { value: 'middle-east', label: 'Middle East & North Africa' },
-      { value: 'north-america', label: 'North America' },
-      { value: 'oceania', label: 'Oceania' },
-      { value: 'global', label: 'Global / Multiple Regions' },
-    ],
     required: true,
   },
   // Economic Value Creation section
@@ -411,14 +468,6 @@ export const demographicQuestions: DemographicQuestion[] = [
     helpText: 'Select all revenue sources that apply to your cultural enterprise',
     type: 'multiselect',
     options: REVENUE_SOURCES,
-    required: true,
-  },
-  {
-    id: 'demo-income-challenges',
-    section: 'demographics',
-    question: 'What are your biggest challenges in generating income?',
-    helpText: 'Describe the main obstacles you face in creating sustainable income from your cultural work',
-    type: 'textarea',
     required: true,
   },
 ]
@@ -515,16 +564,20 @@ export function extractProfileDataFromAnswers(answers: Record<string, unknown>):
 
   // Map demographic questions to profile fields
   const demoToProfileMap: Record<string, string> = {
+    'demo-business-name': 'business_name',
+    'demo-website': 'website',
+    'demo-instagram': 'instagram_handle',
     'demo-sector': 'industry',
     'demo-stage': 'business_stage',
     'demo-team-size': 'team_size',
+    'demo-total-employees': 'total_employees',
     'demo-revenue': 'revenue_range',
     'demo-age-group': 'age_group',
     'demo-gender': 'gender',
+    'demo-country': 'country',
     'demo-state-region': 'state_region',
-    'demo-cultural-innovation-type': 'cultural_innovation_types',
+    'demo-community-identity': 'community_affiliation',
     'demo-revenue-sources': 'revenue_sources',
-    'demo-income-challenges': 'income_challenges',
   }
 
   // Extract from demographic questions
@@ -590,8 +643,8 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     id: 'cc-6',
     section: 'culturalCapital',
     construct: 'culturalMeaning',
-    question: 'Cultural meanings and values are preserved in our commercial activities',
-    helpText: 'Examples: keeping ceremonial items separate from commercial, explaining symbolism to buyers',
+    question: 'Cultural meanings are accurately represented in how we present and sell our products',
+    helpText: 'Examples: product descriptions explain cultural significance, marketing reflects authentic traditions',
     weight: 1.0,
   },
   {
@@ -678,6 +731,14 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     helpText: 'Examples: customer surveys, testing prototypes, adjusting based on reviews',
     weight: 1.2,
   },
+  {
+    id: 'ia-9',
+    section: 'innovationActivities',
+    construct: 'narrativeInnovation',
+    question: 'We have developed new ways to communicate the cultural story behind our products to broader audiences',
+    helpText: 'Examples: brand storytelling on social media, documentary content, cultural experience packaging, heritage labels',
+    weight: 1.2,
+  },
 ]
 
 // Organizational Capacities questions (Section D: 10 questions)
@@ -689,6 +750,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     question: 'We have successfully adjusted operations in response to past disruptions',
     helpText: 'Examples: pivoted to online sales during COVID, found new suppliers when old ones closed',
     weight: 1.5,
+    allowNA: true,
   },
   {
     id: 'oc-2',
@@ -747,14 +809,6 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     weight: 1.3,
   },
   {
-    id: 'oc-9',
-    section: 'organizationalCapacities',
-    construct: 'communityOwnership',
-    question: 'Community members have ownership stakes in our enterprise',
-    helpText: 'Examples: cooperative membership, community trust ownership, artisan equity shares',
-    weight: 1.4,
-  },
-  {
     id: 'oc-10',
     section: 'organizationalCapacities',
     construct: 'allianceNetworks',
@@ -773,6 +827,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     question: 'During the most recent economic shock, we maintained at least 70% of revenue',
     helpText: 'Examples: kept most sales during COVID, weathered a major competitor entering your market',
     weight: 1.3,
+    allowNA: true,
   },
   {
     id: 'er-2',
@@ -781,6 +836,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     question: 'We retained at least 80% of our team during the last disruption',
     helpText: 'Examples: kept artisans employed during slow seasons, no layoffs during the pandemic',
     weight: 1.2,
+    allowNA: true,
   },
   {
     id: 'er-3',
@@ -789,6 +845,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     question: 'We recovered to pre-shock performance levels within 12 months',
     helpText: 'Examples: back to normal sales within a year, regained lost customers quickly',
     weight: 1.4,
+    allowNA: true,
   },
   {
     id: 'er-4',
@@ -797,14 +854,16 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     question: 'Disruptions have led us to discover new market opportunities',
     helpText: 'Examples: started online sales during lockdown, found new customer segments',
     weight: 1.1,
+    allowNA: true,
   },
   {
     id: 'er-5',
     section: 'economicResilience',
     construct: 'postShockStrength',
-    question: 'Our organization is stronger now than before the last major shock',
-    helpText: 'Examples: better systems, stronger team, more diverse customers than before the crisis',
+    question: 'After the most recent disruption, our organization gained new capabilities or resources it did not have before',
+    helpText: 'Examples: new skills learned, new markets discovered, stronger systems, larger network, better brand recognition',
     weight: 1.5,
+    allowNA: true,
   },
   {
     id: 'er-6',
@@ -813,6 +872,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     question: 'Our success has spawned new initiatives in the community',
     helpText: 'Examples: inspired others to start businesses, created a local craft cluster',
     weight: 1.0,
+    allowNA: true,
   },
   {
     id: 'er-7',
@@ -821,6 +881,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     question: 'We have created new jobs beyond our core team',
     helpText: 'Examples: suppliers hired more people, packaging business grew, transport jobs created',
     weight: 1.1,
+    allowNA: true,
   },
   {
     id: 'er-8',
@@ -828,6 +889,22 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     construct: 'intergenerationalPlanning',
     question: 'We have viable plans for intergenerational continuity',
     helpText: 'Examples: training young apprentices, documented succession plan, next-gen leaders identified',
+    weight: 1.2,
+  },
+  {
+    id: 'er-9',
+    section: 'economicResilience',
+    construct: 'revenueDiversification',
+    question: 'Our cultural innovation activities have helped us develop multiple independent revenue streams',
+    helpText: 'Examples: product sales, workshops, licensing, tourism experiences, digital content — at least 3 distinct streams',
+    weight: 1.3,
+  },
+  {
+    id: 'er-10',
+    section: 'economicResilience',
+    construct: 'culturalBrandPremium',
+    question: 'Our cultural authenticity allows us to maintain prices even when competitors lower theirs',
+    helpText: 'Examples: customers pay more for handmade/authentic products, cultural certification protects against price wars',
     weight: 1.2,
   },
 ]
@@ -870,9 +947,9 @@ export const questionConfig = {
 
 // Total question counts
 export const ASSESSMENT_V2_STATS = {
-  totalQuestions: 48,
-  demographicQuestions: 14,
-  likertQuestions: 34,
+  totalQuestions: 52,
+  demographicQuestions: 16,
+  likertQuestions: 36,
   estimatedMinutes: 15,
   sections: 5,
 }
@@ -1204,14 +1281,14 @@ export const calculateScoreInterpretation = (score: number): {
     return {
       level: 'High',
       successRate: 98.5,
-      description: 'Excellent resilience profile. Focus on transformative and generative capacities.',
+      description: 'Excellent performance. Focus on transformative and generative capacities.',
       color: 'text-emerald-600',
     }
   } else {
     return {
       level: 'Excellent',
       successRate: 96.7,
-      description: 'Outstanding cultural innovation resilience. Model for others to follow.',
+      description: 'Outstanding cultural innovation profile. Model for others to follow.',
       color: 'text-teal-600',
     }
   }

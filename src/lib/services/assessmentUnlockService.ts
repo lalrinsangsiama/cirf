@@ -8,7 +8,7 @@ import {
   getAssessmentConfig,
   TOOL_CONFIGS,
 } from '@/lib/data/assessmentConfig'
-import { getCIRFResourceToolAccessIds } from '@/lib/data/resourcesConfig'
+import { getCILResourceToolAccessIds } from '@/lib/data/resourcesConfig'
 
 export interface UnlockStatus {
   isUnlocked: boolean
@@ -33,8 +33,8 @@ export async function checkAssessmentAccess(
   userId: string,
   assessmentType: AssessmentType
 ): Promise<boolean> {
-  // CIRF is always accessible
-  if (assessmentType === 'cirf') {
+  // CIL is always accessible
+  if (assessmentType === 'cil') {
     return true
   }
 
@@ -65,11 +65,11 @@ export async function getUserUnlockedAssessments(userId: string): Promise<Assess
 
   if (error) {
     console.error('Error fetching unlocked assessments:', error)
-    return ['cirf'] // CIRF is always available
+    return ['cil'] // CIL is always available
   }
 
   const unlocked = data?.map(d => d.assessment_type as AssessmentType) || []
-  return ['cirf', ...unlocked]
+  return ['cil', ...unlocked]
 }
 
 // Get full unlock status for all assessments
@@ -98,7 +98,7 @@ export async function getUserUnlockStatus(userId: string): Promise<UserUnlocks> 
 
   // Build assessment unlocks map
   const assessments: Record<AssessmentType, UnlockStatus> = {
-    cirf: { isUnlocked: true }, // Always unlocked
+    cil: { isUnlocked: true }, // Always unlocked
     cimm: { isUnlocked: false },
     cira: { isUnlocked: false },
     tbl: { isUnlocked: false },
@@ -129,7 +129,7 @@ export async function getUserUnlockStatus(userId: string): Promise<UserUnlocks> 
   return { assessments, tools }
 }
 
-// Unlock assessments after completing CIRF
+// Unlock assessments after completing CIL
 export async function unlockAssessmentsOnCompletion(
   userId: string,
   completedAssessmentType: AssessmentType,
@@ -170,17 +170,17 @@ export async function unlockAssessmentsOnCompletion(
   return unlockedAssessments
 }
 
-// Grant resource access after completing CIRF
+// Grant resource access after completing CIL
 export async function grantResourceAccess(
   userId: string,
   completedAssessmentType: AssessmentType
 ): Promise<string[]> {
-  // Only CIRF completion grants resource access
-  if (completedAssessmentType !== 'cirf') {
+  // Only CIL completion grants resource access
+  if (completedAssessmentType !== 'cil') {
     return []
   }
 
-  const resourceToolAccessIds = getCIRFResourceToolAccessIds()
+  const resourceToolAccessIds = getCILResourceToolAccessIds()
   const supabase = createClient()
   const grantedResources: string[] = []
 
@@ -285,7 +285,7 @@ export async function getUserAssessmentHistory(userId: string): Promise<Assessme
   return (
     data?.map(a => ({
       id: a.id,
-      assessmentType: (a.assessment_type || 'cirf') as AssessmentType,
+      assessmentType: (a.assessment_type || 'cil') as AssessmentType,
       score: a.score,
       completedAt: a.created_at,
     })) || []
@@ -299,7 +299,7 @@ export async function getAssessmentCompletionCounts(
   const history = await getUserAssessmentHistory(userId)
 
   const counts: Record<AssessmentType, number> = {
-    cirf: 0,
+    cil: 0,
     cimm: 0,
     cira: 0,
     tbl: 0,
@@ -326,7 +326,7 @@ export async function handleAssessmentCompletion(
   grantedTools: string[]
   grantedResources: string[]
 }> {
-  // Unlock assessments (for CIRF completion)
+  // Unlock assessments (for CIL completion)
   const unlockedAssessments = await unlockAssessmentsOnCompletion(
     userId,
     assessmentType,
@@ -336,7 +336,7 @@ export async function handleAssessmentCompletion(
   // Grant tool access (for secondary assessment completion)
   const grantedTools = await grantToolAccess(userId, assessmentType)
 
-  // Grant resource access (for CIRF completion)
+  // Grant resource access (for CIL completion)
   const grantedResources = await grantResourceAccess(userId, assessmentType)
 
   return {
@@ -386,7 +386,7 @@ export async function getAssessmentProgressSummary(userId: string): Promise<{
     }
   >
 
-  const assessmentTypes: AssessmentType[] = ['cirf', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']
+  const assessmentTypes: AssessmentType[] = ['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']
 
   for (const type of assessmentTypes) {
     const completions = history.filter(h => h.assessmentType === type)

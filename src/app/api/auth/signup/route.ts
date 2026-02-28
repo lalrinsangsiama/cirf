@@ -70,9 +70,16 @@ export async function POST(request: NextRequest) {
         durationMs: Date.now() - startTime,
       })
 
-      // Map common Supabase errors to user-friendly messages
+      // Avoid email enumeration: return same response for existing accounts
       if (error.message.includes('already registered')) {
-        return errorResponse(Errors.conflict('An account with this email already exists'))
+        logger.auth('Signup attempt with existing email', {
+          email,
+          durationMs: Date.now() - startTime,
+        })
+        return successResponse({
+          user: { id: undefined, email },
+          requiresEmailConfirmation: true,
+        }, 'Account created. Please check your email to verify your account.')
       }
 
       return errorResponse(Errors.badRequest(error.message))

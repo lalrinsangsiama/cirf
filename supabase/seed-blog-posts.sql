@@ -1,7 +1,7 @@
--- CIRF Blog Posts Seed Data
+-- CIL Blog Posts Seed Data
 -- Run this in your Supabase SQL Editor after the main schema
 
--- Blog Post 1: Introduction to CIRF
+-- Blog Post 1: Introduction to CIL
 INSERT INTO public.blog_posts (
   slug,
   title,
@@ -14,15 +14,15 @@ INSERT INTO public.blog_posts (
   published_at,
   citations
 ) VALUES (
-  'introduction-to-cirf-framework',
+  'introduction-to-cil-framework',
   'Introduction to the Cultural Innovation Resilience Framework',
-  '# Understanding CIRF: A New Approach to Cultural Economics
+  '# Understanding CIL: A New Approach to Cultural Economics
 
-The Cultural Innovation Resilience Framework (CIRF) represents a paradigm shift in how we understand the relationship between cultural practices and economic outcomes. Unlike traditional development models that often view cultural practices as obstacles to modernization, CIRF demonstrates that cultural innovation is actually the most sustainable path to economic resilience.
+The Cultural Innovation Resilience Framework (CIL) represents a paradigm shift in how we understand the relationship between cultural practices and economic outcomes. Unlike traditional development models that often view cultural practices as obstacles to modernization, CIL demonstrates that cultural innovation is actually the most sustainable path to economic resilience.
 
-## What is CIRF?
+## What is CIL?
 
-CIRF is an evidence-based framework developed through the analysis of 362 case studies across 47 countries. It identifies 13 key components that contribute to successful cultural innovation initiatives:
+CIL is an evidence-based framework developed through the analysis of 362 case studies across 47 countries. It identifies 13 key components that contribute to successful cultural innovation initiatives:
 
 1. **Cultural Integrity** - Maintaining authentic cultural foundations
 2. **Innovation Capacity** - Ability to adapt while preserving core values
@@ -40,13 +40,13 @@ CIRF is an evidence-based framework developed through the analysis of 362 case s
 
 ## The 4-6/13 Boundary Zone
 
-One of CIRF''s most significant discoveries is the "boundary zone" phenomenon. Our research found that initiatives scoring 4-6 out of 13 components occupy a critical transition zone where success becomes highly unpredictable. This insight has profound implications for practitioners and policymakers.
+One of CIL''s most significant discoveries is the "boundary zone" phenomenon. Our research found that initiatives scoring 4-6 out of 13 components occupy a critical transition zone where success becomes highly unpredictable. This insight has profound implications for practitioners and policymakers.
 
 Initiatives below this zone (0-3) face significant challenges and typically require substantial intervention. Those above it (7-13) demonstrate strong resilience and have high success rates. The boundary zone represents a crucial turning point where strategic intervention can make the difference between success and failure.
 
-## Why CIRF Matters
+## Why CIL Matters
 
-Traditional economic development approaches have often failed indigenous and traditional communities because they don''t account for the unique dynamics of cultural economies. CIRF provides:
+Traditional economic development approaches have often failed indigenous and traditional communities because they don''t account for the unique dynamics of cultural economies. CIL provides:
 
 - **Evidence-based guidance** grounded in real-world data
 - **Practical assessment tools** for self-evaluation
@@ -55,11 +55,11 @@ Traditional economic development approaches have often failed indigenous and tra
 
 ## Getting Started
 
-Whether you''re a practitioner launching a cultural enterprise, a researcher studying cultural economics, or a policymaker designing support programs, CIRF offers practical tools and frameworks to guide your work.
+Whether you''re a practitioner launching a cultural enterprise, a researcher studying cultural economics, or a policymaker designing support programs, CIL offers practical tools and frameworks to guide your work.
 
 [Take the free assessment](/tools) to see where your initiative stands, or [explore the framework](/framework) in detail.',
-  'Discover how the Cultural Innovation Resilience Framework (CIRF) provides an evidence-based approach to understanding how cultural innovation drives economic resilience.',
-  'CIRF Research Team',
+  'Discover how the Cultural Innovation Resilience Framework (CIL) provides an evidence-based approach to understanding how cultural innovation drives economic resilience.',
+  'CIL Research Team',
   'framework-updates',
   ARRAY['framework', 'introduction', 'cultural-innovation', 'resilience'],
   'published',
@@ -82,13 +82,13 @@ INSERT INTO public.blog_posts (
 ) VALUES (
   'how-to-assess-cultural-innovation-resilience',
   'How to Assess Your Cultural Innovation Initiative',
-  '# A Practical Guide to CIRF Assessment
+  '# A Practical Guide to CIL Assessment
 
-Assessing your cultural innovation initiative using the CIRF framework provides valuable insights into your strengths, weaknesses, and opportunities for growth. This guide walks you through the assessment process and how to interpret your results.
+Assessing your cultural innovation initiative using the CIL framework provides valuable insights into your strengths, weaknesses, and opportunities for growth. This guide walks you through the assessment process and how to interpret your results.
 
 ## Before You Begin
 
-The CIRF assessment works best when you have:
+The CIL assessment works best when you have:
 
 - A clear understanding of your initiative''s current state
 - Input from multiple stakeholders (if possible)
@@ -97,7 +97,7 @@ The CIRF assessment works best when you have:
 
 ## The 13 Components
 
-Each component in the CIRF framework addresses a critical aspect of cultural innovation resilience:
+Each component in the CIL framework addresses a critical aspect of cultural innovation resilience:
 
 ### Cultural Foundation (Components 1-3)
 These components assess the strength of your cultural base:
@@ -146,7 +146,7 @@ Strong resilience indicators. Focus on:
 
 ## Taking Action
 
-After your assessment, the CIRF platform provides:
+After your assessment, the CIL platform provides:
 
 1. **Matched Case Studies**: Learn from initiatives similar to yours
 2. **Specific Recommendations**: Targeted advice for your situation
@@ -154,9 +154,9 @@ After your assessment, the CIRF platform provides:
 
 ## Start Your Assessment
 
-Ready to assess your initiative? [Take the free CIRF assessment](/tools) and receive personalized insights based on your responses.',
-  'Learn how to use the CIRF assessment tool to evaluate your cultural innovation initiative and interpret your results for actionable insights.',
-  'CIRF Research Team',
+Ready to assess your initiative? [Take the free CIL assessment](/tools) and receive personalized insights based on your responses.',
+  'Learn how to use the CIL assessment tool to evaluate your cultural innovation initiative and interpret your results for actionable insights.',
+  'CIL Research Team',
   'practitioner-tips',
   ARRAY['assessment', 'how-to', 'practitioners', 'guide'],
   'published',
@@ -179,7 +179,7 @@ INSERT INTO public.blog_posts (
 ) VALUES (
   'case-study-vietnamese-craft-villages',
   'Case Study: How Vietnamese Craft Villages Achieved Economic Resilience',
-  '# Vietnamese Craft Villages: A CIRF Success Story
+  '# Vietnamese Craft Villages: A CIL Success Story
 
 Vietnam''s traditional craft villages represent one of the most compelling examples of cultural innovation driving economic resilience. This case study examines how these communities transformed traditional practices into sustainable livelihoods while maintaining cultural integrity.
 
@@ -197,7 +197,7 @@ By the early 2000s, many craft villages were struggling:
 
 ## The Transformation
 
-Several craft villages achieved remarkable turnarounds by implementing strategies that align closely with CIRF principles:
+Several craft villages achieved remarkable turnarounds by implementing strategies that align closely with CIL principles:
 
 ### 1. Cultural Integrity (Score: 1/1)
 Villages that succeeded maintained strict adherence to traditional techniques while selectively adopting modern tools for non-critical processes. For example, Bat Trang ceramics village uses traditional firing techniques but has modernized kiln efficiency for environmental sustainability.
@@ -216,7 +216,7 @@ Formal apprenticeship programs were established, often with government support. 
 
 ## Results
 
-The villages that achieved high CIRF scores (typically 9-11/13) demonstrated:
+The villages that achieved high CIL scores (typically 9-11/13) demonstrated:
 - **40-60% income growth** over 5 years
 - **Youth retention rates** above 70%
 - **Cultural tourism revenue** contributing 30%+ of total income
@@ -240,7 +240,7 @@ The villages that achieved high CIRF scores (typically 9-11/13) demonstrated:
 
 If you''re leading a cultural innovation initiative, consider:
 
-1. **Assess your current state** using the [CIRF assessment tool](/tools)
+1. **Assess your current state** using the [CIL assessment tool](/tools)
 2. **Identify your strongest components** and leverage them
 3. **Address critical gaps** in the boundary zone components
 4. **Build networks** with similar initiatives for mutual learning
@@ -250,8 +250,8 @@ If you''re leading a cultural innovation initiative, consider:
 The Vietnamese craft village experience demonstrates that cultural innovation and economic success are not only compatible but mutually reinforcing. By maintaining cultural integrity while adapting to market realities, these communities have built resilient livelihoods that honor their heritage.
 
 [Explore more case studies](/case-studies) or [assess your own initiative](/tools).',
-  'Explore how Vietnamese craft villages transformed traditional practices into sustainable livelihoods, scoring high on CIRF metrics while maintaining cultural authenticity.',
-  'CIRF Research Team',
+  'Explore how Vietnamese craft villages transformed traditional practices into sustainable livelihoods, scoring high on CIL metrics while maintaining cultural authenticity.',
+  'CIL Research Team',
   'case-study',
   ARRAY['case-study', 'vietnam', 'craft-villages', 'success-story', 'asia'],
   'published',
@@ -282,7 +282,7 @@ After analyzing 362 case studies across 47 countries, clear patterns emerge abou
 
 **Why it matters**: Projects controlled by external organizations—no matter how well-intentioned—consistently underperform those with genuine community ownership.
 
-**What the data shows**: Initiatives with strong community control (CIRF Component 3) had a 73% success rate, compared to 31% for those without.
+**What the data shows**: Initiatives with strong community control (CIL Component 3) had a 73% success rate, compared to 31% for those without.
 
 **How to strengthen it**:
 - Ensure decision-making power rests with community members
@@ -294,7 +294,7 @@ After analyzing 362 case studies across 47 countries, clear patterns emerge abou
 
 **Why it matters**: Cultural innovations that don''t pass to the next generation are innovations that die. Sustainable success requires continuous skill transmission.
 
-**What the data shows**: Strong knowledge transfer systems (CIRF Component 5) correlate with a 2.3x higher 10-year survival rate.
+**What the data shows**: Strong knowledge transfer systems (CIL Component 5) correlate with a 2.3x higher 10-year survival rate.
 
 **How to strengthen it**:
 - Create formal apprenticeship or mentorship programs
@@ -318,7 +318,7 @@ After analyzing 362 case studies across 47 countries, clear patterns emerge abou
 
 **Why it matters**: Cultural products and knowledge are vulnerable to appropriation and exploitation. Without protective mechanisms, communities may lose control of their own heritage.
 
-**What the data shows**: Strong protective capacity (CIRF Component 7) is present in 89% of high-scoring initiatives.
+**What the data shows**: Strong protective capacity (CIL Component 7) is present in 89% of high-scoring initiatives.
 
 **How to strengthen it**:
 - Register trademarks, geographic indications, or collective marks
@@ -330,7 +330,7 @@ After analyzing 362 case studies across 47 countries, clear patterns emerge abou
 
 **Why it matters**: The ability to respond to changing circumstances—markets, technology, climate, policy—determines long-term survival.
 
-**What the data shows**: Initiatives with adaptive governance (CIRF Component 9) were 3.1x more likely to survive major disruptions.
+**What the data shows**: Initiatives with adaptive governance (CIL Component 9) were 3.1x more likely to survive major disruptions.
 
 **How to strengthen it**:
 - Build flexibility into organizational structures
@@ -344,13 +344,13 @@ Here''s what makes these factors especially powerful: they don''t just add up—
 
 An initiative strong in all five areas isn''t just 5x more likely to succeed than one strong in just one area. Our research shows the effect is multiplicative: strength in multiple areas compounds, creating resilience far greater than the sum of parts.
 
-This is why the CIRF framework emphasizes the importance of achieving a critical mass of components (typically 7+ out of 13) rather than perfecting just one or two.
+This is why the CIL framework emphasizes the importance of achieving a critical mass of components (typically 7+ out of 13) rather than perfecting just one or two.
 
 ## Taking Action
 
 To assess where your initiative stands on these five factors:
 
-1. [Take the CIRF assessment](/tools) for a comprehensive evaluation
+1. [Take the CIL assessment](/tools) for a comprehensive evaluation
 2. Identify your strongest and weakest areas
 3. Prioritize improvements that move you above the boundary zone
 4. Track progress over time with regular reassessments
@@ -359,15 +359,15 @@ Remember: sustainability isn''t about achieving perfection. It''s about building
 
 [Start your assessment today](/tools)',
   'Research reveals five critical factors that determine whether cultural innovation projects achieve long-term sustainability. Learn what they are and how to strengthen them.',
-  'CIRF Research Team',
+  'CIL Research Team',
   'research',
   ARRAY['sustainability', 'best-practices', 'research', 'factors', 'success'],
   'published',
   NOW() - INTERVAL '7 days',
-  '[{"author": "CIRF Research Team", "year": "2024", "title": "Multiplicative Effects in Cultural Innovation: Evidence from 362 Case Studies", "journal": "Working Paper"}]'::jsonb
+  '[{"author": "CIL Research Team", "year": "2024", "title": "Multiplicative Effects in Cultural Innovation: Evidence from 362 Case Studies", "journal": "Working Paper"}]'::jsonb
 );
 
--- Blog Post 5: Getting Started with CIRF
+-- Blog Post 5: Getting Started with CIL
 INSERT INTO public.blog_posts (
   slug,
   title,
@@ -380,11 +380,11 @@ INSERT INTO public.blog_posts (
   published_at,
   citations
 ) VALUES (
-  'getting-started-with-cirf-assessment',
-  'Getting Started: Your First CIRF Assessment',
-  '# Your First CIRF Assessment: A Step-by-Step Guide
+  'getting-started-with-cil-assessment',
+  'Getting Started: Your First CIL Assessment',
+  '# Your First CIL Assessment: A Step-by-Step Guide
 
-Taking your first CIRF assessment can feel daunting, but it''s simpler than you might think. This guide walks you through everything you need to know to get started and make the most of your assessment.
+Taking your first CIL assessment can feel daunting, but it''s simpler than you might think. This guide walks you through everything you need to know to get started and make the most of your assessment.
 
 ## What You''ll Need
 
@@ -403,7 +403,7 @@ Before starting your assessment, gather:
 
 ### Step 2: Start the Assessment
 
-Navigate to the [assessment tool](/tools) and click "Start Assessment." You''ll be asked a series of 13 questions, one for each CIRF component.
+Navigate to the [assessment tool](/tools) and click "Start Assessment." You''ll be asked a series of 13 questions, one for each CIL component.
 
 ### Step 3: Answer Thoughtfully
 
@@ -419,7 +419,7 @@ For each question:
 
 After completing all questions, you''ll receive:
 
-1. **Your CIRF Score** (0-13)
+1. **Your CIL Score** (0-13)
 2. **Score Interpretation** explaining what your score means
 3. **Component Breakdown** showing strengths and gaps
 4. **Matched Case Studies** from similar initiatives
@@ -471,7 +471,7 @@ Share your results with stakeholders. Different perspectives can reveal blind sp
 
 ## Reassessing Over Time
 
-CIRF is designed for ongoing use. Regular reassessment helps you:
+CIL is designed for ongoing use. Regular reassessment helps you:
 - Track progress on improvement efforts
 - Identify new challenges early
 - Celebrate wins and maintain motivation
@@ -481,11 +481,11 @@ We recommend reassessing every 6-12 months, or after major changes to your initi
 
 ## Ready to Begin?
 
-Your first CIRF assessment is free. [Create your account](/auth/signup) and discover where your initiative stands—and where it can go.
+Your first CIL assessment is free. [Create your account](/auth/signup) and discover where your initiative stands—and where it can go.
 
 Questions? [Contact us](/about#contact) for support.',
-  'A complete guide to taking your first CIRF assessment, understanding your results, and creating an action plan for improvement.',
-  'CIRF Research Team',
+  'A complete guide to taking your first CIL assessment, understanding your results, and creating an action plan for improvement.',
+  'CIL Research Team',
   'practitioner-tips',
   ARRAY['getting-started', 'assessment', 'guide', 'beginners', 'how-to'],
   'published',

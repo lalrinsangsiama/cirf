@@ -9,7 +9,7 @@ import { AssessmentType } from '@/lib/data/assessmentConfig'
 
 // Request schema for saving draft
 const saveDraftSchema = z.object({
-  assessmentType: z.enum(['cirf', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
+  assessmentType: z.enum(['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
   answers: z.record(z.string(), z.union([z.number(), z.string(), z.array(z.string())])),
   currentSection: z.string().optional(),
 })

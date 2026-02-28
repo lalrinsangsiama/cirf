@@ -2,7 +2,7 @@
  * Personalized Recommendations Module
  *
  * This module provides context-specific recommendations for cultural innovation
- * resilience based on user demographics and assessment scores.
+ * based on user demographics and assessment scores.
  *
  * Usage:
  * ```typescript

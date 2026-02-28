@@ -28,7 +28,7 @@ import { pricingQuestions } from '@/lib/data/pricingQuestions'
 
 // Request schema for assessment submission
 const assessmentSubmitSchema = z.object({
-  assessmentType: z.enum(['cirf', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
+  assessmentType: z.enum(['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
   answers: z.record(z.string(), z.union([z.number(), z.string(), z.array(z.string())])), // Question ID -> answer (number for Likert, string for demographics, array for multiselect)
 })
 
@@ -46,7 +46,7 @@ interface QuestionWithSection {
  */
 function getQuestionsForType(type: AssessmentType): QuestionWithSection[] {
   switch (type) {
-    case 'cirf':
+    case 'cil':
       return [
         ...culturalCapitalQuestions,
         ...innovationActivitiesQuestions,
@@ -78,6 +78,7 @@ function calculateScore(
 ): {
   overallScore: number
   sectionScores: Record<string, number>
+  constructScores: Record<string, number>
 } {
   const questions = getQuestionsForType(assessmentType)
 
@@ -90,13 +91,15 @@ function calculateScore(
   }
 
   if (Object.keys(numericAnswers).length === 0) {
-    return { overallScore: 0, sectionScores: {} }
+    return { overallScore: 0, sectionScores: {}, constructScores: {} }
   }
 
   // Calculate weighted scores
   let totalWeight = 0
   let weightedSum = 0
   const sectionSums: Record<string, { sum: number; weight: number; count: number }> = {}
+  // Track per-construct scores (0-1 scale)
+  const constructSums: Record<string, { sum: number; count: number }> = {}
 
   for (const q of questions) {
     const answer = numericAnswers[q.id]
@@ -124,6 +127,15 @@ function calculateScore(
     }
     sectionSums[section].sum += normalizedScore
     sectionSums[section].count++
+
+    // Track construct scores (normalized to 0-1)
+    if (q.construct) {
+      if (!constructSums[q.construct]) {
+        constructSums[q.construct] = { sum: 0, count: 0 }
+      }
+      constructSums[q.construct].sum += (rawScore - 1) / 6
+      constructSums[q.construct].count++
+    }
   }
 
   const overallScore = totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0
@@ -134,7 +146,15 @@ function calculateScore(
     sectionScores[section] = data.count > 0 ? Math.round(data.sum / data.count) : 0
   }
 
-  return { overallScore, sectionScores }
+  // Calculate construct averages (0-1 scale)
+  const constructScores: Record<string, number> = {}
+  for (const [construct, data] of Object.entries(constructSums)) {
+    constructScores[construct] = data.count > 0
+      ? Math.round((data.sum / data.count) * 1000) / 1000
+      : 0
+  }
+
+  return { overallScore, sectionScores, constructScores }
 }
 
 /**
@@ -222,7 +242,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Calculate score server-side (never trust client-calculated scores)
-    const { overallScore, sectionScores } = calculateScore(answers, assessmentType)
+    const { overallScore, sectionScores, constructScores } = calculateScore(answers, assessmentType)
     const interpretation = getScoreInterpretation(overallScore)
 
     // Determine if this assessment requires credits
@@ -242,6 +262,7 @@ export async function POST(request: NextRequest) {
         description: interpretation.description,
         color: interpretation.color,
         sectionScores,
+        constructScores,
       },
       p_requires_credit: requiresCredit,
     })
@@ -325,6 +346,7 @@ export async function POST(request: NextRequest) {
         color: interpretation.color,
       },
       sectionScores,
+      constructScores,
       newBalance,
       unlockedAssessments,
       grantedTools,

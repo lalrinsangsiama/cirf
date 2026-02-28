@@ -36,7 +36,7 @@ ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS profile_completed BOOLEAN D
 -- Add assessment_type column to assessments table
 -- ============================================
 
-ALTER TABLE public.assessments ADD COLUMN IF NOT EXISTS assessment_type TEXT DEFAULT 'cirf';
+ALTER TABLE public.assessments ADD COLUMN IF NOT EXISTS assessment_type TEXT DEFAULT 'cil';
 
 -- Create index for assessment type queries
 CREATE INDEX IF NOT EXISTS idx_assessments_type ON public.assessments(assessment_type);
@@ -150,10 +150,10 @@ CREATE INDEX IF NOT EXISTS idx_email_logs_type ON public.email_logs(email_type);
 -- HELPER FUNCTIONS
 -- ============================================
 
--- Function to unlock assessments after completing CIRF
-CREATE OR REPLACE FUNCTION public.unlock_assessments_on_cirf_completion(
+-- Function to unlock assessments after completing CIL
+CREATE OR REPLACE FUNCTION public.unlock_assessments_on_cil_completion(
   p_user_id UUID,
-  p_cirf_assessment_id UUID
+  p_cil_assessment_id UUID
 )
 RETURNS SETOF TEXT AS $$
 DECLARE
@@ -163,7 +163,7 @@ BEGIN
   FOREACH assessment_to_unlock IN ARRAY unlocked_assessments
   LOOP
     INSERT INTO public.assessment_unlocks (user_id, assessment_type, unlocked_by_assessment_id)
-    VALUES (p_user_id, assessment_to_unlock, p_cirf_assessment_id)
+    VALUES (p_user_id, assessment_to_unlock, p_cil_assessment_id)
     ON CONFLICT (user_id, assessment_type) DO NOTHING;
 
     RETURN NEXT assessment_to_unlock;
@@ -213,8 +213,8 @@ CREATE OR REPLACE FUNCTION public.check_assessment_access(
 )
 RETURNS BOOLEAN AS $$
 BEGIN
-  -- CIRF is always accessible
-  IF p_assessment_type = 'cirf' THEN
+  -- CIL is always accessible
+  IF p_assessment_type = 'cil' THEN
     RETURN TRUE;
   END IF;
 
@@ -296,7 +296,7 @@ GRANT SELECT, INSERT ON public.tool_access TO authenticated;
 GRANT SELECT ON public.email_logs TO authenticated;
 
 -- Grant execute on functions
-GRANT EXECUTE ON FUNCTION public.unlock_assessments_on_cirf_completion TO authenticated;
+GRANT EXECUTE ON FUNCTION public.unlock_assessments_on_cil_completion TO authenticated;
 GRANT EXECUTE ON FUNCTION public.grant_tool_access_on_assessment_completion TO authenticated;
 GRANT EXECUTE ON FUNCTION public.check_assessment_access TO authenticated;
 GRANT EXECUTE ON FUNCTION public.check_tool_access TO authenticated;

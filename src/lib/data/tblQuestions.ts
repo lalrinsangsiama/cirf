@@ -1,5 +1,5 @@
 // TBL-CI - Triple Bottom Line Cultural Innovation Assessment
-// 20 questions across 3 sections: Economic Returns, Social Impact, Environmental Impact
+// 17 questions across 3 sections: Economic Returns, Social Impact, Environmental Impact
 
 export type TBLSection =
   | 'economicReturns'
@@ -42,7 +42,7 @@ export const TBL_SECTION_META: Record<TBLSection, {
   },
 }
 
-// Economic Returns questions (6 questions)
+// Economic Returns questions (5 questions)
 export const economicReturnsQuestions: TBLLikertQuestion[] = [
   {
     id: 'tbl-er-1',
@@ -84,17 +84,9 @@ export const economicReturnsQuestions: TBLLikertQuestion[] = [
     helpText: 'Examples: local restaurant busier because of our visitors, suppliers grew their business',
     weight: 1.2,
   },
-  {
-    id: 'tbl-er-6',
-    section: 'economicReturns',
-    construct: 'financialResilience',
-    question: 'We have financial reserves and diverse revenue streams',
-    helpText: 'Examples: 3+ months of expenses saved, income from multiple product lines',
-    weight: 1.3,
-  },
 ]
 
-// Social Impact questions (7 questions)
+// Social Impact questions (5 questions)
 export const socialImpactQuestions: TBLLikertQuestion[] = [
   {
     id: 'tbl-si-1',
@@ -103,14 +95,6 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     question: 'Our work actively preserves and transmits cultural traditions',
     helpText: 'Examples: apprenticeship programs, cultural workshops, documenting techniques',
     weight: 1.5,
-  },
-  {
-    id: 'tbl-si-2',
-    section: 'socialImpact',
-    construct: 'communityEmpowerment',
-    question: 'Community members have meaningful decision-making power in our organization',
-    helpText: 'Examples: community-elected board, regular town halls, veto power on key decisions',
-    weight: 1.4,
   },
   {
     id: 'tbl-si-3',
@@ -143,14 +127,6 @@ export const socialImpactQuestions: TBLLikertQuestion[] = [
     question: 'Our work increases community pride in cultural heritage',
     helpText: 'Examples: young people want to learn traditions, media coverage, community celebrations',
     weight: 1.3,
-  },
-  {
-    id: 'tbl-si-7',
-    section: 'socialImpact',
-    construct: 'intergenerationalTransfer',
-    question: 'We actively facilitate knowledge transfer between generations',
-    helpText: 'Examples: elders teaching youth, family craft days, documented oral histories',
-    weight: 1.5,
   },
 ]
 
@@ -240,9 +216,9 @@ export const tblQuestionConfig = {
 
 // Stats
 export const TBL_STATS = {
-  totalQuestions: 20,
+  totalQuestions: 17,
   sections: 3,
-  estimatedMinutes: 8,
+  estimatedMinutes: 7,
 }
 
 // TBL specific scoring weights (equal weight for true triple bottom line)

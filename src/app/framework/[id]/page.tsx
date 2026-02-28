@@ -319,7 +319,7 @@ export default function FrameworkDetailPage({ params }: PageProps) {
                 <IconComponent className="w-12 h-12 text-gold" strokeWidth={1.5} />
                 <div>
                   <p className="font-medium text-lg">Framework Validation</p>
-                  <p className="text-sm text-stone">Based on 362 case studies</p>
+                  <p className="text-sm text-stone">Research-validated framework</p>
                 </div>
               </div>
               <div className="space-y-3">
@@ -447,7 +447,7 @@ export default function FrameworkDetailPage({ params }: PageProps) {
       )}
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ocean to-sage text-pearl text-center">
+      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ink to-ink/90 text-pearl text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-light mb-6">
             Ready to assess your initiative?
@@ -467,7 +467,7 @@ export default function FrameworkDetailPage({ params }: PageProps) {
               href="/framework"
               className="bg-transparent border border-pearl text-pearl px-8 py-4 rounded-full font-medium hover:bg-pearl/10 transition-colors duration-300"
             >
-              Learn About CIRF
+              Learn About CIL
             </Link>
           </div>
         </div>

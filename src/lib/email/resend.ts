@@ -17,8 +17,8 @@ function getResend(): Resend {
   return resendClient
 }
 
-const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@cirf-framework.org'
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://cirf-framework.org'
+const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@cil-framework.org'
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://cil-framework.org'
 
 interface SendEmailOptions {
   to: string | string[]
@@ -40,7 +40,7 @@ async function sendEmailWithRetry(
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
       const { data, error } = await getResend().emails.send({
-        from: `CIRF <${fromEmail}>`,
+        from: `CIL <${fromEmail}>`,
         to: Array.isArray(options.to) ? options.to : [options.to],
         subject: options.subject,
         html: options.html,
@@ -94,7 +94,7 @@ export async function sendContactNotification({
   subject?: string
   message: string
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL || 'contact@cirf-framework.org'
+  const adminEmail = process.env.ADMIN_EMAIL || 'contact@cil-framework.org'
 
   return sendEmail({
     to: adminEmail,
@@ -110,7 +110,7 @@ export async function sendContactNotification({
           <div style="background: white; padding: 15px; border-radius: 4px; white-space: pre-wrap;">${message}</div>
         </div>
         <p style="color: #666; font-size: 12px; margin-top: 20px;">
-          This message was sent from the CIRF website contact form.
+          This message was sent from the CIL website contact form.
         </p>
       </div>
     `,
@@ -125,7 +125,7 @@ Message:
 ${message}
 
 ---
-This message was sent from the CIRF website contact form.
+This message was sent from the CIL website contact form.
     `,
   })
 }
@@ -139,12 +139,12 @@ export async function sendNewsletterWelcome({
 }) {
   return sendEmail({
     to: email,
-    subject: 'Welcome to the CIRF Newsletter',
+    subject: 'Welcome to the CIL Newsletter',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a1a1a;">Welcome to CIRF${name ? `, ${name}` : ''}!</h2>
+        <h2 style="color: #1a1a1a;">Welcome to CIL${name ? `, ${name}` : ''}!</h2>
         <p style="color: #444; line-height: 1.6;">
-          Thank you for subscribing to the CIRF newsletter.
+          Thank you for subscribing to the CIL newsletter.
         </p>
         <p style="color: #444; line-height: 1.6;">
           You'll receive updates on:
@@ -160,7 +160,7 @@ export async function sendNewsletterWelcome({
         </p>
         <p>
           <a href="${baseUrl}/framework" style="color: #D4A574;">
-            Learn about the CIRF Framework →
+            Learn about the CIL Framework →
           </a>
         </p>
         <p>
@@ -170,7 +170,7 @@ export async function sendNewsletterWelcome({
         </p>
         <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;" />
         <p style="color: #999; font-size: 12px;">
-          You're receiving this email because you subscribed to the CIRF newsletter.
+          You're receiving this email because you subscribed to the CIL newsletter.
           <br />
           <a href="${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}" style="color: #999;">
             Unsubscribe
@@ -179,9 +179,9 @@ export async function sendNewsletterWelcome({
       </div>
     `,
     text: `
-Welcome to CIRF${name ? `, ${name}` : ''}!
+Welcome to CIL${name ? `, ${name}` : ''}!
 
-Thank you for subscribing to the CIRF newsletter.
+Thank you for subscribing to the CIL newsletter.
 
 You'll receive updates on:
 - New research findings and publications
@@ -190,11 +190,11 @@ You'll receive updates on:
 - Upcoming events and workshops
 
 Explore our resources:
-- Learn about the CIRF Framework: ${baseUrl}/framework
+- Learn about the CIL Framework: ${baseUrl}/framework
 - Try our Assessment Tool: ${baseUrl}/tools
 
 ---
-You're receiving this email because you subscribed to the CIRF newsletter.
+You're receiving this email because you subscribed to the CIL newsletter.
 To unsubscribe, visit: ${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}
     `,
   })
@@ -209,7 +209,7 @@ export async function sendContactConfirmation({
 }) {
   return sendEmail({
     to: email,
-    subject: 'We received your message - CIRF',
+    subject: 'We received your message - CIL',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Thank you for contacting us, ${name}!</h2>
@@ -226,7 +226,7 @@ export async function sendContactConfirmation({
         </ul>
         <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;" />
         <p style="color: #999; font-size: 12px;">
-          This is an automated response from the CIRF website.
+          This is an automated response from the CIL website.
         </p>
       </div>
     `,
@@ -241,7 +241,7 @@ In the meantime, you might find these resources helpful:
 - Resources: ${baseUrl}/resources
 
 ---
-This is an automated response from the CIRF website.
+This is an automated response from the CIL website.
     `,
   })
 }
@@ -271,7 +271,7 @@ export async function sendPurchaseConfirmation({
 
   return sendEmail({
     to: email,
-    subject: `Payment Confirmed - ${credits} CIRF Credits`,
+    subject: `Payment Confirmed - ${credits} CIL Credits`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Payment Confirmed</h2>
@@ -308,7 +308,7 @@ export async function sendPurchaseConfirmation({
           Your credits are now available in your account. You can use them to:
         </p>
         <ul style="color: #444; line-height: 1.8;">
-          <li>Complete CIRF assessments</li>
+          <li>Complete CIL assessments</li>
           <li>Access detailed analysis reports</li>
           <li>Compare with similar case studies</li>
         </ul>
@@ -345,7 +345,7 @@ Order ID: ${orderId}
 Payment ID: ${paymentId}
 
 Your credits are now available in your account. You can use them to:
-- Complete CIRF assessments
+- Complete CIL assessments
 - Access detailed analysis reports
 - Compare with similar case studies
 
@@ -514,7 +514,7 @@ export async function sendAssessmentResults({
 
           <p style="color: #999; font-size: 12px; text-align: center;">
             Assessment ID: ${assessmentId}<br /><br />
-            You're receiving this email because you completed an assessment on the CIRF website.
+            You're receiving this email because you completed an assessment on the CIL website.
             <br />
             <a href="${baseUrl}/dashboard" style="color: #999;">
               Manage your account
@@ -558,7 +558,7 @@ View your full results: ${baseUrl}/dashboard
 
 ---
 Assessment ID: ${assessmentId}
-You're receiving this email because you completed an assessment on the CIRF website.
+You're receiving this email because you completed an assessment on the CIL website.
     `,
   })
 }
@@ -597,7 +597,7 @@ export async function sendPasswordResetEmail({
 }) {
   return sendEmail({
     to: email,
-    subject: 'Reset Your Password - CIRF',
+    subject: 'Reset Your Password - CIL',
     html: getPasswordResetEmailHtml({ email, name, resetUrl }),
     text: getPasswordResetEmailText({ email, name, resetUrl }),
   })

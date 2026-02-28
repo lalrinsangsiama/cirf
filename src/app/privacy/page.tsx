@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
             <div className="mb-12">
               <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">Introduction</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
-                The Cultural Innovation Lab (&quot;CIL,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website cirf-framework.org and use our services.
+                The Cultural Innovation Lab (&quot;CIL,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website cil-framework.org and use our services.
               </p>
               <p className="text-lg leading-relaxed text-stone">
                 Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
               <div className="bg-pearl p-6 rounded-lg mt-4">
                 <p className="text-stone">
                   Cultural Innovation Lab<br />
-                  Email: contact@cirf-framework.org
+                  Email: contact@cil-framework.org
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function PrivacyPolicyPage() {
                 <li><strong>Withdraw consent:</strong> Where processing is based on consent</li>
               </ul>
               <p className="text-lg leading-relaxed text-stone mt-4">
-                To exercise any of these rights, please contact us at <a href="mailto:contact@cirf-framework.org" className="text-ocean hover:underline">contact@cirf-framework.org</a>.
+                To exercise any of these rights, please contact us at <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a>.
               </p>
             </div>
 
@@ -232,7 +232,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="bg-pearl p-6 rounded-lg">
                 <p className="text-stone">
-                  Email: <a href="mailto:contact@cirf-framework.org" className="text-ocean hover:underline">contact@cirf-framework.org</a><br />
+                  Email: <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a><br />
                   Website: <Link href="/about#contact" className="text-ocean hover:underline">Contact Form</Link>
                 </p>
               </div>

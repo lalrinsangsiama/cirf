@@ -20,18 +20,18 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'Framework',
     question: 'How was the CIL framework developed?',
-    answer: 'CIL was developed through rigorous academic research analyzing 362 case studies of cultural innovation initiatives worldwide. The framework emerged from studying patterns in successful heritage enterprises, indigenous businesses, and cultural entrepreneurship projects. It has been validated with 78.1% predictive accuracy for initiative outcomes.',
+    answer: 'CIL was developed through academic research analyzing cultural innovation initiatives worldwide. The framework emerged from studying patterns in successful heritage enterprises, indigenous businesses, and cultural entrepreneurship projects.',
   },
   {
     category: 'Framework',
     question: 'What is the critical threshold of 7-8?',
-    answer: 'Our research discovered that scoring 7-8 out of 13 represents a critical threshold. Initiatives below this threshold have significantly lower success rates, while those at or above it show dramatically improved outcomes. This "tipping point" indicates the minimum conditions needed for sustainable cultural innovation.',
+    answer: 'Scoring 7-8 out of 13 represents a critical threshold in the CIL framework. Initiatives below this threshold tend to face greater challenges, while those at or above it show improved outcomes. This threshold indicates the minimum conditions needed for sustainable cultural innovation.',
   },
   // Assessment
   {
     category: 'Assessment',
     question: 'How does the CIL assessment work?',
-    answer: 'The assessment consists of 13 questions covering the three main categories. For each question, you evaluate whether your initiative meets the criteria. Your total score (0-13) determines your resilience level: scores of 11-13 indicate High Resilience with 85%+ success rates, 7-10 indicate Moderate Resilience with 65% success rates, and below 7 indicate At Risk status requiring intervention.',
+    answer: 'The assessment consists of 13 questions covering the three main categories. For each question, you evaluate whether your initiative meets the criteria. Your total score (0-13) determines your resilience level: scores of 11-13 indicate High Resilience, 7-10 indicate Moderate Resilience, and below 7 indicate At Risk status where focused intervention may be needed.',
   },
   {
     category: 'Assessment',
@@ -57,28 +57,12 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'Credits & Pricing',
     question: 'Can I get a refund?',
-    answer: 'Unused credits can be refunded within 30 days of purchase. Contact support@cirf-framework.org for refund requests.',
+    answer: 'Unused credits can be refunded within 30 days of purchase. Contact support@cil-framework.org for refund requests.',
   },
   {
     category: 'Credits & Pricing',
     question: 'Are there team or enterprise plans?',
     answer: 'Yes! For organizations needing more than 50 assessments, we offer custom enterprise plans with volume discounts, team dashboards, and additional features. Contact us to discuss your needs.',
-  },
-  // Research & Data
-  {
-    category: 'Research & Data',
-    question: 'Where do the case studies come from?',
-    answer: 'Our database includes 362 case studies analyzed from academic literature, UNESCO documentation, World Bank reports, regional development agencies, and direct field research. The 8 featured case studies on our site have been fully documented with verified sources and citations.',
-  },
-  {
-    category: 'Research & Data',
-    question: 'How accurate is the framework?',
-    answer: 'The CIL framework has demonstrated 78.1% predictive accuracy in determining initiative outcomes. This was validated through retrospective analysis of case studies with known outcomes and prospective tracking of assessed initiatives.',
-  },
-  {
-    category: 'Research & Data',
-    question: 'Can I access the underlying research?',
-    answer: 'Yes, we\'re committed to research transparency. Academic papers, methodology documentation, and data sources are available in our Research section. We also publish regular insights on our blog.',
   },
   // Account & Technical
   {
@@ -89,11 +73,11 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'Account & Technical',
     question: 'Can I delete my account and data?',
-    answer: 'Yes, you can delete your account directly from your dashboard settings, or by contacting support@cirf-framework.org. We will permanently delete all your personal data and assessment history immediately.',
+    answer: 'Yes, you can delete your account directly from your dashboard settings, or by contacting support@cil-framework.org. We will permanently delete all your personal data and assessment history immediately.',
   },
 ]
 
-const CATEGORIES = ['All', 'Framework', 'Assessment', 'Credits & Pricing', 'Research & Data', 'Account & Technical']
+const CATEGORIES = ['All', 'Framework', 'Assessment', 'Credits & Pricing', 'Account & Technical']
 
 export default function FAQPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -209,7 +193,7 @@ export default function FAQPage() {
           <h3 className="text-xl font-semibold text-ink mb-2">
             Still have questions?
           </h3>
-          <p className="text-stone mb-6">
+          <p className="text-ink/70 mb-6">
             Can&apos;t find what you&apos;re looking for? We&apos;re here to help.
           </p>
           <Link

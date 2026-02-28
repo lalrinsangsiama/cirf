@@ -3,8 +3,6 @@ import Link from 'next/link'
 const footerLinks = {
   research: [
     { name: 'Framework', href: '/framework' },
-    { name: 'Publications', href: '/research' },
-    { name: 'Case Studies', href: '/case-studies' },
     { name: 'Resources', href: '/resources' },
   ],
   tools: [
@@ -16,7 +14,6 @@ const footerLinks = {
   connect: [
     { name: 'About', href: '/about' },
     { name: 'Blog', href: '/blog' },
-    { name: 'For Researchers', href: '/for/researchers' },
     { name: 'For Practitioners', href: '/for/practitioners' },
     { name: 'For Communities', href: '/for/communities' },
   ],

@@ -9,7 +9,7 @@
 CREATE TABLE IF NOT EXISTS public.assessment_drafts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES public.profiles ON DELETE CASCADE NOT NULL,
-  assessment_type TEXT NOT NULL DEFAULT 'cirf',
+  assessment_type TEXT NOT NULL DEFAULT 'cil',
   answers JSONB NOT NULL DEFAULT '{}',
   current_section TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),

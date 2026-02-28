@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   Compass,
@@ -9,6 +10,15 @@ import {
   Lightbulb,
   Shield,
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'CIL for Practitioners',
+  description: 'How the CIL framework helps cultural entrepreneurs and practitioners build resilient cultural innovation enterprises.',
+  openGraph: {
+    title: 'CIL for Practitioners',
+    description: 'How the CIL framework helps cultural entrepreneurs and practitioners build resilient cultural innovation enterprises.',
+  },
+}
 
 export default function ForPractitionersPage() {
   return (
@@ -38,10 +48,10 @@ export default function ForPractitionersPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/case-studies"
+              href="/framework"
               className="inline-flex items-center gap-2 border border-ink px-6 py-3 rounded-full font-medium hover:bg-sand transition-colors"
             >
-              See success stories
+              Explore the framework
             </Link>
           </div>
         </div>
@@ -175,49 +185,6 @@ export default function ForPractitionersPage() {
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-serif font-bold text-ink mb-8 text-center">
-            What Practitioners Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl p-8 border border-stone/10">
-              <p className="text-lg text-ink italic mb-6">
-                &ldquo;The CIL assessment helped us identify that while our cultural
-                integrity was strong, we needed to improve community control mechanisms.
-                After addressing this, we saw significant improvement in both community
-                support and economic outcomes.&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-sage/20 rounded-full flex items-center justify-center">
-                  <span className="text-sage font-semibold">MK</span>
-                </div>
-                <div>
-                  <p className="font-medium text-ink">Maria Khatun</p>
-                  <p className="text-sm text-stone">Heritage Craft Cooperative, Bangladesh</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 border border-stone/10">
-              <p className="text-lg text-ink italic mb-6">
-                &ldquo;We scored 5/13 on our first assessment—right in the boundary zone.
-                The framework showed us exactly which components to strengthen. A year later,
-                we&apos;re at 9/13 and our revenue has grown 40%.&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center">
-                  <span className="text-gold font-semibold">JT</span>
-                </div>
-                <div>
-                  <p className="font-medium text-ink">James Tewara</p>
-                  <p className="text-sm text-stone">Māori Tourism Enterprise, New Zealand</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Checklist */}
         <div className="bg-gradient-to-r from-sage/10 to-gold/10 rounded-2xl p-8 md:p-12 mb-16">
           <h2 className="text-2xl font-serif font-bold text-ink mb-6">
@@ -252,17 +219,17 @@ export default function ForPractitionersPage() {
         </div>
 
         {/* CTA */}
-        <div className="bg-gradient-to-r from-sage to-sage/80 rounded-2xl p-8 md:p-12 text-center">
-          <h3 className="text-2xl font-serif font-bold text-white mb-4">
+        <div className="bg-gradient-to-r from-ink to-ink/90 rounded-2xl p-8 md:p-12 text-center">
+          <h3 className="text-2xl font-serif font-bold text-pearl mb-4">
             Ready to strengthen your initiative?
           </h3>
-          <p className="text-white/80 mb-6 max-w-xl mx-auto">
+          <p className="text-pearl/80 mb-6 max-w-xl mx-auto">
             Start with a free assessment and discover how to build a more
             resilient cultural innovation enterprise.
           </p>
           <Link
             href="/auth/signup"
-            className="inline-flex items-center gap-2 bg-white text-sage px-8 py-3 rounded-full font-medium hover:bg-white/90 transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-ink px-8 py-3 rounded-full font-medium hover:bg-white/90 transition-colors"
           >
             Get started free
             <ArrowRight className="w-4 h-4" />

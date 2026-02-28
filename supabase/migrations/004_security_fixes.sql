@@ -11,7 +11,7 @@ DROP FUNCTION IF EXISTS public.use_credit_atomic(UUID, TEXT);
 
 CREATE OR REPLACE FUNCTION public.use_credit_atomic(
   user_uuid UUID,
-  p_assessment_type TEXT DEFAULT 'cirf'
+  p_assessment_type TEXT DEFAULT 'cil'
 )
 RETURNS TABLE (success BOOLEAN, new_balance INTEGER, error_message TEXT) AS $$
 DECLARE

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { Cookie, X, Settings } from 'lucide-react'
 import Link from 'next/link'
 
-const CONSENT_KEY = 'cirf-cookie-consent'
+const CONSENT_KEY = 'cil-cookie-consent'
 const CONSENT_VERSION = 1
 
 interface ConsentPreferences {

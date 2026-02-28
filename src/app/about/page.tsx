@@ -227,14 +227,14 @@ export default function AboutPage() {
                 through which cultural innovation generates resilience remain poorly understood.
               </p>
               <p className="text-lg leading-relaxed">
-                By analyzing 362 case studies across 47 countries, this research provides the
-                first systematic, empirically-validated framework for understanding these mechanisms.
+                This research provides a systematic, empirically-validated framework
+                for understanding these mechanisms.
               </p>
             </div>
             <div className="space-y-6">
               <div className="bg-sand p-6 rounded-lg">
                 <h3 className="font-medium mb-3">Theoretical Contributions</h3>
-                <ul className="space-y-2 text-stone">
+                <ul className="space-y-2 text-ink/70">
                   <li className="flex items-start gap-2">
                     <span className="text-gold mt-1">→</span>
                     Integration of resilience theory with cultural economics
@@ -251,7 +251,7 @@ export default function AboutPage() {
               </div>
               <div className="bg-sand p-6 rounded-lg">
                 <h3 className="font-medium mb-3">Practical Contributions</h3>
-                <ul className="space-y-2 text-stone">
+                <ul className="space-y-2 text-ink/70">
                   <li className="flex items-start gap-2">
                     <span className="text-gold mt-1">→</span>
                     Validated assessment tools for practitioners
@@ -320,7 +320,7 @@ export default function AboutPage() {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
                   <Mail className="w-5 h-5 text-gold" />
-                  <span>contact@cirf-framework.org</span>
+                  <span>contact@cil-framework.org</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <MapPin className="w-5 h-5 text-gold" />
@@ -428,8 +428,8 @@ export default function AboutPage() {
 
             <div id="newsletter" className="bg-sand p-8 rounded-lg">
               <h3 className="font-serif text-xl mb-4">Stay Updated</h3>
-              <p className="text-stone mb-6">
-                Subscribe to receive updates on new research, case studies, and tool releases.
+              <p className="text-ink/70 mb-6">
+                Subscribe to receive updates on new research, insights, and tool releases.
               </p>
 
               {newsletterStatus.type === 'success' ? (
@@ -507,7 +507,7 @@ export default function AboutPage() {
                   </button>
                 </form>
               )}
-              <p className="text-xs text-stone mt-4">
+              <p className="text-xs text-ink/70 mt-4">
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </div>
@@ -516,13 +516,13 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ocean to-sage text-pearl text-center">
+      <section className="py-16 md:py-24 px-6 md:px-16 bg-gradient-to-br from-ink to-ink/90 text-pearl text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-light mb-6">
             Ready to Start Your Journey?
           </h2>
           <p className="text-lg opacity-90 mb-8">
-            Explore the framework, assess your community&apos;s resilience, or dive into our case studies.
+            Explore the framework, assess your community&apos;s resilience, or try our assessment tools.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

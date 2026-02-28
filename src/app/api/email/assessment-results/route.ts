@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse assessment data
-    const assessmentType = (assessment.assessment_type || 'cirf') as AssessmentType
+    const assessmentType = (assessment.assessment_type || 'cil') as AssessmentType
     const score = assessment.score
     const interpretation = assessment.interpretation || {
       level: 'Unknown',
@@ -179,10 +179,10 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * Explicit mapping of CIRF section names to their question key prefixes
+ * Explicit mapping of CIL section names to their question key prefixes
  * This prevents fragile string matching that could match wrong sections
  */
-const CIRF_SECTION_PREFIXES: Record<string, string> = {
+const CIL_SECTION_PREFIXES: Record<string, string> = {
   culturalCapital: 'cc-',
   innovationActivities: 'ia-',
   organizationalCapacities: 'oc-',
@@ -197,13 +197,13 @@ function calculateSectionScores(
   const config = ASSESSMENT_CONFIGS[assessmentType]
   const sectionScores: Record<string, { score: number; label: string }> = {}
 
-  // For CIRF, use the explicit section prefix mapping
-  if (assessmentType === 'cirf') {
+  // For CIL, use the explicit section prefix mapping
+  if (assessmentType === 'cil') {
     const sections = ['culturalCapital', 'innovationActivities', 'organizationalCapacities', 'economicResilience']
 
     for (const section of sections) {
       const sectionMeta = SECTION_META[section as keyof typeof SECTION_META]
-      const prefix = CIRF_SECTION_PREFIXES[section]
+      const prefix = CIL_SECTION_PREFIXES[section]
 
       // Use explicit prefix matching instead of fragile substring matching
       const sectionAnswers = Object.entries(answers)
@@ -277,7 +277,7 @@ function generateRecommendations(
   }
 
   // Add general recommendations based on assessment type
-  if (assessmentType === 'cirf') {
+  if (assessmentType === 'cil') {
     if (recommendations.length < 3) {
       recommendations.push(
         'Consider completing the specialized assessments (CIMM, CIRA, TBL, CISS, Pricing) for deeper insights.'

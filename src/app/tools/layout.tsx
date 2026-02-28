@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Assessment Tool | Measure Your Cultural Innovation Resilience',
-  description: 'Take the CIRF Assessment to evaluate your cultural enterprise across 13 key dimensions. Get personalized insights and recommendations for strengthening your economic resilience.',
+  description: 'Take the CIL Assessment to evaluate your cultural enterprise across 13 key dimensions. Get personalized insights and recommendations for strengthening your economic resilience.',
   keywords: [
-    'CIRF assessment',
+    'CIL assessment',
     'cultural innovation assessment',
     'resilience measurement',
     'heritage enterprise evaluation',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'Assessment Tool | Measure Your Cultural Innovation Resilience',
-    description: 'Evaluate your cultural enterprise across 13 key dimensions with the CIRF Assessment.',
+    description: 'Evaluate your cultural enterprise across 13 key dimensions with the CIL Assessment.',
   },
 }
 

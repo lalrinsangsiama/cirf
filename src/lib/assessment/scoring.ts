@@ -8,7 +8,7 @@
  * 2. Construct scores: Weighted mean of items per construct
  * 3. Apply discriminatory power: Use research-derived weights
  * 4. Synergy bonuses: When paired constructs both exceed 70%
- * 5. Output: Cultural Innovation Resilience Index (0-100)
+ * 5. Output: CIL Score (0-100)
  */
 
 // Assessment section definitions
@@ -27,10 +27,10 @@ export interface AssessmentAnswers {
 // Section weights based on CI-ER theoretical framework
 export const SECTION_WEIGHTS: Record<AssessmentSection, number> = {
   demographics: 0, // Demographics don't contribute to score
-  culturalCapital: 0.25,
-  innovationActivities: 0.25,
-  organizationalCapacities: 0.30,
-  economicResilience: 0.20,
+  culturalCapital: 0.22,
+  innovationActivities: 0.23,
+  organizationalCapacities: 0.28,
+  economicResilience: 0.27,
 }
 
 // Discriminatory power weights for individual constructs (from research)
@@ -43,6 +43,7 @@ export const CONSTRUCT_WEIGHTS: Record<string, number> = {
   culturalPreservation: 1.1,
   practitionerRelationships: 1.0,
   culturalMembership: 0.9,
+  culturalMeaning: 1.0,
 
   // Innovation Activities constructs
   productDevelopment: 1.2,
@@ -53,6 +54,7 @@ export const CONSTRUCT_WEIGHTS: Record<string, number> = {
   efficiencyImprovement: 1.0,
   externalCollaboration: 1.1,
   feedbackIteration: 1.2,
+  narrativeInnovation: 1.2,
 
   // Organizational Capacities constructs
   adaptiveResponse: 1.5, // Highest discriminatory power
@@ -63,7 +65,6 @@ export const CONSTRUCT_WEIGHTS: Record<string, number> = {
   financialReserves: 1.2,
   communityDecisionMaking: 1.4,
   benefitDistribution: 1.3,
-  communityOwnership: 1.4,
   allianceNetworks: 1.1,
 
   // Economic Resilience constructs
@@ -75,6 +76,8 @@ export const CONSTRUCT_WEIGHTS: Record<string, number> = {
   communitySpillover: 1.0,
   jobCreation: 1.1,
   intergenerationalPlanning: 1.2,
+  revenueDiversification: 1.3,
+  culturalBrandPremium: 1.2,
 }
 
 // Synergy pairs that create multiplicative benefits
@@ -113,6 +116,12 @@ export const SYNERGY_PAIRS: Array<{
     construct2: 'culturalPreservation',
     bonus: 0.058, // +5.8%
     description: 'IP Protection + Cultural Protection',
+  },
+  {
+    construct1: 'narrativeInnovation',
+    construct2: 'culturalBrandPremium',
+    bonus: 0.068, // +6.8%
+    description: 'Cultural Storytelling + Brand Premium',
   },
 ]
 
@@ -209,7 +218,7 @@ export interface SectionScore {
  * Overall assessment result
  */
 export interface AssessmentResult {
-  overallScore: number // Cultural Innovation Resilience Index (0-100)
+  overallScore: number // CIL Score (0-100)
   sectionScores: SectionScore[]
   synergyBonus: number
   activeSynergies: typeof SYNERGY_PAIRS
@@ -274,28 +283,28 @@ export function getScoreInterpretation(score: number): ScoreInterpretation {
     return {
       level: 'Medium',
       successRate: 51.2,
-      description: 'Approaching critical threshold. Focused improvements in weak areas can yield dramatic gains in resilience outcomes.',
+      description: 'Approaching critical threshold. Focused improvements in weak areas can yield dramatic gains.',
       color: 'text-yellow-600',
     }
   } else if (score < 70) {
     return {
       level: 'Medium-High',
       successRate: 78.4,
-      description: 'Above average resilience profile. Continue building on strengths while addressing remaining gaps in organizational capacity.',
+      description: 'Above average performance. Continue building on strengths while addressing remaining gaps in organizational capacity.',
       color: 'text-lime-600',
     }
   } else if (score < 85) {
     return {
       level: 'High',
       successRate: 92.3,
-      description: 'Strong cultural innovation resilience. Focus on transformative and generative capacities to maximize long-term impact.',
+      description: 'Strong cultural innovation profile. Focus on transformative and generative capacities to maximize long-term impact.',
       color: 'text-green-600',
     }
   } else {
     return {
       level: 'Excellent',
       successRate: 98.6,
-      description: 'Outstanding cultural innovation resilience. Your initiative serves as a model for others. Focus on knowledge sharing and scaling impact.',
+      description: 'Outstanding cultural innovation profile. Your initiative serves as a model for others. Focus on knowledge sharing and scaling impact.',
       color: 'text-emerald-600',
     }
   }
@@ -439,10 +448,23 @@ export function calculateAssessmentResult(
     const questionIds = sectionQuestions[section]
     const sectionConstructScores: Record<string, number> = {}
 
+    // Skip demographics — they don't contribute to scoring
+    if (section === 'demographics') {
+      sectionScores.push({
+        section,
+        score: 0,
+        answeredQuestions: questionIds.filter(id => answers[id] != null).length,
+        totalQuestions: questionIds.length,
+        constructScores: {},
+      })
+      return
+    }
+
     // Group questions by construct
     const constructQuestions: Record<string, string[]> = {}
     questionIds.forEach(id => {
-      const construct = questionConstructs[id] || 'general'
+      const construct = questionConstructs[id]
+      if (!construct) return // Skip questions without a construct mapping
       if (!constructQuestions[construct]) {
         constructQuestions[construct] = []
       }
@@ -450,20 +472,31 @@ export function calculateAssessmentResult(
     })
 
     // Calculate score for each construct
+    // Track which constructs have at least one numeric (non-N/A) answer
+    const constructsWithData: Set<string> = new Set()
     Object.entries(constructQuestions).forEach(([construct, ids]) => {
+      const hasNumericAnswer = ids.some(id => {
+        const a = answers[id]
+        return typeof a === 'number' && a >= 1 && a <= 7
+      })
       const weights = ids.map(id => CONSTRUCT_WEIGHTS[construct] || 1)
       const score = calculateConstructScore(answers, ids, weights)
       sectionConstructScores[construct] = score
       constructScores[construct] = score
+      if (hasNumericAnswer) {
+        constructsWithData.add(construct)
+      }
     })
 
-    // Calculate section score
+    // Calculate section score — only include constructs with actual data (exclude all-N/A constructs)
     const sectionWeight = SECTION_WEIGHTS[section]
     const answeredCount = questionIds.filter(id => answers[id] != null).length
 
     let sectionScore = 0
-    if (section !== 'demographics' && answeredCount > 0) {
-      const scores = Object.values(sectionConstructScores)
+    if (answeredCount > 0) {
+      const scores = Object.entries(sectionConstructScores)
+        .filter(([construct]) => constructsWithData.has(construct))
+        .map(([, score]) => score)
       sectionScore = scores.length > 0
         ? (scores.reduce((sum, s) => sum + s, 0) / scores.length) * 100
         : 0
@@ -524,6 +557,5 @@ export const SCORE_THRESHOLDS = {
 export const DATABASE_STATISTICS = {
   averageScore: 62.4,
   medianScore: 65,
-  sampleSize: 362,
   successRateAbove70: 92.3,
 } as const

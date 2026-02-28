@@ -171,7 +171,7 @@ function NewBlogPostContent() {
     const postData = {
       ...formData,
       author_id: user?.id,
-      author_name: profile?.full_name || 'CIRF Team',
+      author_name: profile?.full_name || 'CIL Team',
       status: publish ? 'published' : formData.status,
       published_at: publish ? new Date().toISOString() : null,
     }

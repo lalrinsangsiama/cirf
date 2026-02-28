@@ -22,15 +22,21 @@ export type Industry =
   | 'crafts'
   | 'performing-arts'
   | 'visual-arts'
-  | 'music'
   | 'food-beverage'
   | 'fashion-textiles'
   | 'heritage-tourism'
-  | 'publishing-media'
+  | 'digital-film-media'
+  | 'ar-vr-xr'
+  | 'gaming-interactive'
+  | 'mobility'
+  | 'language-literature'
+  | 'festivals-ceremonies'
+  | 'traditional-medicine'
   | 'design'
   | 'education'
-  | 'wellness'
+  | 'community-development'
   | 'agriculture'
+  | 'other'
   | 'multi-sector'
 
 // Business stage values from demographicQuestions
@@ -59,6 +65,7 @@ export type Region =
   | 'middle-east'
   | 'north-america'
   | 'oceania'
+  | 'my-country'
   | 'global'
 
 /**
@@ -95,6 +102,7 @@ export type ConstructId =
   | 'efficiencyImprovement'
   | 'externalCollaboration'
   | 'feedbackIteration'
+  | 'narrativeInnovation'
   // Organizational Capacities
   | 'adaptiveResponse'
   | 'learningFromSetbacks'
@@ -104,7 +112,6 @@ export type ConstructId =
   | 'financialReserves'
   | 'communityDecisionMaking'
   | 'benefitDistribution'
-  | 'communityOwnership'
   | 'allianceNetworks'
   // Economic Resilience
   | 'revenueRetention'
@@ -115,6 +122,8 @@ export type ConstructId =
   | 'communitySpillover'
   | 'jobCreation'
   | 'intergenerationalPlanning'
+  | 'revenueDiversification'
+  | 'culturalBrandPremium'
 
 /**
  * Context used for matching recommendations
@@ -239,6 +248,7 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   efficiencyImprovement: 'Efficiency Improvement',
   externalCollaboration: 'External Collaboration',
   feedbackIteration: 'Feedback & Iteration',
+  narrativeInnovation: 'Cultural Narrative Innovation',
   // Organizational Capacities
   adaptiveResponse: 'Adaptive Capacity',
   learningFromSetbacks: 'Learning Systems',
@@ -248,7 +258,6 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   financialReserves: 'Financial Resilience',
   communityDecisionMaking: 'Community Governance',
   benefitDistribution: 'Benefit Distribution',
-  communityOwnership: 'Community Ownership',
   allianceNetworks: 'Alliance Networks',
   // Economic Resilience
   revenueRetention: 'Revenue Retention',
@@ -259,6 +268,8 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   communitySpillover: 'Community Spillover',
   jobCreation: 'Job Creation',
   intergenerationalPlanning: 'Intergenerational Planning',
+  revenueDiversification: 'Revenue Diversification',
+  culturalBrandPremium: 'Cultural Brand Premium',
 }
 
 /**
@@ -288,15 +299,21 @@ export function generateContextLabel(demographics: Demographics): string {
     crafts: 'crafts',
     'performing-arts': 'performing arts',
     'visual-arts': 'visual arts',
-    music: 'music',
-    'food-beverage': 'food & beverage',
+    'food-beverage': 'food & culinary traditions',
     'fashion-textiles': 'fashion & textiles',
     'heritage-tourism': 'heritage tourism',
-    'publishing-media': 'publishing & media',
+    'digital-film-media': 'digital content & media',
+    'ar-vr-xr': 'AR/VR/XR & immersive experiences',
+    'gaming-interactive': 'gaming & interactive media',
+    mobility: 'mobility & cultural transport',
+    'language-literature': 'language & storytelling',
+    'festivals-ceremonies': 'festivals & events',
+    'traditional-medicine': 'traditional medicine & wellness',
     design: 'design',
     education: 'cultural education',
-    wellness: 'traditional wellness',
+    'community-development': 'community cultural development',
     agriculture: 'cultural agriculture',
+    other: 'the cultural sector',
     'multi-sector': 'multi-sector initiatives',
   }
 

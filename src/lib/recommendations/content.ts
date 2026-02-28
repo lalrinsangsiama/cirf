@@ -269,7 +269,7 @@ export const adaptiveResponseRecommendations: RecommendationVariant[] = [
       { action: 'Build cross-training so multiple people can fill key roles', timeframe: 'ongoing' },
     ],
     relatedCaseStudyIds: ['vietnamese-craft-villages', 'nunavut-indigenous-enterprises'],
-    impact: 'Ensures organizational resilience as you scale',
+    impact: 'Ensures organizational stability as you scale',
     priority: 'high',
   },
   // Cooperatives
@@ -289,7 +289,7 @@ export const adaptiveResponseRecommendations: RecommendationVariant[] = [
       { action: 'Develop group purchasing and selling agreements', timeframe: 'this-quarter' },
     ],
     relatedCaseStudyIds: ['moroccan-fes-pottery', 'bangladeshi-nakshi-kantha'],
-    impact: 'Multiplies individual resilience through collective action',
+    impact: 'Multiplies individual strength through collective action',
     priority: 'high',
   },
   // Default
@@ -307,7 +307,7 @@ export const adaptiveResponseRecommendations: RecommendationVariant[] = [
       { action: 'Identify early warning signs to monitor', timeframe: 'this-month' },
       { action: 'Build relationships with others who can help in crisis', timeframe: 'ongoing' },
     ],
-    impact: 'Highest discriminatory power for resilience (+64.7%)',
+    impact: 'Highest discriminatory power for long-term success (+64.7%)',
     priority: 'critical',
   },
 ]
@@ -953,42 +953,364 @@ export const RECOMMENDATION_LIBRARY: Record<ConstructId, RecommendationVariant[]
   practitionerAccess: practitionerAccessRecommendations,
   culturalAuthenticity: culturalAuthenticityRecommendations,
   communityInvolvement: communityInvolvementRecommendations,
-  culturalPreservation: [], // Add variants as needed
+  culturalPreservation: [
+    {
+      id: 'culpres-default',
+      context: { construct: 'culturalPreservation' },
+      title: 'Protect Cultural Practices for the Future',
+      description:
+        'Systematically identify and safeguard at-risk cultural practices before knowledge is lost, ensuring traditions survive and thrive for future generations.',
+      actionSteps: [
+        { action: 'Identify and prioritize 3-5 at-risk cultural practices or knowledge areas', timeframe: 'this-week' },
+        { action: 'Create a preservation protocol (recording, documentation, archiving standards)', timeframe: 'this-month' },
+        { action: 'Establish a community archive — digital or physical — for storing preserved materials', timeframe: 'this-quarter' },
+        { action: 'Schedule regular review sessions with knowledge holders to update and expand the archive', timeframe: 'ongoing' },
+      ],
+      impact: 'Prevents irreversible loss of cultural knowledge and creates a foundation for authentic innovation',
+      priority: 'critical',
+    },
+  ],
   practitionerRelationships: practitionerAccessRecommendations, // Shares with practitioner access
-  culturalMembership: [],
-  culturalMeaning: [],
+  culturalMembership: [
+    {
+      id: 'culmem-default',
+      context: { construct: 'culturalMembership' },
+      title: 'Strengthen Community Cultural Connections',
+      description:
+        'Deepen engagement between your cultural enterprise and community members so that cultural participation grows and sustains your mission.',
+      actionSteps: [
+        { action: 'Attend or host at least one cultural gathering or community event this month', timeframe: 'this-month' },
+        { action: 'Create a membership or participation program that welcomes new community members', timeframe: 'this-quarter' },
+        { action: 'Track engagement metrics (attendance, participation, repeat involvement)', timeframe: 'ongoing' },
+        { action: 'Gather feedback from participants to improve cultural programming', timeframe: 'ongoing' },
+      ],
+      impact: 'Stronger cultural connections increase community support and long-term enterprise sustainability',
+      priority: 'high',
+    },
+  ],
+  culturalMeaning: [
+    {
+      id: 'culmean-default',
+      context: { construct: 'culturalMeaning' },
+      title: 'Ensure Cultural Meaning Carries Through to Market',
+      description:
+        'Bridge the gap between deep cultural significance and commercial presentation so customers understand and value the authentic meaning behind your products.',
+      actionSteps: [
+        { action: 'Audit your product descriptions and marketing for cultural accuracy and depth', timeframe: 'this-week' },
+        { action: 'Add origin stories and cultural meaning labels to your key products', timeframe: 'this-month' },
+        { action: 'Train sales staff or partners on the cultural context behind each offering', timeframe: 'this-quarter' },
+        { action: 'Collect customer feedback on whether cultural meaning resonates in their experience', timeframe: 'ongoing' },
+      ],
+      impact: 'Products that communicate authentic cultural meaning command higher prices and build deeper customer loyalty',
+      priority: 'high',
+    },
+  ],
 
   // Innovation Activities
   productDevelopment: productDevelopmentRecommendations,
-  techniqueCombination: [],
-  innovationLeadership: [],
-  marketExpansion: [],
+  techniqueCombination: [
+    {
+      id: 'techcomb-default',
+      context: { construct: 'techniqueCombination' },
+      title: 'Blend Traditional and Modern Techniques',
+      description:
+        'Find the intersection of time-tested traditional methods and contemporary tools to create products that honor heritage while meeting modern market expectations.',
+      actionSteps: [
+        { action: 'Identify one traditional technique that could be enhanced with a modern method or tool', timeframe: 'this-week' },
+        { action: 'Prototype a hybrid product combining both approaches', timeframe: 'this-month' },
+        { action: 'Test the hybrid product with customers and gather feedback on quality and appeal', timeframe: 'this-quarter' },
+        { action: 'Document successful combinations as repeatable processes for your team', timeframe: 'ongoing' },
+      ],
+      impact: 'Hybrid techniques can reduce production costs while maintaining cultural authenticity and opening new markets',
+      priority: 'medium',
+    },
+  ],
+  innovationLeadership: [
+    {
+      id: 'innlead-default',
+      context: { construct: 'innovationLeadership' },
+      title: 'Lead Innovation Within Your Cultural Enterprise',
+      description:
+        'Create a culture of experimentation and creative problem-solving that drives continuous improvement without compromising cultural values.',
+      actionSteps: [
+        { action: 'Dedicate regular time (e.g., 2 hours/week) for experimentation and creative exploration', timeframe: 'this-week' },
+        { action: 'Establish an innovation review process — monthly meetings to evaluate new ideas', timeframe: 'this-month' },
+        { action: 'Celebrate and share successful innovations with your team and community', timeframe: 'this-quarter' },
+        { action: 'Track the pipeline of ideas from concept to implementation', timeframe: 'ongoing' },
+      ],
+      impact: 'Organizations with structured innovation leadership are more resilient and adapt faster to market changes',
+      priority: 'high',
+    },
+  ],
+  marketExpansion: [
+    {
+      id: 'mktexp-default',
+      context: { construct: 'marketExpansion' },
+      title: 'Reach New Audiences for Your Cultural Products',
+      description:
+        'Identify and connect with untapped customer segments that value cultural authenticity, expanding your reach without diluting your offering.',
+      actionSteps: [
+        { action: 'Research one untapped market segment (e.g., diaspora communities, ethical consumers, tourism)', timeframe: 'this-week' },
+        { action: 'Create marketing materials tailored to that segment\'s values and language', timeframe: 'this-month' },
+        { action: 'Test with a small campaign (social media, pop-up, or partnership) and measure response', timeframe: 'this-quarter' },
+        { action: 'Refine your approach based on results and scale what works', timeframe: 'ongoing' },
+      ],
+      impact: 'New market segments reduce revenue concentration risk and increase cultural visibility',
+      priority: 'medium',
+    },
+  ],
   digitalDistribution: digitalDistributionRecommendations,
-  efficiencyImprovement: [],
-  externalCollaboration: [],
-  feedbackIteration: [],
+  efficiencyImprovement: [
+    {
+      id: 'effimp-default',
+      context: { construct: 'efficiencyImprovement' },
+      title: 'Streamline Operations Without Losing Cultural Quality',
+      description:
+        'Optimize your production and operational workflows to reduce waste and cost while maintaining the cultural integrity that makes your products special.',
+      actionSteps: [
+        { action: 'Map your current production workflow from start to finish', timeframe: 'this-week' },
+        { action: 'Identify one bottleneck or inefficiency to optimize (without compromising quality)', timeframe: 'this-month' },
+        { action: 'Implement the improvement and measure time and cost savings', timeframe: 'this-quarter' },
+        { action: 'Review workflows quarterly to find further optimization opportunities', timeframe: 'ongoing' },
+      ],
+      impact: 'Operational efficiency frees resources for innovation and cultural investment',
+      priority: 'medium',
+    },
+  ],
+  externalCollaboration: [
+    {
+      id: 'extcol-default',
+      context: { construct: 'externalCollaboration' },
+      title: 'Build Partnerships Beyond Your Organization',
+      description:
+        'Develop strategic partnerships with organizations outside your immediate network to access new skills, markets, and resources.',
+      actionSteps: [
+        { action: 'List 5 potential partners (universities, NGOs, businesses, cultural orgs) with complementary strengths', timeframe: 'this-week' },
+        { action: 'Reach out to at least 2 potential partners this month to explore shared interests', timeframe: 'this-month' },
+        { action: 'Structure one pilot collaboration with clear goals, roles, and timelines', timeframe: 'this-quarter' },
+        { action: 'Evaluate partnerships regularly and expand successful ones', timeframe: 'ongoing' },
+      ],
+      impact: 'External collaborations bring fresh perspectives, resources, and market access that strengthen your enterprise',
+      priority: 'medium',
+    },
+  ],
+  feedbackIteration: [
+    {
+      id: 'fdbkit-default',
+      context: { construct: 'feedbackIteration' },
+      title: 'Use Customer Feedback to Improve Your Offerings',
+      description:
+        'Build a simple, consistent feedback loop that captures customer and community input and turns it into actionable improvements.',
+      actionSteps: [
+        { action: 'Set up a simple feedback collection method (survey, comment card, or follow-up email)', timeframe: 'this-week' },
+        { action: 'Review all collected feedback monthly and identify the top recurring theme', timeframe: 'this-month' },
+        { action: 'Implement the single most impactful improvement suggested by feedback', timeframe: 'this-quarter' },
+        { action: 'Close the loop — tell customers what you changed based on their input', timeframe: 'ongoing' },
+      ],
+      impact: 'Systematic feedback iteration reduces guesswork and ensures products evolve with customer needs',
+      priority: 'high',
+    },
+  ],
+  narrativeInnovation: [
+    {
+      id: 'narr-default',
+      context: { construct: 'narrativeInnovation' },
+      title: 'Develop Your Cultural Storytelling Strategy',
+      description:
+        'Build compelling narratives that communicate the cultural significance of your products to broader audiences, enabling premium positioning and new market access.',
+      actionSteps: [
+        { action: 'Document the origin story and cultural significance of your key products', timeframe: 'this-week' },
+        { action: 'Create a brand storytelling guide with key cultural narratives', timeframe: 'this-month' },
+        { action: 'Develop content (video, social media, packaging) that shares your cultural story', timeframe: 'this-quarter' },
+        { action: 'Test storytelling approaches and measure audience engagement', timeframe: 'ongoing' },
+      ],
+      impact: 'Cultural narratives enable premium pricing, attract grant funding, and open new audience segments',
+      priority: 'high',
+    },
+  ],
 
   // Organizational Capacities
   adaptiveResponse: adaptiveResponseRecommendations,
   learningFromSetbacks: adaptiveResponseRecommendations, // Related to adaptive
-  skillDiversity: [],
-  externalResources: [],
+  skillDiversity: [
+    {
+      id: 'skldiv-default',
+      context: { construct: 'skillDiversity' },
+      title: 'Broaden the Skills Within Your Team',
+      description:
+        'Ensure your team has a diverse mix of traditional, creative, and business skills so you can adapt to new challenges and opportunities.',
+      actionSteps: [
+        { action: 'Audit current team skills against what your enterprise needs to grow', timeframe: 'this-week' },
+        { action: 'Identify the single most critical skill gap holding you back', timeframe: 'this-month' },
+        { action: 'Create a plan to close that gap — cross-training, mentorship, or targeted hiring', timeframe: 'this-quarter' },
+        { action: 'Reassess skill needs annually as your enterprise evolves', timeframe: 'ongoing' },
+      ],
+      impact: 'Diverse skill sets enable faster adaptation and reduce dependency on any single person',
+      priority: 'high',
+    },
+  ],
+  externalResources: [
+    {
+      id: 'extres-default',
+      context: { construct: 'externalResources' },
+      title: 'Access Outside Funding and Support',
+      description:
+        'Proactively identify and pursue external funding, grants, and support programs that align with your cultural mission and growth goals.',
+      actionSteps: [
+        { action: 'Research 3 relevant grants, funds, or support programs for cultural enterprises', timeframe: 'this-week' },
+        { action: 'Prepare and submit one grant application or program enrollment', timeframe: 'this-month' },
+        { action: 'Build relationships with funders through updates, reports, and in-person meetings', timeframe: 'this-quarter' },
+        { action: 'Maintain a calendar of funding deadlines and diversify funding sources', timeframe: 'ongoing' },
+      ],
+      impact: 'External resources provide growth capital and validation without compromising cultural control',
+      priority: 'high',
+    },
+  ],
   ipProtection: ipProtectionRecommendations,
   financialReserves: financialReservesRecommendations,
   communityDecisionMaking: communityDecisionMakingRecommendations,
-  benefitDistribution: [],
-  communityOwnership: communityDecisionMakingRecommendations, // Related to governance
-  allianceNetworks: [],
+  benefitDistribution: [
+    {
+      id: 'bendist-default',
+      context: { construct: 'benefitDistribution' },
+      title: 'Ensure Fair Distribution of Benefits',
+      description:
+        'Map and adjust how revenue and other benefits flow through your enterprise to ensure community members — especially knowledge holders and artisans — are fairly compensated.',
+      actionSteps: [
+        { action: 'Map who currently benefits from your revenue (wages, profit-sharing, community reinvestment)', timeframe: 'this-week' },
+        { action: 'Identify underserved community members or contributors who should benefit more', timeframe: 'this-month' },
+        { action: 'Adjust your benefit-sharing model and communicate changes transparently', timeframe: 'this-quarter' },
+        { action: 'Review distribution fairness annually with community input', timeframe: 'ongoing' },
+      ],
+      impact: 'Fair benefit distribution builds trust, reduces conflict, and strengthens community commitment',
+      priority: 'high',
+    },
+  ],
+  allianceNetworks: [
+    {
+      id: 'allnet-default',
+      context: { construct: 'allianceNetworks' },
+      title: 'Build a Network of Allied Organizations',
+      description:
+        'Develop a network of organizations that share your goals, creating mutual support structures that amplify impact and provide stability during difficult times.',
+      actionSteps: [
+        { action: 'Identify 5 organizations with shared cultural, social, or economic goals', timeframe: 'this-week' },
+        { action: 'Attend one industry event, conference, or network gathering to build connections', timeframe: 'this-month' },
+        { action: 'Propose one joint initiative (shared marketing, co-production, advocacy) with a potential ally', timeframe: 'this-quarter' },
+        { action: 'Nurture alliance relationships through regular communication and mutual support', timeframe: 'ongoing' },
+      ],
+      impact: 'Alliance networks provide collective bargaining power, shared resources, and rapid support during crises',
+      priority: 'medium',
+    },
+  ],
 
   // Economic Resilience
   revenueRetention: financialReservesRecommendations, // Related
-  teamRetention: [],
+  teamRetention: [
+    {
+      id: 'teamret-default',
+      context: { construct: 'teamRetention' },
+      title: 'Keep Your Key People Engaged and Growing',
+      description:
+        'Retain the skilled practitioners and team members who carry your cultural knowledge by investing in their growth, well-being, and sense of purpose.',
+      actionSteps: [
+        { action: 'Conduct stay interviews with your key team members to learn what keeps them (and what might drive them away)', timeframe: 'this-week' },
+        { action: 'Address the top concern raised and communicate the changes you\'re making', timeframe: 'this-month' },
+        { action: 'Create development pathways — apprenticeships, leadership roles, or skill-building opportunities', timeframe: 'this-quarter' },
+        { action: 'Check in regularly and adjust retention strategies as needs evolve', timeframe: 'ongoing' },
+      ],
+      impact: 'Retaining key people preserves institutional knowledge and reduces costly turnover',
+      priority: 'high',
+    },
+  ],
   recoverySpeed: adaptiveResponseRecommendations, // Related
-  opportunityDiscovery: [],
+  opportunityDiscovery: [
+    {
+      id: 'oppdis-default',
+      context: { construct: 'opportunityDiscovery' },
+      title: 'Turn Disruptions Into New Opportunities',
+      description:
+        'Develop the habit of finding silver linings in setbacks — every challenge contains insights that can lead to new products, markets, or processes.',
+      actionSteps: [
+        { action: 'After each challenge or setback, hold a brief "what did we learn?" session with your team', timeframe: 'this-week' },
+        { action: 'Maintain an opportunity log where you record insights and potential pivots', timeframe: 'this-month' },
+        { action: 'Act on at least one opportunity from your log this quarter', timeframe: 'this-quarter' },
+        { action: 'Review your opportunity log quarterly and prioritize the most promising ideas', timeframe: 'ongoing' },
+      ],
+      impact: 'Organizations that find opportunities in disruptions recover faster and emerge stronger',
+      priority: 'medium',
+    },
+  ],
   postShockStrength: adaptiveResponseRecommendations, // Related
-  communitySpillover: [],
-  jobCreation: [],
+  communitySpillover: [
+    {
+      id: 'comspill-default',
+      context: { construct: 'communitySpillover' },
+      title: 'Amplify Your Impact on the Wider Community',
+      description:
+        'Extend the positive effects of your cultural enterprise beyond direct participants by tracking and growing your indirect community benefits.',
+      actionSteps: [
+        { action: 'Track indirect community benefits (local spending, tourism, cultural pride, skill-building)', timeframe: 'this-week' },
+        { action: 'Partner with at least one local business to create mutual economic benefit', timeframe: 'this-month' },
+        { action: 'Share success stories publicly to inspire others and attract support', timeframe: 'this-quarter' },
+        { action: 'Measure and report community impact annually to stakeholders and funders', timeframe: 'ongoing' },
+      ],
+      impact: 'Demonstrating community spillover effects strengthens funding applications and community support',
+      priority: 'medium',
+    },
+  ],
+  jobCreation: [
+    {
+      id: 'jobcre-default',
+      context: { construct: 'jobCreation' },
+      title: 'Create Sustainable Cultural Employment',
+      description:
+        'Turn your cultural enterprise into a source of meaningful, sustainable employment that keeps cultural skills alive while providing livelihoods.',
+      actionSteps: [
+        { action: 'Identify roles that could be filled by local community members', timeframe: 'this-week' },
+        { action: 'Create one apprenticeship, internship, or part-time position focused on cultural skills', timeframe: 'this-month' },
+        { action: 'Track jobs created and their impact on participants and the community', timeframe: 'this-quarter' },
+        { action: 'Develop a hiring pipeline that prioritizes cultural knowledge holders and local talent', timeframe: 'ongoing' },
+      ],
+      impact: 'Cultural employment preserves traditions while providing economic stability for community members',
+      priority: 'high',
+    },
+  ],
   intergenerationalPlanning: intergenerationalPlanningRecommendations,
+  revenueDiversification: [
+    {
+      id: 'revdiv-default',
+      context: { construct: 'revenueDiversification' },
+      title: 'Diversify Your Cultural Revenue Streams',
+      description:
+        'Develop multiple independent revenue sources from your cultural assets to reduce dependency on any single income stream and build protection against market disruptions.',
+      actionSteps: [
+        { action: 'Map all your current revenue streams and identify concentration risks', timeframe: 'this-week' },
+        { action: 'Identify 2-3 new revenue opportunities from existing cultural assets (e.g., workshops, licensing, digital content)', timeframe: 'this-month' },
+        { action: 'Launch a pilot for your most promising new revenue stream', timeframe: 'this-quarter' },
+        { action: 'Track and balance revenue across streams to maintain diversification', timeframe: 'ongoing' },
+      ],
+      impact: 'Multiple revenue streams reduce vulnerability to market shocks and seasonal fluctuations',
+      priority: 'high',
+    },
+  ],
+  culturalBrandPremium: [
+    {
+      id: 'brand-premium-default',
+      context: { construct: 'culturalBrandPremium' },
+      title: 'Build Your Cultural Authenticity Premium',
+      description:
+        'Leverage your cultural authenticity to create pricing power that protects against competitive pressure and economic downturns.',
+      actionSteps: [
+        { action: 'Identify what makes your cultural offering uniquely authentic and document it', timeframe: 'this-week' },
+        { action: 'Develop authenticity markers (certifications, origin labels, maker stories) for your products', timeframe: 'this-month' },
+        { action: 'Test premium pricing on products with strongest cultural authenticity positioning', timeframe: 'this-quarter' },
+        { action: 'Build customer education around why cultural authenticity commands higher value', timeframe: 'ongoing' },
+      ],
+      impact: 'Cultural brand premium provides a buffer against price competition and economic shocks',
+      priority: 'high',
+    },
+  ],
 }
 
 /**

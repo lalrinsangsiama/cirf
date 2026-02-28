@@ -88,17 +88,6 @@ export function BlogBreadcrumb({ title }: { title: string }) {
   )
 }
 
-export function CaseStudyBreadcrumb({ title }: { title: string }) {
-  return (
-    <Breadcrumb
-      items={[
-        { label: 'Case Studies', href: '/case-studies' },
-        { label: title },
-      ]}
-    />
-  )
-}
-
 export function AssessmentBreadcrumb({ name }: { name: string }) {
   return (
     <Breadcrumb

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   UserPlus,
@@ -8,8 +9,16 @@ import {
   CheckCircle,
   Sparkles,
   Users,
-  Target,
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Getting Started with CIL',
+  description: 'A step-by-step guide to evaluating and improving your cultural innovation initiative using the CIL framework.',
+  openGraph: {
+    title: 'Getting Started with CIL',
+    description: 'A step-by-step guide to evaluating and improving your cultural innovation initiative using the CIL framework.',
+  },
+}
 
 export default function GettingStartedPage() {
   return (
@@ -102,7 +111,7 @@ export default function GettingStartedPage() {
                     </div>
                     <div className="bg-sand/50 rounded-lg p-4">
                       <p className="font-medium text-ink mb-1">Capacity</p>
-                      <p className="text-sm text-stone">6 questions on adaptive, protective, empowerment, benefit, and control mechanisms</p>
+                      <p className="text-sm text-stone">6 questions on adaptive, protective, cultural protection, social empowerment, community benefit, and community control</p>
                     </div>
                     <div className="bg-sand/50 rounded-lg p-4">
                       <p className="font-medium text-ink mb-1">Outcomes</p>
@@ -140,7 +149,7 @@ export default function GettingStartedPage() {
                 <div>
                   <p className="text-stone mb-4">
                     Your score (0-13) is categorized into resilience levels with specific
-                    success rate predictions based on our research of 362 case studies.
+                    success rate predictions based on our research.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-4 p-3 rounded-lg bg-sage/10">
@@ -214,10 +223,10 @@ export default function GettingStartedPage() {
               </div>
               <div className="mt-6">
                 <Link
-                  href="/case-studies"
+                  href="/framework"
                   className="inline-flex items-center gap-2 border border-stone/20 bg-white px-5 py-2.5 rounded-full font-medium hover:bg-sand transition-colors"
                 >
-                  Browse case studies
+                  Explore the framework
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -230,15 +239,7 @@ export default function GettingStartedPage() {
           <h2 className="text-2xl font-serif font-bold text-ink mb-6 text-center">
             Who is CIL for?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link
-              href="/for/researchers"
-              className="bg-white rounded-xl p-6 border border-stone/10 hover:border-gold/50 transition-colors group"
-            >
-              <Target className="w-8 h-8 text-gold mb-3" />
-              <h3 className="font-semibold text-ink mb-1">Researchers</h3>
-              <p className="text-sm text-stone">Academic study of cultural innovation</p>
-            </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
               href="/for/practitioners"
               className="bg-white rounded-xl p-6 border border-stone/10 hover:border-gold/50 transition-colors group"

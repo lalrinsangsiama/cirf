@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Navigation', () => {
   test('homepage loads successfully', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/CIRF/)
+    await expect(page).toHaveTitle(/CIL/)
   })
 
   test('main navigation links work', async ({ page }) => {
@@ -12,14 +12,6 @@ test.describe('Navigation', () => {
     // Test Framework link
     await page.click('text=Framework')
     await expect(page).toHaveURL(/\/framework/)
-
-    // Test Research link
-    await page.click('text=Research')
-    await expect(page).toHaveURL(/\/research/)
-
-    // Test Case Studies link
-    await page.click('text=Case Studies')
-    await expect(page).toHaveURL(/\/case-studies/)
 
     // Test Tools link
     await page.click('text=Tools')
@@ -36,7 +28,7 @@ test.describe('Navigation', () => {
 
   test('logo links to homepage', async ({ page }) => {
     await page.goto('/about')
-    await page.click('a:has-text("CIRF")')
+    await page.click('a:has-text("CIL")')
     await expect(page).toHaveURL('/')
   })
 

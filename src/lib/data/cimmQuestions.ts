@@ -1,5 +1,5 @@
 // CIMM - Cultural Innovation Measurement Matrix
-// 20 questions across 4 sections: Innovation Depth, Cultural Integrity, Economic Impact, Innovation Velocity
+// 17 questions across 4 sections: Innovation Depth, Cultural Integrity, Economic Impact, Innovation Velocity
 
 export type CIMMSection =
   | 'innovationDepth'
@@ -93,16 +93,8 @@ export const innovationDepthQuestions: CIMMLikertQuestion[] = [
   },
 ]
 
-// Cultural Integrity questions (5 questions)
+// Cultural Integrity questions (3 questions)
 export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
-  {
-    id: 'cimm-ci-1',
-    section: 'culturalIntegrity',
-    construct: 'sourceAuthenticity',
-    question: 'Our innovations are recognized as authentic by source communities',
-    helpText: 'Examples: elders approve our work, community members buy our products proudly',
-    weight: 1.5,
-  },
   {
     id: 'cimm-ci-2',
     section: 'culturalIntegrity',
@@ -110,14 +102,6 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
     question: 'Cultural meanings and symbolism are preserved in our innovations',
     helpText: 'Examples: sacred symbols not used commercially, ceremonial items kept separate',
     weight: 1.4,
-  },
-  {
-    id: 'cimm-ci-3',
-    section: 'culturalIntegrity',
-    construct: 'storyTelling',
-    question: 'We communicate the cultural stories behind our innovations',
-    helpText: 'Examples: product cards explain origins, website tells the tradition\'s story',
-    weight: 1.1,
   },
   {
     id: 'cimm-ci-4',
@@ -137,7 +121,7 @@ export const culturalIntegrityQuestions: CIMMLikertQuestion[] = [
   },
 ]
 
-// Economic Impact questions (5 questions)
+// Economic Impact questions (4 questions)
 export const economicImpactQuestions: CIMMLikertQuestion[] = [
   {
     id: 'cimm-ei-1',
@@ -162,14 +146,6 @@ export const economicImpactQuestions: CIMMLikertQuestion[] = [
     question: 'Our innovations have increased income for community members',
     helpText: 'Examples: artisan wages up 30%, more families can send kids to school',
     weight: 1.5,
-  },
-  {
-    id: 'cimm-ei-4',
-    section: 'economicImpact',
-    construct: 'marketExpansion',
-    question: 'We have successfully accessed new markets through cultural innovations',
-    helpText: 'Examples: now selling to Europe, reached urban millennials, got into retail stores',
-    weight: 1.2,
   },
   {
     id: 'cimm-ei-5',
@@ -253,7 +229,7 @@ export const cimmQuestionConfig = {
 
 // Stats
 export const CIMM_STATS = {
-  totalQuestions: 20,
+  totalQuestions: 17,
   sections: 4,
-  estimatedMinutes: 8,
+  estimatedMinutes: 7,
 }

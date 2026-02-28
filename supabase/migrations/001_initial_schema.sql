@@ -1,4 +1,4 @@
--- CIRF Database Schema
+-- CIL Database Schema
 -- Run this in your Supabase SQL Editor
 
 -- Enable UUID extension
@@ -86,7 +86,7 @@ CREATE TABLE public.assessments (
   answers JSONB NOT NULL, -- { questionId: { answer: boolean, notes: string } }
   interpretation JSONB, -- { level, successRate, description }
   matched_case_studies TEXT[], -- Array of case study IDs
-  assessment_type TEXT DEFAULT 'cirf', -- cirf, cimm, cira, tbl, ciss, pricing
+  assessment_type TEXT DEFAULT 'cil', -- cil, cimm, cira, tbl, ciss, pricing
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

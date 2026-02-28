@@ -8,7 +8,7 @@ import { GlobalJsonLd } from '@/components/seo/JsonLd'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://culturalinnovationlab.org'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'),
   title: {
     default: 'Cultural Innovation Lab | Building Economies from Heritage',
     template: '%s | CIL',

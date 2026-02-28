@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { createServiceClient } from '@/lib/supabase/server'
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cirf-framework.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
@@ -17,18 +17,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/research`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/case-studies`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/tools`,

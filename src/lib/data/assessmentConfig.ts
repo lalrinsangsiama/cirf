@@ -1,7 +1,7 @@
 // Assessment Configuration
 // Defines all 6 assessments, their unlock requirements, and tools they grant access to
 
-export type AssessmentType = 'cirf' | 'cimm' | 'cira' | 'tbl' | 'ciss' | 'pricing'
+export type AssessmentType = 'cil' | 'cimm' | 'cira' | 'tbl' | 'ciss' | 'pricing'
 
 export interface AssessmentConfig {
   id: AssessmentType
@@ -24,25 +24,25 @@ export interface AssessmentConfig {
 }
 
 export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
-  cirf: {
-    id: 'cirf',
-    name: 'CIRF',
-    fullName: 'Cultural Innovation Resilience Framework',
+  cil: {
+    id: 'cil',
+    name: 'CIL',
+    fullName: 'Cultural Innovation Lab',
     description: 'Discover your strengths and growth areas across 4 key dimensions. Get personalized insights to build a more sustainable cultural business.',
-    questionCount: 40,
+    questionCount: 52,
     estimatedMinutes: 15,
-    creditCost: 1,
+    creditCost: 0, // Free — maximize survey responses for DBA research
     unlockRequirement: null, // Always available
     unlocksAssessments: ['cimm', 'cira', 'tbl', 'ciss', 'pricing'],
-    grantsToolAccess: [], // CIRF unlocks assessments, not tools directly
+    grantsToolAccess: [], // CIL unlocks assessments, not tools directly
     icon: 'Award',
     color: 'sage',
     sections: [
-      { id: 'demographics', name: 'Demographics & Profile', questionCount: 6 },
+      { id: 'demographics', name: 'Demographics & Profile', questionCount: 16 },
       { id: 'culturalCapital', name: 'Cultural Capital', questionCount: 8 },
-      { id: 'innovationActivities', name: 'Innovation Activities', questionCount: 8 },
-      { id: 'organizationalCapacities', name: 'Organizational Capacities', questionCount: 10 },
-      { id: 'economicResilience', name: 'Economic Resilience', questionCount: 8 },
+      { id: 'innovationActivities', name: 'Innovation Activities', questionCount: 9 },
+      { id: 'organizationalCapacities', name: 'Organizational Capacities', questionCount: 9 },
+      { id: 'economicResilience', name: 'Economic Resilience', questionCount: 10 },
     ],
   },
 
@@ -51,18 +51,18 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CIMM',
     fullName: 'Cultural Innovation Measurement Matrix',
     description: 'See how well you\'re balancing tradition with innovation, and where you can increase impact.',
-    questionCount: 20,
-    estimatedMinutes: 8,
-    creditCost: 0, // Free after CIRF unlock
-    unlockRequirement: 'cirf',
+    questionCount: 17,
+    estimatedMinutes: 7,
+    creditCost: 0, // Free after CIL unlock
+    unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['innovation-intensity-ratio', 'cultural-leverage-index'],
     icon: 'BarChart3',
     color: 'ocean',
     sections: [
       { id: 'innovationDepth', name: 'Innovation Depth', questionCount: 5 },
-      { id: 'culturalIntegrity', name: 'Cultural Integrity', questionCount: 5 },
-      { id: 'economicImpact', name: 'Economic Impact', questionCount: 5 },
+      { id: 'culturalIntegrity', name: 'Cultural Integrity', questionCount: 3 },
+      { id: 'economicImpact', name: 'Economic Impact', questionCount: 4 },
       { id: 'innovationVelocity', name: 'Innovation Velocity', questionCount: 5 },
     ],
   },
@@ -72,16 +72,16 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CIRA',
     fullName: 'Cultural Innovation Readiness Assessment',
     description: 'Find out if you\'re ready to scale. Identify what\'s helping you grow and what\'s holding you back.',
-    questionCount: 20,
-    estimatedMinutes: 8,
-    creditCost: 0, // Free after CIRF unlock
-    unlockRequirement: 'cirf',
+    questionCount: 18,
+    estimatedMinutes: 7,
+    creditCost: 0, // Free after CIL unlock
+    unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['innovation-readiness-calculator', 'innovation-inclusivity-score'],
     icon: 'Compass',
     color: 'gold',
     sections: [
-      { id: 'culturalCapitalInventory', name: 'Cultural Capital Inventory', questionCount: 5 },
+      { id: 'culturalCapitalInventory', name: 'Cultural Capital Inventory', questionCount: 3 },
       { id: 'innovationEcosystem', name: 'Innovation Ecosystem', questionCount: 5 },
       { id: 'barriersAssessment', name: 'Barriers Assessment', questionCount: 5 },
       { id: 'readinessIndicators', name: 'Readiness Indicators', questionCount: 5 },
@@ -93,17 +93,17 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'TBL-CI',
     fullName: 'Triple Bottom Line Cultural Innovation',
     description: 'See how your work creates value across three dimensions: profit, people, and planet.',
-    questionCount: 20,
-    estimatedMinutes: 8,
-    creditCost: 0, // Free after CIRF unlock
-    unlockRequirement: 'cirf',
+    questionCount: 17,
+    estimatedMinutes: 7,
+    creditCost: 0, // Free after CIL unlock
+    unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['tbl-calculator', 'economic-multiplier'],
     icon: 'TreePine',
     color: 'sage',
     sections: [
-      { id: 'economicReturns', name: 'Economic Returns', questionCount: 6 },
-      { id: 'socialImpact', name: 'Social Impact', questionCount: 7 },
+      { id: 'economicReturns', name: 'Economic Returns', questionCount: 5 },
+      { id: 'socialImpact', name: 'Social Impact', questionCount: 5 },
       { id: 'environmentalImpact', name: 'Environmental Impact', questionCount: 7 },
     ],
   },
@@ -113,18 +113,18 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CISS',
     fullName: 'Cultural Innovation Sustainability Scorecard',
     description: 'Check if your cultural enterprise can thrive for generations, not just years.',
-    questionCount: 18,
-    estimatedMinutes: 7,
-    creditCost: 0, // Free after CIRF unlock
-    unlockRequirement: 'cirf',
+    questionCount: 15,
+    estimatedMinutes: 6,
+    creditCost: 0, // Free after CIL unlock
+    unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['sustainability-scorecard', 'cultural-resilience-quotient'],
     icon: 'Leaf',
     color: 'sage',
     sections: [
-      { id: 'economicSustainability', name: 'Economic Sustainability', questionCount: 5 },
-      { id: 'culturalSustainability', name: 'Cultural Sustainability', questionCount: 5 },
-      { id: 'socialSustainability', name: 'Social Sustainability', questionCount: 4 },
+      { id: 'economicSustainability', name: 'Economic Sustainability', questionCount: 4 },
+      { id: 'culturalSustainability', name: 'Cultural Sustainability', questionCount: 4 },
+      { id: 'socialSustainability', name: 'Social Sustainability', questionCount: 3 },
       { id: 'environmentalSustainability', name: 'Environmental Sustainability', questionCount: 4 },
     ],
   },
@@ -136,8 +136,8 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     description: 'Find the right price for your work. Stop undercharging and start capturing the true value you create.',
     questionCount: 15,
     estimatedMinutes: 6,
-    creditCost: 0, // Free after CIRF unlock
-    unlockRequirement: 'cirf',
+    creditCost: 0, // Free after CIL unlock
+    unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['pricing-calculator', 'innovation-efficiency-rate'],
     icon: 'DollarSign',
@@ -243,7 +243,7 @@ export function getAllAssessmentTypes(): AssessmentType[] {
 }
 
 export function getSecondaryAssessments(): AssessmentType[] {
-  return getAllAssessmentTypes().filter(type => type !== 'cirf')
+  return getAllAssessmentTypes().filter(type => type !== 'cil')
 }
 
 export function getToolsByAssessment(assessmentType: AssessmentType): ToolConfig[] {

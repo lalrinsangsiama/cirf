@@ -9,7 +9,7 @@ export interface ResourceConfig {
   format: 'PDF' | 'Excel' | 'Word' | 'ZIP'
   size: string
   storagePath: string // Path in Supabase storage
-  unlockRequirement: 'cirf' | 'auth' | 'public' // cirf = requires CIRF completion, auth = requires login, public = no requirement
+  unlockRequirement: 'cil' | 'auth' | 'public' // cil = requires CIL completion, auth = requires login, public = no requirement
   toolAccessId: string // Used in tool_access table with 'resource-' prefix
   category: 'guides' | 'frameworks' | 'research' | 'data'
   features: string[] // Key features/contents of the resource
@@ -24,7 +24,7 @@ export const UNLOCKABLE_RESOURCES: ResourceConfig[] = [
     format: 'PDF',
     size: '4.2 MB',
     storagePath: 'CIL-Global-Funding-Guide-2026.pdf',
-    unlockRequirement: 'cirf',
+    unlockRequirement: 'cil',
     toolAccessId: 'resource-funding-guide-2026',
     category: 'guides',
     features: [
@@ -42,7 +42,7 @@ export const UNLOCKABLE_RESOURCES: ResourceConfig[] = [
     format: 'PDF',
     size: '3.8 MB',
     storagePath: 'CIL-Creative-Reconstruction-Framework.pdf',
-    unlockRequirement: 'cirf',
+    unlockRequirement: 'cil',
     toolAccessId: 'resource-creative-reconstruction',
     category: 'frameworks',
     features: [
@@ -67,13 +67,13 @@ export function getResourceByToolAccessId(toolAccessId: string): ResourceConfig 
   return UNLOCKABLE_RESOURCES.find(r => r.toolAccessId === toolAccessId)
 }
 
-export function getResourcesUnlockedByCIRF(): ResourceConfig[] {
-  return UNLOCKABLE_RESOURCES.filter(r => r.unlockRequirement === 'cirf')
+export function getResourcesUnlockedByCIL(): ResourceConfig[] {
+  return UNLOCKABLE_RESOURCES.filter(r => r.unlockRequirement === 'cil')
 }
 
-// Get all resource tool access IDs (for granting on CIRF completion)
-export function getCIRFResourceToolAccessIds(): string[] {
+// Get all resource tool access IDs (for granting on CIL completion)
+export function getCILResourceToolAccessIds(): string[] {
   return UNLOCKABLE_RESOURCES
-    .filter(r => r.unlockRequirement === 'cirf')
+    .filter(r => r.unlockRequirement === 'cil')
     .map(r => r.toolAccessId)
 }

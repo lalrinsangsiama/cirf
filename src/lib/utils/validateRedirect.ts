@@ -36,7 +36,6 @@ export function validateRedirectUrl(url: string | null): string {
     '/blog',
     '/profile',
     '/framework',
-    '/case-studies',
     '/about',
   ]
 

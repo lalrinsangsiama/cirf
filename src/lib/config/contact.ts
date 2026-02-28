@@ -5,13 +5,13 @@
 
 export const CONTACT_INFO = {
   // Primary contact email for general inquiries
-  email: 'contact@cirf-framework.org',
+  email: 'contact@cil-framework.org',
 
   // Support email for customer/payment issues
-  supportEmail: 'support@cirf-framework.org',
+  supportEmail: 'support@cil-framework.org',
 
   // Admin email for notifications (form submissions, etc.)
-  adminEmail: process.env.ADMIN_EMAIL || 'contact@cirf-framework.org',
+  adminEmail: process.env.ADMIN_EMAIL || 'contact@cil-framework.org',
 
   // Organization info
   organization: 'Cultural Innovation Lab',
@@ -26,7 +26,7 @@ export const CONTACT_INFO = {
 
   // Website URLs
   urls: {
-    base: process.env.NEXT_PUBLIC_BASE_URL || 'https://cirf-framework.org',
+    base: process.env.NEXT_PUBLIC_BASE_URL || 'https://cil-framework.org',
     contact: '/about#contact',
     pricing: '/pricing',
     support: '/about#contact',

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { X, Sparkles, ArrowRight, Lock, Unlock, Download, FileText } from 'lucide-react'
-import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
+import { AssessmentType, ASSESSMENT_CONFIGS, TOOL_CONFIGS } from '@/lib/data/assessmentConfig'
 import { getResourceByToolAccessId, type ResourceConfig } from '@/lib/data/resourcesConfig'
 
 interface UnlockCelebrationProps {
@@ -31,6 +31,15 @@ export default function UnlockCelebration({
       return () => clearTimeout(timer)
     }
   }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
@@ -79,6 +88,7 @@ export default function UnlockCelebration({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-sand/50 transition-colors z-10"
+          aria-label="Close"
         >
           <X className="w-5 h-5 text-ink/60" />
         </button>
@@ -139,13 +149,15 @@ export default function UnlockCelebration({
               </h3>
               <div className="flex flex-wrap gap-2">
                 {grantedTools.map(tool => (
-                  <span
+                  <Link
                     key={tool}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-gold/10 text-gold border border-gold/20 text-sm rounded-full"
+                    href={`/tools/${tool}`}
+                    onClick={onClose}
+                    className="inline-flex items-center gap-1 px-3 py-1 bg-gold/10 text-gold border border-gold/20 text-sm rounded-full hover:bg-gold/20 transition-colors"
                   >
                     <Unlock className="w-3 h-3" />
-                    {tool.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                  </span>
+                    {TOOL_CONFIGS[tool]?.name || tool.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -201,8 +213,8 @@ export default function UnlockCelebration({
                 </>
               ) : (
                 <>
-                  <strong>Keep going!</strong> Continue using the tools you&apos;ve
-                  unlocked to strengthen your cultural innovation practice.
+                  <strong>Keep going!</strong> Try the tools you&apos;ve
+                  unlocked to start measuring and improving your cultural innovation practice.
                 </>
               )}
             </p>
@@ -245,6 +257,20 @@ export default function UnlockCelebration({
                 onClick={onClose}
               >
                 Start Next Assessment
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </>
+          ) : hasNewTools ? (
+            <>
+              <button onClick={onClose} className="flex-1 btn-secondary">
+                Close
+              </button>
+              <Link
+                href="/tools/calculators"
+                className="flex-1 btn-primary flex items-center justify-center gap-2"
+                onClick={onClose}
+              >
+                Try Your New Tools
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </>

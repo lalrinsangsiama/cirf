@@ -78,7 +78,7 @@ export default function HomePage() {
                 className="text-base md:text-lg leading-relaxed font-light max-w-[500px] text-ink/80 animate-fade-in-up"
                 style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
               >
-                Take the free CIRF Assessment to discover your strengths and unlock exclusive tools, frameworks, and funding guides designed for cultural entrepreneurs.
+                Take the free CIL Assessment to discover your strengths and unlock exclusive tools, frameworks, and funding guides designed for cultural entrepreneurs.
               </p>
 
               {/* Quick Value Proposition */}
@@ -88,7 +88,7 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-2 text-sm">
                   <Unlock className="w-4 h-4 text-sage" />
-                  <span>6 assessments & tools — complete CIRF to unlock 5 more free</span>
+                  <span>6 assessments & tools — complete CIL to unlock 5 more free</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Unlock className="w-4 h-4 text-sage" />
@@ -104,7 +104,7 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in-up"
                 style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
               >
-                <Link href="/tools?start=cirf" className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
+                <Link href="/tools?start=cil" className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
                   Take the Free Assessment
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -186,7 +186,7 @@ export default function HomePage() {
               )}
 
               <Link
-                href="/tools?start=cirf"
+                href="/tools?start=cil"
                 className="mt-6 w-full bg-ink text-pearl py-3 rounded-full font-medium hover:bg-gold hover:text-ink transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Continue to Full Assessment
@@ -366,7 +366,7 @@ export default function HomePage() {
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-sage flex-shrink-0" />
-                  <span className="text-sm">CIRF (Main Assessment)</span>
+                  <span className="text-sm">CIL (Main Assessment)</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-sage flex-shrink-0" />
@@ -508,7 +508,7 @@ export default function HomePage() {
             ].map((study, i) => (
               <Link
                 key={study.title}
-                href="/case-studies"
+                href="/framework"
                 className="animate-on-scroll group aspect-[3/4] relative overflow-hidden card-hover block"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${study.color}`} />
@@ -531,8 +531,8 @@ export default function HomePage() {
           </div>
 
           <div className="mt-16 text-center">
-            <Link href="/case-studies" className="btn-secondary inline-flex items-center gap-2">
-              Explore All Case Studies
+            <Link href="/framework" className="btn-secondary inline-flex items-center gap-2">
+              Explore the Framework
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -567,8 +567,8 @@ export default function HomePage() {
                   <span>Dual accountability: academic rigour + market reality</span>
                 </div>
               </div>
-              <Link href="/research" className="btn-primary inline-flex items-center gap-2 mt-8">
-                View Our Research
+              <Link href="/framework" className="btn-primary inline-flex items-center gap-2 mt-8">
+                Explore the Framework
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

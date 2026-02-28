@@ -265,8 +265,8 @@ function PricingContent() {
               <h3 className="font-semibold text-ink mb-2">Can I get a refund?</h3>
               <p className="text-stone text-sm">
                 Unused credits can be refunded within 30 days of purchase. Contact us at{' '}
-                <a href="mailto:support@cirf-framework.org" className="text-gold hover:underline">
-                  support@cirf-framework.org
+                <a href="mailto:support@cil-framework.org" className="text-gold hover:underline">
+                  support@cil-framework.org
                 </a>{' '}
                 for refund requests.
               </p>

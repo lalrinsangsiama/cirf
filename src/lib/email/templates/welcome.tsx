@@ -53,7 +53,7 @@ export function getWelcomeEmailHtml({ name, email, loginUrl }: WelcomeEmailProps
                   Your Free Credit
                 </h3>
                 <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.6;">
-                  We've added <strong>1 free assessment credit</strong> to your account. Use it to take the CIRF (Cultural Innovation Resilience Framework) assessment and discover your initiative's resilience score.
+                  We've added <strong>1 free assessment credit</strong> to your account. Use it to take the CIL (Cultural Innovation Lab) assessment and discover your initiative's CIL Score.
                 </p>
               </div>
 
@@ -82,7 +82,7 @@ export function getWelcomeEmailHtml({ name, email, loginUrl }: WelcomeEmailProps
                     <span style="color: #D4A574;">2.</span>
                   </td>
                   <td style="padding: 10px 0; color: #555; font-size: 14px; line-height: 1.5;">
-                    <strong>Take the CIRF Assessment</strong><br>
+                    <strong>Take the CIL Assessment</strong><br>
                     Evaluate your cultural innovation initiative across 13 research-validated dimensions.
                   </td>
                 </tr>
@@ -92,7 +92,7 @@ export function getWelcomeEmailHtml({ name, email, loginUrl }: WelcomeEmailProps
                   </td>
                   <td style="padding: 10px 0; color: #555; font-size: 14px; line-height: 1.5;">
                     <strong>Unlock More Assessments</strong><br>
-                    Completing CIRF unlocks 5 specialized assessments for free.
+                    Completing CIL unlocks 5 specialized assessments for free.
                   </td>
                 </tr>
                 <tr>
@@ -100,8 +100,8 @@ export function getWelcomeEmailHtml({ name, email, loginUrl }: WelcomeEmailProps
                     <span style="color: #D4A574;">4.</span>
                   </td>
                   <td style="padding: 10px 0; color: #555; font-size: 14px; line-height: 1.5;">
-                    <strong>Explore Case Studies</strong><br>
-                    Learn from 362 verified cultural innovation initiatives worldwide.
+                    <strong>Explore Resources</strong><br>
+                    Explore cultural innovation initiatives worldwide.
                   </td>
                 </tr>
               </table>
@@ -112,10 +112,10 @@ export function getWelcomeEmailHtml({ name, email, loginUrl }: WelcomeEmailProps
           <tr>
             <td style="background: #f8f6f3; padding: 30px; text-align: center; border-radius: 0 0 12px 12px; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
               <p style="margin: 0 0 10px 0; color: #888; font-size: 12px;">
-                You're receiving this email because you created an account at cirf-framework.org.
+                You're receiving this email because you created an account at cil-framework.org.
               </p>
               <p style="margin: 0; color: #888; font-size: 12px;">
-                Cultural Innovation Lab | <a href="https://cirf-framework.org" style="color: #D4A574;">cirf-framework.org</a>
+                Cultural Innovation Lab | <a href="https://cil-framework.org" style="color: #D4A574;">cil-framework.org</a>
               </p>
             </td>
           </tr>
@@ -138,7 +138,7 @@ Thank you for joining the Cultural Innovation Lab community. Your account has be
 
 YOUR FREE CREDIT
 ----------------
-We've added 1 free assessment credit to your account. Use it to take the CIRF (Cultural Innovation Resilience Framework) assessment and discover your initiative's resilience score.
+We've added 1 free assessment credit to your account. Use it to take the CIL (Cultural Innovation Lab) assessment and discover your initiative's CIL Score.
 
 Go to your dashboard: ${loginUrl}
 
@@ -146,14 +146,14 @@ WHAT YOU CAN DO
 ---------------
 1. Complete Your Profile - Add your organization details and cultural context for personalized insights.
 
-2. Take the CIRF Assessment - Evaluate your cultural innovation initiative across 13 research-validated dimensions.
+2. Take the CIL Assessment - Evaluate your cultural innovation initiative across 13 research-validated dimensions.
 
-3. Unlock More Assessments - Completing CIRF unlocks 5 specialized assessments for free.
+3. Unlock More Assessments - Completing CIL unlocks 5 specialized assessments for free.
 
-4. Explore Case Studies - Learn from 362 verified cultural innovation initiatives worldwide.
+4. Explore Resources - Explore cultural innovation initiatives worldwide.
 
 ---
-You're receiving this email because you created an account at cirf-framework.org.
-Cultural Innovation Lab | https://cirf-framework.org
+You're receiving this email because you created an account at cil-framework.org.
+Cultural Innovation Lab | https://cil-framework.org
   `.trim()
 }
