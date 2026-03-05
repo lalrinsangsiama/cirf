@@ -1,11 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
-import crypto from 'crypto'
 
 // CSRF Configuration
 const CSRF_TOKEN_NAME = 'csrf_token'
 const CSRF_HEADER_NAME = 'x-csrf-token'
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000 // 24 hours
+
 function getCsrfSecret(): string {
   const secret = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET
   if (secret) return secret
@@ -14,8 +14,6 @@ function getCsrfSecret(): string {
   }
   return 'dev-only-csrf-secret'
 }
-
-const SECRET_KEY = getCsrfSecret()
 
 /**
  * Routes that are exempt from CSRF validation
@@ -34,17 +32,44 @@ const CSRF_EXEMPT_ROUTES = [
  */
 const CSRF_REQUIRED_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE']
 
+// --- Web Crypto helpers (edge-compatible) ---
+
+const encoder = new TextEncoder()
+
+async function getHmacKey(secret: string): Promise<CryptoKey> {
+  return crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign', 'verify']
+  )
+}
+
+function toHex(buffer: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+}
+
+function randomHex(bytes: number): string {
+  const arr = new Uint8Array(bytes)
+  crypto.getRandomValues(arr)
+  return toHex(arr.buffer)
+}
+
 /**
  * Generate a CSRF token
  */
-function generateCsrfToken(): string {
+async function generateCsrfToken(): Promise<string> {
+  const secret = getCsrfSecret()
   const timestamp = Date.now().toString(36)
-  const randomBytes = crypto.randomBytes(32).toString('hex')
-  const data = `${timestamp}.${randomBytes}`
+  const random = randomHex(32)
+  const data = `${timestamp}.${random}`
 
-  const hmac = crypto.createHmac('sha256', SECRET_KEY)
-  hmac.update(data)
-  const signature = hmac.digest('hex')
+  const key = await getHmacKey(secret)
+  const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(data))
+  const signature = toHex(sig)
 
   return `${data}.${signature}`
 }
@@ -52,7 +77,7 @@ function generateCsrfToken(): string {
 /**
  * Validate a CSRF token
  */
-function validateCsrfToken(token: string): boolean {
+async function validateCsrfToken(token: string): Promise<boolean> {
   if (!token) return false
 
   const parts = token.split('.')
@@ -61,18 +86,17 @@ function validateCsrfToken(token: string): boolean {
   const [timestamp, randomBytes, signature] = parts
 
   // Verify signature
+  const secret = getCsrfSecret()
   const data = `${timestamp}.${randomBytes}`
-  const hmac = crypto.createHmac('sha256', SECRET_KEY)
-  hmac.update(data)
-  const expectedSignature = hmac.digest('hex')
+  const key = await getHmacKey(secret)
+  const valid = await crypto.subtle.verify(
+    'HMAC',
+    key,
+    hexToBuffer(signature),
+    encoder.encode(data)
+  )
 
-  try {
-    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature))) {
-      return false
-    }
-  } catch {
-    return false
-  }
+  if (!valid) return false
 
   // Check token expiry
   const tokenTime = parseInt(timestamp, 36)
@@ -81,6 +105,14 @@ function validateCsrfToken(token: string): boolean {
   }
 
   return true
+}
+
+function hexToBuffer(hex: string): ArrayBuffer {
+  const bytes = new Uint8Array(hex.length / 2)
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16)
+  }
+  return bytes.buffer
 }
 
 /**
@@ -125,7 +157,7 @@ export async function middleware(request: NextRequest) {
 
     // Compare tokens
     try {
-      if (headerToken !== cookieToken || !validateCsrfToken(cookieToken)) {
+      if (headerToken !== cookieToken || !(await validateCsrfToken(cookieToken))) {
         return NextResponse.json(
           {
             success: false,
@@ -153,10 +185,10 @@ export async function middleware(request: NextRequest) {
 
   // Ensure CSRF token cookie exists for all requests
   const existingToken = request.cookies.get(CSRF_TOKEN_NAME)?.value
-  const tokenValid = existingToken && validateCsrfToken(existingToken)
+  const tokenValid = existingToken && (await validateCsrfToken(existingToken))
 
   if (!tokenValid) {
-    const newToken = generateCsrfToken()
+    const newToken = await generateCsrfToken()
     response.cookies.set(CSRF_TOKEN_NAME, newToken, {
       httpOnly: false, // Double-submit cookie pattern: JS reads cookie to send as X-CSRF-TOKEN header
       secure: process.env.NODE_ENV === 'production',
