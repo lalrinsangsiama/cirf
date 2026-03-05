@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { use, useEffect, useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/components/auth/AuthProvider'
@@ -168,7 +168,8 @@ function calculateSecondaryAssessmentScore(
   return { overallScore, sectionScores }
 }
 
-export default function AssessmentPage({ params }: PageProps) {
+export default function AssessmentPage({ params }: { params: Promise<{ type: string }> }) {
+  const { type } = use(params)
   const router = useRouter()
   const { user, profile, loading: authLoading } = useAuth()
   const [hasAccess, setHasAccess] = useState<boolean | null>(null)
@@ -198,7 +199,7 @@ export default function AssessmentPage({ params }: PageProps) {
 
   const supabase = createClient()
 
-  const assessmentType = params.type as AssessmentType
+  const assessmentType = type as AssessmentType
   const config = ASSESSMENT_CONFIGS[assessmentType]
 
   // Redirect if invalid assessment type

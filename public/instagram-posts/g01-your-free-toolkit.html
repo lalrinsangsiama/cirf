@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Your Free Toolkit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #e8e8e8;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #fdfdfb;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.04;
+      background-image:
+        radial-gradient(circle at 20% 30%, #b8963e 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, #b8963e 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .gold-accent {
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #b8963e, #d4af37);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #b8963e;
+      margin-bottom: 30px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #1a1a1a;
+      margin-bottom: 45px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #b8963e;
+    }
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-bottom: 50px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .item-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: #b8963e;
+      min-width: 70px;
+    }
+
+    .item-text {
+      font-size: 22px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .item-text strong {
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(184, 150, 62, 0.15);
+    }
+
+    .subtext {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: #999;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(184, 150, 62, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #b8963e;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+    <div class="gold-accent"></div>
+
+    <div class="content">
+      <div class="label">Free for Cultural Entrepreneurs</div>
+      <h1 class="headline">
+        Take the survey.<br>
+        Unlock <em>everything.</em>
+      </h1>
+
+      <div class="items">
+        <div class="item">
+          <span class="item-number">6</span>
+          <span class="item-text"><strong>Assessments</strong> covering innovation, readiness, impact, sustainability &amp; pricing</span>
+        </div>
+        <div class="divider"></div>
+        <div class="item">
+          <span class="item-number">10</span>
+          <span class="item-text"><strong>Interactive calculators</strong> to measure and grow your cultural enterprise</span>
+        </div>
+        <div class="divider"></div>
+        <div class="item">
+          <span class="item-number">7</span>
+          <span class="item-text"><strong>Expert PDF guides</strong> on funding, pricing, impact reporting &amp; succession</span>
+        </div>
+      </div>
+
+      <p class="subtext">
+        One free assessment unlocks the full toolkit.<br>
+        No credit card. No catch. Just start.
+      </p>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">culturalinnovationlab.org</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -63,6 +63,13 @@ export default function InteractiveCalculator({ config, prefillValues, prefillSo
     sage: 'bg-sage',
   }
 
+  const interpCardMap: Record<string, string> = {
+    terracotta: 'bg-terracotta/10 border-terracotta/20',
+    gold: 'bg-gold/10 border-gold/20',
+    ocean: 'bg-ocean/10 border-ocean/20',
+    sage: 'bg-sage/10 border-sage/20',
+  }
+
   const handleInputChange = (id: string, rawValue: string, input: typeof config.inputs[0]) => {
     const parsed = parseFloat(rawValue)
     if (isNaN(parsed)) return
@@ -162,7 +169,7 @@ export default function InteractiveCalculator({ config, prefillValues, prefillSo
         <div className="space-y-4">
           <div className={cn(
             'p-4 rounded-lg border',
-            `bg-${interpretation.color}/10 border-${interpretation.color}/20`
+            interpCardMap[interpretation.color] || interpCardMap.gold
           )}>
             <p className="text-sm">{interpretation.description}</p>
           </div>

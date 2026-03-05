@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -13,10 +13,11 @@ import { TOOL_PREFILL_MAPPINGS, scaleScoreToInput } from '@/lib/data/toolPrefill
 import InteractiveCalculator from '@/components/tools/InteractiveCalculator'
 
 interface PageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default function ToolPage({ params }: PageProps) {
+  const { id: toolId } = use(params)
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
   const [hasAccess, setHasAccess] = useState<boolean | null>(null)
@@ -24,7 +25,6 @@ export default function ToolPage({ params }: PageProps) {
   const [prefillValues, setPrefillValues] = useState<Record<string, number> | null>(null)
   const [assessmentName, setAssessmentName] = useState<string | null>(null)
 
-  const toolId = params.id
   const toolConfig = TOOL_CONFIGS[toolId]
   const pageConfig = getToolPageConfig(toolId)
 
