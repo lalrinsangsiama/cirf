@@ -241,6 +241,26 @@ export async function POST(request: NextRequest) {
       return errorResponse(Errors.validation(answersValidation.error || 'Invalid answers'))
     }
 
+    // Check if user already submitted this assessment type (1 response per person)
+    const serviceClientForCheck = await createServiceClient()
+    const { data: existingAssessment } = await serviceClientForCheck
+      .from('assessments')
+      .select('id, score, interpretation, created_at')
+      .eq('user_id', user.id)
+      .eq('assessment_type', assessmentType)
+      .maybeSingle()
+
+    if (existingAssessment) {
+      logger.info('Duplicate assessment submission blocked', {
+        userId: user.id,
+        assessmentType,
+        existingAssessmentId: existingAssessment.id,
+      })
+      return errorResponse(
+        Errors.conflict('You have already completed this assessment. Each assessment can only be taken once.')
+      )
+    }
+
     // Calculate score server-side (never trust client-calculated scores)
     const { overallScore, sectionScores, constructScores } = calculateScore(answers, assessmentType)
     const interpretation = getScoreInterpretation(overallScore)
@@ -289,13 +309,23 @@ export async function POST(request: NextRequest) {
         return errorResponse(Errors.insufficientCredits())
       }
 
+      if (errorMsg === 'Assessment already completed') {
+        logger.info('Duplicate assessment submission blocked by RPC', {
+          userId: user.id,
+          assessmentType,
+        })
+        return errorResponse(
+          Errors.conflict('You have already completed this assessment. Each assessment can only be taken once.')
+        )
+      }
+
       logger.error('Assessment save failed', {
         userId: user.id,
         assessmentType,
         error: errorMsg,
         durationMs: Date.now() - startTime,
       })
-      return errorResponse(Errors.database(`Failed to save assessment: ${errorMsg}`))
+      return errorResponse(Errors.database('Failed to save assessment'))
     }
 
     const assessmentId = saveResult.assessment_id
@@ -305,16 +335,19 @@ export async function POST(request: NextRequest) {
     let unlockedAssessments: AssessmentType[] = []
     let grantedTools: string[] = []
     let grantedResources: string[] = []
+    let creditsEarned = 0
 
     try {
       const completionResult = await handleAssessmentCompletion(
         user.id,
         assessmentType,
-        assessmentId
+        assessmentId,
+        serviceClient
       )
       unlockedAssessments = completionResult.unlockedAssessments
       grantedTools = completionResult.grantedTools
       grantedResources = completionResult.grantedResources
+      creditsEarned = completionResult.creditsEarned
     } catch (completionError) {
       // Log but don't fail the submission - assessment is already saved
       logger.warn('Failed to handle assessment completion', {
@@ -347,7 +380,8 @@ export async function POST(request: NextRequest) {
       },
       sectionScores,
       constructScores,
-      newBalance,
+      newBalance: (newBalance || 0) + creditsEarned,
+      creditsEarned,
       unlockedAssessments,
       grantedTools,
       grantedResources,

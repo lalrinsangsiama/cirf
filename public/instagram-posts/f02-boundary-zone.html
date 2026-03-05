@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post F02 - The Boundary Zone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 65px 80px 40px;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37;
+      margin-bottom: 18px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 700; color: #fdfdfb; line-height: 1.15;
+    }
+    .headline em { color: #d4af37; font-style: normal; }
+    .subtitle {
+      font-size: 16px; font-weight: 300; color: #7c7c7c;
+      margin-top: 12px; line-height: 1.5;
+    }
+    .spectrum-section {
+      padding: 50px 80px 30px;
+    }
+    .scale-numbers {
+      display: flex; justify-content: space-between;
+      padding: 0 4px; margin-bottom: 8px;
+    }
+    .scale-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px; color: rgba(253,253,251,0.3);
+      width: calc(100% / 14); text-align: center;
+    }
+    .spectrum-bar {
+      display: flex; height: 80px; border-radius: 8px; overflow: hidden;
+      position: relative;
+    }
+    .zone {
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 10px;
+    }
+    .zone-foundation {
+      flex: 3; background: rgba(198,117,87,0.2);
+      border-right: 1px solid rgba(198,117,87,0.4);
+    }
+    .zone-boundary {
+      flex: 3; background: rgba(212,175,55,0.25);
+      border: 2px solid #d4af37;
+      position: relative;
+    }
+    .zone-scaling {
+      flex: 7; background: rgba(168,181,160,0.15);
+      border-left: 1px solid rgba(168,181,160,0.4);
+    }
+    .zone-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .zone-foundation .zone-label { color: #c67557; }
+    .zone-boundary .zone-label { color: #d4af37; }
+    .zone-scaling .zone-label { color: #a8b5a0; }
+    .zone-range {
+      font-size: 11px; color: rgba(253,253,251,0.5); margin-top: 4px;
+    }
+    .arrow-section {
+      padding: 20px 80px; text-align: center;
+    }
+    .arrow-pointer {
+      display: inline-block; padding: 12px 30px;
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 30px;
+      font-size: 13px; font-weight: 600; color: #d4af37;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .details {
+      padding: 30px 80px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .detail-card {
+      padding: 24px; border-radius: 8px; text-align: center;
+    }
+    .detail-card:nth-child(1) {
+      background: rgba(198,117,87,0.08);
+      border-top: 2px solid #c67557;
+    }
+    .detail-card:nth-child(2) {
+      background: rgba(212,175,55,0.08);
+      border-top: 2px solid #d4af37;
+    }
+    .detail-card:nth-child(3) {
+      background: rgba(168,181,160,0.08);
+      border-top: 2px solid #a8b5a0;
+    }
+    .detail-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb;
+      margin-bottom: 8px;
+    }
+    .detail-range {
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .detail-card:nth-child(1) .detail-range { color: #c67557; }
+    .detail-card:nth-child(2) .detail-range { color: #d4af37; }
+    .detail-card:nth-child(3) .detail-range { color: #a8b5a0; }
+    .detail-desc {
+      font-size: 12px; color: #7c7c7c; line-height: 1.4;
+    }
+    .closing {
+      padding: 20px 80px 0; text-align: center;
+      font-size: 15px; font-weight: 500; color: #fdfdfb; font-style: italic;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Key Concept</div>
+      <h1 class="headline">The <em>Boundary Zone</em>:<br>Where Transformation Happens</h1>
+      <p class="subtitle">Scores 4&ndash;6 out of 13 represent the critical transition point</p>
+    </div>
+    <div class="spectrum-section">
+      <div class="scale-numbers">
+        <div class="scale-num">0</div><div class="scale-num">1</div><div class="scale-num">2</div>
+        <div class="scale-num">3</div><div class="scale-num">4</div><div class="scale-num">5</div>
+        <div class="scale-num">6</div><div class="scale-num">7</div><div class="scale-num">8</div>
+        <div class="scale-num">9</div><div class="scale-num">10</div><div class="scale-num">11</div>
+        <div class="scale-num">12</div><div class="scale-num">13</div>
+      </div>
+      <div class="spectrum-bar">
+        <div class="zone zone-foundation">
+          <div>
+            <div class="zone-label">Foundation</div>
+            <div class="zone-range">0&ndash;3</div>
+          </div>
+        </div>
+        <div class="zone zone-boundary">
+          <div>
+            <div class="zone-label">Boundary Zone</div>
+            <div class="zone-range">4&ndash;6</div>
+          </div>
+        </div>
+        <div class="zone zone-scaling">
+          <div>
+            <div class="zone-label">Scaling</div>
+            <div class="zone-range">7&ndash;13</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="arrow-section">
+      <div class="arrow-pointer">&darr; Maximum Leverage Point &darr;</div>
+    </div>
+    <div class="details">
+      <div class="detail-card">
+        <div class="detail-title">Foundation</div>
+        <div class="detail-range">Scores 0&ndash;3</div>
+        <div class="detail-desc">Assets exist but lack structure, governance, or market connection</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-title">Boundary Zone</div>
+        <div class="detail-range">Scores 4&ndash;6</div>
+        <div class="detail-desc">Small investments here yield disproportionate outcomes</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-title">Scaling</div>
+        <div class="detail-range">Scores 7&ndash;13</div>
+        <div class="detail-desc">Self-sustaining growth, multiplicative effects emerge</div>
+      </div>
+    </div>
+    <div class="closing">"Focus resources where transformation happens."</div>
+    <div class="source">Cultural Innovation Lab (CIL) 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

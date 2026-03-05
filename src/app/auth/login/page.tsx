@@ -172,7 +172,7 @@ function LoginForm() {
 
       {/* Benefits reminder */}
       <div className="mt-6 text-center text-sm text-stone">
-        <p>Get 1 free assessment credit when you sign up</p>
+        <p>Start your free CIL assessment today</p>
       </div>
     </div>
   )

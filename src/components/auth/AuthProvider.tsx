@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
+import { logger } from '@/lib/logger'
 
 interface Profile {
   id: string
@@ -71,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .single()
 
     if (error) {
-      console.error('Error fetching profile:', error)
+      logger.error('Error fetching profile', {}, error instanceof Error ? error : undefined)
       return null
     }
 
@@ -86,10 +87,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signOut = async () => {
-    await supabase.auth.signOut()
-    setUser(null)
-    setSession(null)
-    setProfile(null)
+    try {
+      await supabase.auth.signOut()
+    } catch (error) {
+      // Still clear local state to avoid stuck state
+      logger.error('Sign out failed', {}, error instanceof Error ? error : undefined)
+    } finally {
+      setUser(null)
+      setSession(null)
+      setProfile(null)
+    }
   }
 
   useEffect(() => {
@@ -111,7 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
         }
       } catch (error) {
-        console.error('Error initializing auth:', error)
+        logger.error('Error initializing auth', {}, error instanceof Error ? error : undefined)
       } finally {
         if (isMounted) {
           setLoading(false)
@@ -138,7 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               setProfile(profileData)
             }
           } catch (error) {
-            console.error('Error fetching profile during auth state change:', error)
+            logger.error('Error fetching profile during auth state change', {}, error instanceof Error ? error : undefined)
           }
         } else {
           setProfile(null)

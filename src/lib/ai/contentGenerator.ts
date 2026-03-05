@@ -100,7 +100,7 @@ Respond with valid JSON only.`
     const parsed = JSON.parse(jsonMatch[0]) as GeneratedPost
     return parsed
   } catch (parseError) {
-    console.error('Failed to parse AI response:', parseError)
+    // Log parse error for debugging (logger may not be available in all contexts)
     throw new Error('Failed to parse AI-generated content')
   }
 }

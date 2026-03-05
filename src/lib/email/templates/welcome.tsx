@@ -112,10 +112,10 @@ export function getWelcomeEmailHtml({ name, email, loginUrl }: WelcomeEmailProps
           <tr>
             <td style="background: #f8f6f3; padding: 30px; text-align: center; border-radius: 0 0 12px 12px; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
               <p style="margin: 0 0 10px 0; color: #888; font-size: 12px;">
-                You're receiving this email because you created an account at cil-framework.org.
+                You're receiving this email because you created an account at culturalinnovationlab.org.
               </p>
               <p style="margin: 0; color: #888; font-size: 12px;">
-                Cultural Innovation Lab | <a href="https://cil-framework.org" style="color: #D4A574;">cil-framework.org</a>
+                Cultural Innovation Lab | <a href="https://culturalinnovationlab.org" style="color: #D4A574;">culturalinnovationlab.org</a>
               </p>
             </td>
           </tr>
@@ -153,7 +153,7 @@ WHAT YOU CAN DO
 4. Explore Resources - Explore cultural innovation initiatives worldwide.
 
 ---
-You're receiving this email because you created an account at cil-framework.org.
-Cultural Innovation Lab | https://cil-framework.org
+You're receiving this email because you created an account at culturalinnovationlab.org.
+Cultural Innovation Lab | https://culturalinnovationlab.org
   `.trim()
 }

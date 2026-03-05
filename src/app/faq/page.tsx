@@ -15,7 +15,7 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'Framework',
     question: 'What is the CIL framework?',
-    answer: 'The Cultural Innovation Lab (CIL) is a research-based assessment tool that measures the sustainability and success potential of cultural innovation initiatives. It evaluates 13 key components across three categories: Foundation (cultural integrity, community relevance, economic value, adaptability), Capacity (adaptive, protective, social empowerment, community benefit, community control), and Outcomes (transformative, generative, sustainable development).',
+    answer: 'The Cultural Innovation Lab (CIL) is a research-based assessment platform that measures the sustainability and success potential of cultural innovation initiatives. The main CIL assessment has 61 questions across 5 sections: Demographics & Profile, Cultural Capital, Innovation Activities, Organizational Capacities, and Economic Resilience. You receive a score from 0-100 categorized into four levels: Emerging (0-40), Developing (40-60), Established (60-80), and Thriving (80-100).',
   },
   {
     category: 'Framework',
@@ -24,60 +24,91 @@ const FAQ_ITEMS: FAQItem[] = [
   },
   {
     category: 'Framework',
-    question: 'What is the critical threshold of 7-8?',
-    answer: 'Scoring 7-8 out of 13 represents a critical threshold in the CIL framework. Initiatives below this threshold tend to face greater challenges, while those at or above it show improved outcomes. This threshold indicates the minimum conditions needed for sustainable cultural innovation.',
+    question: 'What do the score levels mean?',
+    answer: 'The CIL assessment uses a 0-100 scoring system with four levels: Emerging (0-40) indicates early stage with foundational work needed; Developing (40-60) shows good progress with significant growth opportunities; Established (60-80) reflects solid performance with some areas for improvement; Thriving (80-100) indicates excellent performance with strong foundations across all dimensions.',
   },
   // Assessment
   {
     category: 'Assessment',
     question: 'How does the CIL assessment work?',
-    answer: 'The assessment consists of 13 questions covering the three main categories. For each question, you evaluate whether your initiative meets the criteria. Your total score (0-13) determines your resilience level: scores of 11-13 indicate High Resilience, 7-10 indicate Moderate Resilience, and below 7 indicate At Risk status where focused intervention may be needed.',
+    answer: 'The assessment consists of 61 questions covering demographics, cultural capital, innovation activities, organizational capacities, and economic resilience. Your responses generate a CIL Score from 0-100 that determines your resilience level.',
   },
   {
     category: 'Assessment',
-    question: 'How many credits do I need for an assessment?',
-    answer: 'Each full CIL assessment requires 1 credit. New users receive 1 free credit upon signup. Additional credits can be purchased in packs of 5, 15, or 50 credits at discounted rates.',
+    question: 'How long does each assessment take?',
+    answer: 'The main CIL Assessment takes approximately 20 minutes. Each of the 5 secondary assessments (CIMM, CIRA, TBL-CI, CISS, Pricing) takes 6-8 minutes.',
   },
   {
     category: 'Assessment',
-    question: 'Can I retake the assessment?',
-    answer: 'Yes, you can retake the assessment as many times as you like (each attempt uses 1 credit). This is useful for tracking progress over time or reassessing after implementing changes. All your assessment results are saved in your dashboard history.',
+    question: 'Who can take the assessments?',
+    answer: 'The assessments are designed for cultural entrepreneurs, artisans, heritage practitioners, community leaders, and researchers working in cultural innovation and economic resilience.',
   },
-  // Credits & Pricing
   {
-    category: 'Credits & Pricing',
+    category: 'Assessment',
+    question: 'Can I change my answers after submitting?',
+    answer: 'No, answers cannot be edited after submission. Each assessment can only be taken once per person. Please review your responses carefully before submitting.',
+  },
+  {
+    category: 'Assessment',
+    question: 'What happens if I don\'t finish?',
+    answer: 'Your progress is automatically saved if you\'re signed in. You can close the browser and return anytime to continue where you left off.',
+  },
+  // Credits & Access
+  {
+    category: 'Credits & Access',
+    question: 'Is the platform free?',
+    answer: 'Yes, CIL is completely free. The main CIL Assessment is free and grants you 1 credit. Each secondary assessment costs 1 credit but grants 1 credit back on completion, so the net cost is always zero. You can complete all 6 assessments for free.',
+  },
+  {
+    category: 'Credits & Access',
+    question: 'How many credits do I need?',
+    answer: 'The CIL Assessment is free and grants 1 credit. Each secondary assessment costs 1 credit but returns 1 credit on completion. This means you can complete all assessments sequentially at no cost — just do them one at a time.',
+  },
+  {
+    category: 'Credits & Access',
+    question: 'How do credits work?',
+    answer: 'Credits fuel the assessment loop. The CIL Assessment is free and grants 1 credit on completion. Each of the 5 secondary assessments costs 1 credit but grants 1 credit back when you finish. This means the net cost is always zero — you can complete all 6 assessments for free, just one at a time.',
+  },
+  {
+    category: 'Credits & Access',
+    question: 'Can I retake an assessment?',
+    answer: 'No, each assessment can only be taken once per person. This ensures data integrity for our research. Your results are permanently saved and accessible from your dashboard.',
+  },
+  {
+    category: 'Credits & Access',
     question: 'Do my credits expire?',
-    answer: 'No, your credits never expire. Use them whenever you\'re ready to assess an initiative.',
+    answer: 'No, your credits never expire. Use them whenever you\'re ready to take the next assessment.',
+  },
+  // Privacy & Data
+  {
+    category: 'Privacy & Data',
+    question: 'How is my data used?',
+    answer: 'Your responses are kept confidential — only you can see your individual results. For research purposes, data is anonymized before analysis or publication. Individual responses are never shared or published. Only aggregated, de-identified data is used in research findings. We also collect basic usage data such as browser type, pages visited, and IP address (anonymized for analytics).',
   },
   {
-    category: 'Credits & Pricing',
-    question: 'What payment methods do you accept?',
-    answer: 'We accept all major credit cards, debit cards, and UPI through our secure Razorpay payment processing. International cards (Visa, Mastercard, American Express) and Indian payment methods are supported.',
+    category: 'Privacy & Data',
+    question: 'Who can see my responses?',
+    answer: 'Only you can see your individual assessment results on your dashboard. Researchers only have access to aggregated, anonymized data. Your personal information (name, email) is never linked to your responses in any published research. For concerns about data handling, contact hello@culturalinnovationlab.org.',
   },
   {
-    category: 'Credits & Pricing',
-    question: 'Can I get a refund?',
-    answer: 'Unused credits can be refunded within 30 days of purchase. Contact support@cil-framework.org for refund requests.',
-  },
-  {
-    category: 'Credits & Pricing',
-    question: 'Are there team or enterprise plans?',
-    answer: 'Yes! For organizations needing more than 50 assessments, we offer custom enterprise plans with volume discounts, team dashboards, and additional features. Contact us to discuss your needs.',
+    category: 'Privacy & Data',
+    question: 'Can I withdraw my data?',
+    answer: 'Yes, you can withdraw at any time by deleting your account from your dashboard settings, or by contacting hello@culturalinnovationlab.org. This will permanently remove all your personal data and assessment responses.',
   },
   // Account & Technical
   {
     category: 'Account & Technical',
     question: 'Is my data secure?',
-    answer: 'Yes, we take data security seriously. All data is encrypted in transit and at rest. Assessment results are private to your account. We use Supabase for secure authentication and database storage, and Razorpay for payment processing.',
+    answer: 'Yes, we take data security seriously. All data is encrypted in transit and at rest. Assessment results are private to your account. We use Supabase for secure authentication and database storage.',
   },
   {
     category: 'Account & Technical',
     question: 'Can I delete my account and data?',
-    answer: 'Yes, you can delete your account directly from your dashboard settings, or by contacting support@cil-framework.org. We will permanently delete all your personal data and assessment history immediately.',
+    answer: 'Yes, you can delete your account directly from your dashboard settings, or by contacting hello@culturalinnovationlab.org. We will permanently delete all your personal data and assessment history immediately.',
   },
 ]
 
-const CATEGORIES = ['All', 'Framework', 'Assessment', 'Credits & Pricing', 'Account & Technical']
+const CATEGORIES = ['All', 'Framework', 'Assessment', 'Credits & Access', 'Privacy & Data', 'Account & Technical']
 
 export default function FAQPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -135,7 +166,7 @@ export default function FAQPage() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors ${
                 selectedCategory === category
                   ? 'bg-ink text-pearl'
                   : 'bg-white border border-stone/20 text-stone hover:border-ink/50'

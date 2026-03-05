@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Maori Economy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 55px 70px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 18px; margin-top: 5px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 50px; font-weight: 700; color: #fdfdfb;
+      line-height: 1.1; margin-bottom: 35px;
+    }
+    .headline span { color: #d4af37; }
+    /* Table */
+    .table {
+      width: 100%; max-width: 820px;
+    }
+    .table-header {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      padding: 14px 20px; border-bottom: 2px solid rgba(212,175,55,0.3);
+      margin-bottom: 4px;
+    }
+    .th {
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: #d4af37;
+    }
+    .th:first-child { text-align: left; }
+    .th:not(:first-child) { text-align: center; }
+    .table-row {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      padding: 18px 20px; align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .table-row:nth-child(even) {
+      background: rgba(255,255,255,0.015);
+    }
+    .td {
+      font-size: 15px; color: #a0a0a0; font-weight: 400;
+    }
+    .td:first-child { text-align: left; font-weight: 500; color: #c0c0c0; }
+    .td:not(:first-child) { text-align: center; }
+    .td-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 700; color: #fdfdfb;
+    }
+    .td-val.highlight { color: #d4af37; }
+    .growth-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      font-size: 13px; font-weight: 600; color: #d4af37;
+      background: rgba(212,175,55,0.1);
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Case Study: New Zealand</div>
+      <div class="headline"><span>$17B</span> to <span>$32B</span><br>in Five Years</div>
+
+      <div class="table">
+        <div class="table-header">
+          <div class="th">Metric</div>
+          <div class="th">2018</div>
+          <div class="th">2023</div>
+          <div class="th">Growth</div>
+        </div>
+        <div class="table-row">
+          <div class="td">Economy</div>
+          <div class="td"><span class="td-val">$17B</span></div>
+          <div class="td"><span class="td-val highlight">$32B</span></div>
+          <div class="td"><span class="growth-badge">+88%</span></div>
+        </div>
+        <div class="table-row">
+          <div class="td">Assets</div>
+          <div class="td"><span class="td-val">$69B</span></div>
+          <div class="td"><span class="td-val highlight">$126B</span></div>
+          <div class="td"><span class="growth-badge">+83%</span></div>
+        </div>
+        <div class="table-row">
+          <div class="td">Tourism</div>
+          <div class="td"><span class="td-val">$1B</span></div>
+          <div class="td"><span class="td-val highlight">$1.2B</span></div>
+          <div class="td"><span class="growth-badge">+20%</span></div>
+        </div>
+        <div class="table-row">
+          <div class="td">Businesses</div>
+          <div class="td"><span class="td-val" style="color:#7c7c7c;font-size:18px;">&mdash;</span></div>
+          <div class="td"><span class="td-val highlight">24K</span></div>
+          <div class="td"><span class="growth-badge">&mdash;</span></div>
+        </div>
+        <div class="table-row">
+          <div class="td">High-Skilled Jobs</div>
+          <div class="td"><span class="td-val">37%</span></div>
+          <div class="td"><span class="td-val highlight">46%</span></div>
+          <div class="td"><span class="growth-badge">+9pp</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">BERL Economics / MBIE 2025</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - Medellin Transformation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #1a1a1a; padding: 20px; }
+    .post { width: 1080px; height: 1080px; background: #0a0a0a; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; }
+    .content { position: relative; z-index: 10; padding: 60px 70px 0; height: 100%; display: flex; flex-direction: column; }
+    .label { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #5b8c9e; margin-bottom: 16px; }
+    .headline { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; line-height: 1.15; color: #fdfdfb; margin-bottom: 40px; }
+    .headline em { font-style: italic; color: #d4af37; }
+
+    .metrics { flex: 1; display: flex; flex-direction: column; gap: 24px; }
+    .metric-row { display: flex; align-items: center; gap: 24px; }
+    .metric-label { width: 160px; font-size: 14px; font-weight: 500; color: rgba(253,253,251,0.5); text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+    .metric-bars { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .bar-group { display: flex; align-items: center; gap: 12px; }
+    .bar-tag { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(253,253,251,0.3); width: 50px; }
+    .bar { height: 40px; border-radius: 2px; display: flex; align-items: center; padding: 0 16px; justify-content: flex-end; }
+    .bar.before { background: linear-gradient(90deg, rgba(198,117,87,0.2), rgba(198,117,87,0.5)); }
+    .bar.after { background: linear-gradient(90deg, rgba(168,181,160,0.2), rgba(168,181,160,0.6)); }
+    .bar-val { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
+    .bar.before .bar-val { color: #c67557; }
+    .bar.after .bar-val { color: #a8b5a0; }
+    .change-badge { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #d4af37; min-width: 80px; text-align: right; }
+
+    .bottom-stat { text-align: center; padding: 28px; margin-top: auto; margin-bottom: 20px; background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.15); }
+    .bottom-stat .stat-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 900; color: #d4af37; }
+    .bottom-stat .stat-text { font-size: 15px; font-weight: 300; color: rgba(253,253,251,0.5); margin-top: 6px; }
+
+    .source { font-size: 11px; color: rgba(124,124,124,0.6); text-align: center; position: absolute; bottom: 80px; left: 70px; right: 70px; }
+    .bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 70px; text-align: center; border-top: 1px solid #d4af37; }
+    .bottom-bar .logo { font-family: 'Playfair Display', serif; font-size: 20px; color: #fdfdfb; }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Urban Transformation</div>
+      <h1 class="headline">How <em>Culture</em> Defeated Violence</h1>
+
+      <div class="metrics">
+        <div class="metric-row">
+          <div class="metric-label">Homicide Rate</div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <div class="bar-tag">1991</div>
+              <div class="bar before" style="width: 90%;"><span class="bar-val">381/100K</span></div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-tag">Now</div>
+              <div class="bar after" style="width: 12%;"><span class="bar-val">11</span></div>
+            </div>
+          </div>
+          <div class="change-badge">&darr;97%</div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-label">Poverty Rate</div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <div class="bar-tag">Before</div>
+              <div class="bar before" style="width: 70%;"><span class="bar-val">36.5%</span></div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-tag">After</div>
+              <div class="bar after" style="width: 28%;"><span class="bar-val">14.1%</span></div>
+            </div>
+          </div>
+          <div class="change-badge">&darr;61%</div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-label">Unemployment</div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <div class="bar-tag">Before</div>
+              <div class="bar before" style="width: 55%;"><span class="bar-val">15%</span></div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-tag">After</div>
+              <div class="bar after" style="width: 38%;"><span class="bar-val">10%</span></div>
+            </div>
+          </div>
+          <div class="change-badge">&darr;33%</div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-label">Culture Budget</div>
+          <div class="metric-bars">
+            <div class="bar-group">
+              <div class="bar-tag">Before</div>
+              <div class="bar before" style="width: 15%;"><span class="bar-val">0.68%</span></div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-tag">After</div>
+              <div class="bar after" style="width: 70%;"><span class="bar-val">5%</span></div>
+            </div>
+          </div>
+          <div class="change-badge">&uarr;635%</div>
+        </div>
+      </div>
+
+      <div class="bottom-stat">
+        <div class="stat-num">60</div>
+        <div class="stat-text">Cultural facilities built in the poorest neighborhoods</div>
+      </div>
+    </div>
+    <div class="source">Source: Secretaria de Cultura Medellin 2021; WEF 2016</div>
+    <div class="bottom-bar"><div class="logo">Cultural Innovation Lab</div></div>
+  </div>
+</body>
+</html>

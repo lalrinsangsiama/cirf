@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 23 - Heritage as Capital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header {
+      padding: 60px 80px 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 15px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: #fdfdfb;
+      line-height: 1.2;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .capital-grid {
+      padding: 40px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .capital-card {
+      padding: 30px;
+      background: rgba(245, 240, 232, 0.03);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capital-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .capital-card:nth-child(1)::before { background: #d4af37; }
+    .capital-card:nth-child(2)::before { background: #5b8c9e; }
+    .capital-card:nth-child(3)::before { background: #a8b5a0; }
+    .capital-card:nth-child(4)::before { background: #c67557; }
+
+    .capital-type {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .capital-card:nth-child(1) .capital-type { color: #d4af37; }
+    .capital-card:nth-child(2) .capital-type { color: #5b8c9e; }
+    .capital-card:nth-child(3) .capital-type { color: #a8b5a0; }
+    .capital-card:nth-child(4) .capital-type { color: #c67557; }
+
+    .capital-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fdfdfb;
+      margin-bottom: 10px;
+    }
+
+    .capital-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: #7c7c7c;
+      line-height: 1.5;
+    }
+
+    .center-text {
+      text-align: center;
+      padding: 10px 80px 0;
+    }
+
+    .center-text p {
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: #7c7c7c;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.6);
+      line-height: 1.5;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding-top: 15px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">The Framework</div>
+      <h1 class="headline">Heritage is <em>cross-dimensional</em> capital</h1>
+    </div>
+
+    <div class="capital-grid">
+      <div class="capital-card">
+        <div class="capital-type">Human Capital</div>
+        <div class="capital-name">Values & Skills</div>
+        <div class="capital-desc">System of values, solidarity of residents, craftsmanship passed between generations</div>
+      </div>
+      <div class="capital-card">
+        <div class="capital-type">Social Capital</div>
+        <div class="capital-name">Bonds & Trust</div>
+        <div class="capital-desc">Regional customs, folk traditions, cooperation networks that strengthen community resilience</div>
+      </div>
+      <div class="capital-card">
+        <div class="capital-type">Economic Capital</div>
+        <div class="capital-name">Assets & Tourism</div>
+        <div class="capital-desc">Historic infrastructure, cultural sites, and material heritage as tourism destinations</div>
+      </div>
+      <div class="capital-card">
+        <div class="capital-type">Ecological Capital</div>
+        <div class="capital-name">Land & Knowledge</div>
+        <div class="capital-desc">Respect for natural resources, traditional agriculture, environmental stewardship</div>
+      </div>
+    </div>
+
+    <div class="center-text">
+      <p>"Cultural heritage is not only a marker of identity but a key resource for promoting socio-economic and environmental sustainability."</p>
+    </div>
+
+    <div class="source">Source: Musialik, W. et al. (2025). "Cultural heritage capital as a resilience factor in sustainable development policy of the region." Economics and Environment.</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

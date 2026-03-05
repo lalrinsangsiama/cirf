@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post E02 - You Can Measure Culture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 35px;
+    }
+    .label {
+      font-size: 14px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557;
+      background: rgba(198,117,87,0.1); padding: 8px 20px; border-radius: 4px;
+      display: inline-block; margin-bottom: 20px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 700; color: #fdfdfb; line-height: 1.2;
+    }
+    .headline em { color: #d4af37; font-style: normal; }
+    .methods-list {
+      padding: 25px 80px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .method {
+      display: flex; align-items: stretch; gap: 0;
+      background: rgba(245,240,232,0.03); border-radius: 6px;
+      overflow: hidden;
+    }
+    .method-number {
+      width: 60px; min-height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: #0a0a0a;
+      background: #d4af37;
+    }
+    .method-content {
+      padding: 18px 24px; flex: 1;
+    }
+    .method-name {
+      font-size: 16px; font-weight: 600; color: #fdfdfb; margin-bottom: 4px;
+    }
+    .method-detail {
+      font-size: 13px; font-weight: 400; color: #7c7c7c; line-height: 1.4;
+    }
+    .method-detail strong { color: #d4af37; font-weight: 600; }
+    .method:nth-child(2) .method-number { background: #5b8c9e; }
+    .method:nth-child(3) .method-number { background: #a8b5a0; }
+    .method:nth-child(4) .method-number { background: #c67557; }
+    .method:nth-child(5) .method-number { background: #d4af37; }
+    .closing {
+      padding: 25px 80px 0;
+      font-size: 15px; font-weight: 500; color: #fdfdfb;
+      font-style: italic; text-align: center;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Myth vs Fact</div>
+      <h1 class="headline">"You Can't Measure Culture"<br><em>Yes, You Can.</em></h1>
+    </div>
+    <div class="methods-list">
+      <div class="method">
+        <div class="method-number">1</div>
+        <div class="method-content">
+          <div class="method-name">UNESCO Framework for Cultural Statistics</div>
+          <div class="method-detail"><strong>12 domains</strong> of cultural activity, adopted globally</div>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-number">2</div>
+        <div class="method-content">
+          <div class="method-name">OECD Cultural Satellite Accounts</div>
+          <div class="method-detail">Implemented in <strong>12+ countries</strong>, GDP-level precision</div>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-number">3</div>
+        <div class="method-content">
+          <div class="method-name">UK DCMS Methodology</div>
+          <div class="method-detail">Measured <strong>&pound;117.9 billion</strong> in cultural GVA</div>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-number">4</div>
+        <div class="method-content">
+          <div class="method-name">CIL 13-Component Framework</div>
+          <div class="method-detail"><strong>13 validated indicators</strong> across 362 case studies</div>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-number">5</div>
+        <div class="method-content">
+          <div class="method-name">SROI Analysis</div>
+          <div class="method-detail">Social Return on Investment &mdash; captures <strong>non-market value</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="closing">"The tools exist. The question is whether we choose to use them."</div>
+    <div class="source">UNESCO UIS 2019; OECD 2022</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

@@ -1,11 +1,17 @@
 import { NextRequest } from 'next/server'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
-import { successResponse, errorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, rateLimitErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
+import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return rateLimitErrorResponse(rateLimitResult.resetTime, apiRateLimit.message)
+    }
+
     const supabase = await createClient()
 
     // Check authentication
@@ -18,7 +24,7 @@ export async function POST(request: NextRequest) {
     const serviceClient = await createServiceClient()
 
     // Fetch all user data
-    const [profileResult, assessmentsResult, transactionsResult, newsletterResult] = await Promise.all([
+    const [profileResult, assessmentsResult, transactionsResult, newsletterResult, toolAccessResult, draftsResult, unlocksResult] = await Promise.all([
       serviceClient
         .from('profiles')
         .select('*')
@@ -39,6 +45,18 @@ export async function POST(request: NextRequest) {
         .select('*')
         .eq('email', user.email)
         .single(),
+      serviceClient
+        .from('tool_access')
+        .select('*')
+        .eq('user_id', user.id),
+      serviceClient
+        .from('assessment_drafts')
+        .select('*')
+        .eq('user_id', user.id),
+      serviceClient
+        .from('assessment_unlocks')
+        .select('*')
+        .eq('user_id', user.id),
     ])
 
     const exportData = {
@@ -49,6 +67,9 @@ export async function POST(request: NextRequest) {
       assessments: assessmentsResult.data || [],
       creditTransactions: transactionsResult.data || [],
       newsletterSubscription: newsletterResult.data || null,
+      toolAccess: toolAccessResult.data || [],
+      assessmentDrafts: draftsResult.data || [],
+      assessmentUnlocks: unlocksResult.data || [],
       metadata: {
         totalAssessments: assessmentsResult.data?.length || 0,
         totalTransactions: transactionsResult.data?.length || 0,

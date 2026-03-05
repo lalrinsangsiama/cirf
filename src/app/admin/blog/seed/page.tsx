@@ -51,6 +51,7 @@ export default function SeedBlogPage() {
           category: post.category,
           tags: post.tags,
           featured_image: post.featured_image || null,
+          citations: post.citations || null,
           status: post.status,
           published_at: new Date().toISOString(),
           view_count: 0,

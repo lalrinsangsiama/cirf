@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post F05 - Community Control Spectrum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 60px 80px 35px;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #5b8c9e;
+      margin-bottom: 18px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 700; color: #fdfdfb; line-height: 1.15;
+    }
+    .spectrum-section {
+      padding: 40px 80px 20px;
+    }
+    .spectrum-labels {
+      display: flex; justify-content: space-between; margin-bottom: 12px;
+    }
+    .spec-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .spec-label-left { color: #c67557; }
+    .spec-label-right { color: #a8b5a0; }
+    .spectrum-bar {
+      height: 16px; border-radius: 8px;
+      background: linear-gradient(90deg, #c67557 0%, #d4af37 50%, #a8b5a0 100%);
+      position: relative; margin-bottom: 8px;
+    }
+    .benefit-curve {
+      height: 120px; position: relative;
+      margin-bottom: 10px;
+    }
+    .curve-svg {
+      width: 100%; height: 100%;
+    }
+    .curve-label {
+      position: absolute; top: 5px; right: 10px;
+      font-size: 11px; color: #a8b5a0; font-weight: 500;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .examples {
+      padding: 10px 80px 15px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .example-card {
+      padding: 24px 22px;
+      background: rgba(245,240,232,0.03);
+      border-radius: 8px; text-align: center;
+      border-top: 3px solid;
+      position: relative;
+    }
+    .example-card:nth-child(1) { border-top-color: #c67557; }
+    .example-card:nth-child(2) { border-top-color: #d4af37; }
+    .example-card:nth-child(3) { border-top-color: #a8b5a0; }
+    .example-position {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .example-card:nth-child(1) .example-position { color: #c67557; }
+    .example-card:nth-child(2) .example-position { color: #d4af37; }
+    .example-card:nth-child(3) .example-position { color: #a8b5a0; }
+    .example-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb;
+      margin-bottom: 8px;
+    }
+    .example-desc {
+      font-size: 12px; color: #7c7c7c; line-height: 1.4; margin-bottom: 8px;
+    }
+    .example-stat {
+      font-size: 14px; font-weight: 600;
+    }
+    .example-card:nth-child(1) .example-stat { color: #c67557; }
+    .example-card:nth-child(2) .example-stat { color: #d4af37; }
+    .example-card:nth-child(3) .example-stat { color: #a8b5a0; }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Diagnostic Tool</div>
+      <h1 class="headline">Community Control Spectrum</h1>
+    </div>
+    <div class="spectrum-section">
+      <div class="spectrum-labels">
+        <div class="spec-label spec-label-left">Full External Control</div>
+        <div class="spec-label spec-label-right">Full Community Sovereignty</div>
+      </div>
+      <div class="spectrum-bar"></div>
+      <div class="benefit-curve">
+        <div class="curve-label">Community Benefit &uarr;</div>
+        <svg class="curve-svg" viewBox="0 0 920 120" preserveAspectRatio="none">
+          <path d="M0,110 C150,108 300,95 460,60 C600,30 750,10 920,5"
+                stroke="rgba(168,181,160,0.6)" stroke-width="2" fill="none"/>
+          <path d="M0,110 C150,108 300,95 460,60 C600,30 750,10 920,5 L920,120 L0,120 Z"
+                fill="rgba(168,181,160,0.06)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="examples">
+      <div class="example-card">
+        <div class="example-position">External Control</div>
+        <div class="example-name">Mass Tourism Resort</div>
+        <div class="example-desc">Revenue extracted by external operators</div>
+        <div class="example-stat">40&ndash;80% leakage</div>
+      </div>
+      <div class="example-card">
+        <div class="example-position">Shared Control</div>
+        <div class="example-name">Rwanda Model</div>
+        <div class="example-desc">10% tourism revenue to communities by policy</div>
+        <div class="example-stat">$620M total revenue</div>
+      </div>
+      <div class="example-card">
+        <div class="example-position">Community Sovereignty</div>
+        <div class="example-name">M&#257;ori Tourism</div>
+        <div class="example-desc">Community-owned, culturally governed</div>
+        <div class="example-stat">Full benefit retention</div>
+      </div>
+    </div>
+    <div class="source">Ashley, Roe & Goodwin 2001; UNCTAD 2022; RDB 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

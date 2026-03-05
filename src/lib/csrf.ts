@@ -5,7 +5,16 @@ import crypto from 'crypto'
 const CSRF_TOKEN_NAME = 'csrf_token'
 const CSRF_HEADER_NAME = 'x-csrf-token'
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000 // 24 hours
-const SECRET_KEY = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || 'fallback-secret-change-in-production'
+function getCsrfSecret(): string {
+  const secret = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET
+  if (secret) return secret
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('[SECURITY] CSRF_SECRET or NEXTAUTH_SECRET must be set in production')
+  }
+  return 'dev-only-csrf-secret'
+}
+
+const SECRET_KEY = getCsrfSecret()
 
 /**
  * Generate a CSRF token with timestamp
@@ -127,12 +136,12 @@ export async function validateRequestCsrf(request: Request): Promise<{
  */
 export function isCsrfExempt(pathname: string): boolean {
   const exemptRoutes = [
-    // Webhooks use signature verification instead of CSRF
-    '/api/razorpay/webhook',
     // OAuth callbacks are protected by state parameter
     '/auth/callback',
     // Health check is read-only
     '/api/health',
+    // Uses Bearer token authentication
+    '/api/blog/seed',
   ]
 
   return exemptRoutes.some(route => pathname.startsWith(route))

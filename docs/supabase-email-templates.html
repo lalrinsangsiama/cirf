@@ -1,0 +1,287 @@
+<!--
+  Cultural Innovation Lab — Supabase Email Templates
+  ===================================================
+  Paste each section into the matching template in:
+  Supabase Dashboard > Authentication > Email Templates
+
+  Color palette:
+    ink   #0a0a0a
+    pearl #fdfdfb
+    gold  #d4af37
+    sand  #f5f0e8
+    stone #7c7c7c
+-->
+
+
+<!-- ============================================================
+     1. CONFIRM SIGNUP
+     Subject: Confirm your Cultural Innovation Lab account
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:#fdfdfb;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fdfdfb;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(124,124,124,0.1);overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="padding:32px 40px 24px;text-align:center;border-bottom:1px solid #f5f0e8;">
+          <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif;font-weight:500;color:#0a0a0a;">Cultural Innovation</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:200;letter-spacing:-0.02em;color:#0a0a0a;margin-top:-1px;">Lab</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:40px;">
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#0a0a0a;margin:0 0 12px;">Confirm your email</h1>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#7c7c7c;margin:0 0 28px;">
+            Thanks for signing up for Cultural Innovation Lab. Please confirm your email address to activate your account.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto 28px;"><tr><td>
+            <a href="{{ .ConfirmationURL }}" target="_blank"
+               style="display:inline-block;background-color:#0a0a0a;color:#fdfdfb;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">
+              Confirm email address
+            </a>
+          </td></tr></table>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#7c7c7c;margin:0;">
+            If the button doesn't work, copy and paste this link into your browser:<br>
+            <a href="{{ .ConfirmationURL }}" style="color:#d4af37;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          </p>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="padding:24px 40px;background-color:#f5f0e8;text-align:center;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7c7c7c;margin:0;">
+            Cultural Innovation Lab &middot; If you didn't create an account, you can safely ignore this email.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================================
+     2. INVITE USER
+     Subject: You've been invited to Cultural Innovation Lab
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:#fdfdfb;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fdfdfb;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(124,124,124,0.1);overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="padding:32px 40px 24px;text-align:center;border-bottom:1px solid #f5f0e8;">
+          <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif;font-weight:500;color:#0a0a0a;">Cultural Innovation</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:200;letter-spacing:-0.02em;color:#0a0a0a;margin-top:-1px;">Lab</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:40px;">
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#0a0a0a;margin:0 0 12px;">You've been invited</h1>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#7c7c7c;margin:0 0 28px;">
+            You've been invited to join Cultural Innovation Lab. Click the button below to accept your invitation and set up your account.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto 28px;"><tr><td>
+            <a href="{{ .ConfirmationURL }}" target="_blank"
+               style="display:inline-block;background-color:#0a0a0a;color:#fdfdfb;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">
+              Accept invitation
+            </a>
+          </td></tr></table>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#7c7c7c;margin:0;">
+            If the button doesn't work, copy and paste this link into your browser:<br>
+            <a href="{{ .ConfirmationURL }}" style="color:#d4af37;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          </p>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="padding:24px 40px;background-color:#f5f0e8;text-align:center;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7c7c7c;margin:0;">
+            Cultural Innovation Lab &middot; If you weren't expecting this invitation, you can safely ignore this email.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================================
+     3. MAGIC LINK
+     Subject: Sign in to Cultural Innovation Lab
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:#fdfdfb;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fdfdfb;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(124,124,124,0.1);overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="padding:32px 40px 24px;text-align:center;border-bottom:1px solid #f5f0e8;">
+          <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif;font-weight:500;color:#0a0a0a;">Cultural Innovation</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:200;letter-spacing:-0.02em;color:#0a0a0a;margin-top:-1px;">Lab</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:40px;">
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#0a0a0a;margin:0 0 12px;">Sign in to your account</h1>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#7c7c7c;margin:0 0 28px;">
+            Click the button below to sign in to your Cultural Innovation Lab account. This link will expire in 24 hours.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto 28px;"><tr><td>
+            <a href="{{ .ConfirmationURL }}" target="_blank"
+               style="display:inline-block;background-color:#0a0a0a;color:#fdfdfb;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">
+              Sign in
+            </a>
+          </td></tr></table>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#7c7c7c;margin:0;">
+            If the button doesn't work, copy and paste this link into your browser:<br>
+            <a href="{{ .ConfirmationURL }}" style="color:#d4af37;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          </p>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="padding:24px 40px;background-color:#f5f0e8;text-align:center;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7c7c7c;margin:0;">
+            Cultural Innovation Lab &middot; If you didn't request this link, you can safely ignore this email.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================================
+     4. CHANGE EMAIL ADDRESS
+     Subject: Confirm your email change
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:#fdfdfb;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fdfdfb;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(124,124,124,0.1);overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="padding:32px 40px 24px;text-align:center;border-bottom:1px solid #f5f0e8;">
+          <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif;font-weight:500;color:#0a0a0a;">Cultural Innovation</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:200;letter-spacing:-0.02em;color:#0a0a0a;margin-top:-1px;">Lab</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:40px;">
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#0a0a0a;margin:0 0 12px;">Confirm email change</h1>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#7c7c7c;margin:0 0 28px;">
+            You requested to change your email address on Cultural Innovation Lab. Click the button below to confirm this change.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto 28px;"><tr><td>
+            <a href="{{ .ConfirmationURL }}" target="_blank"
+               style="display:inline-block;background-color:#0a0a0a;color:#fdfdfb;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">
+              Confirm email change
+            </a>
+          </td></tr></table>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#7c7c7c;margin:0;">
+            If the button doesn't work, copy and paste this link into your browser:<br>
+            <a href="{{ .ConfirmationURL }}" style="color:#d4af37;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          </p>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="padding:24px 40px;background-color:#f5f0e8;text-align:center;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7c7c7c;margin:0;">
+            Cultural Innovation Lab &middot; If you didn't request this change, please secure your account immediately.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================================
+     5. RESET PASSWORD
+     Subject: Reset your Cultural Innovation Lab password
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:#fdfdfb;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fdfdfb;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(124,124,124,0.1);overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="padding:32px 40px 24px;text-align:center;border-bottom:1px solid #f5f0e8;">
+          <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif;font-weight:500;color:#0a0a0a;">Cultural Innovation</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:200;letter-spacing:-0.02em;color:#0a0a0a;margin-top:-1px;">Lab</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:40px;">
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#0a0a0a;margin:0 0 12px;">Reset your password</h1>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#7c7c7c;margin:0 0 28px;">
+            We received a request to reset your password for your Cultural Innovation Lab account. Click the button below to choose a new password.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto 28px;"><tr><td>
+            <a href="{{ .ConfirmationURL }}" target="_blank"
+               style="display:inline-block;background-color:#0a0a0a;color:#fdfdfb;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">
+              Reset password
+            </a>
+          </td></tr></table>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#7c7c7c;margin:0;">
+            If the button doesn't work, copy and paste this link into your browser:<br>
+            <a href="{{ .ConfirmationURL }}" style="color:#d4af37;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          </p>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="padding:24px 40px;background-color:#f5f0e8;text-align:center;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7c7c7c;margin:0;">
+            Cultural Innovation Lab &middot; If you didn't request a password reset, you can safely ignore this email.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================================
+     6. REAUTHENTICATION (OTP CODE)
+     Subject: Confirm your identity
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:#fdfdfb;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fdfdfb;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(124,124,124,0.1);overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="padding:32px 40px 24px;text-align:center;border-bottom:1px solid #f5f0e8;">
+          <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif;font-weight:500;color:#0a0a0a;">Cultural Innovation</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:200;letter-spacing:-0.02em;color:#0a0a0a;margin-top:-1px;">Lab</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:40px;">
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#0a0a0a;margin:0 0 12px;">Confirm your identity</h1>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#7c7c7c;margin:0 0 28px;">
+            Enter the following code to verify your identity on Cultural Innovation Lab. This code will expire in 10 minutes.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto 28px;"><tr><td>
+            <div style="background-color:#f5f0e8;border:2px solid #d4af37;border-radius:12px;padding:20px 40px;text-align:center;">
+              <span style="font-family:'Courier New',Courier,monospace;font-size:36px;font-weight:bold;letter-spacing:0.2em;color:#0a0a0a;">{{ .Token }}</span>
+            </div>
+          </td></tr></table>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#7c7c7c;margin:0;">
+            If you didn't request this code, please secure your account by changing your password immediately.
+          </p>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="padding:24px 40px;background-color:#f5f0e8;text-align:center;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7c7c7c;margin:0;">
+            Cultural Innovation Lab &middot; This is an automated security message.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Global Creative Economy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .gold-glow {
+      position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 70px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 40px; margin-top: 10px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 130px; font-weight: 900; color: #fdfdfb;
+      line-height: 1; letter-spacing: -3px; margin-bottom: 10px;
+    }
+    .headline-sub {
+      font-size: 20px; font-weight: 300; color: #7c7c7c; margin-bottom: 50px;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 30px 60px;
+      width: 100%; max-width: 800px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: 12px; padding: 30px 24px;
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 44px; font-weight: 700; color: #fdfdfb; line-height: 1.1;
+    }
+    .stat-value span { color: #d4af37; }
+    .stat-desc {
+      font-size: 13px; font-weight: 400; color: #7c7c7c;
+      margin-top: 8px; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .stat-card.highlight {
+      border-color: rgba(212,175,55,0.4);
+      background: rgba(212,175,55,0.05);
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="gold-glow"></div>
+    <div class="content">
+      <div class="label">Global Creative Economy</div>
+      <div class="headline">$2.3 <span style="font-size:80px;color:#d4af37">Trillion</span></div>
+      <div class="headline-sub">The global creative economy, measured</div>
+
+      <div class="stats-grid">
+        <div class="stat-card highlight">
+          <div class="stat-value">3<span>%</span></div>
+          <div class="stat-desc">of Global GDP</div>
+        </div>
+        <div class="stat-card highlight">
+          <div class="stat-value">6.2<span>%</span></div>
+          <div class="stat-desc">of Global Employment</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$1.4<span>T</span></div>
+          <div class="stat-desc">Creative Services Exports</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><span>+</span>29<span>%</span></div>
+          <div class="stat-desc">Export Growth Since 2017</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">UNCTAD Creative Economy Outlook 2024; UNESCO 2023</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

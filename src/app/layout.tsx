@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
+import { Suspense } from 'react'
 import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { ToastProvider } from '@/components/ui/ToastProvider'
+import { PostHogProvider } from '@/components/analytics/PostHogProvider'
 import { GlobalJsonLd } from '@/components/seo/JsonLd'
+import { CookieConsent } from '@/components/legal/CookieConsent'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://culturalinnovationlab.org'),
   title: {
     default: 'Cultural Innovation Lab | Building Economies from Heritage',
     template: '%s | CIL',
@@ -33,11 +35,13 @@ export const metadata: Metadata = {
     siteName: 'Cultural Innovation Lab',
     title: 'Cultural Innovation Lab | Building Economies from Heritage',
     description: 'Heritage is not a museum. It is an economy waiting to be built. We research, build, and connect the global ecosystem of cultural entrepreneurs.',
+    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'Cultural Innovation Lab' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cultural Innovation Lab | Building Economies from Heritage',
     description: 'Heritage is not a museum. It is an economy waiting to be built.',
+    images: ['/og-image.svg'],
   },
   robots: {
     index: true,
@@ -60,11 +64,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Load Razorpay after page is interactive to ensure payment button works */}
-        <Script
-          src="https://checkout.razorpay.com/v1/checkout.js"
-          strategy="afterInteractive"
-        />
         {/* Global JSON-LD structured data for SEO */}
         <GlobalJsonLd />
       </head>
@@ -78,21 +77,26 @@ export default function RootLayout({
         </a>
 
         <AuthProvider>
-          <ToastProvider>
-            <Header />
-            <main id="main-content" tabIndex={-1}>
-              {children}
-            </main>
-            <Footer />
+          <Suspense fallback={null}>
+            <PostHogProvider>
+              <ToastProvider>
+                <Header />
+                <main id="main-content" tabIndex={-1}>
+                  {children}
+                </main>
+                <Footer />
+                <CookieConsent />
 
-            {/* Live region for screen reader announcements */}
-            <div
-              aria-live="polite"
-              aria-atomic="true"
-              className="sr-only"
-              id="announcer"
-            />
-          </ToastProvider>
+                {/* Live region for screen reader announcements */}
+                <div
+                  aria-live="polite"
+                  aria-atomic="true"
+                  className="sr-only"
+                  id="announcer"
+                />
+              </ToastProvider>
+            </PostHogProvider>
+          </Suspense>
         </AuthProvider>
       </body>
     </html>

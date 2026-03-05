@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post F03 - Cultural Asset Mapping 101</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 30px;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #5b8c9e;
+      margin-bottom: 18px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 700; color: #fdfdfb; line-height: 1.15;
+    }
+    .steps {
+      padding: 25px 80px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .step {
+      display: flex; align-items: stretch; gap: 0;
+      background: rgba(245,240,232,0.03); border-radius: 8px; overflow: hidden;
+    }
+    .step-num {
+      width: 70px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step:nth-child(1) .step-num { background: rgba(212,175,55,0.2); color: #d4af37; }
+    .step:nth-child(2) .step-num { background: rgba(91,140,158,0.2); color: #5b8c9e; }
+    .step:nth-child(3) .step-num { background: rgba(168,181,160,0.2); color: #a8b5a0; }
+    .step:nth-child(4) .step-num { background: rgba(198,117,87,0.2); color: #c67557; }
+    .step:nth-child(5) .step-num { background: rgba(212,175,55,0.2); color: #d4af37; }
+    .step-content {
+      padding: 20px 24px; flex: 1;
+    }
+    .step-title {
+      font-size: 16px; font-weight: 600; color: #fdfdfb; margin-bottom: 4px;
+    }
+    .step-desc {
+      font-size: 13px; color: #7c7c7c; line-height: 1.4;
+    }
+    .callout {
+      margin: 20px 80px; padding: 24px 30px;
+      background: rgba(212,175,55,0.06);
+      border-left: 3px solid #d4af37;
+      border-radius: 0 8px 8px 0;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .callout-text {
+      font-size: 15px; font-weight: 500; color: #fdfdfb;
+      font-style: italic; flex: 1;
+    }
+    .callout-stat {
+      text-align: center; margin-left: 30px;
+    }
+    .callout-stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 700; color: #d4af37;
+    }
+    .callout-stat-label {
+      font-size: 11px; font-weight: 500; color: #7c7c7c;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Tool</div>
+      <h1 class="headline">Cultural Asset Mapping 101</h1>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Identify Community</div>
+          <div class="step-desc">Define the geographic and cultural boundaries of your mapping area</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Define Asset Categories</div>
+          <div class="step-desc">Tangible (sites, objects) and intangible (knowledge, practices, language)</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Participatory Documentation</div>
+          <div class="step-desc">Community-led identification &mdash; they know what matters most</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Prioritize by Value</div>
+          <div class="step-desc">Cultural significance, economic potential, vulnerability to loss</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Develop Protection + Monetization Strategy</div>
+          <div class="step-desc">IP protection, market access, and reinvestment planning</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-text">"If it's not mapped, it doesn't exist in policy."</div>
+      <div class="callout-stat">
+        <div class="callout-stat-number">40%</div>
+        <div class="callout-stat-label">Higher success rate<br>with mapping (OECD)</div>
+      </div>
+    </div>
+    <div class="source">UNESCO FCS 2019; OECD 2022; Duxbury et al. (2015)</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

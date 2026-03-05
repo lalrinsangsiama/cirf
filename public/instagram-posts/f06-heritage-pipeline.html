@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post F06 - Heritage-to-Market Pipeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 30px;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37;
+      margin-bottom: 18px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 700; color: #fdfdfb; line-height: 1.15;
+    }
+    .headline em { color: #d4af37; font-style: normal; }
+    .pipeline {
+      padding: 30px 60px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .stage {
+      display: flex; align-items: stretch; gap: 0;
+      border-radius: 8px; overflow: hidden;
+      position: relative;
+    }
+    .stage-num {
+      width: 70px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 700; color: #0a0a0a;
+      flex-shrink: 0;
+    }
+    .stage-content {
+      padding: 18px 24px; flex: 1;
+      background: rgba(245,240,232,0.03);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .stage-info { flex: 1; }
+    .stage-name {
+      font-size: 16px; font-weight: 600; color: #fdfdfb; margin-bottom: 3px;
+    }
+    .stage-desc {
+      font-size: 12px; color: #7c7c7c; line-height: 1.3;
+    }
+    .stage-flag {
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; white-space: nowrap;
+      margin-left: 16px;
+    }
+    .flag-red {
+      background: rgba(198,117,87,0.15); color: #c67557;
+      border: 1px solid rgba(198,117,87,0.3);
+    }
+    .flag-green {
+      background: rgba(168,181,160,0.15); color: #a8b5a0;
+      border: 1px solid rgba(168,181,160,0.3);
+    }
+    .stage:nth-child(1) .stage-num { background: #d4af37; }
+    .stage:nth-child(2) .stage-num { background: #5b8c9e; }
+    .stage:nth-child(3) .stage-num { background: #c67557; }
+    .stage:nth-child(4) .stage-num { background: #a8b5a0; }
+    .stage:nth-child(5) .stage-num { background: #d4af37; }
+    .stage:nth-child(6) .stage-num { background: #5b8c9e; }
+    .connector {
+      display: flex; justify-content: center; padding: 0;
+    }
+    .connector-line {
+      width: 2px; height: 6px; background: rgba(212,175,55,0.2);
+    }
+    .loop-indicator {
+      margin: 15px 60px; padding: 20px 30px;
+      background: rgba(91,140,158,0.06);
+      border: 1px dashed rgba(91,140,158,0.3);
+      border-radius: 8px; text-align: center;
+    }
+    .loop-text {
+      font-size: 14px; font-weight: 500; color: #5b8c9e;
+    }
+    .loop-arrow {
+      font-size: 20px; color: #5b8c9e; margin-top: 6px;
+    }
+    .legend {
+      padding: 10px 80px; display: flex; gap: 30px; justify-content: center;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .legend-dot.red { background: #c67557; }
+    .legend-dot.green { background: #a8b5a0; }
+    .legend-text {
+      font-size: 12px; color: #7c7c7c;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Strategy Framework</div>
+      <h1 class="headline">Heritage-to-Market:<br><em>The 6 Stages</em></h1>
+    </div>
+    <div class="pipeline">
+      <div class="stage">
+        <div class="stage-num">1</div>
+        <div class="stage-content">
+          <div class="stage-info">
+            <div class="stage-name">Asset Identification</div>
+            <div class="stage-desc">Map tangible and intangible cultural resources</div>
+          </div>
+          <div class="stage-flag flag-red">Exploitation Risk</div>
+        </div>
+      </div>
+      <div class="connector"><div class="connector-line"></div></div>
+      <div class="stage">
+        <div class="stage-num">2</div>
+        <div class="stage-content">
+          <div class="stage-info">
+            <div class="stage-name">Community Governance</div>
+            <div class="stage-desc">Establish ownership, decision-making, benefit-sharing</div>
+          </div>
+        </div>
+      </div>
+      <div class="connector"><div class="connector-line"></div></div>
+      <div class="stage">
+        <div class="stage-num">3</div>
+        <div class="stage-content">
+          <div class="stage-info">
+            <div class="stage-name">IP Protection</div>
+            <div class="stage-desc">Trademarks, GIs, copyright, traditional knowledge protocols</div>
+          </div>
+          <div class="stage-flag flag-red">IP Gaps</div>
+        </div>
+      </div>
+      <div class="connector"><div class="connector-line"></div></div>
+      <div class="stage">
+        <div class="stage-num">4</div>
+        <div class="stage-content">
+          <div class="stage-info">
+            <div class="stage-name">Product Development</div>
+            <div class="stage-desc">Transform assets into market-ready products and experiences</div>
+          </div>
+        </div>
+      </div>
+      <div class="connector"><div class="connector-line"></div></div>
+      <div class="stage">
+        <div class="stage-num">5</div>
+        <div class="stage-content">
+          <div class="stage-info">
+            <div class="stage-name">Market Access</div>
+            <div class="stage-desc">Distribution channels: local, national, digital, global</div>
+          </div>
+        </div>
+      </div>
+      <div class="connector"><div class="connector-line"></div></div>
+      <div class="stage">
+        <div class="stage-num">6</div>
+        <div class="stage-content">
+          <div class="stage-info">
+            <div class="stage-name">Reinvestment Loop</div>
+            <div class="stage-desc">Revenue reinvested into cultural preservation and capacity</div>
+          </div>
+          <div class="stage-flag flag-green">Sustainability</div>
+        </div>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot red"></div>
+        <div class="legend-text">Critical risk points</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot green"></div>
+        <div class="legend-text">Sustainability achieved</div>
+      </div>
+    </div>
+    <div class="source">CIL 2024; WIPO 2023; UNESCO 2022</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

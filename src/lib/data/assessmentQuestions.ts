@@ -11,7 +11,7 @@ export interface AssessmentQuestion {
   discriminatoryPower: number // Percentage points advantage
 }
 
-// New Likert-scale question interface for 49-question assessment
+// Likert-scale question interface for CIL assessment
 export type LikertSection =
   | 'demographics'
   | 'culturalCapital'
@@ -385,10 +385,9 @@ export const demographicQuestions: DemographicQuestion[] = [
   {
     id: 'demo-state-region',
     section: 'demographics',
-    question: 'State/Region',
-    helpText: 'Select your state or region',
-    type: 'select',
-    options: INDIAN_STATES,
+    question: 'State/Province/Region',
+    helpText: 'Enter your state, province, or region name',
+    type: 'text',
     required: true,
   },
   {
@@ -468,6 +467,25 @@ export const demographicQuestions: DemographicQuestion[] = [
     helpText: 'Select all revenue sources that apply to your cultural enterprise',
     type: 'multiselect',
     options: REVENUE_SOURCES,
+    required: true,
+  },
+  // Disruption context — critical for interpreting resilience scores
+  {
+    id: 'demo-disruption-type',
+    section: 'demographics',
+    question: 'What type of economic disruption has your enterprise experienced? (Select all that apply)',
+    helpText: 'Understanding the disruptions you have faced helps us interpret your resilience scores accurately',
+    type: 'multiselect',
+    options: [
+      { value: 'pandemic', label: 'Pandemic (e.g., COVID-19)' },
+      { value: 'recession', label: 'Economic recession/downturn' },
+      { value: 'natural-disaster', label: 'Natural disaster (flood, earthquake, cyclone)' },
+      { value: 'political', label: 'Political instability or conflict' },
+      { value: 'market-shift', label: 'Major market shift or new competition' },
+      { value: 'supply-chain', label: 'Supply chain disruption' },
+      { value: 'climate', label: 'Climate-related disruption (drought, extreme weather)' },
+      { value: 'none', label: 'No significant disruption experienced' },
+    ],
     required: true,
   },
 ]
@@ -578,6 +596,7 @@ export function extractProfileDataFromAnswers(answers: Record<string, unknown>):
     'demo-state-region': 'state_region',
     'demo-community-identity': 'community_affiliation',
     'demo-revenue-sources': 'revenue_sources',
+    'demo-disruption-type': 'disruption_types',
   }
 
   // Extract from demographic questions
@@ -597,14 +616,14 @@ export function extractProfileDataFromAnswers(answers: Record<string, unknown>):
   return profileData
 }
 
-// Cultural Capital questions (Section B: 8 questions)
+// Cultural Capital questions (Section B: 10 questions)
 export const culturalCapitalQuestions: LikertQuestion[] = [
   {
     id: 'cc-1',
     section: 'culturalCapital',
     construct: 'traditionalKnowledge',
     question: 'Our organization has documented traditional knowledge relevant to our activities',
-    helpText: 'Examples: recipe books, technique guides, video tutorials, recorded interviews with elders',
+    helpText: 'Think of it this way: A Mizo weaving cooperative created video archives of elderly weavers demonstrating traditional puan patterns, ensuring techniques survive even if the masters cannot teach in person. Has your organization done something similar — recipe books, technique guides, recorded interviews with elders, or digital archives?',
     weight: 1.0,
   },
   {
@@ -612,7 +631,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'practitionerAccess',
     question: 'We have access to skilled practitioners of traditional techniques',
-    helpText: 'Examples: master weavers, traditional chefs, elder craftspeople, trained apprentices',
+    helpText: 'For example: A Rajasthani block-printing enterprise employs three master printers who trained for 15+ years under their fathers. Do you have access to master weavers, traditional chefs, elder craftspeople, or trained apprentices who carry deep expertise?',
     weight: 1.2,
   },
   {
@@ -620,7 +639,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalAuthenticity',
     question: 'Our cultural practices have recognized authenticity within source communities',
-    helpText: 'Examples: community endorsements, cultural council approval, elder recognition',
+    helpText: 'For example: A Maori tourism venture received formal endorsement from local iwi (tribal council) before launching. Does your work have community endorsements, cultural council approval, or elder recognition that validates its authenticity?',
     weight: 1.3,
   },
   {
@@ -628,15 +647,15 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'communityInvolvement',
     question: 'Cultural practitioners from source communities are involved in development decisions',
-    helpText: 'Examples: advisory board seats, design review panels, regular community consultations',
+    helpText: 'For example: A fair-trade coffee brand in Guatemala has indigenous farmers on its product development board, giving them veto power over how their cultural story is marketed. Do community members hold advisory seats, join design reviews, or participate in regular consultations?',
     weight: 1.4,
   },
   {
     id: 'cc-5',
     section: 'culturalCapital',
     construct: 'culturalPreservation',
-    question: 'Our innovations build upon (rather than replace) traditional practices',
-    helpText: 'Examples: adding new colorways to traditional patterns vs. replacing handwork with machines',
+    question: 'Our core traditional practices remain intact even as we introduce new products or services',
+    helpText: 'For example: A Japanese indigo dyer added contemporary garment silhouettes but kept the traditional shibori hand-dyeing process intact — the innovation happened around the tradition, not in place of it. Are your fundamental traditional methods still being practised in their original form alongside any new offerings?',
     weight: 1.1,
   },
   {
@@ -644,7 +663,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalMeaning',
     question: 'Cultural meanings are accurately represented in how we present and sell our products',
-    helpText: 'Examples: product descriptions explain cultural significance, marketing reflects authentic traditions',
+    helpText: 'For example: A Navajo jewelry brand includes cards explaining the spiritual significance of turquoise in their tradition, rather than just labeling it "handmade." Do your product descriptions, packaging, or marketing explain the cultural significance behind what you create?',
     weight: 1.0,
   },
   {
@@ -652,7 +671,7 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'practitionerRelationships',
     question: 'We have strong relationships with cultural knowledge holders',
-    helpText: 'Examples: regular visits, fair compensation, sharing profits, co-authoring work',
+    helpText: 'For example: A Balinese dance troupe pays monthly honorariums to elder choreographers regardless of performance season, maintaining the relationship year-round. Do you have regular contact, fair compensation, profit-sharing, or co-creation arrangements with knowledge holders?',
     weight: 1.0,
   },
   {
@@ -660,19 +679,35 @@ export const culturalCapitalQuestions: LikertQuestion[] = [
     section: 'culturalCapital',
     construct: 'culturalMembership',
     question: 'Our team includes members from the source culture community',
-    helpText: 'Examples: founders from the community, cultural advisors, community members on staff',
+    helpText: 'For example: A West African textile brand was co-founded by a Kente weaver from the Ashanti community and ensures 60% of staff are from weaving families. Are founders, cultural advisors, or team members from the source community?',
     weight: 0.9,
+  },
+  {
+    id: 'cc-9',
+    section: 'culturalCapital',
+    construct: 'culturalMechanisms',
+    question: 'Our community has traditional customs or agreements that govern economic relationships between stakeholders',
+    helpText: 'For example: In Bali, the catur dresta system provides customary agreements between landowners and farmers that stabilize economic relationships during uncertain times. Does your community have traditional profit-sharing norms, customary trade agreements, cultural protocols for economic exchange, or reciprocal obligations that structure how people work together?',
+    weight: 1.3,
+  },
+  {
+    id: 'cc-10',
+    section: 'culturalCapital',
+    construct: 'culturalConsumption',
+    question: 'Members of our team and community regularly attend or participate in cultural activities beyond our own enterprise',
+    helpText: 'For example: Staff at an Italian ceramics workshop regularly attend local opera, visit museums, and participate in the town\'s annual historical pageant — this broader cultural engagement feeds creative ideas back into their work. Does your team attend festivals, visit cultural sites, consume cultural media, or support other cultural enterprises?',
+    weight: 0.8,
   },
 ]
 
-// Innovation Activities questions (Section C: 8 questions)
+// Innovation Activities questions (Section C: 10 questions)
 export const innovationActivitiesQuestions: LikertQuestion[] = [
   {
     id: 'ia-1',
     section: 'innovationActivities',
     construct: 'productDevelopment',
     question: 'We regularly develop new products/services based on cultural assets',
-    helpText: 'Examples: new product lines each season, limited editions, custom offerings',
+    helpText: 'For example: A Oaxacan mezcal producer launches a limited-edition spirit each year infused with a different ancestral herb, keeping the product line fresh while rooted in tradition. Do you create new product lines each season, limited editions, or custom offerings drawn from cultural assets?',
     weight: 1.2,
   },
   {
@@ -680,7 +715,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'techniqueCombination',
     question: 'We experiment with combining traditional and modern techniques',
-    helpText: 'Examples: hand-dyed fabric with modern cuts, traditional recipes with new presentations',
+    helpText: 'For example: A Korean hanbok designer uses traditional silk-dyeing methods but cuts patterns with laser precision for a contemporary fit. Do you blend hand-dyed fabric with modern cuts, traditional recipes with new presentations, or ancestral methods with current technology?',
     weight: 1.1,
   },
   {
@@ -688,7 +723,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'innovationLeadership',
     question: 'We have introduced innovations that others in our sector have adopted',
-    helpText: 'Examples: your packaging style got copied, you pioneered a new product category',
+    helpText: 'For example: A Ghanaian chocolate maker pioneered "bean-to-bar" branding in West Africa, and now several competitors use the same approach. Has your packaging style been copied, have you pioneered a new product category, or set a trend others followed?',
     weight: 1.3,
   },
   {
@@ -696,7 +731,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'marketExpansion',
     question: 'We have successfully entered new geographic markets',
-    helpText: 'Examples: selling abroad, opening in new cities, reaching customers in new regions',
+    helpText: 'For example: A Moroccan argan oil cooperative that once sold only at local souks now ships to 12 countries through online retail. Have you started selling abroad, opened in new cities, or reached customers in new regions?',
     weight: 1.0,
   },
   {
@@ -704,15 +739,15 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'digitalDistribution',
     question: 'We use digital channels effectively for cultural product distribution',
-    helpText: 'Examples: Etsy/Amazon store, Instagram shopping, your own website with checkout',
+    helpText: 'For example: A Peruvian textile collective generates 40% of revenue through their Instagram shop and Etsy store, with each listing telling the weaver\'s story. Do you use platforms like Etsy, Amazon, Instagram Shopping, or your own website with checkout?',
     weight: 0.9,
   },
   {
     id: 'ia-6',
     section: 'innovationActivities',
     construct: 'efficiencyImprovement',
-    question: 'We have improved efficiency while maintaining cultural authenticity',
-    helpText: 'Examples: better tools that speed up work, streamlined ordering, improved workspace layout',
+    question: 'We have found ways to produce more or work faster without changing the traditional techniques themselves',
+    helpText: 'For example: A Thai silk weaver introduced an ergonomic loom frame that reduced back strain and sped up weaving by 20% — the hand-weaving technique stayed exactly the same, but the working conditions improved. Have you adopted better tools, streamlined ordering, or improved workspace layout to increase output?',
     weight: 1.0,
   },
   {
@@ -720,7 +755,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'externalCollaboration',
     question: 'We collaborate with external partners on innovation projects',
-    helpText: 'Examples: working with designers, universities, NGOs, or other artisan groups',
+    helpText: 'For example: An Indigenous Australian art centre partnered with a university design lab to develop UV-resistant pigments that preserve traditional dot-painting colours outdoors. Do you work with designers, universities, NGOs, or other artisan groups on joint innovation?',
     weight: 1.1,
   },
   {
@@ -728,7 +763,7 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'feedbackIteration',
     question: 'We actively seek feedback and iterate on our offerings',
-    helpText: 'Examples: customer surveys, testing prototypes, adjusting based on reviews',
+    helpText: 'For example: A Mizo bamboo craft enterprise runs quarterly "tasting sessions" where customers handle prototypes and suggest improvements before production. Do you conduct customer surveys, test prototypes, or adjust your offerings based on reviews and feedback?',
     weight: 1.2,
   },
   {
@@ -736,8 +771,25 @@ export const innovationActivitiesQuestions: LikertQuestion[] = [
     section: 'innovationActivities',
     construct: 'narrativeInnovation',
     question: 'We have developed new ways to communicate the cultural story behind our products to broader audiences',
-    helpText: 'Examples: brand storytelling on social media, documentary content, cultural experience packaging, heritage labels',
+    helpText: 'For example: A Sami reindeer herding family created a short documentary series on YouTube showing the seasonal migration, which tripled demand for their traditional dried meat products. Have you used brand storytelling on social media, documentary content, cultural experience packaging, or heritage labels?',
     weight: 1.2,
+  },
+  {
+    id: 'ia-10',
+    section: 'innovationActivities',
+    construct: 'businessModelAdaptation',
+    question: 'We have fundamentally changed our business model or delivery method in response to a major disruption',
+    helpText: 'For example: During COVID-19, Montreal music festivals pivoted from in-person events to hybrid digital experiences, creating new subscription-based content that now generates year-round revenue. Have you shifted from in-person to digital, changed from B2C to B2B, added a subscription model, or reinvented how you deliver value?',
+    weight: 1.4,
+    allowNA: true,
+  },
+  {
+    id: 'ia-11',
+    section: 'innovationActivities',
+    construct: 'knowledgeDiversity',
+    question: 'Our cultural innovation draws on multiple types of knowledge — artistic, technical, scientific, or business',
+    helpText: 'For example: An Italian ceramics studio combines centuries-old glazing techniques (artistic), 3D-printed mould prototyping (technical), university material science research on glaze durability (scientific), and data-driven pricing strategies (business). Does your work blend at least two or three different knowledge types?',
+    weight: 1.1,
   },
 ]
 
@@ -748,7 +800,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'adaptiveResponse',
     question: 'We have successfully adjusted operations in response to past disruptions',
-    helpText: 'Examples: pivoted to online sales during COVID, found new suppliers when old ones closed',
+    helpText: 'For example: A Kenyan beadwork collective lost its tourist market overnight during COVID and within two weeks pivoted to online sales through WhatsApp Business, retaining 60% of revenue. Have you pivoted to online sales, found new suppliers when old ones closed, or restructured operations during a crisis?',
     weight: 1.5,
     allowNA: true,
   },
@@ -757,7 +809,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'learningFromSetbacks',
     question: 'We have systematic processes for learning from setbacks',
-    helpText: 'Examples: team debriefs after failed projects, documenting lessons learned',
+    helpText: 'For example: After a failed product launch, a Vietnamese lacquerware studio now holds monthly "reflection circles" where the team reviews what went wrong and documents lessons in a shared notebook. Do you hold team debriefs after failed projects, document lessons learned, or have formal review processes?',
     weight: 1.3,
   },
   {
@@ -765,7 +817,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'skillDiversity',
     question: 'Our team has diverse skills that allow flexibility',
-    helpText: 'Examples: artisans who can also do sales, staff trained on multiple crafts',
+    helpText: 'For example: In a small Bhutanese textile enterprise, the lead weaver also manages the Instagram account, while the accountant can step in to handle customer visits during festivals. Can your artisans also do sales? Are staff trained on multiple crafts or business functions?',
     weight: 1.2,
   },
   {
@@ -773,7 +825,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'externalResources',
     question: 'We can access external resources and expertise when needed',
-    helpText: 'Examples: business mentors, NGO support, government programs, university partnerships',
+    helpText: 'For example: A Colombian coffee cooperative taps into a university agricultural extension program for soil testing and receives free business coaching through an NGO partnership. Can you access business mentors, NGO support, government programs, or university partnerships when you need help?',
     weight: 1.1,
   },
   {
@@ -781,7 +833,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'ipProtection',
     question: 'We have legal protections for our cultural intellectual property',
-    helpText: 'Examples: registered trademark, GI certification, copyright on designs, community protocols',
+    helpText: 'For example: Darjeeling tea producers secured a Geographical Indication (GI) tag that prevents other regions from using the name, protecting both cultural identity and price premiums. Do you have registered trademarks, GI certification, copyright on designs, or community protocols?',
     weight: 1.0,
   },
   {
@@ -789,7 +841,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'financialReserves',
     question: 'We maintain financial reserves for unexpected challenges',
-    helpText: 'Examples: 3+ months operating expenses saved, access to emergency loans or credit',
+    helpText: 'For example: A Balinese silver jewellery workshop keeps a "rainy season fund" equal to 4 months of operating costs, built up gradually during peak tourist seasons. Do you have 3+ months of operating expenses saved, or access to emergency loans or credit lines?',
     weight: 1.2,
   },
   {
@@ -797,7 +849,7 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'communityDecisionMaking',
     question: 'Community members make key strategic decisions',
-    helpText: 'Examples: elected board, community voting on major decisions, regular community meetings',
+    helpText: 'For example: A Mexican cooperative of indigenous potters holds a quarterly assembly where every member votes on pricing, new product lines, and how profits are reinvested. Do you have an elected board, community voting on major decisions, or regular community meetings that shape strategy?',
     weight: 1.4,
   },
   {
@@ -805,7 +857,15 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'benefitDistribution',
     question: 'Benefits flow primarily to community members',
-    helpText: 'Examples: profit-sharing with artisans, above-market wages, community development fund',
+    helpText: 'For example: A Rwandan basket-weaving cooperative distributes 70% of profits directly to weavers and invests the remaining 30% in community health insurance. Do you have profit-sharing with artisans, above-market wages, or a community development fund?',
+    weight: 1.3,
+  },
+  {
+    id: 'oc-9',
+    section: 'organizationalCapacities',
+    construct: 'purposeClarity',
+    question: 'Our organization has a clearly articulated cultural mission that guides decisions during difficult times',
+    helpText: 'For example: When a Montreal festival faced budget cuts during COVID, their clearly defined mission — "to be the living bridge between Haitian heritage and Québécois culture" — helped them decide which programs to keep and which to pause, rather than cutting randomly. Can your team articulate "why we exist" beyond making money? Does your mission guide trade-off decisions during crises?',
     weight: 1.3,
   },
   {
@@ -813,19 +873,28 @@ export const organizationalCapacitiesQuestions: LikertQuestion[] = [
     section: 'organizationalCapacities',
     construct: 'allianceNetworks',
     question: 'We have alliance networks we can call on for support',
-    helpText: 'Examples: craft associations, fair trade networks, other cooperatives, industry groups',
+    helpText: 'For example: During a supply shortage, a Turkish carpet cooperative reached out to its fair-trade network and within days secured alternative wool from a partner cooperative in neighbouring Georgia. Are you part of craft associations, fair trade networks, cooperative alliances, or industry groups you can call on?',
     weight: 1.1,
+  },
+  {
+    id: 'oc-11',
+    section: 'organizationalCapacities',
+    construct: 'dependencyRisk',
+    question: 'Our organization depends heavily on one or two key people, and would struggle if they left',
+    helpText: 'For example: A Kashmiri pashmina workshop relied entirely on one master weaver for quality control — when he fell ill for three months, production halted completely because no one else could judge the final product. Is your enterprise heavily dependent on specific individuals whose absence would cause serious problems?',
+    weight: 1.2,
+    reverse: true,
   },
 ]
 
-// Economic Resilience Outcomes questions (Section E: 8 questions)
+// Economic Resilience Outcomes questions (Section E: 12 questions)
 export const economicResilienceQuestions: LikertQuestion[] = [
   {
     id: 'er-1',
     section: 'economicResilience',
     construct: 'revenueRetention',
     question: 'During the most recent economic shock, we maintained at least 70% of revenue',
-    helpText: 'Examples: kept most sales during COVID, weathered a major competitor entering your market',
+    helpText: 'For example: A Tuscan olive oil producer kept 75% of revenue during COVID by rapidly shifting from restaurant supply to direct-to-consumer gift boxes. Did you keep most sales during a major disruption, or weather a significant competitive threat without major revenue loss?',
     weight: 1.3,
     allowNA: true,
   },
@@ -834,7 +903,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'teamRetention',
     question: 'We retained at least 80% of our team during the last disruption',
-    helpText: 'Examples: kept artisans employed during slow seasons, no layoffs during the pandemic',
+    helpText: 'For example: A Rajasthani puppet-making collective kept all 15 artisans employed during the pandemic by temporarily shifting to making decorative masks, ensuring no one lost their livelihood. Did you keep artisans employed during slow seasons or avoid layoffs during a crisis?',
     weight: 1.2,
     allowNA: true,
   },
@@ -843,7 +912,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'recoverySpeed',
     question: 'We recovered to pre-shock performance levels within 12 months',
-    helpText: 'Examples: back to normal sales within a year, regained lost customers quickly',
+    helpText: 'For example: After a devastating flood, a Thai silk village rebuilt its workshop and regained pre-flood sales within 9 months — partly because loyal international buyers pre-ordered to support recovery. Were you back to normal sales within a year, or did you regain lost customers relatively quickly?',
     weight: 1.4,
     allowNA: true,
   },
@@ -852,7 +921,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'opportunityDiscovery',
     question: 'Disruptions have led us to discover new market opportunities',
-    helpText: 'Examples: started online sales during lockdown, found new customer segments',
+    helpText: 'For example: When border closures killed tourist sales, a Nepali singing bowl maker started hosting virtual "sound healing" sessions on Zoom, discovering an entirely new wellness-focused customer base. Have disruptions led you to start online sales, find new customer segments, or discover unexpected demand?',
     weight: 1.1,
     allowNA: true,
   },
@@ -861,7 +930,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'postShockStrength',
     question: 'After the most recent disruption, our organization gained new capabilities or resources it did not have before',
-    helpText: 'Examples: new skills learned, new markets discovered, stronger systems, larger network, better brand recognition',
+    helpText: 'For example: A Brazilian capoeira school that went virtual during lockdown emerged with professional video production skills, a global online membership, and partnerships with three international cultural centres — none of which existed before the crisis. Did you gain new skills, markets, systems, networks, or brand recognition because of a disruption?',
     weight: 1.5,
     allowNA: true,
   },
@@ -870,7 +939,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'communitySpillover',
     question: 'Our success has spawned new initiatives in the community',
-    helpText: 'Examples: inspired others to start businesses, created a local craft cluster',
+    helpText: 'For example: After one Oaxacan mezcal producer gained international recognition, five neighbouring families started their own labels, and a local glass-blowing workshop opened to supply artisanal bottles — creating a cultural enterprise cluster. Has your success inspired others to start businesses or helped create a local creative economy?',
     weight: 1.0,
     allowNA: true,
   },
@@ -879,7 +948,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'jobCreation',
     question: 'We have created new jobs beyond our core team',
-    helpText: 'Examples: suppliers hired more people, packaging business grew, transport jobs created',
+    helpText: 'For example: A Ghanaian kente weaving enterprise now employs 12 weavers directly, but has also created work for 30+ people in thread-dyeing, packaging, transport, and local retail. Have your suppliers hired more people, has a packaging business grown around you, or have transport and service jobs been created?',
     weight: 1.1,
     allowNA: true,
   },
@@ -888,7 +957,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'intergenerationalPlanning',
     question: 'We have viable plans for intergenerational continuity',
-    helpText: 'Examples: training young apprentices, documented succession plan, next-gen leaders identified',
+    helpText: 'For example: A Japanese wagashi (traditional confectionery) shop has a formal 5-year apprenticeship program where the master\'s grandchildren are already learning, and recipes are documented in a family archive. Are you training young apprentices, documenting succession plans, or developing next-generation leaders?',
     weight: 1.2,
   },
   {
@@ -896,7 +965,7 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'revenueDiversification',
     question: 'Our cultural innovation activities have helped us develop multiple independent revenue streams',
-    helpText: 'Examples: product sales, workshops, licensing, tourism experiences, digital content — at least 3 distinct streams',
+    helpText: 'For example: A Balinese dance troupe earns from live performances, YouTube ad revenue, dance workshop fees, costume rental, and cultural tourism packages — five distinct streams so that a drop in one doesn\'t threaten survival. Do you have at least 3 distinct revenue streams such as product sales, workshops, licensing, tourism, or digital content?',
     weight: 1.3,
   },
   {
@@ -904,8 +973,26 @@ export const economicResilienceQuestions: LikertQuestion[] = [
     section: 'economicResilience',
     construct: 'culturalBrandPremium',
     question: 'Our cultural authenticity allows us to maintain prices even when competitors lower theirs',
-    helpText: 'Examples: customers pay more for handmade/authentic products, cultural certification protects against price wars',
+    helpText: 'For example: When mass-produced imitations flooded the market, a Navajo silversmith collective maintained its premium pricing because buyers trust the "Navajo Made" hallmark — sales barely dipped while imitators competed on price. Does your cultural certification, handmade quality, or authentic origin story protect you from price wars?',
     weight: 1.2,
+  },
+  {
+    id: 'er-11',
+    section: 'economicResilience',
+    construct: 'culturalInnovationPathway',
+    question: 'Our cultural knowledge and traditions were directly responsible for helping us survive or recover from economic hardship',
+    helpText: 'For example: When tourism collapsed during COVID, a Balinese silversmith collective fell back on traditional community resource-sharing customs (banjar) to keep artisans fed, then used their deep craft knowledge to pivot to online luxury markets faster than non-cultural competitors. Was it specifically your cultural knowledge, traditions, or community bonds — rather than generic business skills — that got you through?',
+    weight: 1.4,
+    allowNA: true,
+  },
+  {
+    id: 'er-12',
+    section: 'economicResilience',
+    construct: 'employmentProtection',
+    question: 'Our enterprise maintained or created jobs during the last downturn specifically because of our cultural products or services',
+    helpText: 'For example: During the 2008 recession, an Italian ceramics workshop kept all staff employed because demand for authentic handmade goods held steady even as factory-made alternatives collapsed — their cultural authenticity insulated them. Did your cultural products or services specifically help you keep people employed when other businesses around you were cutting staff?',
+    weight: 1.0,
+    allowNA: true,
   },
 ]
 
@@ -947,10 +1034,10 @@ export const questionConfig = {
 
 // Total question counts
 export const ASSESSMENT_V2_STATS = {
-  totalQuestions: 52,
-  demographicQuestions: 16,
-  likertQuestions: 36,
-  estimatedMinutes: 15,
+  totalQuestions: 61,
+  demographicQuestions: 17,
+  likertQuestions: 44,
+  estimatedMinutes: 20,
   sections: 5,
 }
 

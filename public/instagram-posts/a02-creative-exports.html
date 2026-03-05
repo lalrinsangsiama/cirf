@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Creative Trade Flows</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 60px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 20px;
+      text-align: center;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 700; color: #fdfdfb;
+      text-align: center; margin-bottom: 40px; line-height: 1.1;
+    }
+    /* Comparison bars */
+    .comparison {
+      display: flex; gap: 40px; justify-content: center; align-items: flex-end;
+      margin-bottom: 45px; padding: 0 40px;
+    }
+    .bar-group { text-align: center; flex: 1; max-width: 280px; }
+    .bar-label {
+      font-size: 13px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: #7c7c7c; margin-bottom: 12px;
+    }
+    .bar-wrapper {
+      width: 100%; border-radius: 8px; overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+    .bar-fill {
+      width: 100%; border-radius: 8px; display: flex;
+      align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 700; color: #fdfdfb;
+    }
+    .bar-fill.goods {
+      height: 100px; background: linear-gradient(135deg, #5b8c9e, #4a7585);
+    }
+    .bar-fill.services {
+      height: 200px; background: linear-gradient(135deg, #d4af37, #b8962e);
+    }
+    .bar-amount {
+      font-size: 14px; color: #7c7c7c; margin-top: 8px;
+      font-weight: 300;
+    }
+    /* Pie breakdown */
+    .pie-section {
+      margin-top: 10px;
+    }
+    .pie-title {
+      font-size: 16px; font-weight: 500; color: #fdfdfb;
+      text-align: center; margin-bottom: 20px; letter-spacing: 1px;
+    }
+    .pie-rows {
+      display: flex; flex-direction: column; gap: 12px;
+      padding: 0 60px;
+    }
+    .pie-row {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .pie-bar-track {
+      flex: 1; height: 28px; background: rgba(255,255,255,0.04);
+      border-radius: 6px; overflow: hidden; position: relative;
+    }
+    .pie-bar-fill {
+      height: 100%; border-radius: 6px;
+      display: flex; align-items: center; padding-left: 12px;
+      font-size: 12px; font-weight: 500; color: #fdfdfb;
+    }
+    .pie-category {
+      font-size: 13px; color: #a0a0a0; width: 110px; text-align: right;
+      font-weight: 400;
+    }
+    .pie-pct {
+      font-size: 14px; font-weight: 600; color: #fdfdfb; width: 55px;
+      text-align: right;
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Creative Trade Flows</div>
+      <div class="headline">The $1.4 Trillion<br>Services Boom</div>
+
+      <div class="comparison">
+        <div class="bar-group">
+          <div class="bar-label">Creative Goods</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill goods">$713B</div>
+          </div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label">Creative Services</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill services">$1.4T</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pie-section">
+        <div class="pie-title">Creative Services Breakdown</div>
+        <div class="pie-rows">
+          <div class="pie-row">
+            <div class="pie-category">Software</div>
+            <div class="pie-bar-track">
+              <div class="pie-bar-fill" style="width:41.3%;background:#d4af37;">41.3%</div>
+            </div>
+          </div>
+          <div class="pie-row">
+            <div class="pie-category">R&D</div>
+            <div class="pie-bar-track">
+              <div class="pie-bar-fill" style="width:30.7%;background:#5b8c9e;">30.7%</div>
+            </div>
+          </div>
+          <div class="pie-row">
+            <div class="pie-category">Advertising</div>
+            <div class="pie-bar-track">
+              <div class="pie-bar-fill" style="width:15.5%;background:#c67557;">15.5%</div>
+            </div>
+          </div>
+          <div class="pie-row">
+            <div class="pie-category">Audiovisual</div>
+            <div class="pie-bar-track">
+              <div class="pie-bar-fill" style="width:7.9%;background:#a8b5a0;">7.9%</div>
+            </div>
+          </div>
+          <div class="pie-row">
+            <div class="pie-category">Heritage</div>
+            <div class="pie-bar-track">
+              <div class="pie-bar-fill" style="width:3%;background:rgba(212,175,55,0.4);font-size:10px;">0.6%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">UNCTAD Creative Economy Outlook 2024</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

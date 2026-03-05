@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Scotch Whisky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .gold-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 60px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 25px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px; font-weight: 700; color: #fdfdfb;
+      line-height: 1.1; margin-bottom: 55px;
+    }
+    .headline em {
+      font-style: italic; color: #d4af37;
+    }
+    /* Radiating stats */
+    .stats-ring {
+      position: relative; width: 680px; height: 500px;
+    }
+    .center-stat {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 200px; height: 200px; border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.3);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(212,175,55,0.04);
+    }
+    .center-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 900; color: #d4af37; line-height: 1;
+    }
+    .center-label {
+      font-size: 13px; color: #a0a0a0; margin-top: 4px; letter-spacing: 1px;
+    }
+    /* Satellite stats */
+    .sat {
+      position: absolute; text-align: center; width: 160px;
+    }
+    .sat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px; font-weight: 700; color: #fdfdfb; line-height: 1.1;
+    }
+    .sat-val span { color: #d4af37; font-size: 22px; }
+    .sat-label {
+      font-size: 11px; color: #7c7c7c; margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;
+    }
+    .sat-line {
+      position: absolute; background: rgba(212,175,55,0.15); border-radius: 1px;
+    }
+    /* Positions */
+    .sat-1 { top: 0; left: 50%; transform: translateX(-50%); }
+    .sat-2 { top: 80px; right: 0; }
+    .sat-3 { bottom: 80px; right: 0; }
+    .sat-4 { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .sat-5 { top: 80px; left: 0; }
+    /* Lines from center */
+    .line-1 { width: 2px; height: 50px; top: 72px; left: 50%; transform: translateX(-50%); }
+    .line-2 { width: 80px; height: 2px; top: 155px; right: 140px; }
+    .line-3 { width: 80px; height: 2px; bottom: 155px; right: 140px; }
+    .line-4 { width: 2px; height: 50px; bottom: 72px; left: 50%; transform: translateX(-50%); }
+    .line-5 { width: 80px; height: 2px; top: 155px; left: 140px; }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="gold-glow"></div>
+    <div class="content">
+      <div class="label">Heritage as IP</div>
+      <div class="headline">Scotland's<br><em>Liquid Gold</em></div>
+
+      <div class="stats-ring">
+        <div class="sat-line line-1"></div>
+        <div class="sat-line line-2"></div>
+        <div class="sat-line line-3"></div>
+        <div class="sat-line line-4"></div>
+        <div class="sat-line line-5"></div>
+
+        <div class="center-stat">
+          <div class="center-val">180<span style="font-size:28px;">+</span></div>
+          <div class="center-label">Markets Worldwide</div>
+        </div>
+
+        <div class="sat sat-1">
+          <div class="sat-val" style="color:#d4af37;font-size:40px;">$6B</div>
+          <div class="sat-label">Annual Exports</div>
+        </div>
+        <div class="sat sat-2">
+          <div class="sat-val">42<span>K</span></div>
+          <div class="sat-label">Jobs Supported</div>
+        </div>
+        <div class="sat sat-3">
+          <div class="sat-val">2.1<span>M</span></div>
+          <div class="sat-label">Distillery Visits</div>
+        </div>
+        <div class="sat sat-4">
+          <div class="sat-val" style="color:#c67557;">$90<span>M</span></div>
+          <div class="sat-label">Tourism Revenue</div>
+        </div>
+        <div class="sat sat-5">
+          <div class="sat-val" style="color:#5b8c9e;">GI</div>
+          <div class="sat-label">Protected Status</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Scotch Whisky Association 2024; VisitScotland 2023</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

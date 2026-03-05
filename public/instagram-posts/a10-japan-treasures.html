@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Japan Living National Treasures</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 55px 70px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 18px; margin-top: 5px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; font-weight: 700; color: #fdfdfb;
+      line-height: 1.1; margin-bottom: 30px;
+    }
+    .headline em { font-style: italic; color: #d4af37; }
+    /* Grid of crafts */
+    .craft-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 14px; width: 100%; max-width: 760px; margin-bottom: 30px;
+    }
+    .craft-cell {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; padding: 22px 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: border-color 0.3s;
+    }
+    .craft-cell:hover { border-color: rgba(212,175,55,0.3); }
+    .craft-icon {
+      font-size: 32px; margin-bottom: 8px; filter: grayscale(0.3);
+    }
+    .craft-name {
+      font-size: 13px; font-weight: 500; color: #c0c0c0;
+      letter-spacing: 0.5px;
+    }
+    /* Center stat - spans middle 2 columns of a special row */
+    .center-block {
+      grid-column: 2 / 4;
+      background: rgba(212,175,55,0.05);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 12px; padding: 24px 20px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .center-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 900; color: #d4af37; line-height: 1;
+    }
+    .center-sub {
+      font-size: 13px; color: #a0a0a0; margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;
+    }
+    /* Footer notes */
+    .notes {
+      display: flex; gap: 40px; margin-top: 5px;
+    }
+    .note {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .note-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .note-text {
+      font-size: 14px; color: #7c7c7c; font-weight: 300; text-align: left;
+    }
+    .note-text strong { color: #c0c0c0; font-weight: 500; }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Preservation Model</div>
+      <div class="headline">Japan's <em>Living<br>National Treasures</em></div>
+
+      <div class="craft-grid">
+        <!-- Row 1 -->
+        <div class="craft-cell">
+          <div class="craft-icon">&#x1FAD9;</div>
+          <div class="craft-name">Pottery</div>
+        </div>
+        <div class="craft-cell">
+          <div class="craft-icon">&#x1F9F5;</div>
+          <div class="craft-name">Textiles</div>
+        </div>
+        <div class="craft-cell">
+          <div class="craft-icon">&#x2728;</div>
+          <div class="craft-name">Lacquerware</div>
+        </div>
+        <div class="craft-cell">
+          <div class="craft-icon">&#x2694;&#xFE0F;</div>
+          <div class="craft-name">Metalwork</div>
+        </div>
+        <!-- Row 2 with center stat -->
+        <div class="craft-cell">
+          <div class="craft-icon">&#x1F3CE;&#xFE0F;</div>
+          <div class="craft-name">Dollmaking</div>
+        </div>
+        <div class="center-block">
+          <div class="center-val">116</div>
+          <div class="center-sub">Maximum Designees</div>
+        </div>
+        <div class="craft-cell">
+          <div class="craft-icon">&#x1FAB5;</div>
+          <div class="craft-name">Woodwork</div>
+        </div>
+        <!-- Row 3 -->
+        <div class="craft-cell">
+          <div class="craft-icon">&#x1F4DC;</div>
+          <div class="craft-name">Papermaking</div>
+        </div>
+        <div class="craft-cell" style="grid-column: 2 / 4;">
+          <div class="craft-icon">&#x1FAD2;</div>
+          <div class="craft-name">Bamboo Craft</div>
+        </div>
+        <div class="craft-cell" style="visibility:hidden;"></div>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <div class="note-dot" style="background:#d4af37;"></div>
+          <div class="note-text">Program since <strong>1950</strong></div>
+        </div>
+        <div class="note">
+          <div class="note-dot" style="background:#5b8c9e;"></div>
+          <div class="note-text">Inspired <strong>8+ countries</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Agency for Cultural Affairs Japan 2024; IDE-JETRO 2019</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

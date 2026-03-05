@@ -1,14 +1,19 @@
 // Assessment Unlock Service
 // Handles the tiered assessment unlock system and tool access
+//
+// Functions called from server (API routes) accept a SupabaseClient parameter.
+// Functions called from client components use createClient() internally.
 
 import { createClient } from '@/lib/supabase/client'
+import { type SupabaseClient } from '@supabase/supabase-js'
+import { logger } from '@/lib/logger'
 import {
   AssessmentType,
   ASSESSMENT_CONFIGS,
   getAssessmentConfig,
   TOOL_CONFIGS,
 } from '@/lib/data/assessmentConfig'
-import { getCILResourceToolAccessIds } from '@/lib/data/resourcesConfig'
+import { getResourceToolAccessIds } from '@/lib/data/resourcesConfig'
 
 export interface UnlockStatus {
   isUnlocked: boolean
@@ -48,7 +53,7 @@ export async function checkAssessmentAccess(
     .single()
 
   if (error && error.code !== 'PGRST116') {
-    console.error('Error checking assessment access:', error)
+    logger.error('Error checking assessment access', { userId, assessmentType, error: error.message })
   }
 
   return !!data
@@ -64,7 +69,7 @@ export async function getUserUnlockedAssessments(userId: string): Promise<Assess
     .eq('user_id', userId)
 
   if (error) {
-    console.error('Error fetching unlocked assessments:', error)
+    logger.error('Error fetching unlocked assessments', { userId, error: error.message })
     return ['cil'] // CIL is always available
   }
 
@@ -83,7 +88,7 @@ export async function getUserUnlockStatus(userId: string): Promise<UserUnlocks> 
     .eq('user_id', userId)
 
   if (assessmentError) {
-    console.error('Error fetching assessment unlocks:', assessmentError)
+    logger.error('Error fetching assessment unlocks', { userId, error: assessmentError.message })
   }
 
   // Fetch tool access
@@ -93,7 +98,7 @@ export async function getUserUnlockStatus(userId: string): Promise<UserUnlocks> 
     .eq('user_id', userId)
 
   if (toolError) {
-    console.error('Error fetching tool access:', toolError)
+    logger.error('Error fetching tool access', { userId, error: toolError.message })
   }
 
   // Build assessment unlocks map
@@ -133,7 +138,8 @@ export async function getUserUnlockStatus(userId: string): Promise<UserUnlocks> 
 export async function unlockAssessmentsOnCompletion(
   userId: string,
   completedAssessmentType: AssessmentType,
-  completedAssessmentId: string
+  completedAssessmentId: string,
+  supabase?: SupabaseClient
 ): Promise<AssessmentType[]> {
   const config = getAssessmentConfig(completedAssessmentType)
   const assessmentsToUnlock = config.unlocksAssessments
@@ -142,11 +148,11 @@ export async function unlockAssessmentsOnCompletion(
     return []
   }
 
-  const supabase = createClient()
+  const client = supabase || createClient()
   const unlockedAssessments: AssessmentType[] = []
 
   for (const assessmentType of assessmentsToUnlock) {
-    const { error } = await supabase
+    const { error } = await client
       .from('assessment_unlocks')
       .upsert(
         {
@@ -163,29 +169,30 @@ export async function unlockAssessmentsOnCompletion(
     if (!error) {
       unlockedAssessments.push(assessmentType)
     } else {
-      console.error(`Error unlocking ${assessmentType}:`, error)
+      logger.error(`Error unlocking ${assessmentType}`, { userId, assessmentType, error: error.message })
     }
   }
 
   return unlockedAssessments
 }
 
-// Grant resource access after completing CIL
+// Grant resource access after completing any assessment
 export async function grantResourceAccess(
   userId: string,
-  completedAssessmentType: AssessmentType
+  completedAssessmentType: AssessmentType,
+  supabase?: SupabaseClient
 ): Promise<string[]> {
-  // Only CIL completion grants resource access
-  if (completedAssessmentType !== 'cil') {
+  const resourceToolAccessIds = getResourceToolAccessIds(completedAssessmentType)
+
+  if (resourceToolAccessIds.length === 0) {
     return []
   }
 
-  const resourceToolAccessIds = getCILResourceToolAccessIds()
-  const supabase = createClient()
+  const client = supabase || createClient()
   const grantedResources: string[] = []
 
   for (const toolAccessId of resourceToolAccessIds) {
-    const { error } = await supabase
+    const { error } = await client
       .from('tool_access')
       .upsert(
         {
@@ -202,17 +209,71 @@ export async function grantResourceAccess(
     if (!error) {
       grantedResources.push(toolAccessId)
     } else {
-      console.error(`Error granting resource access ${toolAccessId}:`, error)
+      logger.error(`Error granting resource access ${toolAccessId}`, { userId, toolAccessId, error: error.message })
     }
   }
 
   return grantedResources
 }
 
+// Grant credits after completing an assessment
+export async function grantCreditsOnCompletion(
+  userId: string,
+  assessmentType: AssessmentType,
+  supabase?: SupabaseClient
+): Promise<number> {
+  const config = getAssessmentConfig(assessmentType)
+  const creditsToGrant = config.creditsGranted
+
+  if (creditsToGrant <= 0) {
+    return 0
+  }
+
+  const client = supabase || createClient()
+
+  // Add credits to user profile
+  const { error: profileError } = await client.rpc('increment_credits', {
+    user_id_input: userId,
+    amount: creditsToGrant,
+  })
+
+  if (profileError) {
+    // Fallback: manual update if RPC doesn't exist
+    const { data: profile } = await client
+      .from('profiles')
+      .select('credits')
+      .eq('id', userId)
+      .single()
+
+    const currentCredits = profile?.credits || 0
+    const { error: updateError } = await client
+      .from('profiles')
+      .update({ credits: currentCredits + creditsToGrant })
+      .eq('id', userId)
+
+    if (updateError) {
+      logger.error('Error granting credits', { userId, assessmentType, error: updateError.message })
+      return 0
+    }
+  }
+
+  // Record transaction
+  await client.from('credit_transactions').insert({
+    user_id: userId,
+    amount: creditsToGrant,
+    type: 'earned',
+    description: `Completed ${config.name} assessment`,
+    reference_id: assessmentType,
+  })
+
+  return creditsToGrant
+}
+
 // Grant tool access after completing an assessment
 export async function grantToolAccess(
   userId: string,
-  assessmentType: AssessmentType
+  assessmentType: AssessmentType,
+  supabase?: SupabaseClient
 ): Promise<string[]> {
   const config = getAssessmentConfig(assessmentType)
   const toolsToGrant = config.grantsToolAccess
@@ -221,11 +282,11 @@ export async function grantToolAccess(
     return []
   }
 
-  const supabase = createClient()
+  const client = supabase || createClient()
   const grantedTools: string[] = []
 
   for (const toolId of toolsToGrant) {
-    const { error } = await supabase
+    const { error } = await client
       .from('tool_access')
       .upsert(
         {
@@ -242,7 +303,7 @@ export async function grantToolAccess(
     if (!error) {
       grantedTools.push(toolId)
     } else {
-      console.error(`Error granting tool access ${toolId}:`, error)
+      logger.error(`Error granting tool access ${toolId}`, { userId, toolId, error: error.message })
     }
   }
 
@@ -261,7 +322,7 @@ export async function checkToolAccess(userId: string, toolId: string): Promise<b
     .single()
 
   if (error && error.code !== 'PGRST116') {
-    console.error('Error checking tool access:', error)
+    logger.error('Error checking tool access', { userId, toolId, error: error.message })
   }
 
   return !!data
@@ -278,7 +339,7 @@ export async function getUserAssessmentHistory(userId: string): Promise<Assessme
     .order('created_at', { ascending: false })
 
   if (error) {
-    console.error('Error fetching assessment history:', error)
+    logger.error('Error fetching assessment history', { userId, error: error.message })
     return []
   }
 
@@ -316,33 +377,37 @@ export async function getAssessmentCompletionCounts(
   return counts
 }
 
-// Handle full assessment completion flow (unlocks + tool grants + resource grants)
+// Handle full assessment completion flow (unlocks + tool grants + resource grants + credits)
+// Pass a SupabaseClient (service role) when calling from server-side API routes
 export async function handleAssessmentCompletion(
   userId: string,
   assessmentType: AssessmentType,
-  assessmentId: string
+  assessmentId: string,
+  supabase?: SupabaseClient
 ): Promise<{
   unlockedAssessments: AssessmentType[]
   grantedTools: string[]
   grantedResources: string[]
+  creditsEarned: number
 }> {
-  // Unlock assessments (for CIL completion)
-  const unlockedAssessments = await unlockAssessmentsOnCompletion(
-    userId,
-    assessmentType,
-    assessmentId
-  )
-
-  // Grant tool access (for secondary assessment completion)
-  const grantedTools = await grantToolAccess(userId, assessmentType)
-
-  // Grant resource access (for CIL completion)
-  const grantedResources = await grantResourceAccess(userId, assessmentType)
+  // Run all grants in parallel for speed
+  const [unlockedAssessments, grantedTools, grantedResources, creditsEarned] =
+    await Promise.all([
+      // Unlock assessments (for CIL completion)
+      unlockAssessmentsOnCompletion(userId, assessmentType, assessmentId, supabase),
+      // Grant tool access (for secondary assessment completion)
+      grantToolAccess(userId, assessmentType, supabase),
+      // Grant resource access (for any assessment completion)
+      grantResourceAccess(userId, assessmentType, supabase),
+      // Grant credits (for any assessment completion)
+      grantCreditsOnCompletion(userId, assessmentType, supabase),
+    ])
 
   return {
     unlockedAssessments,
     grantedTools,
     grantedResources,
+    creditsEarned,
   }
 }
 

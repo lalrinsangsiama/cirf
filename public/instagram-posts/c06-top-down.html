@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Failure - Culture Cannot Be Built FOR Communities</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .pattern {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.03;
+      background-image:
+        radial-gradient(circle at 35% 35%, #c67557 1px, transparent 1px),
+        radial-gradient(circle at 65% 65%, #c67557 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .content {
+      position: relative; z-index: 10; padding: 70px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557; margin-bottom: 16px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 44px;
+      font-weight: 700; line-height: 1.15; color: #fdfdfb; margin-bottom: 44px;
+    }
+    .headline em { font-style: italic; color: #c67557; }
+
+    .columns {
+      display: flex; gap: 28px; flex: 1; margin-bottom: 28px;
+    }
+    .col {
+      flex: 1; border-radius: 14px; padding: 36px 30px;
+      display: flex; flex-direction: column;
+    }
+    .col.fail {
+      background: rgba(198,117,87,0.06); border: 1px solid rgba(198,117,87,0.2);
+    }
+    .col.success {
+      background: rgba(168,181,160,0.06); border: 1px solid rgba(168,181,160,0.2);
+    }
+    .col-header {
+      font-size: 13px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .col.fail .col-header { color: #c67557; }
+    .col.success .col-header { color: #a8b5a0; }
+
+    .col-stat {
+      margin-bottom: 20px;
+    }
+    .col-stat .num {
+      font-family: 'Playfair Display', serif; font-size: 52px;
+      font-weight: 700; line-height: 1;
+    }
+    .col.fail .col-stat .num { color: #c67557; }
+    .col.success .col-stat .num { color: #a8b5a0; }
+    .col-stat .desc {
+      font-size: 14px; color: #7c7c7c; margin-top: 8px; line-height: 1.5;
+    }
+
+    .col-bar {
+      margin-top: auto; height: 6px; border-radius: 3px; overflow: hidden;
+      background: rgba(124,124,124,0.1);
+    }
+    .col.fail .col-bar-fill {
+      height: 100%; width: 65%; border-radius: 3px;
+      background: linear-gradient(90deg, #c67557, rgba(198,117,87,0.4));
+    }
+    .col.success .col-bar-fill {
+      height: 100%; width: 85%; border-radius: 3px;
+      background: linear-gradient(90deg, #a8b5a0, rgba(168,181,160,0.4));
+    }
+
+    .example-row {
+      display: flex; gap: 28px;
+    }
+    .example-box {
+      flex: 1; border-radius: 10px; padding: 18px 22px;
+      text-align: center;
+    }
+    .example-box.fail-ex {
+      background: rgba(198,117,87,0.04); border: 1px solid rgba(198,117,87,0.1);
+    }
+    .example-box.success-ex {
+      background: rgba(168,181,160,0.04); border: 1px solid rgba(168,181,160,0.1);
+    }
+    .example-box .name {
+      font-size: 14px; font-weight: 600; margin-bottom: 4px;
+    }
+    .example-box.fail-ex .name { color: #c67557; }
+    .example-box.success-ex .name { color: #a8b5a0; }
+    .example-box .detail {
+      font-size: 12px; color: #7c7c7c; line-height: 1.4;
+    }
+
+    .source {
+      position: absolute; bottom: 72px; left: 80px; right: 80px;
+      font-size: 11px; color: rgba(124,124,124,0.6); text-align: center;
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 30px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      display: flex; justify-content: center; align-items: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+    <div class="content">
+      <div class="label">Policy Failure</div>
+      <h1 class="headline">Culture Cannot Be Built<br><em>FOR</em> Communities</h1>
+
+      <div class="columns">
+        <div class="col fail">
+          <div class="col-header">Top-Down Approach</div>
+          <div class="col-stat">
+            <div class="num">60-70%</div>
+            <div class="desc">fail to meet targets<br>(World Bank 2010)</div>
+          </div>
+          <div class="col-bar"><div class="col-bar-fill"></div></div>
+        </div>
+        <div class="col success">
+          <div class="col-header">Community-Led</div>
+          <div class="col-stat">
+            <div class="num">3.4x</div>
+            <div class="desc">higher sustainability rate<br>(UNESCO 2016)</div>
+          </div>
+          <div class="col-bar"><div class="col-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-box fail-ex">
+          <div class="name">Pacific Island Craft Villages</div>
+          <div class="detail">Top-down model failed;<br>communities abandoned projects</div>
+        </div>
+        <div class="example-box success-ex">
+          <div class="name">Rwanda's Cultural Recovery</div>
+          <div class="detail">Community-led approach;<br>sustainable cultural enterprise</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">World Bank 2010; UNESCO 2022; Throsby (2010)</div>
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -160,7 +160,7 @@ function SignupForm() {
         </Link>
         <h1 className="text-3xl font-serif font-bold text-ink mb-2">Create your account</h1>
         <p className="text-stone">
-          Get started with 1 free assessment credit
+          Start with a free assessment — no credit card needed
         </p>
       </div>
 

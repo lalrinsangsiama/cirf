@@ -320,7 +320,7 @@ export default function AboutPage() {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
                   <Mail className="w-5 h-5 text-gold" />
-                  <span>contact@cil-framework.org</span>
+                  <span>hello@culturalinnovationlab.org</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <MapPin className="w-5 h-5 text-gold" />

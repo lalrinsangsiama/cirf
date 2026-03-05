@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Hallyu Growth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 60px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 20px; margin-top: 10px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; font-weight: 700; color: #fdfdfb;
+      line-height: 1.15; margin-bottom: 40px;
+    }
+    .headline span { color: #d4af37; }
+    /* Growth chart */
+    .growth-chart {
+      width: 100%; max-width: 750px;
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 12px; height: 320px; margin-bottom: 15px;
+      padding: 0 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .chart-col {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-end; flex: 1;
+    }
+    .chart-bar {
+      width: 100%; max-width: 80px; border-radius: 6px 6px 0 0;
+      position: relative; min-height: 8px;
+    }
+    .chart-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 700; color: #fdfdfb;
+      margin-bottom: 6px; white-space: nowrap;
+    }
+    .chart-year {
+      font-size: 13px; color: #7c7c7c; margin-top: 10px; font-weight: 400;
+    }
+    .arrow-label {
+      font-size: 40px; font-weight: 300; color: #d4af37;
+      margin: 0 10px; align-self: center; padding-bottom: 30px;
+    }
+    /* Secondary stats */
+    .secondary {
+      display: flex; gap: 50px; margin-top: 35px;
+    }
+    .sec-stat { text-align: center; }
+    .sec-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px; font-weight: 700; color: #fdfdfb;
+    }
+    .sec-val span { color: #d4af37; }
+    .sec-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #7c7c7c; margin-top: 6px;
+    }
+    .sec-divider {
+      width: 1px; background: rgba(212,175,55,0.2); align-self: stretch;
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Case Study: South Korea</div>
+      <div class="headline"><span>9M</span> to <span>225M</span> Fans<br>in One Decade</div>
+
+      <div class="growth-chart">
+        <div class="chart-col">
+          <div class="chart-val">9M</div>
+          <div class="chart-bar" style="height:12px;background:rgba(212,175,55,0.3);"></div>
+          <div class="chart-year">2012</div>
+        </div>
+        <div class="chart-col">
+          <div class="chart-val">35M</div>
+          <div class="chart-bar" style="height:47px;background:rgba(212,175,55,0.4);"></div>
+          <div class="chart-year">2015</div>
+        </div>
+        <div class="chart-col">
+          <div class="chart-val">73M</div>
+          <div class="chart-bar" style="height:97px;background:rgba(212,175,55,0.5);"></div>
+          <div class="chart-year">2017</div>
+        </div>
+        <div class="chart-col">
+          <div class="chart-val">100M</div>
+          <div class="chart-bar" style="height:133px;background:rgba(212,175,55,0.6);"></div>
+          <div class="chart-year">2019</div>
+        </div>
+        <div class="chart-col">
+          <div class="chart-val">157M</div>
+          <div class="chart-bar" style="height:210px;background:rgba(212,175,55,0.75);"></div>
+          <div class="chart-year">2021</div>
+        </div>
+        <div class="chart-col">
+          <div class="chart-val" style="color:#d4af37;">225M</div>
+          <div class="chart-bar" style="height:300px;background:linear-gradient(180deg,#d4af37,rgba(212,175,55,0.5));"></div>
+          <div class="chart-year" style="color:#d4af37;font-weight:600;">2023</div>
+        </div>
+      </div>
+
+      <div class="secondary">
+        <div class="sec-stat">
+          <div class="sec-val">$14.16<span>B</span></div>
+          <div class="sec-label">Content Exports</div>
+        </div>
+        <div class="sec-divider"></div>
+        <div class="sec-stat">
+          <div class="sec-val">$2.5<span>B</span></div>
+          <div class="sec-label">Netflix Investment</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">KOFICE 2024; Korean Ministry of Culture 2024</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 import { createServiceClient } from '@/lib/supabase/server'
+import { logger } from '@/lib/logger'
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://culturalinnovationlab.org'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
@@ -37,12 +38,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/pricing`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
       url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -65,6 +60,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/for/practitioners`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/for/communities`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/privacy`,
@@ -100,7 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     }
   } catch (error) {
-    console.error('Error generating sitemap blog pages:', error)
+    logger.error('Error generating sitemap blog pages', {}, error instanceof Error ? error : undefined)
   }
 
   return [...staticPages, ...blogPages]

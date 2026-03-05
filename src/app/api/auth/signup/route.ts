@@ -6,6 +6,7 @@ import { successResponse, errorResponse, validationErrorResponse, rateLimitError
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 import { checkRateLimit, authRateLimit } from '@/lib/rateLimit'
+import { validateRedirectUrl } from '@/lib/utils/validateRedirect'
 
 // Request schema
 const signupSchema = z.object({
@@ -45,8 +46,9 @@ export async function POST(request: NextRequest) {
     const { email, password, fullName, organization, role, redirectTo } = validation.data
 
     // Determine the redirect URL for email confirmation
-    const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    const emailRedirectTo = `${origin}/auth/callback?redirectTo=${encodeURIComponent(redirectTo || '/dashboard')}`
+    const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'https://culturalinnovationlab.org'
+    const validatedRedirect = validateRedirectUrl(redirectTo || null)
+    const emailRedirectTo = `${origin}/auth/callback?redirectTo=${encodeURIComponent(validatedRedirect)}`
 
     // Create account with Supabase
     const supabase = await createClient()

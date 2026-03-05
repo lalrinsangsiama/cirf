@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post E01 - Culture Is Not a Luxury</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .label {
+      position: absolute; top: 60px; left: 80px;
+      font-size: 14px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557;
+      background: rgba(198,117,87,0.1); padding: 8px 20px; border-radius: 4px;
+    }
+    .panels {
+      display: flex; height: calc(100% - 140px); margin-top: 110px;
+    }
+    .panel-myth, .panel-fact {
+      flex: 1; padding: 50px 50px 80px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .panel-myth {
+      background: rgba(198,117,87,0.06);
+      border-right: 1px solid rgba(198,117,87,0.2);
+    }
+    .panel-fact {
+      background: rgba(212,175,55,0.04);
+    }
+    .panel-label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; margin-bottom: 30px;
+    }
+    .panel-myth .panel-label { color: #c67557; }
+    .panel-fact .panel-label { color: #d4af37; }
+    .myth-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px; font-weight: 700; color: rgba(198,117,87,0.5);
+      text-decoration: line-through; text-decoration-thickness: 3px;
+      line-height: 1.3; margin-bottom: 30px;
+    }
+    .myth-sub {
+      font-size: 15px; color: rgba(124,124,124,0.7); font-weight: 300;
+      line-height: 1.6;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px; font-weight: 700; color: #d4af37;
+      line-height: 1.2; margin-bottom: 35px;
+    }
+    .fact-stats {
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .fact-item {
+      display: flex; align-items: baseline; gap: 14px;
+    }
+    .fact-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: #fdfdfb;
+      white-space: nowrap;
+    }
+    .fact-desc {
+      font-size: 13px; font-weight: 400; color: #7c7c7c;
+      line-height: 1.4;
+    }
+    .takeaway {
+      margin-top: 30px; padding-top: 20px;
+      border-top: 1px solid rgba(212,175,55,0.2);
+      font-size: 13px; font-weight: 500; color: #fdfdfb;
+      line-height: 1.6; font-style: italic;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="label">Myth vs Fact</div>
+    <div class="panels">
+      <div class="panel-myth">
+        <div class="panel-label">Myth</div>
+        <div class="myth-text">"Culture is a luxury we can't afford right now."</div>
+        <div class="myth-sub">A common refrain from finance ministries and development agencies worldwide.</div>
+      </div>
+      <div class="panel-fact">
+        <div class="panel-label">Fact</div>
+        <div class="headline">Culture is a $2.3 Trillion Economy</div>
+        <div class="fact-stats">
+          <div class="fact-item">
+            <div class="fact-number">6.2%</div>
+            <div class="fact-desc">of global employment</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-number">#1</div>
+            <div class="fact-desc">Larger than automotive in UK GDP</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-number">+4.2%</div>
+            <div class="fact-desc">Italian cultural regions during recession<br>(recession insurance effect)</div>
+          </div>
+        </div>
+        <div class="takeaway">Countries that treat culture as infrastructure generate higher returns.</div>
+      </div>
+    </div>
+    <div class="source">Cellini & Cuccia (2019); UNCTAD 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - Culture Is an Ecosystem, Not a Pipeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 30px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .label {
+      font-size: 13px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 15px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 40px;
+      font-weight: 400; color: #fdfdfb; line-height: 1.15;
+    }
+    .comparison {
+      display: flex; gap: 30px; padding: 30px 80px 20px;
+    }
+    .model {
+      flex: 1; padding: 25px; position: relative;
+    }
+    .model-old {
+      background: rgba(253,253,251,0.02);
+      border: 1px solid rgba(253,253,251,0.06);
+    }
+    .model-new {
+      background: rgba(212, 175, 55, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+    }
+    .model-badge {
+      font-size: 10px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 15px;
+    }
+    .model-badge.old { color: rgba(253,253,251,0.3); }
+    .model-badge.new { color: #d4af37; }
+    .pipeline {
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+    }
+    .pipe-node {
+      padding: 12px 20px; font-size: 13px; font-weight: 500;
+      color: rgba(253,253,251,0.4); text-align: center; width: 100%;
+      background: rgba(253,253,251,0.03);
+    }
+    .pipe-arrow {
+      width: 1px; height: 15px; background: rgba(253,253,251,0.15);
+      position: relative;
+    }
+    .pipe-arrow::after {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(253,253,251,0.15);
+    }
+    .web-diagram {
+      position: relative; width: 100%; height: 220px;
+    }
+    .web-node {
+      position: absolute; font-size: 11px; font-weight: 500;
+      color: #fdfdfb; padding: 10px 14px;
+      background: rgba(91, 140, 158, 0.12);
+      border: 1px solid rgba(91, 140, 158, 0.3);
+      border-radius: 4px; text-align: center;
+      white-space: nowrap;
+    }
+    .web-node.center-node {
+      left: 50%; top: 50%; transform: translate(-50%, -50%);
+      background: rgba(212, 175, 55, 0.12);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: #d4af37; font-weight: 600;
+    }
+    .web-svg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .cross-out {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-10deg);
+      font-family: 'Playfair Display', serif; font-size: 28px;
+      color: rgba(198, 117, 87, 0.4); font-weight: 700;
+      letter-spacing: 4px;
+    }
+    .korea-section {
+      margin: 15px 80px 0;
+      padding: 25px 30px;
+      background: rgba(91, 140, 158, 0.06);
+      border-left: 3px solid #5b8c9e;
+    }
+    .korea-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: #5b8c9e; margin-bottom: 12px;
+    }
+    .korea-stat {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .korea-number {
+      font-family: 'Playfair Display', serif; font-size: 48px;
+      font-weight: 700; color: #d4af37; line-height: 1;
+    }
+    .korea-desc {
+      font-size: 15px; color: #fdfdfb; font-weight: 300; line-height: 1.4;
+    }
+    .korea-desc strong { color: #5b8c9e; font-weight: 600; }
+    .source {
+      position: absolute; bottom: 68px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      text-align: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px;
+      color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Policy Framework</div>
+      <h1 class="headline">Culture Is an Ecosystem, Not a Pipeline</h1>
+    </div>
+
+    <div class="comparison">
+      <div class="model model-old">
+        <div class="model-badge old">Old Model: Linear Pipeline</div>
+        <div class="pipeline">
+          <div class="pipe-node">Government</div>
+          <div class="pipe-arrow"></div>
+          <div class="pipe-node">Grant</div>
+          <div class="pipe-arrow"></div>
+          <div class="pipe-node">Artist</div>
+          <div class="pipe-arrow"></div>
+          <div class="pipe-node">Output</div>
+        </div>
+        <div class="cross-out">OUTDATED</div>
+      </div>
+
+      <div class="model model-new">
+        <div class="model-badge new">New Model: Ecosystem</div>
+        <div class="web-diagram">
+          <svg class="web-svg" viewBox="0 0 400 220">
+            <!-- Connection lines -->
+            <line x1="200" y1="110" x2="80" y2="30" stroke="rgba(91,140,158,0.25)" stroke-width="1"/>
+            <line x1="200" y1="110" x2="320" y2="30" stroke="rgba(91,140,158,0.25)" stroke-width="1"/>
+            <line x1="200" y1="110" x2="50" y2="140" stroke="rgba(91,140,158,0.25)" stroke-width="1"/>
+            <line x1="200" y1="110" x2="350" y2="140" stroke="rgba(91,140,158,0.25)" stroke-width="1"/>
+            <line x1="200" y1="110" x2="100" y2="200" stroke="rgba(91,140,158,0.25)" stroke-width="1"/>
+            <line x1="200" y1="110" x2="300" y2="200" stroke="rgba(91,140,158,0.25)" stroke-width="1"/>
+            <!-- Cross connections -->
+            <line x1="80" y1="30" x2="50" y2="140" stroke="rgba(91,140,158,0.12)" stroke-width="1"/>
+            <line x1="320" y1="30" x2="350" y2="140" stroke="rgba(91,140,158,0.12)" stroke-width="1"/>
+            <line x1="50" y1="140" x2="100" y2="200" stroke="rgba(91,140,158,0.12)" stroke-width="1"/>
+            <line x1="350" y1="140" x2="300" y2="200" stroke="rgba(91,140,158,0.12)" stroke-width="1"/>
+            <line x1="80" y1="30" x2="320" y2="30" stroke="rgba(91,140,158,0.08)" stroke-width="1"/>
+            <line x1="100" y1="200" x2="300" y2="200" stroke="rgba(91,140,158,0.08)" stroke-width="1"/>
+          </svg>
+          <div class="web-node" style="left:50px;top:10px;">Artists</div>
+          <div class="web-node" style="right:50px;top:10px;">Institutions</div>
+          <div class="web-node" style="left:10px;top:115px;">Investors</div>
+          <div class="web-node" style="right:10px;top:115px;">Platforms</div>
+          <div class="web-node" style="left:55px;bottom:0;">Policymakers</div>
+          <div class="web-node" style="right:45px;bottom:0;">Communities</div>
+          <div class="web-node center-node">Culture</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="korea-section">
+      <div class="korea-title">Case Study: South Korea's Ecosystem Approach</div>
+      <div class="korea-stat">
+        <div class="korea-number">$13.2B</div>
+        <div class="korea-desc">
+          Cultural content exports through <strong>ecosystem investment</strong> rather than linear grants.
+          Interconnected support for creators, platforms, and global distribution.
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Lee &amp; Kim (2023); Korea MCST 2024</div>
+
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

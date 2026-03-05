@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post F01 - 13 Components</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 45px 60px 25px;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37;
+      margin-bottom: 12px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px; font-weight: 700; color: #fdfdfb; line-height: 1.2;
+    }
+    .grid {
+      padding: 15px 60px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    }
+    .cell {
+      padding: 14px 16px;
+      background: rgba(245,240,232,0.03);
+      border-left: 2px solid;
+      border-radius: 0 4px 4px 0;
+    }
+    .cell:nth-child(-n+5) { border-left-color: #d4af37; }
+    .cell:nth-child(n+6):nth-child(-n+9) { border-left-color: #5b8c9e; }
+    .cell:nth-child(n+10) { border-left-color: #a8b5a0; }
+    .cell-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: rgba(253,253,251,0.25); margin-bottom: 4px;
+    }
+    .cell-name {
+      font-size: 13px; font-weight: 600; color: #fdfdfb;
+      margin-bottom: 3px; line-height: 1.2;
+    }
+    .cell-desc {
+      font-size: 10px; color: #7c7c7c; line-height: 1.3;
+    }
+    .cell-13 {
+      grid-column: 2;
+    }
+    .legend {
+      padding: 12px 60px; display: flex; gap: 30px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .legend-color {
+      width: 16px; height: 3px; border-radius: 1px;
+    }
+    .legend-color.gold { background: #d4af37; }
+    .legend-color.ocean { background: #5b8c9e; }
+    .legend-color.sage { background: #a8b5a0; }
+    .legend-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; color: #7c7c7c;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">The CIL Framework</div>
+      <h1 class="headline">13 Components of Cultural Innovation</h1>
+    </div>
+    <div class="grid">
+      <div class="cell">
+        <div class="cell-num">01</div>
+        <div class="cell-name">Cultural Assets</div>
+        <div class="cell-desc">Heritage, traditions, creative resources</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">02</div>
+        <div class="cell-name">Economic Integration</div>
+        <div class="cell-desc">Connected to economic systems</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">03</div>
+        <div class="cell-name">Governance & Policy</div>
+        <div class="cell-desc">Legal/institutional frameworks</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">04</div>
+        <div class="cell-name">Community Ownership</div>
+        <div class="cell-desc">Who controls, who benefits</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">05</div>
+        <div class="cell-name">Innovation Capacity</div>
+        <div class="cell-desc">Tradition + contemporary creativity</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">06</div>
+        <div class="cell-name">Knowledge Systems</div>
+        <div class="cell-desc">Traditional knowledge documented & active</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">07</div>
+        <div class="cell-name">IP & Legal Protection</div>
+        <div class="cell-desc">Protected from extraction</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">08</div>
+        <div class="cell-name">Market Access</div>
+        <div class="cell-desc">Local, national, global reach</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">09</div>
+        <div class="cell-name">Financial Infrastructure</div>
+        <div class="cell-desc">Funding mechanisms for culture</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">10</div>
+        <div class="cell-name">Talent & Transmission</div>
+        <div class="cell-desc">Skills taught to next generation</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">11</div>
+        <div class="cell-name">Digital Capacity</div>
+        <div class="cell-desc">Technology for production & distribution</div>
+      </div>
+      <div class="cell">
+        <div class="cell-num">12</div>
+        <div class="cell-name">Cross-Sector Linkages</div>
+        <div class="cell-desc">Connected to tourism, education, health, tech</div>
+      </div>
+      <div class="cell cell-13">
+        <div class="cell-num">13</div>
+        <div class="cell-name">Resilience & Adaptation</div>
+        <div class="cell-desc">Capacity to absorb shocks and evolve</div>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color gold"></div>
+        <div class="legend-label">Foundation (1&ndash;5)</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color ocean"></div>
+        <div class="legend-label">Capacity (6&ndash;9)</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color sage"></div>
+        <div class="legend-label">Outcomes (10&ndash;13)</div>
+      </div>
+    </div>
+    <div class="source">Cultural Innovation Lab (CIL) 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

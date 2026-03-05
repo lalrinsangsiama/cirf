@@ -83,42 +83,6 @@ export const newsletterSchema = z.object({
 
 export type NewsletterInput = z.infer<typeof newsletterSchema>
 
-// ===== Razorpay Schemas =====
-
-export const creditPackIdSchema = z.enum(['pack_5', 'pack_15', 'pack_50'])
-
-export const currencySchema = z.enum(['INR', 'USD']).default('INR')
-
-export const createOrderSchema = z.object({
-  packId: creditPackIdSchema,
-  currency: currencySchema,
-})
-
-export type CreateOrderInput = z.infer<typeof createOrderSchema>
-
-export const verifyPaymentSchema = z.object({
-  razorpay_order_id: z
-    .string()
-    .min(1, 'Order ID is required')
-    .max(100, 'Order ID is too long'),
-  razorpay_payment_id: z
-    .string()
-    .min(1, 'Payment ID is required')
-    .max(100, 'Payment ID is too long'),
-  razorpay_signature: z
-    .string()
-    .min(1, 'Signature is required')
-    .max(256, 'Signature is too long'),
-  packId: creditPackIdSchema,
-  credits: z
-    .number()
-    .int()
-    .positive()
-    .max(1000, 'Invalid credit amount'),
-})
-
-export type VerifyPaymentInput = z.infer<typeof verifyPaymentSchema>
-
 // ===== AI Generation Schema =====
 
 export const generatePostSchema = z.object({
@@ -154,6 +118,10 @@ export const blogPostSchema = z.object({
     .optional()
     .transform((val) => (val ? sanitizeString(val.trim()) : undefined)),
   category: z.enum([
+    'resources',
+    'education',
+    'series',
+    'playlist',
     'research',
     'case-study',
     'practitioner-tips',
@@ -162,6 +130,14 @@ export const blogPostSchema = z.object({
   ]),
   tags: z.array(z.string().max(50)).max(10).optional(),
   featured_image: z.string().url().optional(),
+  citations: z.array(z.object({
+    author: z.string(),
+    year: z.string(),
+    title: z.string(),
+    journal: z.string().optional(),
+    doi: z.string().optional(),
+    url: z.string().optional(),
+  })).optional(),
   status: z.enum(['draft', 'review', 'published', 'archived']).default('draft'),
   seo_description: z
     .string()

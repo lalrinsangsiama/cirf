@@ -7,7 +7,6 @@ const footerLinks = {
   ],
   tools: [
     { name: 'Assessment Tool', href: '/tools' },
-    { name: 'Pricing', href: '/pricing' },
     { name: 'Getting Started', href: '/getting-started' },
     { name: 'FAQ', href: '/faq' },
   ],
@@ -20,7 +19,6 @@ const footerLinks = {
   legal: [
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
-    { name: 'Refund Policy', href: '/refund-policy' },
   ],
 }
 

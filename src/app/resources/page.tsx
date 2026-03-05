@@ -7,6 +7,8 @@ import { useAuth } from '@/components/auth/AuthProvider'
 import { createBrowserClient } from '@supabase/ssr'
 import { FileText, Download, BookOpen, Lock, AlertCircle, CheckCircle, Loader2, Unlock, Sparkles, ArrowRight, X, Bell } from 'lucide-react'
 import { UNLOCKABLE_RESOURCES, type ResourceConfig } from '@/lib/data/resourcesConfig'
+import { logger } from '@/lib/logger'
+import { ASSESSMENT_CONFIGS, type AssessmentType } from '@/lib/data/assessmentConfig'
 
 export default function ResourcesPage() {
   const { user, loading: authLoading } = useAuth()
@@ -39,12 +41,12 @@ export default function ResourcesPage() {
           .like('tool_id', 'resource-%')
 
         if (error) {
-          console.error('Error checking resource access:', error)
+          logger.error('Error checking resource access', { error: error?.message })
         } else {
           setUnlockedResources(new Set(data?.map(d => d.tool_id) || []))
         }
       } catch (err) {
-        console.error('Error checking resource access:', err)
+        logger.error('Error checking resource access', {}, err instanceof Error ? err : undefined)
       } finally {
         setLoadingAccess(false)
       }
@@ -71,7 +73,9 @@ export default function ResourcesPage() {
     }
 
     if (!unlockedResources.has(resource.toolAccessId)) {
-      setDownloadError('You need to complete the CIL Assessment to unlock this resource.')
+      const requiredAssessment = ASSESSMENT_CONFIGS[resource.unlockRequirement as AssessmentType]
+      const name = requiredAssessment?.name || resource.unlockRequirement
+      setDownloadError(`You need to complete the ${name} Assessment to unlock this resource.`)
       return
     }
 
@@ -93,7 +97,7 @@ export default function ResourcesPage() {
         // Trigger download
         const link = document.createElement('a')
         link.href = data.signedUrl
-        link.download = resource.storagePath
+        link.download = resource.storagePath.split('/').pop() || resource.storagePath
         link.target = '_blank'
         document.body.appendChild(link)
         link.click()
@@ -101,7 +105,7 @@ export default function ResourcesPage() {
         setDownloadSuccess(`Starting download: ${resource.title}`)
       }
     } catch (error) {
-      console.error('Download error:', error)
+      logger.error('Download error', {}, error instanceof Error ? error : undefined)
       setDownloadError(
         error instanceof Error
           ? error.message
@@ -169,9 +173,14 @@ export default function ResourcesPage() {
           <h2 className="font-serif text-3xl md:text-4xl font-light mb-4">
             Exclusive Guides & Frameworks
           </h2>
-          <p className="text-stone text-lg max-w-3xl mb-8">
-            Complete the CIL Assessment to unlock these premium resources designed specifically for cultural entrepreneurs.
+          <p className="text-stone text-lg max-w-3xl mb-4">
+            Complete assessments to unlock resources. Each assessment unlocks its own exclusive guides and tools.
           </p>
+          <div className="bg-pearl/50 border border-ink/10 rounded-lg p-4 mb-8 max-w-3xl">
+            <p className="text-sm text-stone">
+              <strong>How it works:</strong> Complete assessments to unlock resources. The free CIL Assessment unlocks the first 2 resources. Each secondary assessment unlocks 1 additional resource.
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {UNLOCKABLE_RESOURCES.map((resource) => {
@@ -278,10 +287,10 @@ export default function ResourcesPage() {
                     </Link>
                   ) : (
                     <Link
-                      href="/tools"
+                      href={resource.unlockRequirement === 'cil' ? '/tools?start=cil' : `/assessments/${resource.unlockRequirement}`}
                       className="w-full btn-secondary flex items-center justify-center gap-2"
                     >
-                      Complete CIL to Unlock
+                      Complete {ASSESSMENT_CONFIGS[resource.unlockRequirement as AssessmentType]?.name || 'CIL'} to Unlock
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   )}
@@ -351,12 +360,12 @@ export default function ResourcesPage() {
             <div className="bg-pearl p-6 rounded font-mono text-sm leading-relaxed">
               <p>Cultural Innovation Lab (CIL). (2024).</p>
               <p>A framework for understanding how cultural innovation generates economic resilience.</p>
-              <p className="mt-2">Available at: https://cil-framework.org</p>
+              <p className="mt-2">Available at: https://culturalinnovationlab.org</p>
             </div>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  'Cultural Innovation Lab (CIL). (2024). A framework for understanding how cultural innovation generates economic resilience. Available at: https://cil-framework.org'
+                  'Cultural Innovation Lab (CIL). (2024). A framework for understanding how cultural innovation generates economic resilience. Available at: https://culturalinnovationlab.org'
                 )
                 setDownloadSuccess('Citation copied to clipboard!')
               }}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Nollywood GDP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 60px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 25px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px; font-weight: 700; color: #fdfdfb;
+      line-height: 1.15; margin-bottom: 50px;
+    }
+    /* Before/After comparison */
+    .comparison {
+      display: flex; gap: 0; width: 100%; max-width: 780px; margin-bottom: 50px;
+    }
+    .comp-side {
+      flex: 1; padding: 40px 30px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center;
+    }
+    .comp-side.before {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px 0 0 16px;
+    }
+    .comp-side.after {
+      background: rgba(212,175,55,0.05);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 0 16px 16px 0;
+    }
+    .comp-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 16px; padding: 4px 14px;
+      border-radius: 20px;
+    }
+    .before .comp-tag {
+      color: #7c7c7c; background: rgba(255,255,255,0.05);
+    }
+    .after .comp-tag {
+      color: #d4af37; background: rgba(212,175,55,0.1);
+    }
+    .comp-label {
+      font-size: 14px; color: #7c7c7c; margin-bottom: 8px; font-weight: 300;
+    }
+    .comp-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px; font-weight: 900; line-height: 1;
+    }
+    .before .comp-value { color: #555; }
+    .after .comp-value { color: #fdfdfb; }
+    .comp-value span { font-size: 36px; }
+    .after .comp-value span { color: #d4af37; }
+    .comp-change {
+      font-size: 16px; font-weight: 600; color: #d4af37; margin-top: 12px;
+    }
+    .arrow-between {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; color: #d4af37; padding: 0 5px;
+      align-self: center;
+    }
+    /* Secondary stats */
+    .secondary {
+      display: flex; gap: 60px;
+    }
+    .sec-stat { text-align: center; }
+    .sec-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 700; color: #fdfdfb;
+    }
+    .sec-val span { color: #d4af37; }
+    .sec-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #7c7c7c; margin-top: 6px;
+    }
+    .sec-divider {
+      width: 1px; background: rgba(212,175,55,0.2); align-self: stretch;
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Case Study: Nigeria</div>
+      <div class="headline">The GDP That Was<br>Always There</div>
+
+      <div class="comparison">
+        <div class="comp-side before">
+          <div class="comp-tag">Before Rebasing</div>
+          <div class="comp-label">Nigeria's GDP</div>
+          <div class="comp-value">$285<span>B</span></div>
+        </div>
+        <div class="comp-side after">
+          <div class="comp-tag">After Rebasing</div>
+          <div class="comp-label">Nigeria's GDP</div>
+          <div class="comp-value">$510<span>B</span></div>
+          <div class="comp-change">+79% overnight</div>
+        </div>
+      </div>
+
+      <div class="secondary">
+        <div class="sec-stat">
+          <div class="sec-val">220<span>K</span></div>
+          <div class="sec-label">Direct Jobs</div>
+        </div>
+        <div class="sec-divider"></div>
+        <div class="sec-stat">
+          <div class="sec-val">$6.4<span>B</span></div>
+          <div class="sec-label">Revenue</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Omanufeme (2016) IMF; NBS Nigeria 2024</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

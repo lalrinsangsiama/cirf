@@ -8,6 +8,7 @@ import { useAuth } from '@/components/auth/AuthProvider'
 import { TOOL_CONFIGS, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import { TOOL_PAGE_CONFIGS } from '@/lib/data/toolPageConfigs'
 import { createClient } from '@/lib/supabase/client'
+import { logger } from '@/lib/logger'
 
 export default function CalculatorsPage() {
   const { user } = useAuth()
@@ -34,7 +35,7 @@ export default function CalculatorsPage() {
           setUnlockedToolIds(new Set(data.map(t => t.tool_id)))
         }
       } catch {
-        console.error('Error fetching tool access')
+        logger.error('Error fetching tool access')
       }
       setLoading(false)
     }

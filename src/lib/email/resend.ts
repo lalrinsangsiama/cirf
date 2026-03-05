@@ -2,6 +2,19 @@ import { Resend } from 'resend'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import { getWelcomeEmailHtml, getWelcomeEmailText } from './templates/welcome'
 import { getPasswordResetEmailHtml, getPasswordResetEmailText } from './templates/password-reset'
+import { logger } from '@/lib/logger'
+
+/**
+ * Escape HTML special characters to prevent XSS in email templates
+ */
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
 
 // Lazy initialization to avoid build-time errors when API key is not available
 let resendClient: Resend | null = null
@@ -17,8 +30,8 @@ function getResend(): Resend {
   return resendClient
 }
 
-const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@cil-framework.org'
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://cil-framework.org'
+const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@culturalinnovationlab.org'
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://culturalinnovationlab.org'
 
 interface SendEmailOptions {
   to: string | string[]
@@ -53,12 +66,12 @@ async function sendEmailWithRetry(
         if (error.message?.includes('rate') || error.message?.includes('500')) {
           if (attempt < maxRetries - 1) {
             const delay = baseDelayMs * Math.pow(2, attempt)
-            console.warn(`Email send failed, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries}):`, error.message)
+            logger.warn(`Email send failed, retrying in ${delay}ms`, { attempt: attempt + 1, maxRetries, error: error.message })
             await new Promise(resolve => setTimeout(resolve, delay))
             continue
           }
         }
-        console.error('Email send error:', error)
+        logger.error('Email send error', {}, error instanceof Error ? error : undefined)
         return { success: false, error: error.message }
       }
 
@@ -68,11 +81,11 @@ async function sendEmailWithRetry(
       // Retry on network errors
       if (attempt < maxRetries - 1) {
         const delay = baseDelayMs * Math.pow(2, attempt)
-        console.warn(`Email send failed, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries}):`, lastError)
+        logger.warn(`Email send failed, retrying in ${delay}ms`, { attempt: attempt + 1, maxRetries, error: lastError })
         await new Promise(resolve => setTimeout(resolve, delay))
         continue
       }
-      console.error('Email send error:', error)
+      logger.error('Email send error', {}, error instanceof Error ? error : undefined)
     }
   }
 
@@ -94,20 +107,25 @@ export async function sendContactNotification({
   subject?: string
   message: string
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL || 'contact@cil-framework.org'
+  const adminEmail = process.env.ADMIN_EMAIL || 'hello@culturalinnovationlab.org'
+
+  const safeName = escapeHtml(name)
+  const safeEmail = escapeHtml(email)
+  const safeSubject = subject ? escapeHtml(subject) : undefined
+  const safeMessage = escapeHtml(message)
 
   return sendEmail({
     to: adminEmail,
-    subject: `New Contact Form Submission: ${subject || 'General Inquiry'}`,
+    subject: `New Contact Form Submission: ${safeSubject || 'General Inquiry'}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">New Contact Form Submission</h2>
         <div style="background: #f5f5f5; padding: 20px; border-radius: 8px;">
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> <a href="mailto:${safeEmail}">${safeEmail}</a></p>
+          ${safeSubject ? `<p><strong>Subject:</strong> ${safeSubject}</p>` : ''}
           <p><strong>Message:</strong></p>
-          <div style="background: white; padding: 15px; border-radius: 4px; white-space: pre-wrap;">${message}</div>
+          <div style="background: white; padding: 15px; border-radius: 4px; white-space: pre-wrap;">${safeMessage}</div>
         </div>
         <p style="color: #666; font-size: 12px; margin-top: 20px;">
           This message was sent from the CIL website contact form.
@@ -142,7 +160,7 @@ export async function sendNewsletterWelcome({
     subject: 'Welcome to the CIL Newsletter',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a1a1a;">Welcome to CIL${name ? `, ${name}` : ''}!</h2>
+        <h2 style="color: #1a1a1a;">Welcome to CIL${name ? `, ${escapeHtml(name)}` : ''}!</h2>
         <p style="color: #444; line-height: 1.6;">
           Thank you for subscribing to the CIL newsletter.
         </p>
@@ -212,7 +230,7 @@ export async function sendContactConfirmation({
     subject: 'We received your message - CIL',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a1a1a;">Thank you for contacting us, ${name}!</h2>
+        <h2 style="color: #1a1a1a;">Thank you for contacting us, ${escapeHtml(name)}!</h2>
         <p style="color: #444; line-height: 1.6;">
           We've received your message and will get back to you within 2-3 business days.
         </p>
@@ -242,118 +260,6 @@ In the meantime, you might find these resources helpful:
 
 ---
 This is an automated response from the CIL website.
-    `,
-  })
-}
-
-export async function sendPurchaseConfirmation({
-  email,
-  name,
-  credits,
-  amount,
-  currency,
-  orderId,
-  paymentId,
-}: {
-  email: string
-  name?: string
-  credits: number
-  amount: number
-  currency: string
-  orderId: string
-  paymentId: string
-}) {
-  const formattedAmount = currency === 'INR'
-    ? `₹${(amount / 100).toFixed(2)}`
-    : `$${(amount / 100).toFixed(2)}`
-
-  const greeting = name ? `Hi ${name},` : 'Hello,'
-
-  return sendEmail({
-    to: email,
-    subject: `Payment Confirmed - ${credits} CIL Credits`,
-    html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a1a1a;">Payment Confirmed</h2>
-        <p style="color: #444; line-height: 1.6;">
-          ${greeting}
-        </p>
-        <p style="color: #444; line-height: 1.6;">
-          Thank you for your purchase! Your payment has been successfully processed.
-        </p>
-
-        <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1a1a1a; margin-top: 0;">Order Details</h3>
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="padding: 8px 0; color: #666;">Credits Added:</td>
-              <td style="padding: 8px 0; text-align: right; font-weight: bold;">${credits} credits</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #666;">Amount Paid:</td>
-              <td style="padding: 8px 0; text-align: right; font-weight: bold;">${formattedAmount}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #666;">Order ID:</td>
-              <td style="padding: 8px 0; text-align: right; font-family: monospace; font-size: 12px;">${orderId}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #666;">Payment ID:</td>
-              <td style="padding: 8px 0; text-align: right; font-family: monospace; font-size: 12px;">${paymentId}</td>
-            </tr>
-          </table>
-        </div>
-
-        <p style="color: #444; line-height: 1.6;">
-          Your credits are now available in your account. You can use them to:
-        </p>
-        <ul style="color: #444; line-height: 1.8;">
-          <li>Complete CIL assessments</li>
-          <li>Access detailed analysis reports</li>
-          <li>Compare with similar case studies</li>
-        </ul>
-
-        <p style="text-align: center; margin: 30px 0;">
-          <a href="${baseUrl}/dashboard"
-             style="display: inline-block; background: #1a1a1a; color: #fff; padding: 12px 24px; border-radius: 24px; text-decoration: none;">
-            Go to Dashboard
-          </a>
-        </p>
-
-        <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;" />
-
-        <p style="color: #999; font-size: 12px;">
-          If you have any questions about your purchase, please
-          <a href="${baseUrl}/about#contact" style="color: #999;">contact us</a>.
-          <br /><br />
-          This is a receipt for your records. Please save this email for your reference.
-        </p>
-      </div>
-    `,
-    text: `
-Payment Confirmed
-
-${greeting}
-
-Thank you for your purchase! Your payment has been successfully processed.
-
-Order Details
--------------
-Credits Added: ${credits} credits
-Amount Paid: ${formattedAmount}
-Order ID: ${orderId}
-Payment ID: ${paymentId}
-
-Your credits are now available in your account. You can use them to:
-- Complete CIL assessments
-- Access detailed analysis reports
-- Compare with similar case studies
-
-Go to Dashboard: ${baseUrl}/dashboard
-
----
-If you have any questions about your purchase, please contact us at ${baseUrl}/about#contact.
-This is a receipt for your records.
     `,
   })
 }

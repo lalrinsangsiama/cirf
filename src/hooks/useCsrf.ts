@@ -50,7 +50,7 @@ export function useCsrf() {
         }
       }
     } catch (error) {
-      console.warn('Failed to refresh CSRF token:', error)
+      // Non-critical: CSRF token refresh failed, will retry on next request
     }
   }, [])
 

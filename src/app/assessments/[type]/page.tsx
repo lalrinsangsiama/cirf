@@ -15,10 +15,10 @@ import {
 } from '@/lib/data/assessmentConfig'
 import {
   checkAssessmentAccess,
-  handleAssessmentCompletion,
   getUserUnlockStatus,
 } from '@/lib/services/assessmentUnlockService'
 import { cn } from '@/lib/utils'
+import { logger } from '@/lib/logger'
 import {
   ArrowRight,
   ArrowLeft,
@@ -46,7 +46,10 @@ import {
 } from 'recharts'
 import { LikertScale } from '@/components/assessment/LikertScale'
 import UnlockCelebration from '@/components/assessment/UnlockCelebration'
+import AssessmentIntroScreen from '@/components/assessment/AssessmentIntroScreen'
+import { getResourceByToolAccessId } from '@/lib/data/resourcesConfig'
 import { getSectionRecommendation } from '@/lib/data/secondaryRecommendations'
+import { trackAssessmentStarted, trackAssessmentCompleted } from '@/lib/analytics/posthog'
 
 // Import question sets
 import { cimmQuestions, CIMM_SECTION_META } from '@/lib/data/cimmQuestions'
@@ -187,6 +190,9 @@ export default function AssessmentPage({ params }: PageProps) {
   const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [hasDraft, setHasDraft] = useState(false)
   const [draftLoaded, setDraftLoaded] = useState(false)
+  const [hasExistingSubmission, setHasExistingSubmission] = useState(false)
+  const [existingScore, setExistingScore] = useState<number | null>(null)
+  const [existingDate, setExistingDate] = useState<string | null>(null)
   const autoSaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastSavedAnswersRef = useRef<string>('')
 
@@ -202,17 +208,34 @@ export default function AssessmentPage({ params }: PageProps) {
     }
   }, [config, router])
 
-  // Check access
+  // Check access and existing submission
   useEffect(() => {
-    async function checkAccess() {
+    async function checkAccessAndExisting() {
       if (!user || authLoading) return
 
       const access = await checkAssessmentAccess(user.id, assessmentType)
       setHasAccess(access)
+
+      // Check if user already completed this assessment (1 response per person)
+      const { data: existing } = await supabase
+        .from('assessments')
+        .select('id, score, interpretation, created_at')
+        .eq('user_id', user.id)
+        .eq('assessment_type', assessmentType)
+        .maybeSingle()
+
+      if (existing) {
+        setHasExistingSubmission(true)
+        setExistingScore(existing.score)
+        setExistingDate(existing.created_at)
+        setAssessmentId(existing.id)
+        // Show results view with existing data
+        setShowResults(true)
+      }
     }
 
     if (user) {
-      checkAccess()
+      checkAccessAndExisting()
     } else if (!authLoading) {
       setHasAccess(false)
     }
@@ -246,7 +269,7 @@ export default function AssessmentPage({ params }: PageProps) {
         setAutoSaveStatus('error')
       }
     } catch (error) {
-      console.error('Auto-save failed:', error)
+      logger.error('Auto-save failed', {}, error instanceof Error ? error : undefined)
       setAutoSaveStatus('error')
     }
   }, [user, answers, assessmentType, currentSection, config])
@@ -275,7 +298,7 @@ export default function AssessmentPage({ params }: PageProps) {
           lastSavedAnswersRef.current = JSON.stringify(draft.answers)
         }
       } catch (error) {
-        console.error('Failed to load draft:', error)
+        logger.error('Failed to load draft', {}, error instanceof Error ? error : undefined)
       }
       setDraftLoaded(true)
     }
@@ -312,7 +335,7 @@ export default function AssessmentPage({ params }: PageProps) {
       })
       setHasDraft(false)
     } catch (error) {
-      console.error('Failed to delete draft:', error)
+      logger.error('Failed to delete draft', {}, error instanceof Error ? error : undefined)
     }
   }, [user, hasDraft, assessmentType])
 
@@ -372,10 +395,16 @@ export default function AssessmentPage({ params }: PageProps) {
         if (!response.ok) {
           // Handle specific error cases
           if (result.error?.code === 'INSUFFICIENT_CREDITS') {
-            setError('You need credits to complete this assessment.')
+            setError('You do not have enough credits to complete this assessment. Credits are granted when you complete other assessments.')
             setSaving(false)
             setIsSubmitting(false)
-            router.push('/pricing?need_credits=true')
+            return
+          }
+          if (result.error?.code === 'CONFLICT') {
+            setError('You have already completed this assessment. Each assessment can only be taken once.')
+            setHasExistingSubmission(true)
+            setSaving(false)
+            setIsSubmitting(false)
             return
           }
           throw new Error(result.error?.message || result.message || 'Failed to submit assessment')
@@ -397,11 +426,12 @@ export default function AssessmentPage({ params }: PageProps) {
         }
 
         setShowResults(true)
+        trackAssessmentCompleted(score, interpretation, user?.id)
 
         // Delete draft after successful submission
         await deleteDraft()
       } catch (err) {
-        console.error('Error completing assessment:', err)
+        logger.error('Error completing assessment', {}, err instanceof Error ? err : undefined)
         setError(err instanceof Error ? err.message : 'Failed to complete assessment. Please try again.')
       } finally {
         setSaving(false)
@@ -418,6 +448,7 @@ export default function AssessmentPage({ params }: PageProps) {
   }
 
   const handleReset = () => {
+    if (hasExistingSubmission) return // Cannot reset a completed assessment
     setShowResetConfirm(true)
   }
 
@@ -463,7 +494,7 @@ export default function AssessmentPage({ params }: PageProps) {
         }, 1000)
       }
     } catch (error) {
-      console.error('Error sending email:', error)
+      logger.error('Error sending email', {}, error instanceof Error ? error : undefined)
     }
     setSendingEmail(false)
   }
@@ -659,31 +690,19 @@ export default function AssessmentPage({ params }: PageProps) {
 
           {/* Secondary Assessment Intro Screen */}
           {showIntroScreen ? (
-            <div className="p-8 text-center">
-              <div className="max-w-lg mx-auto">
-                <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <ClipboardCheck className="w-8 h-8 text-gold" />
-                </div>
-                <h2 className="text-2xl font-serif mb-3">{config.fullName}</h2>
-                <p className="text-stone mb-6">{config.description}</p>
-                <div className="flex items-center justify-center gap-6 text-sm text-stone mb-8">
-                  <span className="flex items-center gap-1.5">
-                    <ClipboardCheck className="w-4 h-4" />
-                    {config.questionCount} questions
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    ~{config.estimatedMinutes} minutes
-                  </span>
-                </div>
-                <button
-                  onClick={() => setShowIntro(false)}
-                  className="btn-primary inline-flex items-center gap-2"
-                >
-                  Begin Assessment
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
+            <div className="p-8">
+              <AssessmentIntroScreen
+                config={config}
+                user={user}
+                profileName={profile?.full_name}
+                credits={profile?.credits || 0}
+                authLoading={authLoading}
+                hasDraft={hasDraft}
+                hasExistingSubmission={hasExistingSubmission}
+                existingDate={existingDate}
+                existingScore={existingScore}
+                onStart={() => { trackAssessmentStarted(user?.id); setShowIntro(false) }}
+              />
             </div>
           ) : !showResults ? (
             <div className="p-8">
@@ -796,6 +815,85 @@ export default function AssessmentPage({ params }: PageProps) {
           ) : (
             /* Results */
             <div className="p-8 space-y-8">
+              {/* Already completed notice */}
+              {hasExistingSubmission && (
+                <div className="p-4 rounded-lg border border-gold/30 bg-gold/10">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-medium mb-1">Assessment Already Completed</h4>
+                      <p className="text-sm text-stone">
+                        You completed this assessment{existingDate ? ` on ${new Date(existingDate).toLocaleDateString()}` : ''}. Each assessment can only be taken once. Below are your saved results.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Thank You Banner */}
+              {!hasExistingSubmission && (
+                <div className="bg-sage/10 border border-sage/30 p-6 rounded-lg text-center">
+                  <h3 className="font-serif text-xl mb-2">Thank you for completing the {config.fullName}!</h3>
+                  <p className="text-sm text-stone mb-4">
+                    Your responses contribute to research on cultural innovation and economic resilience.
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    <button
+                      onClick={() => {
+                        const text = `I just completed the ${config.name} assessment on CIL! Discover your cultural innovation potential: ${window.location.origin}/tools`
+                        if (navigator.share) {
+                          navigator.share({ title: `${config.name} Assessment`, text }).catch(() => {})
+                        } else {
+                          navigator.clipboard.writeText(text)
+                        }
+                      }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-sage text-white rounded-full text-sm hover:bg-sage/90 transition-colors"
+                    >
+                      <Share2 className="w-4 h-4" />
+                      Share with a friend
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* What You Just Unlocked */}
+              {!hasExistingSubmission && (grantedTools.length > 0 || grantedResources.length > 0) && (
+                <div className="bg-gold/5 border border-gold/20 p-6 rounded-lg">
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-gold" />
+                    What you just unlocked
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {grantedTools.map(tool => {
+                      const toolConfig = TOOL_CONFIGS[tool]
+                      return (
+                        <Link
+                          key={tool}
+                          href={`/tools/${tool}`}
+                          className="flex items-center gap-2 p-3 bg-white rounded-lg border border-sage/20 hover:bg-sage/5 transition-colors text-sm"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-sage flex-shrink-0" />
+                          <span className="font-medium">{toolConfig?.name || tool}</span>
+                        </Link>
+                      )
+                    })}
+                    {grantedResources.map(resourceId => {
+                      const resource = getResourceByToolAccessId(resourceId)
+                      return resource ? (
+                        <Link
+                          key={resourceId}
+                          href="/resources"
+                          className="flex items-center gap-2 p-3 bg-white rounded-lg border border-gold/20 hover:bg-gold/5 transition-colors text-sm"
+                        >
+                          <Download className="w-4 h-4 text-gold flex-shrink-0" />
+                          <span className="font-medium">{resource.title}</span>
+                        </Link>
+                      ) : null
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* Score Summary */}
               <div className="text-center p-8 bg-gradient-to-br from-sand to-pearl rounded-lg">
                 <p className="text-sm uppercase tracking-[0.2em] text-stone mb-2">
@@ -922,9 +1020,9 @@ export default function AssessmentPage({ params }: PageProps) {
                 <div className="space-y-4">
                   {sections.map(section => (
                     <div key={section.id}>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium">{section.name}</span>
-                        <span className="text-sm text-stone">{sectionScores[section.id] || 0}%</span>
+                      <div className="flex justify-between gap-2 mb-1">
+                        <span className="text-sm font-medium truncate">{section.name}</span>
+                        <span className="text-sm text-stone flex-shrink-0">{sectionScores[section.id] || 0}%</span>
                       </div>
                       <div className="h-2 bg-ink/10 rounded-full overflow-hidden">
                         <div

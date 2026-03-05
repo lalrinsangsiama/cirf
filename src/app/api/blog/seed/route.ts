@@ -1,7 +1,9 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import { BLOG_POSTS } from '@/lib/data/blogContent'
+import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
+import { logger } from '@/lib/logger'
 
 // Create admin client with service role key to bypass RLS
 function createAdminClient() {
@@ -22,8 +24,17 @@ function createAdminClient() {
 
 // POST /api/blog/seed - Seed blog posts from blogContent.ts
 // This should only be run by admins/developers
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      )
+    }
+
     // Check for admin secret in header for basic protection
     const authHeader = request.headers.get('Authorization')
     const adminSecret = process.env.ADMIN_SECRET_KEY
@@ -68,6 +79,7 @@ export async function POST(request: Request) {
         category: post.category,
         tags: post.tags,
         featured_image: post.featured_image || null,
+        citations: post.citations || null,
         status: post.status,
         published_at: new Date().toISOString(),
         view_count: 0,
@@ -108,7 +120,9 @@ export async function POST(request: Request) {
       message: `Created ${results.created.length} posts, updated ${results.updated.length} posts, ${results.errors.length} errors`,
     })
   } catch (error) {
-    console.error('Blog seed error:', error)
+    logger.error('Blog seed error', {
+      path: '/api/blog/seed',
+    }, error instanceof Error ? error : undefined)
     return NextResponse.json(
       { error: 'Failed to seed blog posts' },
       { status: 500 }
@@ -168,7 +182,9 @@ export async function GET() {
       needsSeeding: missingPosts.length > 0,
     })
   } catch (error) {
-    console.error('Blog seed check error:', error)
+    logger.error('Blog seed check error', {
+      path: '/api/blog/seed',
+    }, error instanceof Error ? error : undefined)
     return NextResponse.json(
       { error: 'Failed to check seed status' },
       { status: 500 }

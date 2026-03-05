@@ -5,8 +5,6 @@ import {
   stripHtml,
   contactFormSchema,
   newsletterSchema,
-  createOrderSchema,
-  verifyPaymentSchema,
   generatePostSchema,
   validateInput,
 } from '@/lib/validation'
@@ -156,71 +154,6 @@ describe('Newsletter Schema', () => {
   it('rejects invalid email', () => {
     const input = { email: 'invalid' }
     const result = validateInput(newsletterSchema, input)
-    expect(result.success).toBe(false)
-  })
-})
-
-describe('Create Order Schema', () => {
-  it('validates correct input', () => {
-    const input = { packId: 'pack_5', currency: 'INR' }
-    const result = validateInput(createOrderSchema, input)
-    expect(result.success).toBe(true)
-  })
-
-  it('rejects invalid pack ID', () => {
-    const input = { packId: 'pack_100', currency: 'INR' }
-    const result = validateInput(createOrderSchema, input)
-    expect(result.success).toBe(false)
-  })
-
-  it('defaults currency to INR', () => {
-    const input = { packId: 'pack_5' }
-    const result = validateInput(createOrderSchema, input)
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.currency).toBe('INR')
-    }
-  })
-
-  it('accepts USD currency', () => {
-    const input = { packId: 'pack_15', currency: 'USD' }
-    const result = validateInput(createOrderSchema, input)
-    expect(result.success).toBe(true)
-  })
-})
-
-describe('Verify Payment Schema', () => {
-  it('validates correct input', () => {
-    const input = {
-      razorpay_order_id: 'order_123',
-      razorpay_payment_id: 'pay_123',
-      razorpay_signature: 'sig_123abc',
-      packId: 'pack_5',
-      credits: 5,
-    }
-    const result = validateInput(verifyPaymentSchema, input)
-    expect(result.success).toBe(true)
-  })
-
-  it('rejects missing fields', () => {
-    const input = {
-      razorpay_order_id: 'order_123',
-      packId: 'pack_5',
-      credits: 5,
-    }
-    const result = validateInput(verifyPaymentSchema, input)
-    expect(result.success).toBe(false)
-  })
-
-  it('rejects negative credits', () => {
-    const input = {
-      razorpay_order_id: 'order_123',
-      razorpay_payment_id: 'pay_123',
-      razorpay_signature: 'sig_123',
-      packId: 'pack_5',
-      credits: -5,
-    }
-    const result = validateInput(verifyPaymentSchema, input)
     expect(result.success).toBe(false)
   })
 })

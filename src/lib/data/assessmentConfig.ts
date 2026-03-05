@@ -1,5 +1,11 @@
 // Assessment Configuration
-// Defines all 6 assessments, their unlock requirements, and tools they grant access to
+// Defines all 6 assessments, their unlock requirements, rewards, and tools they grant access to
+//
+// PROGRESSIVE UNLOCK FLOW:
+// 1. CIL (free) → 2 PDF resources + 1 credit + unlocks all secondary assessments
+// 2. User spends 1 credit on any secondary assessment → 2 tools + 1 PDF resource + 1 credit
+// 3. Repeat until all 5 secondaries are complete
+// Net effect: user can complete ALL assessments for free, but must do them one at a time
 
 export type AssessmentType = 'cil' | 'cimm' | 'cira' | 'tbl' | 'ciss' | 'pricing'
 
@@ -8,12 +14,17 @@ export interface AssessmentConfig {
   name: string
   fullName: string
   description: string
+  targetParticipants: string
+  researchDescription: string
   questionCount: number
   estimatedMinutes: number
-  creditCost: number // 0 = free after unlock
+  creditCost: number // 0 = free, 1 = costs 1 credit
+  creditsGranted: number // Credits earned on completion
   unlockRequirement: AssessmentType | null // null = always available
   unlocksAssessments: AssessmentType[] // assessments unlocked after completion
   grantsToolAccess: string[] // tool IDs granted after completion
+  grantsResourceAccess: string[] // resource IDs granted after completion
+  completionRewardSummary: string // Shown in UI: "You'll unlock..."
   icon: string
   color: string
   sections: {
@@ -29,20 +40,25 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CIL',
     fullName: 'Cultural Innovation Lab',
     description: 'Discover your strengths and growth areas across 4 key dimensions. Get personalized insights to build a more sustainable cultural business.',
-    questionCount: 52,
-    estimatedMinutes: 15,
+    targetParticipants: 'Cultural entrepreneurs, heritage practitioners, community leaders, artisans, and researchers working in cultural innovation',
+    researchDescription: 'This research examines how cultural innovation builds economic resilience while maintaining community sovereignty.',
+    questionCount: 61,
+    estimatedMinutes: 20,
     creditCost: 0, // Free — maximize survey responses for DBA research
+    creditsGranted: 1, // Earn 1 credit to unlock first secondary assessment
     unlockRequirement: null, // Always available
     unlocksAssessments: ['cimm', 'cira', 'tbl', 'ciss', 'pricing'],
     grantsToolAccess: [], // CIL unlocks assessments, not tools directly
+    grantsResourceAccess: ['resource-funding-guide-2026', 'resource-creative-reconstruction'],
+    completionRewardSummary: 'Global Funding Guide 2026, Creative Reconstruction Framework, and 1 credit to unlock your next assessment',
     icon: 'Award',
     color: 'sage',
     sections: [
-      { id: 'demographics', name: 'Demographics & Profile', questionCount: 16 },
-      { id: 'culturalCapital', name: 'Cultural Capital', questionCount: 8 },
-      { id: 'innovationActivities', name: 'Innovation Activities', questionCount: 9 },
-      { id: 'organizationalCapacities', name: 'Organizational Capacities', questionCount: 9 },
-      { id: 'economicResilience', name: 'Economic Resilience', questionCount: 10 },
+      { id: 'demographics', name: 'Demographics & Profile', questionCount: 17 },
+      { id: 'culturalCapital', name: 'Cultural Capital', questionCount: 10 },
+      { id: 'innovationActivities', name: 'Innovation Activities', questionCount: 11 },
+      { id: 'organizationalCapacities', name: 'Organizational Capacities', questionCount: 11 },
+      { id: 'economicResilience', name: 'Economic Resilience', questionCount: 12 },
     ],
   },
 
@@ -51,18 +67,23 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CIMM',
     fullName: 'Cultural Innovation Measurement Matrix',
     description: 'See how well you\'re balancing tradition with innovation, and where you can increase impact.',
-    questionCount: 17,
-    estimatedMinutes: 7,
-    creditCost: 0, // Free after CIL unlock
+    targetParticipants: 'Cultural entrepreneurs and innovators balancing tradition with modern markets',
+    researchDescription: 'Measures the depth and integrity of cultural innovation practices across four dimensions.',
+    questionCount: 19,
+    estimatedMinutes: 8,
+    creditCost: 1, // Costs 1 credit (earned from CIL or previous assessment)
+    creditsGranted: 1, // Earn 1 credit for next assessment
     unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['innovation-intensity-ratio', 'cultural-leverage-index'],
+    grantsResourceAccess: ['resource-cultural-innovation-playbook'],
+    completionRewardSummary: 'Cultural Innovation Playbook, 2 interactive tools (Innovation Intensity Ratio + Cultural Leverage Index), and 1 credit',
     icon: 'BarChart3',
     color: 'ocean',
     sections: [
       { id: 'innovationDepth', name: 'Innovation Depth', questionCount: 5 },
-      { id: 'culturalIntegrity', name: 'Cultural Integrity', questionCount: 3 },
-      { id: 'economicImpact', name: 'Economic Impact', questionCount: 4 },
+      { id: 'culturalIntegrity', name: 'Cultural Integrity', questionCount: 4 },
+      { id: 'economicImpact', name: 'Economic Impact', questionCount: 5 },
       { id: 'innovationVelocity', name: 'Innovation Velocity', questionCount: 5 },
     ],
   },
@@ -72,18 +93,23 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CIRA',
     fullName: 'Cultural Innovation Readiness Assessment',
     description: 'Find out if you\'re ready to scale. Identify what\'s helping you grow and what\'s holding you back.',
-    questionCount: 18,
-    estimatedMinutes: 7,
-    creditCost: 0, // Free after CIL unlock
+    targetParticipants: 'Cultural enterprises preparing to grow, scale, or enter new markets',
+    researchDescription: 'Assesses organizational readiness for innovation by identifying enablers and barriers.',
+    questionCount: 20,
+    estimatedMinutes: 8,
+    creditCost: 1,
+    creditsGranted: 1,
     unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['innovation-readiness-calculator', 'innovation-inclusivity-score'],
+    grantsResourceAccess: ['resource-readiness-action-plan'],
+    completionRewardSummary: 'Innovation Readiness Action Plan, 2 interactive tools (Readiness Calculator + Inclusivity Score), and 1 credit',
     icon: 'Compass',
     color: 'gold',
     sections: [
-      { id: 'culturalCapitalInventory', name: 'Cultural Capital Inventory', questionCount: 3 },
+      { id: 'culturalCapitalInventory', name: 'Cultural Capital Inventory', questionCount: 4 },
       { id: 'innovationEcosystem', name: 'Innovation Ecosystem', questionCount: 5 },
-      { id: 'barriersAssessment', name: 'Barriers Assessment', questionCount: 5 },
+      { id: 'barriersAssessment', name: 'Barriers Assessment', questionCount: 6 },
       { id: 'readinessIndicators', name: 'Readiness Indicators', questionCount: 5 },
     ],
   },
@@ -93,18 +119,23 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'TBL-CI',
     fullName: 'Triple Bottom Line Cultural Innovation',
     description: 'See how your work creates value across three dimensions: profit, people, and planet.',
-    questionCount: 17,
-    estimatedMinutes: 7,
-    creditCost: 0, // Free after CIL unlock
+    targetParticipants: 'Cultural enterprises seeking to measure and communicate their social and environmental impact',
+    researchDescription: 'Evaluates economic, social, and environmental impact of cultural innovation initiatives.',
+    questionCount: 18,
+    estimatedMinutes: 8,
+    creditCost: 1,
+    creditsGranted: 1,
     unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['tbl-calculator', 'economic-multiplier'],
+    grantsResourceAccess: ['resource-impact-report-template'],
+    completionRewardSummary: 'Impact Report Template, 2 interactive tools (TBL Calculator + Economic Multiplier), and 1 credit',
     icon: 'TreePine',
     color: 'sage',
     sections: [
-      { id: 'economicReturns', name: 'Economic Returns', questionCount: 5 },
-      { id: 'socialImpact', name: 'Social Impact', questionCount: 5 },
-      { id: 'environmentalImpact', name: 'Environmental Impact', questionCount: 7 },
+      { id: 'economicReturns', name: 'Economic Returns', questionCount: 6 },
+      { id: 'socialImpact', name: 'Social Impact', questionCount: 6 },
+      { id: 'environmentalImpact', name: 'Environmental Impact', questionCount: 6 },
     ],
   },
 
@@ -113,18 +144,23 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'CISS',
     fullName: 'Cultural Innovation Sustainability Scorecard',
     description: 'Check if your cultural enterprise can thrive for generations, not just years.',
-    questionCount: 15,
-    estimatedMinutes: 6,
-    creditCost: 0, // Free after CIL unlock
+    targetParticipants: 'Cultural enterprises planning for long-term viability and intergenerational knowledge transfer',
+    researchDescription: 'Measures sustainability across economic, cultural, social, and environmental dimensions.',
+    questionCount: 17,
+    estimatedMinutes: 7,
+    creditCost: 1,
+    creditsGranted: 1,
     unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['sustainability-scorecard', 'cultural-resilience-quotient'],
+    grantsResourceAccess: ['resource-sustainability-succession-guide'],
+    completionRewardSummary: 'Sustainability & Succession Guide, 2 interactive tools (Sustainability Scorecard + Resilience Quotient), and 1 credit',
     icon: 'Leaf',
     color: 'sage',
     sections: [
       { id: 'economicSustainability', name: 'Economic Sustainability', questionCount: 4 },
-      { id: 'culturalSustainability', name: 'Cultural Sustainability', questionCount: 4 },
-      { id: 'socialSustainability', name: 'Social Sustainability', questionCount: 3 },
+      { id: 'culturalSustainability', name: 'Cultural Sustainability', questionCount: 5 },
+      { id: 'socialSustainability', name: 'Social Sustainability', questionCount: 4 },
       { id: 'environmentalSustainability', name: 'Environmental Sustainability', questionCount: 4 },
     ],
   },
@@ -134,19 +170,24 @@ export const ASSESSMENT_CONFIGS: Record<AssessmentType, AssessmentConfig> = {
     name: 'Pricing',
     fullName: 'Cultural Product Pricing Assessment',
     description: 'Find the right price for your work. Stop undercharging and start capturing the true value you create.',
-    questionCount: 15,
+    targetParticipants: 'Artisans, craftspeople, and cultural product creators who want to price their work fairly',
+    researchDescription: 'Analyses cost structures, value propositions, and market positioning for cultural products.',
+    questionCount: 16,
     estimatedMinutes: 6,
-    creditCost: 0, // Free after CIL unlock
+    creditCost: 1,
+    creditsGranted: 1, // Last credit — user can buy premium resources with it or it rolls over
     unlockRequirement: 'cil',
     unlocksAssessments: [],
     grantsToolAccess: ['pricing-calculator', 'innovation-efficiency-rate'],
+    grantsResourceAccess: ['resource-pricing-strategy-workbook'],
+    completionRewardSummary: 'Cultural Pricing Strategy Workbook, 2 interactive tools (Pricing Calculator + Innovation Efficiency Rate), and 1 credit',
     icon: 'DollarSign',
     color: 'gold',
     sections: [
       { id: 'costAnalysis', name: 'Cost Analysis', questionCount: 4 },
       { id: 'valueProposition', name: 'Value Proposition', questionCount: 4 },
       { id: 'marketPositioning', name: 'Market Positioning', questionCount: 4 },
-      { id: 'priceOptimization', name: 'Price Optimization', questionCount: 3 },
+      { id: 'priceOptimization', name: 'Price Optimization', questionCount: 4 },
     ],
   },
 }

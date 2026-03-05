@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 24 - Hallyu Business Ecosystem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: linear-gradient(180deg, #fdfdfb 0%, #f5f0e8 100%);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 70px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c67557;
+      margin-bottom: 25px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #0a0a0a;
+      margin-bottom: 15px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .subtext {
+      font-size: 17px;
+      font-weight: 300;
+      color: #7c7c7c;
+      margin-bottom: 45px;
+      line-height: 1.6;
+      max-width: 650px;
+    }
+
+    .ecosystem-flow {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .flow-step {
+      flex: 1;
+      padding: 22px 28px;
+      background: #0a0a0a;
+      position: relative;
+    }
+
+    .flow-step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: rgba(212, 175, 55, 0.3);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .flow-step-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fdfdfb;
+      margin-bottom: 4px;
+    }
+
+    .flow-step-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: #7c7c7c;
+      line-height: 1.4;
+    }
+
+    .flow-arrow {
+      width: 40px;
+      text-align: center;
+      font-size: 24px;
+      color: #d4af37;
+    }
+
+    .flow-connector {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 24px;
+      color: #d4af37;
+    }
+
+    .insight-box {
+      margin-top: 30px;
+      padding: 25px 30px;
+      background: rgba(10, 10, 10, 0.06);
+      border-left: 3px solid #d4af37;
+    }
+
+    .insight-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 8px;
+    }
+
+    .insight-text {
+      font-size: 16px;
+      font-weight: 400;
+      color: #0a0a0a;
+      line-height: 1.5;
+    }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.5);
+      line-height: 1.5;
+      border-top: 1px solid rgba(10, 10, 10, 0.1);
+      padding-top: 15px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Case Study: South Korea</div>
+      <h1 class="headline">The <em>Hallyu</em> Blueprint:<br>Culture as Industrial Policy</h1>
+      <p class="subtext">South Korea proved that cultural industries can be grown through a business ecosystem approach, reconciling industrial and cultural policy goals.</p>
+
+      <div class="ecosystem-flow">
+        <div class="flow-row">
+          <div class="flow-step">
+            <div class="flow-step-num">01</div>
+            <div class="flow-step-title">Invisible Sources</div>
+            <div class="flow-step-desc">Identify hidden cultural assets: traditions, stories, aesthetics, values</div>
+          </div>
+          <div class="flow-arrow">&#8594;</div>
+          <div class="flow-step">
+            <div class="flow-step-num">02</div>
+            <div class="flow-step-title">Content Formats</div>
+            <div class="flow-step-desc">Package culture into exportable formats: K-drama, K-pop, animation</div>
+          </div>
+          <div class="flow-arrow">&#8594;</div>
+          <div class="flow-step">
+            <div class="flow-step-num">03</div>
+            <div class="flow-step-title">IP Bundling</div>
+            <div class="flow-step-desc">Bundle intellectual property rights across content segments</div>
+          </div>
+        </div>
+        <div class="flow-connector">&#8595;</div>
+        <div class="flow-row">
+          <div class="flow-step">
+            <div class="flow-step-num">06</div>
+            <div class="flow-step-title">National Growth</div>
+            <div class="flow-step-desc">Cultural exports fuel national economic growth and soft power</div>
+          </div>
+          <div class="flow-arrow">&#8592;</div>
+          <div class="flow-step">
+            <div class="flow-step-num">05</div>
+            <div class="flow-step-title">Ecosystem Policy</div>
+            <div class="flow-step-desc">Government supports with macro-level business ecosystem approach</div>
+          </div>
+          <div class="flow-arrow">&#8592;</div>
+          <div class="flow-step">
+            <div class="flow-step-num">04</div>
+            <div class="flow-step-title">Market Expansion</div>
+            <div class="flow-step-desc">Deploy through global platforms to reach international audiences</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <div class="insight-label">Key Insight</div>
+        <div class="insight-text">The true winners in cultural industries are the invisible sources of culture, not just the visible content creators.</div>
+      </div>
+    </div>
+
+    <div class="source">Source: Lee, Y.W. & Kim, K. (2023). "Who Is the Real Winner in Cultural Industries? A Business Ecosystem Approach for Government Policies." Korea International Trade Research Institute.</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

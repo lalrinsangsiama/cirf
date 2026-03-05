@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 22 - Italian Resilience Study</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .gold-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 70px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 30px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #fdfdfb;
+      margin-bottom: 15px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .subtext {
+      font-size: 18px;
+      font-weight: 300;
+      color: #7c7c7c;
+      margin-bottom: 50px;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    .comparison {
+      display: flex;
+      gap: 40px;
+      flex: 1;
+      align-items: center;
+    }
+
+    .comparison-col {
+      flex: 1;
+      text-align: center;
+      padding: 40px 30px;
+      position: relative;
+    }
+
+    .comparison-col::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 20%;
+      right: 20%;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .col-low::after { background: #c67557; }
+    .col-high::after { background: #a8b5a0; }
+
+    .vs-divider {
+      width: 1px;
+      height: 200px;
+      background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+      position: relative;
+    }
+
+    .vs-divider::after {
+      content: 'VS';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: #d4af37;
+      background: #0a0a0a;
+      padding: 10px 0;
+    }
+
+    .col-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .col-low .col-label { color: #c67557; }
+    .col-high .col-label { color: #a8b5a0; }
+
+    .col-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    .col-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 700;
+      color: #fdfdfb;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .col-stat span {
+      font-size: 36px;
+    }
+
+    .col-low .col-stat span { color: #c67557; }
+    .col-high .col-stat span { color: #a8b5a0; }
+
+    .col-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: #7c7c7c;
+      line-height: 1.5;
+    }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.6);
+      line-height: 1.5;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding-top: 15px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="gold-glow"></div>
+
+    <div class="content">
+      <div class="label">Case Study: Italy</div>
+      <h1 class="headline">Culture-rich regions<br><em>weathered</em> the Great Recession</h1>
+      <p class="subtext">Italian regions with higher cultural production and consumption showed greater economic resilience, particularly in limiting employment drops after 2008.</p>
+
+      <div class="comparison">
+        <div class="comparison-col col-low">
+          <div class="col-label">Low Cultural Activity</div>
+          <div class="col-stat"><span>-</span>Higher</div>
+          <div class="col-desc">Employment losses<br>Slower recovery<br>Less diversified economy</div>
+        </div>
+
+        <div class="vs-divider"></div>
+
+        <div class="comparison-col col-high">
+          <div class="col-label">High Cultural Activity</div>
+          <div class="col-stat"><span>+</span>Resilient</div>
+          <div class="col-desc">Employment stability<br>Faster recovery<br>Knowledge-driven growth</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Source: Cellini, R. & Cuccia, T. (2019). Italian regions with higher cultural activity demonstrated greater economic resilience during the Great Recession. | Sedita, S. et al. (2017). "Out of the crisis: place-specific determinants of economic resilience."</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

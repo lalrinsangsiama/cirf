@@ -1,19 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, TrendingUp, Globe2, Shield, Users, CheckCircle2, ChevronRight, Sparkles, Unlock, FileText, Calculator, BarChart3, BookOpen } from 'lucide-react'
+import { useEffect, useRef } from 'react'
+import { ArrowRight, TrendingUp, Globe2, Shield, Users, CheckCircle2, ChevronRight, Sparkles, Unlock, Calculator, BarChart3, BookOpen, Lock, Clock } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { ASSESSMENT_CONFIGS, type AssessmentType } from '@/lib/data/assessmentConfig'
+import { trackEvent } from '@/lib/analytics/posthog'
 
 export default function HomePage() {
   const { user, profile, loading: authLoading } = useAuth()
   const observerRef = useRef<IntersectionObserver | null>(null)
-  const [quickAnswers, setQuickAnswers] = useState<Record<string, boolean | null>>({
-    cultural: null,
-    community: null,
-    economic: null,
-    adaptive: null,
-  })
 
   useEffect(() => {
     // Add js-ready class to enable scroll animations (content visible by default if JS fails)
@@ -40,8 +36,7 @@ export default function HomePage() {
     }
   }, [])
 
-  const quickScore = Object.values(quickAnswers).filter(v => v === true).length
-  const answeredCount = Object.values(quickAnswers).filter(v => v !== null).length
+  const assessmentOrder: AssessmentType[] = ['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']
 
   return (
     <>
@@ -104,7 +99,7 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in-up"
                 style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
               >
-                <Link href="/tools?start=cil" className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
+                <Link href="/tools?start=cil" onClick={() => trackEvent('cta_click', { cta: 'hero_take_assessment', location: 'homepage_hero' })} className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
                   Take the Free Assessment
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -114,82 +109,61 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Quick Assessment Preview Card */}
+            {/* Survey Listing Card */}
             <div
               className="bg-white rounded-2xl shadow-xl p-8 animate-fade-in-up hidden lg:block"
               style={{ animationDelay: '1s', animationFillMode: 'forwards' }}
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="font-serif text-xl">Quick Assessment Preview</h3>
-                <span className="text-sm text-ink/60">~2 minutes</span>
+                <h3 className="font-serif text-xl">6 Assessments</h3>
+                <span className="text-sm text-ink/60">Complete all for free</span>
               </div>
 
-              <div className="space-y-4">
-                {[
-                  { key: 'cultural', q: 'Does your initiative preserve authentic cultural elements?', short: 'cultural preservation' },
-                  { key: 'community', q: 'Are benefits clearly relevant to local community needs?', short: 'community benefits' },
-                  { key: 'economic', q: 'Is there a sustainable revenue model?', short: 'sustainable revenue' },
-                  { key: 'adaptive', q: 'Can you adjust to changing conditions?', short: 'adaptability' },
-                ].map((item) => (
-                  <fieldset key={item.key} className="border-b border-ink/10 pb-4">
-                    <legend className="text-sm mb-2">{item.q}</legend>
-                    <div className="flex gap-2" role="group" aria-label={`Answer for ${item.short}`}>
-                      <button
-                        onClick={() => setQuickAnswers(prev => ({ ...prev, [item.key]: true }))}
-                        aria-pressed={quickAnswers[item.key as keyof typeof quickAnswers] === true}
-                        aria-label={`Yes, ${item.short}`}
-                        className={`px-4 py-1 rounded-full text-sm transition-all ${
-                          quickAnswers[item.key as keyof typeof quickAnswers] === true
-                            ? 'bg-sage text-white'
-                            : 'bg-sand hover:bg-sage/20'
-                        }`}
-                      >
-                        Yes
-                      </button>
-                      <button
-                        onClick={() => setQuickAnswers(prev => ({ ...prev, [item.key]: false }))}
-                        aria-pressed={quickAnswers[item.key as keyof typeof quickAnswers] === false}
-                        aria-label={`No, ${item.short}`}
-                        className={`px-4 py-1 rounded-full text-sm transition-all ${
-                          quickAnswers[item.key as keyof typeof quickAnswers] === false
-                            ? 'bg-terracotta text-white'
-                            : 'bg-sand hover:bg-terracotta/20'
-                        }`}
-                      >
-                        No
-                      </button>
-                    </div>
-                  </fieldset>
-                ))}
+              <div className="space-y-3">
+                {assessmentOrder.map((type) => {
+                  const cfg = ASSESSMENT_CONFIGS[type]
+                  const isCIL = type === 'cil'
+                  return (
+                    <Link
+                      key={type}
+                      href={isCIL ? '/tools?start=cil' : `/assessments/${type}`}
+                      className="flex items-center gap-3 p-3 rounded-lg border border-ink/10 hover:border-gold/40 hover:bg-sand/50 transition-all group"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-sm">{cfg.name}</span>
+                          {isCIL && (
+                            <span className="inline-flex items-center px-2 py-0.5 bg-gold/20 text-gold text-[10px] font-semibold rounded-full uppercase tracking-wide">
+                              Free — Start Here
+                            </span>
+                          )}
+                          {!isCIL && (
+                            <Lock className="w-3 h-3 text-ink/30" />
+                          )}
+                        </div>
+                        <p className="text-xs text-ink/60 truncate mt-0.5">
+                          {cfg.completionRewardSummary.split(',')[0]}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-ink/50 flex-shrink-0">
+                        <Clock className="w-3 h-3" />
+                        ~{cfg.estimatedMinutes}m
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-ink/30 group-hover:text-gold transition-colors flex-shrink-0" />
+                    </Link>
+                  )
+                })}
               </div>
 
-              {answeredCount > 0 && (
-                <div className="mt-6 p-4 bg-sand rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Quick Score Preview</span>
-                    <span className="font-serif text-2xl text-gold">{quickScore}/4</span>
-                  </div>
-                  <div className="w-full bg-ink/10 rounded-full h-2 mb-3">
-                    <div
-                      className="bg-gold h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${(quickScore / 4) * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-ink/60">
-                    {quickScore >= 3
-                      ? 'Strong foundation! Take the full assessment to see your complete profile.'
-                      : quickScore >= 2
-                      ? 'Good start. The full assessment will identify specific areas for improvement.'
-                      : 'The full 13-component assessment will help identify priorities.'}
-                  </p>
-                </div>
-              )}
+              <p className="text-xs text-ink/50 mt-4 text-center">
+                Complete CIL to unlock all 5 secondary assessments
+              </p>
 
               <Link
                 href="/tools?start=cil"
-                className="mt-6 w-full bg-ink text-pearl py-3 rounded-full font-medium hover:bg-gold hover:text-ink transition-all duration-300 flex items-center justify-center gap-2"
+                className="mt-4 w-full bg-ink text-pearl py-3 rounded-full font-medium hover:bg-gold hover:text-ink transition-all duration-300 flex items-center justify-center gap-2"
               >
-                Continue to Full Assessment
+                Start Free Assessment
                 <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
@@ -431,12 +405,12 @@ export default function HomePage() {
           </div>
 
           <div className="mt-16 text-center">
-            <Link href="/tools" className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center gap-2 text-lg px-8 py-4">
+            <Link href="/tools" onClick={() => trackEvent('cta_click', { cta: 'start_assessment', location: 'homepage_unlock_section' })} className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center gap-2 text-lg px-8 py-4">
               Start Your Free Assessment
               <ArrowRight className="w-5 h-5" />
             </Link>
             <p className="text-sm text-ink/60 mt-4">
-              Takes ~15 minutes • No credit card required
+              CIL assessment ~20 min + 5 follow-up assessments ~8 min each — all free
             </p>
           </div>
         </div>
@@ -632,7 +606,7 @@ export default function HomePage() {
                 <span className="font-medium">Get started free</span>
               </div>
               <p className="text-sm opacity-80">
-                Sign up now and get 1 free assessment credit
+                Sign up now — your first assessment is free
               </p>
             </div>
           )}

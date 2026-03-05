@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Over-Tourism - Success That Threatens Survival</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .pattern {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.03;
+      background-image:
+        radial-gradient(circle at 20% 60%, #c67557 1px, transparent 1px),
+        radial-gradient(circle at 80% 40%, #c67557 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .content {
+      position: relative; z-index: 10; padding: 70px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557; margin-bottom: 16px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 48px;
+      font-weight: 700; line-height: 1.15; color: #fdfdfb; margin-bottom: 44px;
+    }
+    .headline em { font-style: italic; color: #c67557; }
+
+    .split {
+      display: flex; gap: 24px; flex: 1; margin-bottom: 30px;
+    }
+    .split-card {
+      flex: 1; border-radius: 14px; padding: 36px 30px;
+      display: flex; flex-direction: column;
+    }
+    .split-card.success {
+      background: rgba(91,140,158,0.06); border: 1px solid rgba(91,140,158,0.2);
+    }
+    .split-card.danger {
+      background: rgba(198,117,87,0.06); border: 1px solid rgba(198,117,87,0.2);
+    }
+    .split-header {
+      font-size: 13px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .split-card.success .split-header { color: #5b8c9e; }
+    .split-card.danger .split-header { color: #c67557; }
+
+    .split-item {
+      margin-bottom: 24px;
+    }
+    .split-item:last-child { margin-bottom: 0; }
+    .split-num {
+      font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700;
+    }
+    .split-card.success .split-num { color: #5b8c9e; }
+    .split-card.danger .split-num { color: #c67557; }
+    .split-desc {
+      font-size: 14px; color: #7c7c7c; margin-top: 4px; line-height: 1.4;
+    }
+
+    .gdp-bar {
+      background: rgba(198,117,87,0.08); border: 1px solid rgba(198,117,87,0.15);
+      border-radius: 10px; padding: 22px 32px;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin-top: auto;
+    }
+    .gdp-bar .num {
+      font-family: 'Playfair Display', serif; font-size: 36px;
+      font-weight: 700; color: #c67557;
+    }
+    .gdp-bar .desc {
+      font-size: 15px; color: #7c7c7c;
+    }
+
+    .source {
+      position: absolute; bottom: 72px; left: 80px; right: 80px;
+      font-size: 11px; color: rgba(124,124,124,0.6); text-align: center;
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 30px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      display: flex; justify-content: center; align-items: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+    <div class="content">
+      <div class="label">Over-Tourism</div>
+      <h1 class="headline">Success That<br><em>Threatens</em> Survival</h1>
+
+      <div class="split">
+        <div class="split-card success">
+          <div class="split-header">The Revenue</div>
+          <div class="split-item">
+            <div class="split-num">2.6M</div>
+            <div class="split-desc">visitors per year</div>
+          </div>
+          <div class="split-item">
+            <div class="split-num">~$1B</div>
+            <div class="split-desc">annual tourism revenue</div>
+          </div>
+        </div>
+        <div class="split-card danger">
+          <div class="split-header">The Cost</div>
+          <div class="split-item">
+            <div class="split-num">Structural</div>
+            <div class="split-desc">deterioration of temples</div>
+          </div>
+          <div class="split-item">
+            <div class="split-num">Groundwater</div>
+            <div class="split-desc">depletion threatening foundations</div>
+          </div>
+          <div class="split-item">
+            <div class="split-num">UNESCO</div>
+            <div class="split-desc">"In Danger" candidate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gdp-bar">
+        <div class="num">21%</div>
+        <div class="desc">of Cambodia's GDP depends on tourism</div>
+      </div>
+    </div>
+
+    <div class="source">UNESCO 2023; UNCTAD/UNESCO 2013</div>
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

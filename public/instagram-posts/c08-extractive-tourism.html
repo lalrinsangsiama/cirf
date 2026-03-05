@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who Benefits? - Where Does Your $100 Actually Go?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .pattern {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.03;
+      background-image:
+        radial-gradient(circle at 45% 45%, #c67557 1px, transparent 1px),
+        radial-gradient(circle at 55% 55%, #c67557 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .content {
+      position: relative; z-index: 10; padding: 60px 70px 120px;
+      height: 100%; display: flex; flex-direction: column;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557; margin-bottom: 16px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 44px;
+      font-weight: 700; line-height: 1.15; color: #fdfdfb; margin-bottom: 36px;
+    }
+    .headline em { font-style: italic; color: #c67557; }
+
+    .models {
+      display: flex; gap: 24px; flex: 1;
+    }
+    .model {
+      flex: 1; border-radius: 14px; padding: 30px 26px;
+      display: flex; flex-direction: column;
+    }
+    .model.extractive {
+      background: rgba(198,117,87,0.06); border: 1px solid rgba(198,117,87,0.2);
+    }
+    .model.community {
+      background: rgba(168,181,160,0.06); border: 1px solid rgba(168,181,160,0.2);
+    }
+    .model-header {
+      font-size: 12px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .model.extractive .model-header { color: #c67557; }
+    .model.community .model-header { color: #a8b5a0; }
+
+    .flow-item {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px; padding: 10px 14px; border-radius: 8px;
+    }
+    .model.extractive .flow-item {
+      background: rgba(198,117,87,0.04);
+    }
+    .model.community .flow-item {
+      background: rgba(168,181,160,0.04);
+    }
+    .flow-item .who {
+      font-size: 14px; color: #7c7c7c; font-weight: 400;
+    }
+    .flow-item .amount {
+      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+    }
+    .model.extractive .flow-item .amount { color: #c67557; }
+    .model.community .flow-item .amount { color: #a8b5a0; }
+
+    .flow-item.local {
+      border: 1px solid;
+      margin-top: 10px;
+    }
+    .model.extractive .flow-item.local {
+      border-color: rgba(198,117,87,0.3);
+    }
+    .model.community .flow-item.local {
+      border-color: rgba(168,181,160,0.3);
+    }
+    .flow-item.local .who {
+      font-weight: 600;
+    }
+    .model.extractive .flow-item.local .who { color: #c67557; }
+    .model.community .flow-item.local .who { color: #a8b5a0; }
+
+    .bar-visual {
+      margin-top: auto; padding-top: 16px;
+    }
+    .bar-label {
+      font-size: 11px; color: #7c7c7c; margin-bottom: 8px; text-align: center;
+    }
+    .bar-track {
+      height: 14px; background: rgba(124,124,124,0.08);
+      border-radius: 7px; overflow: hidden;
+    }
+    .model.extractive .bar-fill {
+      height: 100%; width: 30%; border-radius: 7px;
+      background: linear-gradient(90deg, #c67557, rgba(198,117,87,0.4));
+    }
+    .model.community .bar-fill {
+      height: 100%; width: 80%; border-radius: 7px;
+      background: linear-gradient(90deg, #a8b5a0, rgba(168,181,160,0.4));
+    }
+    .bar-percent {
+      font-size: 12px; margin-top: 6px; text-align: center; font-weight: 600;
+    }
+    .model.extractive .bar-percent { color: #c67557; }
+    .model.community .bar-percent { color: #a8b5a0; }
+
+    .leakage-note {
+      background: rgba(198,117,87,0.06); border: 1px solid rgba(198,117,87,0.12);
+      border-radius: 10px; padding: 16px 24px; text-align: center;
+      margin-top: 20px;
+    }
+    .leakage-note .text {
+      font-size: 14px; color: #7c7c7c;
+    }
+    .leakage-note strong {
+      color: #c67557; font-weight: 600;
+    }
+
+    .source {
+      position: absolute; bottom: 72px; left: 80px; right: 80px;
+      font-size: 11px; color: rgba(124,124,124,0.6); text-align: center;
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 30px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      display: flex; justify-content: center; align-items: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+    <div class="content">
+      <div class="label">Who Benefits?</div>
+      <h1 class="headline">Where Does Your <em>$100</em><br>Actually Go?</h1>
+
+      <div class="models">
+        <div class="model extractive">
+          <div class="model-header">Extractive Model</div>
+          <div class="flow-item">
+            <span class="who">OTA Platform</span>
+            <span class="amount">$20</span>
+          </div>
+          <div class="flow-item">
+            <span class="who">International Hotel</span>
+            <span class="amount">$40</span>
+          </div>
+          <div class="flow-item">
+            <span class="who">Transport</span>
+            <span class="amount">$10</span>
+          </div>
+          <div class="flow-item local">
+            <span class="who">Stays Local</span>
+            <span class="amount">$30</span>
+          </div>
+          <div class="bar-visual">
+            <div class="bar-label">Local retention</div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+            <div class="bar-percent">30%</div>
+          </div>
+        </div>
+
+        <div class="model community">
+          <div class="model-header">Community-Controlled</div>
+          <div class="flow-item local" style="margin-top:0;">
+            <span class="who">Stays Local</span>
+            <span class="amount">$80+</span>
+          </div>
+          <div class="flow-item">
+            <span class="who">Local guides & hosts</span>
+            <span class="amount">$35</span>
+          </div>
+          <div class="flow-item">
+            <span class="who">Community fund</span>
+            <span class="amount">$25</span>
+          </div>
+          <div class="flow-item">
+            <span class="who">Local suppliers</span>
+            <span class="amount">$20</span>
+          </div>
+          <div class="bar-visual">
+            <div class="bar-label">Local retention</div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+            <div class="bar-percent">80%+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="leakage-note">
+        <div class="text">Caribbean tourism leakage: up to <strong>80% of revenue leaves</strong> the local economy</div>
+      </div>
+    </div>
+
+    <div class="source">UNCTAD 2022; Ashley, Roe & Goodwin (2001); UNWTO 2019</div>
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

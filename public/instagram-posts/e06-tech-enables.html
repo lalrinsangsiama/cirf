@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post E06 - Technology Enables Tradition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 50px 80px 25px;
+    }
+    .label {
+      font-size: 14px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #a8b5a0;
+      background: rgba(168,181,160,0.1); padding: 8px 20px; border-radius: 4px;
+      display: inline-block; margin-bottom: 18px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px; font-weight: 700; color: #fdfdfb; line-height: 1.2;
+    }
+    .headline em { color: #d4af37; font-style: normal; }
+    .timeline {
+      padding: 15px 80px; display: flex; gap: 20px; height: auto;
+    }
+    .era {
+      flex: 1; position: relative;
+    }
+    .era-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 2px solid;
+    }
+    .era-threat .era-label { color: #c67557; border-bottom-color: #c67557; }
+    .era-enabler .era-label { color: #d4af37; border-bottom-color: #d4af37; }
+    .era-items {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .era-item {
+      background: rgba(245,240,232,0.03);
+      border-radius: 6px; padding: 16px 18px;
+    }
+    .era-threat .era-item {
+      border-left: 2px solid rgba(198,117,87,0.4);
+    }
+    .era-enabler .era-item {
+      border-left: 2px solid rgba(212,175,55,0.4);
+    }
+    .item-title {
+      font-size: 13px; font-weight: 600; color: #fdfdfb; margin-bottom: 3px;
+    }
+    .item-detail {
+      font-size: 12px; color: #7c7c7c; line-height: 1.3;
+    }
+    .item-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: #d4af37;
+      margin-top: 4px;
+    }
+    .arrow-divider {
+      display: flex; align-items: center; justify-content: center;
+      width: 50px; flex-shrink: 0;
+    }
+    .arrow {
+      font-size: 36px; color: #d4af37;
+    }
+    .closing {
+      padding: 20px 80px 0; text-align: center;
+      font-size: 15px; font-weight: 500; color: #fdfdfb; font-style: italic;
+      border-top: 1px solid rgba(212,175,55,0.15);
+      margin: 0 80px; padding-top: 20px;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Rethink</div>
+      <h1 class="headline">"Technology Threatens Tradition"<br><em>Or Enables It?</em></h1>
+    </div>
+    <div class="timeline">
+      <div class="era era-threat">
+        <div class="era-label">Threat Era</div>
+        <div class="era-items">
+          <div class="era-item">
+            <div class="item-title">Printing press</div>
+            <div class="item-detail">"Killed" manuscript traditions</div>
+          </div>
+          <div class="era-item">
+            <div class="item-title">Mass production</div>
+            <div class="item-detail">"Killed" artisan crafts</div>
+          </div>
+          <div class="era-item">
+            <div class="item-title">Recording</div>
+            <div class="item-detail">"Killed" live music</div>
+          </div>
+          <div class="era-item">
+            <div class="item-title">Internet</div>
+            <div class="item-detail">"Killed" local culture</div>
+          </div>
+        </div>
+      </div>
+      <div class="arrow-divider">
+        <div class="arrow">&rarr;</div>
+      </div>
+      <div class="era era-enabler">
+        <div class="era-label">Enabler Era</div>
+        <div class="era-items">
+          <div class="era-item">
+            <div class="item-title">Music Streaming</div>
+            <div class="item-stat">67.3%</div>
+            <div class="item-detail">of global music revenue</div>
+          </div>
+          <div class="era-item">
+            <div class="item-title">Language Preservation</div>
+            <div class="item-stat">50+</div>
+            <div class="item-detail">endangered languages on Duolingo</div>
+          </div>
+          <div class="era-item">
+            <div class="item-title">Online Craft Market</div>
+            <div class="item-stat">$10B+</div>
+            <div class="item-detail">connecting artisans to global buyers</div>
+          </div>
+          <div class="era-item">
+            <div class="item-title">Netflix &times; Korea</div>
+            <div class="item-stat">$2.5B</div>
+            <div class="item-detail">invested in Korean content</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="closing">"The tool is neutral. The question is who holds it."</div>
+    <div class="source">UNCTAD 2024; UNESCO 2022; Duolingo 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

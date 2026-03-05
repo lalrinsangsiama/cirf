@@ -3,6 +3,8 @@
  * Validates required environment variables at startup
  */
 
+import { logger } from '@/lib/logger'
+
 interface EnvVar {
   name: string
   required: boolean
@@ -31,30 +33,6 @@ const ENV_VARS: EnvVar[] = [
     description: 'Supabase service role key (JWT)',
   },
 
-  // Razorpay
-  {
-    name: 'NEXT_PUBLIC_RAZORPAY_KEY_ID',
-    required: true,
-    pattern: /^rzp_(test|live)_/,
-    description: 'Razorpay key ID',
-  },
-  {
-    name: 'RAZORPAY_KEY_ID',
-    required: true,
-    pattern: /^rzp_(test|live)_/,
-    description: 'Razorpay key ID (server-side)',
-  },
-  {
-    name: 'RAZORPAY_KEY_SECRET',
-    required: true,
-    description: 'Razorpay key secret',
-  },
-  {
-    name: 'RAZORPAY_WEBHOOK_SECRET',
-    required: true,
-    description: 'Razorpay webhook secret',
-  },
-
   // Resend
   {
     name: 'RESEND_API_KEY',
@@ -73,6 +51,27 @@ const ENV_VARS: EnvVar[] = [
     required: true,
     pattern: /^.+@.+\..+$/,
     description: 'Admin email for notifications',
+  },
+
+  // Security
+  {
+    name: 'CSRF_SECRET',
+    required: true,
+    description: 'CSRF token signing secret (generate with: openssl rand -hex 32)',
+  },
+
+  // App URLs
+  {
+    name: 'NEXT_PUBLIC_SITE_URL',
+    required: true,
+    pattern: /^https?:\/\//,
+    description: 'Public site URL (e.g. https://culturalinnovationlab.org)',
+  },
+  {
+    name: 'NEXT_PUBLIC_APP_URL',
+    required: true,
+    pattern: /^https?:\/\//,
+    description: 'App URL for auth redirects (e.g. https://culturalinnovationlab.org)',
   },
 
   // AI (optional in non-production)
@@ -136,18 +135,7 @@ export function validateEnv(): ValidationResult {
     }
   }
 
-  // Additional validation checks
-  const razorpayKeyId = process.env.RAZORPAY_KEY_ID
-  const razorpayPublicKeyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
-
-  if (razorpayKeyId && razorpayPublicKeyId && razorpayKeyId !== razorpayPublicKeyId) {
-    warnings.push('RAZORPAY_KEY_ID and NEXT_PUBLIC_RAZORPAY_KEY_ID should match')
-  }
-
   if (isProduction) {
-    if (razorpayKeyId?.includes('test')) {
-      warnings.push('Using Razorpay test mode in production')
-    }
     if (!process.env.ANTHROPIC_API_KEY) {
       warnings.push('ANTHROPIC_API_KEY not set - AI features will be disabled')
     }
@@ -167,13 +155,11 @@ export function assertEnv(): void {
   const result = validateEnv()
 
   if (result.warnings.length > 0) {
-    console.warn('Environment warnings:')
-    result.warnings.forEach((warning) => console.warn(`  - ${warning}`))
+    logger.warn('Environment warnings', { warnings: result.warnings })
   }
 
   if (!result.valid) {
-    console.error('Environment validation failed:')
-    result.errors.forEach((error) => console.error(`  - ${error}`))
+    logger.error('Environment validation failed', { errors: result.errors })
     throw new Error('Environment validation failed. Check the logs above.')
   }
 }
@@ -188,20 +174,10 @@ export const features = {
   get analytics(): boolean {
     return !!(process.env.NEXT_PUBLIC_POSTHOG_KEY && process.env.NEXT_PUBLIC_POSTHOG_HOST)
   },
-  get payments(): boolean {
-    return !!(
-      process.env.RAZORPAY_KEY_ID &&
-      process.env.RAZORPAY_KEY_SECRET &&
-      process.env.RAZORPAY_WEBHOOK_SECRET
-    )
-  },
   get email(): boolean {
     return !!(process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL)
   },
   get isProduction(): boolean {
     return process.env.NODE_ENV === 'production'
-  },
-  get isTestMode(): boolean {
-    return !!process.env.RAZORPAY_KEY_ID?.includes('test')
   },
 }

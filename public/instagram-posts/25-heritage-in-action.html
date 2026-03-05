@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 25 - Cultural Heritage in Action</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header {
+      padding: 55px 80px 30px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 400;
+      color: #fdfdfb;
+      line-height: 1.2;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 300;
+      color: #7c7c7c;
+      margin-top: 10px;
+    }
+
+    .cities-grid {
+      padding: 35px 80px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .city-card {
+      padding: 28px;
+      background: rgba(245, 240, 232, 0.03);
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .city-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fdfdfb;
+      margin-bottom: 4px;
+    }
+
+    .city-country {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    .city-initiative {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fdfdfb;
+      margin-bottom: 6px;
+    }
+
+    .city-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: #7c7c7c;
+      line-height: 1.5;
+    }
+
+    .city-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .city-card:nth-child(1) .city-tag { background: rgba(212, 175, 55, 0.15); color: #d4af37; }
+    .city-card:nth-child(2) .city-tag { background: rgba(91, 140, 158, 0.15); color: #5b8c9e; }
+    .city-card:nth-child(3) .city-tag { background: rgba(168, 181, 160, 0.15); color: #a8b5a0; }
+    .city-card:nth-child(4) .city-tag { background: rgba(198, 117, 87, 0.15); color: #c67557; }
+
+    .project-banner {
+      margin: 20px 80px 0;
+      padding: 20px 30px;
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .banner-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #d4af37;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .banner-stat span {
+      font-size: 28px;
+    }
+
+    .banner-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: #7c7c7c;
+      line-height: 1.5;
+    }
+
+    .banner-text strong {
+      color: #fdfdfb;
+      font-weight: 500;
+    }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.6);
+      line-height: 1.5;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding-top: 15px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">European Case Studies</div>
+      <h1 class="headline">Heritage <em>in Action</em>: 4 Cities Proving It Works</h1>
+      <p class="subtitle">How cities transformed cultural heritage into economic resilience engines</p>
+    </div>
+
+    <div class="cities-grid">
+      <div class="city-card">
+        <div class="city-name">Rzeszow</div>
+        <div class="city-country">Poland</div>
+        <div class="city-initiative">Underground City Trail</div>
+        <div class="city-desc">Transformed underground heritage into a tourism destination driving local economic regeneration</div>
+        <div class="city-tag">Tourism Revival</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Helsinki</div>
+        <div class="city-country">Finland</div>
+        <div class="city-initiative">Cable Factory Cultural Centre</div>
+        <div class="city-desc">Adaptive reuse of industrial heritage into a creative hub engaging communities and businesses</div>
+        <div class="city-tag">Creative Hub</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Lisbon</div>
+        <div class="city-country">Portugal</div>
+        <div class="city-initiative">Heritage-Led Regeneration</div>
+        <div class="city-desc">Strategic integration of cultural heritage into urban development and economic recovery plans</div>
+        <div class="city-tag">Urban Renewal</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Stockholm</div>
+        <div class="city-country">Sweden</div>
+        <div class="city-initiative">Cultural Identity Preservation</div>
+        <div class="city-desc">Heritage management strengthening local identity while driving sustainable economic growth</div>
+        <div class="city-tag">Identity-Led Growth</div>
+      </div>
+    </div>
+
+    <div class="project-banner">
+      <div class="banner-stat">100<span>+</span></div>
+      <div class="banner-text"><strong>"Cultural Heritage in Action" project (2020-2023)</strong> helped over 100 European cities share best practices in heritage management for post-pandemic recovery.</div>
+    </div>
+
+    <div class="source">Source: Musialik, W. et al. (2025). "Cultural heritage capital as a resilience factor in sustainable development policy of the region." Economics and Environment.</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cil-framework.org'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://culturalinnovationlab.org'
 
 interface JsonLdProps {
   data: Record<string, unknown>
@@ -31,7 +31,7 @@ export function OrganizationJsonLd() {
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: 'contact@cil-framework.org',
+      email: 'hello@culturalinnovationlab.org',
       url: `${baseUrl}/about#contact`,
     },
   }
@@ -151,40 +151,6 @@ export function WebsiteJsonLd() {
     url: baseUrl,
     description:
       'Transforming indigenous wisdom into economic resilience. A comprehensive framework for understanding how cultural innovation drives sustainable development.',
-  }
-
-  return <JsonLd data={data} />
-}
-
-// Product schema for credit packs
-interface ProductJsonLdProps {
-  name: string
-  description: string
-  price: number
-  currency: string
-}
-
-export function ProductJsonLd({
-  name,
-  description,
-  price,
-  currency,
-}: ProductJsonLdProps) {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: name,
-    description: description,
-    offers: {
-      '@type': 'Offer',
-      price: price,
-      priceCurrency: currency,
-      availability: 'https://schema.org/InStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'CIL',
-      },
-    },
   }
 
   return <JsonLd data={data} />

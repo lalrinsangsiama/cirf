@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultural Displacement - When Culture Arrives, Then Leaves</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .pattern {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.03;
+      background-image:
+        radial-gradient(circle at 50% 50%, #c67557 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .content {
+      position: relative; z-index: 10; padding: 60px 70px 120px;
+      height: 100%; display: flex; flex-direction: column;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557; margin-bottom: 14px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 42px;
+      font-weight: 700; line-height: 1.15; color: #fdfdfb; margin-bottom: 36px;
+    }
+    .headline em { font-style: italic; color: #c67557; }
+
+    .cycle {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0; margin-bottom: 32px; position: relative;
+    }
+    .cycle-row {
+      display: flex; align-items: center; width: 100%;
+      justify-content: center; margin-bottom: 6px;
+    }
+    .cycle-step {
+      background: rgba(91,140,158,0.06); border: 1px solid rgba(91,140,158,0.15);
+      border-radius: 10px; padding: 14px 18px; text-align: center;
+      font-size: 13px; color: #a8b5a0; font-weight: 500;
+      min-width: 160px;
+    }
+    .cycle-step.warn {
+      background: rgba(198,117,87,0.08); border-color: rgba(198,117,87,0.25);
+      color: #c67557;
+    }
+    .cycle-step.danger {
+      background: rgba(198,117,87,0.12); border-color: rgba(198,117,87,0.35);
+      color: #c67557; font-weight: 600;
+    }
+    .cycle-arrow {
+      color: rgba(124,124,124,0.35); font-size: 20px; margin: 0 10px;
+    }
+    .cycle-arrow-down {
+      color: rgba(124,124,124,0.35); font-size: 20px;
+      text-align: center; width: 100%; margin: 4px 0;
+    }
+
+    .stats-grid {
+      display: flex; gap: 16px; margin-top: auto;
+    }
+    .stat-card {
+      flex: 1; background: rgba(198,117,87,0.06);
+      border: 1px solid rgba(198,117,87,0.15); border-radius: 10px;
+      padding: 22px 18px; text-align: center;
+    }
+    .stat-card .num {
+      font-family: 'Playfair Display', serif; font-size: 32px;
+      font-weight: 700; color: #c67557;
+    }
+    .stat-card .desc {
+      font-size: 12px; color: #7c7c7c; margin-top: 6px; line-height: 1.4;
+    }
+
+    .source {
+      position: absolute; bottom: 72px; left: 80px; right: 80px;
+      font-size: 11px; color: rgba(124,124,124,0.6); text-align: center;
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 30px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      display: flex; justify-content: center; align-items: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+    <div class="content">
+      <div class="label">Cultural Displacement</div>
+      <h1 class="headline">When Culture Arrives,<br><em>Then Leaves</em></h1>
+
+      <div class="cycle">
+        <div class="cycle-row">
+          <div class="cycle-step">Artists seek<br>affordable space</div>
+          <div class="cycle-arrow">&rarr;</div>
+          <div class="cycle-step">Cultural community<br>forms</div>
+          <div class="cycle-arrow">&rarr;</div>
+          <div class="cycle-step">Reputation<br>rises</div>
+        </div>
+        <div class="cycle-arrow-down">&darr;</div>
+        <div class="cycle-row" style="flex-direction: row-reverse;">
+          <div class="cycle-step danger">Culture<br>lost</div>
+          <div class="cycle-arrow">&larr;</div>
+          <div class="cycle-step danger">Artists<br>displaced</div>
+          <div class="cycle-arrow">&larr;</div>
+          <div class="cycle-step warn">Rents<br>rise</div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-bottom: 28px;">
+        <svg width="60" height="40" viewBox="0 0 60 40" style="opacity:0.3;">
+          <path d="M30 5 L55 35 L5 35 Z" fill="none" stroke="#c67557" stroke-width="1.5"/>
+        </svg>
+        <div style="font-size:13px; color:rgba(198,117,87,0.7); font-style:italic; letter-spacing:1px;">The cycle repeats</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="num">+300%</div>
+          <div class="desc">NYC East Village<br>rent increase</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">+800%</div>
+          <div class="desc">London Shoreditch<br>rent increase</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">+15-30%</div>
+          <div class="desc">Property value rise within<br>5 yrs of cultural designation</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Zukin (1989); Florida (2017); Pratt (2009) Urban Studies</div>
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

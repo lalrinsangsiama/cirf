@@ -28,9 +28,11 @@ import {
 } from 'lucide-react'
 import { getAssessmentProgressSummary, getUserUnlockStatus, type UserUnlocks } from '@/lib/services/assessmentUnlockService'
 import { AssessmentType, ASSESSMENT_CONFIGS, TOOL_CONFIGS } from '@/lib/data/assessmentConfig'
+import { logger } from '@/lib/logger'
 import { getAssessmentRecommendations, getRecommendationBadge, type AssessmentRecommendation } from '@/lib/data/assessmentRecommendations'
 import { calculateAssessmentResult } from '@/lib/assessment/scoring'
 import { questionConfig } from '@/lib/data/assessmentQuestions'
+import { useSearchParams } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 interface Assessment {
@@ -56,9 +58,12 @@ interface Transaction {
 
 export default function DashboardPage() {
   const { user, profile, loading, refreshProfile } = useAuth()
+  const searchParams = useSearchParams()
   const [assessments, setAssessments] = useState<Assessment[]>([])
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [loadingData, setLoadingData] = useState(true)
+  const [showEarnedBanner, setShowEarnedBanner] = useState(false)
+  const [earnedFromType, setEarnedFromType] = useState<string | null>(null)
   const [progressSummary, setProgressSummary] = useState<{
     totalAssessments: number
     completedAssessments: number
@@ -95,7 +100,7 @@ export default function DashboardPage() {
           .limit(10)
 
         if (assessmentError) {
-          console.error('Error fetching assessments:', assessmentError)
+          logger.error('Error fetching assessments', { error: assessmentError.message })
           throw new Error('Failed to load assessments')
         }
 
@@ -112,7 +117,7 @@ export default function DashboardPage() {
           .limit(5)
 
         if (transactionError) {
-          console.error('Error fetching transactions:', transactionError)
+          logger.error('Error fetching transactions', { error: transactionError.message })
         }
 
         if (transactionsData) {
@@ -163,7 +168,7 @@ export default function DashboardPage() {
           }
         }
       } catch (error) {
-        console.error('Error fetching dashboard data:', error)
+        logger.error('Error fetching dashboard data', {}, error instanceof Error ? error : undefined)
         setDataError(
           error instanceof Error
             ? error.message
@@ -177,6 +182,14 @@ export default function DashboardPage() {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, supabase])
+
+  // Show credit earned banner from search params
+  useEffect(() => {
+    if (searchParams.get('earned') === '1') {
+      setShowEarnedBanner(true)
+      setEarnedFromType(searchParams.get('from'))
+    }
+  }, [searchParams])
 
   if (loading) {
     return (
@@ -253,6 +266,25 @@ export default function DashboardPage() {
           </p>
         </div>
 
+        {/* Credit Earned Banner */}
+        {showEarnedBanner && (
+          <div className="mb-8 p-4 bg-sage/10 border border-sage/20 rounded-xl flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-sage flex-shrink-0" />
+              <p className="text-sage font-medium">
+                +1 credit earned{earnedFromType ? ` from completing ${getAssessmentName(earnedFromType)}` : ''}! You now have {profile?.credits || 0} credit{(profile?.credits || 0) !== 1 ? 's' : ''}.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowEarnedBanner(false)}
+              className="text-sage/60 hover:text-sage transition-colors ml-4"
+              aria-label="Dismiss"
+            >
+              &times;
+            </button>
+          </div>
+        )}
+
         {/* Error Display */}
         {dataError && (
           <div className="mb-8 p-4 bg-terracotta/10 border border-terracotta/20 rounded-xl flex items-start gap-3">
@@ -277,12 +309,9 @@ export default function DashboardPage() {
               <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center">
                 <CreditCard className="w-6 h-6 text-gold" />
               </div>
-              <Link
-                href="/pricing"
-                className="text-sm text-gold font-medium hover:underline"
-              >
-                Buy more
-              </Link>
+              <span className="text-sm text-stone">
+                Free
+              </span>
             </div>
             <p className="text-3xl font-bold text-ink mb-1">{profile?.credits || 0}</p>
             <p className="text-sm text-stone">Credits available</p>
@@ -320,7 +349,7 @@ export default function DashboardPage() {
               <div>
                 <h2 className="text-lg font-semibold text-ink">Your Journey</h2>
                 <p className="text-sm text-stone">
-                  CIL Assessment → 5 Specialized Assessments → 10 Interactive Tools
+                  Complete CIL (free) → earn 1 credit → take any assessment → earn it back → repeat
                 </p>
               </div>
               <Link

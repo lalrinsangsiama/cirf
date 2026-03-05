@@ -48,10 +48,12 @@ export default function Error({
             Try again
           </Button>
 
-          <Link href="/">
-            <Button variant="outline" icon={Home}>
-              Go home
-            </Button>
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-transparent text-ink border border-ink/20 hover:bg-ink/5 hover:border-ink/40 focus:ring-ink/10 px-4 py-2.5 text-sm gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Go home
           </Link>
         </div>
 

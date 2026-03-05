@@ -162,40 +162,9 @@ export default function SettingsPage() {
               <Bell className="w-5 h-5 text-gold" />
               Notification Preferences
             </h2>
-            <div className="space-y-4">
-              <label className="flex items-center justify-between cursor-pointer">
-                <div>
-                  <p className="font-medium text-ink">Assessment Results</p>
-                  <p className="text-sm text-stone">Email me when my assessment results are ready</p>
-                </div>
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="w-5 h-5 text-gold rounded border-stone/30 focus:ring-gold"
-                />
-              </label>
-              <label className="flex items-center justify-between cursor-pointer">
-                <div>
-                  <p className="font-medium text-ink">Newsletter</p>
-                  <p className="text-sm text-stone">Receive updates about cultural innovation research</p>
-                </div>
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="w-5 h-5 text-gold rounded border-stone/30 focus:ring-gold"
-                />
-              </label>
-              <label className="flex items-center justify-between cursor-pointer">
-                <div>
-                  <p className="font-medium text-ink">Product Updates</p>
-                  <p className="text-sm text-stone">Get notified about new features and tools</p>
-                </div>
-                <input
-                  type="checkbox"
-                  className="w-5 h-5 text-gold rounded border-stone/30 focus:ring-gold"
-                />
-              </label>
-            </div>
+            <p className="text-stone text-sm">
+              Notification preferences coming soon.
+            </p>
           </section>
 
           {/* Data Export Section */}
@@ -305,7 +274,7 @@ export default function SettingsPage() {
               <ul className="text-sm text-stone space-y-1 mb-4">
                 <li>- Your profile information</li>
                 <li>- All assessment results and history</li>
-                <li>- Any remaining credits (non-refundable)</li>
+                <li>- Any remaining credits</li>
                 <li>- Transaction history</li>
               </ul>
               <p className="text-sm text-ink font-medium mb-2">

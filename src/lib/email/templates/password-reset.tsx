@@ -96,10 +96,10 @@ export function getPasswordResetEmailHtml({
             <td style="background: #f8f6f3; padding: 20px 30px; text-align: center; border-radius: 0 0 12px 12px; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
               <p style="margin: 0 0 10px 0; color: #888; font-size: 12px;">
                 If you didn't request this password reset, please contact us at
-                <a href="mailto:support@cil-framework.org" style="color: #D4A574;">support@cil-framework.org</a>
+                <a href="mailto:hello@culturalinnovationlab.org" style="color: #D4A574;">hello@culturalinnovationlab.org</a>
               </p>
               <p style="margin: 0; color: #888; font-size: 12px;">
-                Cultural Innovation Lab | <a href="https://cil-framework.org" style="color: #D4A574;">cil-framework.org</a>
+                Cultural Innovation Lab | <a href="https://culturalinnovationlab.org" style="color: #D4A574;">culturalinnovationlab.org</a>
               </p>
             </td>
           </tr>
@@ -141,8 +141,8 @@ SECURITY TIPS
 - Enable two-factor authentication when available
 
 ---
-If you didn't request this password reset, please contact us at support@cil-framework.org
+If you didn't request this password reset, please contact us at hello@culturalinnovationlab.org
 
-Cultural Innovation Lab | https://cil-framework.org
+Cultural Innovation Lab | https://culturalinnovationlab.org
   `.trim()
 }

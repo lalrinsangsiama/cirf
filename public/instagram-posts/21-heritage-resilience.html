@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 21 - Heritage Builds Resilience</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header {
+      padding: 60px 80px 40px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 15px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 44px;
+      font-weight: 400;
+      color: #fdfdfb;
+      line-height: 1.2;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .infographic {
+      padding: 50px 80px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .dimension {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .dimension-icon {
+      width: 70px;
+      height: 70px;
+      min-width: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #0a0a0a;
+    }
+
+    .dimension:nth-child(1) .dimension-icon { background: linear-gradient(135deg, #d4af37, #f4d03f); }
+    .dimension:nth-child(2) .dimension-icon { background: linear-gradient(135deg, #5b8c9e, #7ab5c9); }
+    .dimension:nth-child(3) .dimension-icon { background: linear-gradient(135deg, #a8b5a0, #c4d4bc); }
+    .dimension:nth-child(4) .dimension-icon { background: linear-gradient(135deg, #c67557, #e09577); }
+
+    .dimension-content {
+      flex: 1;
+    }
+
+    .dimension-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fdfdfb;
+      margin-bottom: 6px;
+    }
+
+    .dimension-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: #7c7c7c;
+      line-height: 1.5;
+    }
+
+    .dimension-bar {
+      margin-top: 10px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(253, 253, 251, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dimension:nth-child(1) .dimension-bar::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 90%; background: linear-gradient(90deg, #d4af37, #f4d03f); border-radius: 2px; }
+    .dimension:nth-child(2) .dimension-bar::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 85%; background: linear-gradient(90deg, #5b8c9e, #7ab5c9); border-radius: 2px; }
+    .dimension:nth-child(3) .dimension-bar::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 80%; background: linear-gradient(90deg, #a8b5a0, #c4d4bc); border-radius: 2px; }
+    .dimension:nth-child(4) .dimension-bar::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 75%; background: linear-gradient(90deg, #c67557, #e09577); border-radius: 2px; }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.6);
+      line-height: 1.5;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding-top: 15px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Research Finding</div>
+      <h1 class="headline">4 Dimensions of Heritage<br>as <em>Economic Shield</em></h1>
+    </div>
+
+    <div class="infographic">
+      <div class="dimension">
+        <div class="dimension-icon">01</div>
+        <div class="dimension-content">
+          <div class="dimension-title">Identity & Community Cohesion</div>
+          <div class="dimension-desc">Heritage transmits values across generations, fostering belonging and unity that strengthens crisis response.</div>
+          <div class="dimension-bar"></div>
+        </div>
+      </div>
+      <div class="dimension">
+        <div class="dimension-icon">02</div>
+        <div class="dimension-content">
+          <div class="dimension-title">Social Capital</div>
+          <div class="dimension-desc">Cultural practices build trust networks and cooperation between groups, creating mutual aid systems for recovery.</div>
+          <div class="dimension-bar"></div>
+        </div>
+      </div>
+      <div class="dimension">
+        <div class="dimension-icon">03</div>
+        <div class="dimension-content">
+          <div class="dimension-title">Economic Engine</div>
+          <div class="dimension-desc">Cultural tourism, craftsmanship, and heritage festivals generate income and jobs, diversifying local economies.</div>
+          <div class="dimension-bar"></div>
+        </div>
+      </div>
+      <div class="dimension">
+        <div class="dimension-icon">04</div>
+        <div class="dimension-content">
+          <div class="dimension-title">Environmental Knowledge</div>
+          <div class="dimension-desc">Traditional practices like regenerative agriculture inform sustainable approaches to climate adaptation.</div>
+          <div class="dimension-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Source: Musialik, W. et al. (2025). "Cultural heritage capital as a resilience factor in sustainable development policy of the region." Economics and Environment.</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

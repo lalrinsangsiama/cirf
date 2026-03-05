@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     const { email } = validation.data
 
     // Determine the redirect URL for password reset
-    const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'https://culturalinnovationlab.org'
     const redirectTo = `${origin}/auth/reset-password`
 
     // Request password reset

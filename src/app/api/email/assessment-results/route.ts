@@ -4,7 +4,9 @@ import { createClient as createServerClient } from '@/lib/supabase/server'
 import { sendAssessmentResults } from '@/lib/email/resend'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import { SECTION_META } from '@/lib/data/assessmentQuestions'
-import { checkRateLimit } from '@/lib/rateLimit'
+import { z } from 'zod'
+import { checkRateLimit, emailRateLimit } from '@/lib/rateLimit'
+import { validateInput } from '@/lib/validation'
 import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
@@ -25,24 +27,19 @@ function getSupabaseAdmin() {
   return supabaseAdmin
 }
 
-interface AssessmentEmailRequest {
-  assessmentId: string
-  userId: string
-}
+const assessmentEmailSchema = z.object({
+  assessmentId: z.string().uuid('Invalid assessment ID format'),
+  userId: z.string().uuid('Invalid user ID format'),
+})
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting: 5 emails per 15 minutes per user
-    const rateLimitResult = checkRateLimit(request, {
-      windowMs: 15 * 60 * 1000,
-      maxRequests: 5,
-      message: 'Too many email requests. Please try again later.',
-    })
+    const rateLimitResult = checkRateLimit(request, emailRateLimit)
 
     if (!rateLimitResult.allowed) {
       return rateLimitErrorResponse(
-        Date.now() + 15 * 60 * 1000,
-        'Too many email requests. Please try again later.'
+        rateLimitResult.resetTime,
+        emailRateLimit.message
       )
     }
 
@@ -54,12 +51,14 @@ export async function POST(request: NextRequest) {
       return errorResponse(Errors.unauthorized('Unauthorized - please log in'))
     }
 
-    const body: AssessmentEmailRequest = await request.json()
-    const { assessmentId, userId } = body
+    const body = await request.json()
+    const validation = validateInput(assessmentEmailSchema, body)
 
-    if (!assessmentId || !userId) {
-      return validationErrorResponse('Missing required fields: assessmentId and userId')
+    if (!validation.success) {
+      return validationErrorResponse(validation.error, validation.errors)
     }
+
+    const { assessmentId, userId } = validation.data
 
     // Verify the requesting user owns this assessment
     if (currentUser.id !== userId) {

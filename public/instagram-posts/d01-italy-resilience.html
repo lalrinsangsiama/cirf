@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - Italy Proves Culture Buffers Economic Shocks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .label {
+      font-size: 13px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 15px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 40px;
+      font-weight: 400; color: #fdfdfb; line-height: 1.15;
+    }
+    .chart-area {
+      padding: 30px 80px 15px;
+      position: relative;
+    }
+    .chart-title {
+      font-size: 13px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: #5b8c9e; margin-bottom: 20px;
+    }
+    .scatter-container {
+      position: relative; width: 580px; height: 420px;
+      margin: 0 auto;
+    }
+    .axis-y {
+      position: absolute; left: 0; top: 0; bottom: 40px; width: 1px;
+      background: rgba(253, 253, 251, 0.15);
+    }
+    .axis-x {
+      position: absolute; left: 0; right: 0; bottom: 40px; height: 1px;
+      background: rgba(253, 253, 251, 0.15);
+    }
+    .axis-label-y {
+      position: absolute; left: -10px; top: 50%;
+      transform: rotate(-90deg) translateX(50%); transform-origin: left center;
+      font-size: 11px; color: rgba(253, 253, 251, 0.5); letter-spacing: 1px;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .axis-label-x {
+      position: absolute; bottom: 12px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px; color: rgba(253, 253, 251, 0.5); letter-spacing: 1px;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .dot {
+      position: absolute; width: 14px; height: 14px; border-radius: 50%;
+      background: #5b8c9e; opacity: 0.7;
+      transform: translate(-50%, -50%);
+    }
+    .dot.highlight { background: #d4af37; opacity: 1; width: 18px; height: 18px; }
+    .trendline {
+      position: absolute; left: 30px; bottom: 80px;
+      width: 500px; height: 300px; overflow: visible;
+    }
+    .trendline svg { width: 100%; height: 100%; }
+    .region-label {
+      position: absolute; font-size: 10px; color: rgba(253,253,251,0.5);
+      transform: translate(-50%, 12px); white-space: nowrap;
+    }
+    .insight-box {
+      margin: 0 80px;
+      padding: 25px 30px;
+      background: rgba(91, 140, 158, 0.08);
+      border-left: 3px solid #5b8c9e;
+    }
+    .insight-text {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      color: #fdfdfb; font-style: italic; line-height: 1.4;
+    }
+    .study-detail {
+      margin-top: 12px; font-size: 12px; color: rgba(253,253,251,0.4);
+      letter-spacing: 1px;
+    }
+    .source {
+      position: absolute; bottom: 68px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      text-align: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px;
+      color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Research Finding</div>
+      <h1 class="headline">Italy Proves Culture Buffers Economic Shocks</h1>
+    </div>
+
+    <div class="chart-area">
+      <div class="chart-title">20 Italian Regions | Great Recession 2008-2012</div>
+      <div class="scatter-container">
+        <div class="axis-y"></div>
+        <div class="axis-x"></div>
+        <div class="axis-label-y">Employment Loss (%)</div>
+        <div class="axis-label-x">Cultural Market Activity Index</div>
+
+        <svg style="position:absolute;left:0;top:0;width:100%;height:calc(100% - 40px);overflow:visible;" viewBox="0 0 580 380">
+          <!-- Trendline -->
+          <line x1="40" y1="60" x2="540" y2="320" stroke="#d4af37" stroke-width="2" stroke-dasharray="8,4" opacity="0.6"/>
+          <!-- Grid lines -->
+          <line x1="40" y1="380" x2="40" y2="0" stroke="rgba(253,253,251,0.05)" stroke-width="1"/>
+          <line x1="165" y1="380" x2="165" y2="0" stroke="rgba(253,253,251,0.05)" stroke-width="1"/>
+          <line x1="290" y1="380" x2="290" y2="0" stroke="rgba(253,253,251,0.05)" stroke-width="1"/>
+          <line x1="415" y1="380" x2="415" y2="0" stroke="rgba(253,253,251,0.05)" stroke-width="1"/>
+          <line x1="540" y1="380" x2="540" y2="0" stroke="rgba(253,253,251,0.05)" stroke-width="1"/>
+          <!-- Dots: low cultural activity, high loss (top-left) -->
+          <circle cx="70" cy="55" r="8" fill="#c67557" opacity="0.7"/>
+          <circle cx="95" cy="75" r="8" fill="#c67557" opacity="0.7"/>
+          <circle cx="120" cy="90" r="8" fill="#c67557" opacity="0.6"/>
+          <circle cx="85" cy="105" r="8" fill="#c67557" opacity="0.6"/>
+          <circle cx="140" cy="110" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <!-- Mid range -->
+          <circle cx="190" cy="145" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="220" cy="170" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="250" cy="160" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="270" cy="195" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="300" cy="200" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="310" cy="220" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="340" cy="230" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <circle cx="360" cy="250" r="8" fill="#5b8c9e" opacity="0.6"/>
+          <!-- High cultural activity, low loss (bottom-right) -->
+          <circle cx="400" cy="260" r="8" fill="#d4af37" opacity="0.8"/>
+          <circle cx="430" cy="280" r="8" fill="#d4af37" opacity="0.8"/>
+          <circle cx="460" cy="290" r="8" fill="#d4af37" opacity="0.8"/>
+          <circle cx="480" cy="310" r="8" fill="#d4af37" opacity="0.8"/>
+          <circle cx="510" cy="305" r="8" fill="#d4af37" opacity="0.8"/>
+          <circle cx="520" cy="330" r="8" fill="#d4af37" opacity="0.8"/>
+          <circle cx="540" cy="340" r="10" fill="#d4af37" opacity="1"/>
+          <!-- Arrow annotation -->
+          <text x="420" y="355" fill="rgba(212,175,55,0.7)" font-size="11" font-family="Inter" letter-spacing="1">HIGH CULTURE</text>
+          <text x="50" y="40" fill="rgba(198,117,87,0.7)" font-size="11" font-family="Inter" letter-spacing="1">HIGH LOSS</text>
+          <!-- Negative correlation label -->
+          <text x="300" y="30" fill="rgba(253,253,251,0.3)" font-size="12" font-family="Inter" text-anchor="middle" letter-spacing="2">NEGATIVE CORRELATION</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-text">"More culture = less economic damage. This is data."</div>
+      <div class="study-detail">n = 20 REGIONS | PANEL DATA ANALYSIS | STATISTICALLY SIGNIFICANT</div>
+    </div>
+
+    <div class="source">Cellini &amp; Cuccia (2019) European Planning Studies</div>
+
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

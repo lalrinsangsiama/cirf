@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - Rwanda Kwita Izina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #1a1a1a; padding: 20px; }
+    .post { width: 1080px; height: 1080px; background: #0a0a0a; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; }
+    .content { position: relative; z-index: 10; padding: 60px 70px 0; height: 100%; display: flex; flex-direction: column; }
+    .label { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #a8b5a0; margin-bottom: 16px; }
+    .headline { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; line-height: 1.15; color: #fdfdfb; margin-bottom: 40px; }
+    .headline em { font-style: italic; color: #d4af37; }
+
+    .central { text-align: center; margin-bottom: 30px; }
+    .central .big-number { font-family: 'Playfair Display', serif; font-size: 100px; font-weight: 900; color: #d4af37; line-height: 1; }
+    .central .big-unit { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 400; color: rgba(212,175,55,0.6); }
+    .central .big-label { font-size: 14px; font-weight: 400; color: rgba(253,253,251,0.4); letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; }
+
+    .radial-facts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .fact { background: rgba(253,253,251,0.03); border: 1px solid rgba(253,253,251,0.06); padding: 24px 16px; text-align: center; position: relative; }
+    .fact::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 30px; height: 2px; background: #d4af37; }
+    .fact .fact-val { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: #fdfdfb; margin-bottom: 6px; }
+    .fact .fact-val .unit { font-size: 16px; color: rgba(253,253,251,0.5); }
+    .fact .fact-desc { font-size: 11px; font-weight: 400; color: rgba(253,253,251,0.4); letter-spacing: 1px; text-transform: uppercase; line-height: 1.4; }
+
+    .population-bar { margin-top: auto; margin-bottom: 20px; padding: 22px 30px; background: rgba(168,181,160,0.08); border-left: 3px solid #a8b5a0; }
+    .pop-label { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(253,253,251,0.3); margin-bottom: 12px; }
+    .pop-row { display: flex; align-items: center; gap: 20px; }
+    .pop-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; }
+    .pop-old { color: #c67557; }
+    .pop-arrow { font-size: 24px; color: #d4af37; }
+    .pop-new { color: #a8b5a0; }
+    .pop-desc { font-size: 13px; font-weight: 300; color: rgba(253,253,251,0.5); }
+
+    .source { font-size: 11px; color: rgba(124,124,124,0.6); text-align: center; position: absolute; bottom: 80px; left: 70px; right: 70px; }
+    .bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 70px; text-align: center; border-top: 1px solid #d4af37; }
+    .bottom-bar .logo { font-family: 'Playfair Display', serif; font-size: 20px; color: #fdfdfb; }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Conservation + Culture</div>
+      <h1 class="headline"><em>Kwita Izina</em>: A Naming Ceremony<br>Worth $620 Million</h1>
+
+      <div class="central">
+        <div class="big-number">$620<span class="big-unit">M</span></div>
+        <div class="big-label">Annual Tourism Revenue</div>
+      </div>
+
+      <div class="radial-facts">
+        <div class="fact">
+          <div class="fact-val">1.4<span class="unit">M</span></div>
+          <div class="fact-desc">Annual Visitors</div>
+        </div>
+        <div class="fact">
+          <div class="fact-val">$1,500</div>
+          <div class="fact-desc">Per Gorilla Permit</div>
+        </div>
+        <div class="fact">
+          <div class="fact-val">397</div>
+          <div class="fact-desc">Gorillas Named</div>
+        </div>
+        <div class="fact">
+          <div class="fact-val">1,200<span class="unit">+</span></div>
+          <div class="fact-desc">Community Projects</div>
+        </div>
+        <div class="fact">
+          <div class="fact-val">10%</div>
+          <div class="fact-desc">Revenue to Communities</div>
+        </div>
+        <div class="fact">
+          <div class="fact-val">20<span class="unit">+</span></div>
+          <div class="fact-desc">Years of Growth</div>
+        </div>
+      </div>
+
+      <div class="population-bar">
+        <div class="pop-label">Mountain Gorilla Population Recovery</div>
+        <div class="pop-row">
+          <div class="pop-num pop-old">480</div>
+          <div class="pop-arrow">&rarr;</div>
+          <div class="pop-num pop-new">1,063</div>
+          <div class="pop-desc">+121% population increase</div>
+        </div>
+      </div>
+    </div>
+    <div class="source">Source: Rwanda Development Board 2023; Environmental Law Institute 2025</div>
+    <div class="bottom-bar"><div class="logo">Cultural Innovation Lab</div></div>
+  </div>
+</body>
+</html>

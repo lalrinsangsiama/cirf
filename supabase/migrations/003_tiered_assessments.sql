@@ -60,14 +60,18 @@ CREATE TABLE IF NOT EXISTS public.assessment_unlocks (
 ALTER TABLE public.assessment_unlocks ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for assessment_unlocks
+-- Drop first in case migration 001 already created these
+DROP POLICY IF EXISTS "Users can view their own unlocks" ON public.assessment_unlocks;
 CREATE POLICY "Users can view their own unlocks"
   ON public.assessment_unlocks FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own unlocks" ON public.assessment_unlocks;
 CREATE POLICY "Users can insert their own unlocks"
   ON public.assessment_unlocks FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can manage unlocks" ON public.assessment_unlocks;
 CREATE POLICY "Service role can manage unlocks"
   ON public.assessment_unlocks FOR ALL
   USING (true)
@@ -95,14 +99,18 @@ CREATE TABLE IF NOT EXISTS public.tool_access (
 ALTER TABLE public.tool_access ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for tool_access
+-- Drop first in case migration 001 already created these
+DROP POLICY IF EXISTS "Users can view their own tool access" ON public.tool_access;
 CREATE POLICY "Users can view their own tool access"
   ON public.tool_access FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own tool access" ON public.tool_access;
 CREATE POLICY "Users can insert their own tool access"
   ON public.tool_access FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can manage tool access" ON public.tool_access;
 CREATE POLICY "Service role can manage tool access"
   ON public.tool_access FOR ALL
   USING (true)
@@ -133,10 +141,13 @@ CREATE TABLE IF NOT EXISTS public.email_logs (
 ALTER TABLE public.email_logs ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for email_logs
+-- Drop first in case migration 001 already created these
+DROP POLICY IF EXISTS "Users can view their own email logs" ON public.email_logs;
 CREATE POLICY "Users can view their own email logs"
   ON public.email_logs FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can manage email logs" ON public.email_logs;
 CREATE POLICY "Service role can manage email logs"
   ON public.email_logs FOR ALL
   USING (true)

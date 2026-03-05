@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
             <span className="hero-line"><span>Privacy Policy</span></span>
           </h1>
           <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-            Last updated: January 30, 2025
+            Last updated: 1 March 2026
           </p>
         </div>
       </section>
@@ -33,10 +33,13 @@ export default function PrivacyPolicyPage() {
             <div className="mb-12">
               <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">Introduction</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
-                The Cultural Innovation Lab (&quot;CIL,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website cil-framework.org and use our services.
+                The Cultural Innovation Lab (&quot;CIL,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website culturalinnovationlab.org and use our services.
               </p>
-              <p className="text-lg leading-relaxed text-stone">
+              <p className="text-lg leading-relaxed text-stone mb-4">
                 Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
+              </p>
+              <p className="text-lg leading-relaxed text-stone bg-pearl p-4 rounded-lg border-l-4 border-gold">
+                CIL is an ongoing academic research project. All assessments, tools, frameworks, results, and content on this platform are provided strictly for informational and educational purposes. They do not constitute professional, financial, legal, or strategic advice. The research is experimental and subject to change. You should not rely on any output from this platform as a basis for making decisions without seeking independent professional advice. The Cultural Innovation Lab and its operators accept no liability for any harm, loss, damage, or adverse outcome arising from the use of this platform or reliance on its content.
               </p>
             </div>
 
@@ -49,7 +52,7 @@ export default function PrivacyPolicyPage() {
               <div className="bg-pearl p-6 rounded-lg mt-4">
                 <p className="text-stone">
                   Cultural Innovation Lab<br />
-                  Email: contact@cil-framework.org
+                  Email: hello@culturalinnovationlab.org
                 </p>
               </div>
             </div>
@@ -64,7 +67,6 @@ export default function PrivacyPolicyPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2 text-stone mb-6">
                 <li>Create an account (name, email address, password)</li>
-                <li>Purchase credits (payment information processed by Razorpay)</li>
                 <li>Complete assessments (assessment responses and results)</li>
                 <li>Subscribe to our newsletter (name, email address)</li>
                 <li>Contact us through our contact form (name, email, message content)</li>
@@ -82,10 +84,6 @@ export default function PrivacyPolicyPage() {
                 <li>IP address (anonymized for analytics)</li>
               </ul>
 
-              <h3 className="font-medium text-xl mb-3 mt-6">Payment Data</h3>
-              <p className="text-lg leading-relaxed text-stone">
-                When you purchase credits, your payment is processed by Razorpay. We do not store your complete credit card details on our servers. We receive from Razorpay: transaction ID, payment status, amount, and the last four digits of your card (for reference purposes only).
-              </p>
             </div>
 
             {/* How We Use Your Data */}
@@ -114,12 +112,6 @@ export default function PrivacyPolicyPage() {
               </p>
 
               <div className="space-y-4">
-                <div className="bg-pearl p-6 rounded-lg">
-                  <h4 className="font-medium mb-2">Razorpay (Payment Processing)</h4>
-                  <p className="text-stone text-sm">
-                    Processes payments securely. Their privacy policy: <a href="https://razorpay.com/privacy/" target="_blank" rel="noopener noreferrer" className="text-ocean hover:underline">razorpay.com/privacy</a>
-                  </p>
-                </div>
                 <div className="bg-pearl p-6 rounded-lg">
                   <h4 className="font-medium mb-2">Supabase (Database & Authentication)</h4>
                   <p className="text-stone text-sm">
@@ -170,7 +162,7 @@ export default function PrivacyPolicyPage() {
                 <li><strong>Withdraw consent:</strong> Where processing is based on consent</li>
               </ul>
               <p className="text-lg leading-relaxed text-stone mt-4">
-                To exercise any of these rights, please contact us at <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a>.
+                To exercise any of these rights, please contact us at <a href="mailto:hello@culturalinnovationlab.org" className="text-ocean hover:underline">hello@culturalinnovationlab.org</a>.
               </p>
             </div>
 
@@ -232,7 +224,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="bg-pearl p-6 rounded-lg">
                 <p className="text-stone">
-                  Email: <a href="mailto:contact@cil-framework.org" className="text-ocean hover:underline">contact@cil-framework.org</a><br />
+                  Email: <a href="mailto:hello@culturalinnovationlab.org" className="text-ocean hover:underline">hello@culturalinnovationlab.org</a><br />
                   Website: <Link href="/about#contact" className="text-ocean hover:underline">Contact Form</Link>
                 </p>
               </div>

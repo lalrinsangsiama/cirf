@@ -12,7 +12,6 @@ afterEach(() => {
 // Mock environment variables
 process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
 process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJtest'
-process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID = 'rzp_test_123'
 
 // MSW handlers for API mocking
 export const handlers = [

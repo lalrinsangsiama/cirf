@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { useToast } from '@/components/ui/ToastProvider'
 import { createClient } from '@/lib/supabase/client'
+import { logger } from '@/lib/logger'
 import {
   ArrowRight,
   ArrowLeft,
@@ -63,9 +64,10 @@ import {
 } from '@/lib/assessment/scoring'
 import type { ConstructId } from '@/lib/recommendations/types'
 import { extractProfileDataFromAnswers, INDIAN_STATES } from '@/lib/data/assessmentQuestions'
-import { handleAssessmentCompletion } from '@/lib/services/assessmentUnlockService'
 import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import UnlockCelebration from './UnlockCelebration'
+import AssessmentIntroScreen from './AssessmentIntroScreen'
+import { trackAssessmentStarted, trackAssessmentCompleted } from '@/lib/analytics/posthog'
 
 type Step = 'overview' | LikertSection | 'results'
 
@@ -104,6 +106,7 @@ export function CILAssessmentTool() {
   const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [hasDraft, setHasDraft] = useState(false)
   const [draftLoaded, setDraftLoaded] = useState(false)
+  const [hasExistingSubmission, setHasExistingSubmission] = useState(false)
   const [personalizedRecommendations, setPersonalizedRecommendations] = useState<PersonalizedRecommendation[]>([])
   const [profileSummary, setProfileSummary] = useState<string>('')
   const [thisWeekActions, setThisWeekActions] = useState<Array<{ area: string; action: string }>>([])
@@ -127,7 +130,7 @@ export function CILAssessmentTool() {
           setSavedResults(parsed.history)
         }
       } catch {
-        console.error('Failed to load saved progress')
+        logger.error('Failed to load saved progress')
         toastWarning('Could not load your saved progress.')
       }
     }
@@ -143,10 +146,52 @@ export function CILAssessmentTool() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   }, [answers, savedResults])
 
+  // Check for existing submission (1 response per person)
+  useEffect(() => {
+    const checkExisting = async () => {
+      if (!user) return
+
+      const { data: existing } = await supabase
+        .from('assessments')
+        .select('id, score, interpretation, answers, created_at')
+        .eq('user_id', user.id)
+        .eq('assessment_type', 'cil')
+        .maybeSingle()
+
+      if (existing) {
+        setHasExistingSubmission(true)
+        setAssessmentId(existing.id)
+        setHasUsedCredit(true)
+        // Recalculate results from saved answers for display
+        const result = calculateAssessmentResult(existing.answers, questionConfig)
+        setAssessmentResult(result)
+        setAnswers(existing.answers)
+        setCurrentStep('results')
+
+        // Generate personalized recommendations from saved data
+        const demographics = extractDemographics(existing.answers)
+        const allConstructScores: Record<string, number> = {}
+        result.sectionScores.forEach(s => {
+          Object.entries(s.constructScores).forEach(([k, v]) => {
+            allConstructScores[k] = v
+          })
+        })
+        const personalized = generatePersonalizedRecommendations(allConstructScores, demographics)
+        setPersonalizedRecommendations(personalized)
+        setProfileSummary(generateProfileSummary(demographics))
+        setThisWeekActions(getThisWeekActions(personalized))
+        setQuickWins(getQuickWins(personalized))
+        setIndustryTips(getIndustryTips(demographics.industry))
+      }
+    }
+
+    checkExisting()
+  }, [user])
+
   // Load draft from server on mount (if user is logged in)
   useEffect(() => {
     const loadDraft = async () => {
-      if (!user || draftLoaded) return
+      if (!user || draftLoaded || hasExistingSubmission) return
 
       try {
         const response = await fetch('/api/assessments/draft?type=cil')
@@ -167,7 +212,7 @@ export function CILAssessmentTool() {
           lastSavedAnswersRef.current = JSON.stringify(draft.answers)
         }
       } catch (error) {
-        console.error('Failed to load draft:', error)
+        logger.error('Failed to load draft', {}, error instanceof Error ? error : undefined)
         toastWarning('Could not restore your draft.')
       }
       setDraftLoaded(true)
@@ -206,7 +251,7 @@ export function CILAssessmentTool() {
         setAutoSaveStatus('error')
       }
     } catch (error) {
-      console.error('Auto-save failed:', error)
+      logger.error('Auto-save failed', {}, error instanceof Error ? error : undefined)
       setAutoSaveStatus('error')
     }
   }, [user])
@@ -243,7 +288,7 @@ export function CILAssessmentTool() {
       })
       setHasDraft(false)
     } catch (error) {
-      console.error('Failed to delete draft:', error)
+      logger.error('Failed to delete draft', {}, error instanceof Error ? error : undefined)
     }
   }, [user, hasDraft])
 
@@ -363,9 +408,10 @@ export function CILAssessmentTool() {
 
       // Show results immediately
       setCurrentStep('results')
+      trackAssessmentCompleted(result.overallScore, result.interpretation.level, user?.id)
 
-      // Save to server in background if logged in
-      if (user && !hasUsedCredit) {
+      // Save to server in background if logged in (skip if already submitted)
+      if (user && !hasUsedCredit && !hasExistingSubmission) {
         const cilConfig = ASSESSMENT_CONFIGS.cil
         const requiresCredit = cilConfig.creditCost > 0
         if (requiresCredit && (!profile || profile.credits <= 0)) {
@@ -398,7 +444,7 @@ export function CILAssessmentTool() {
                 setShowUnlockCelebration(true)
               }
             } else {
-              console.error('Failed to save assessment:', apiResult.error?.message || apiResult.message)
+              logger.error('Failed to save assessment', { error: apiResult.error?.message || apiResult.message })
             }
 
             // Save profile data from demographics
@@ -419,7 +465,7 @@ export function CILAssessmentTool() {
             await deleteDraft()
             toastSuccess('Your results have been saved')
           } catch (error) {
-            console.error('Error saving assessment to server:', error)
+            logger.error('Error saving assessment to server', {}, error instanceof Error ? error : undefined)
           }
         })()
       }
@@ -442,6 +488,7 @@ export function CILAssessmentTool() {
   }
 
   const handleReset = () => {
+    if (hasExistingSubmission) return // Cannot reset a completed assessment
     setAnswers({})
     setCurrentStep('overview')
     setHasUsedCredit(false)
@@ -477,7 +524,7 @@ export function CILAssessmentTool() {
         toastError(errorMsg)
       }
     } catch (error) {
-      console.error('Error sending email:', error)
+      logger.error('Error sending email', {}, error instanceof Error ? error : undefined)
       toastError('Failed to send results email. Please try again.')
     }
     setSendingEmail(false)
@@ -609,7 +656,7 @@ https://cil.org/tools
               </div>
             )}
             {user && profile && (
-              <div className="flex items-center gap-2 text-pearl/70 text-sm">
+              <div className="hidden sm:flex items-center gap-2 text-pearl/70 text-sm">
                 <CreditCard className="w-4 h-4" />
                 {profile.credits} credits
               </div>
@@ -689,88 +736,18 @@ https://cil.org/tools
 
         {/* Overview Step */}
         {currentStep === 'overview' && (
-          <div className="space-y-6">
-            <h3 className="font-serif text-2xl">CIL Assessment</h3>
-            <p className="text-stone leading-relaxed mb-4">
-              <strong>For Cultural Entrepreneurs:</strong> This survey is part of research examining how cultural
-              innovation can build economic resilience while maintaining community sovereignty. Your insights
-              will help develop practical tools for cultural entrepreneurs.
-            </p>
-            <p className="text-stone leading-relaxed">
-              Based on the CI-ER (Cultural Innovation → Economic Resilience) framework, your results will
-              provide actionable insights for strengthening your cultural innovation capacity.
-            </p>
-            <div className="flex flex-wrap gap-4 text-sm text-stone mt-4">
-              <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                Time Required: 3-7 minutes
-              </span>
-              <span className="flex items-center gap-2">
-                <Lock className="w-4 h-4" />
-                Confidentiality: Your responses will be anonymized
-              </span>
-            </div>
-
-            {/* Resume Draft Notice */}
-            {user && hasDraft && (
-              <div className="p-4 rounded-lg border border-ocean/30 bg-ocean/10">
-                <div className="flex items-start gap-3">
-                  <Save className="w-5 h-5 text-ocean flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium mb-1">You have saved progress</h4>
-                    <p className="text-sm text-stone">
-                      Your previous answers have been saved. Click &quot;Start Assessment&quot; to continue where you left off.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Auth Status Card */}
-            {!authLoading && (
-              <div className={cn(
-                'p-4 rounded-lg border',
-                user ? 'bg-sage/10 border-sage/30' : 'bg-sand border-stone/20'
-              )}>
-                {user ? (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-sage" />
-                      <div>
-                        <p className="font-medium text-ink">Signed in as {profile?.full_name || user.email}</p>
-                        <p className="text-sm text-stone">
-                          {profile?.credits || 0} assessment credits available
-                        </p>
-                      </div>
-                    </div>
-                    {profile && profile.credits === 0 && (
-                      <Link
-                        href="/pricing"
-                        className="text-sm text-gold font-medium hover:underline"
-                      >
-                        Buy credits
-                      </Link>
-                    )}
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-ink">Get 1 free assessment</p>
-                      <p className="text-sm text-stone">Sign up to save your results and track progress</p>
-                    </div>
-                    <Link
-                      href="/auth/signup?redirectTo=/tools"
-                      className="inline-flex items-center gap-2 bg-ink text-pearl px-4 py-2 rounded-full text-sm font-medium hover:bg-ink/90 transition-colors"
-                    >
-                      Sign up free
-                    </Link>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Assessment Structure */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <AssessmentIntroScreen
+            config={ASSESSMENT_CONFIGS.cil}
+            user={user}
+            profileName={profile?.full_name}
+            credits={profile?.credits || 0}
+            authLoading={authLoading}
+            hasDraft={!!(user && hasDraft)}
+            hasExistingSubmission={hasExistingSubmission}
+            onStart={() => { trackAssessmentStarted(user?.id); setCurrentStep(SECTION_ORDER[0]) }}
+          >
+            {/* CIL-specific section grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {SECTION_ORDER.map((section, i) => (
                 <div key={section} className="bg-sand/50 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
@@ -809,21 +786,7 @@ https://cil.org/tools
                 </div>
               </div>
             </div>
-
-            {savedResults.length > 0 && (
-              <div className="bg-sand/50 p-6 rounded-lg">
-                <h4 className="font-medium mb-3">Previous Assessments</h4>
-                <div className="space-y-2">
-                  {savedResults.slice(-3).map((result, i) => (
-                    <div key={i} className="flex justify-between text-sm">
-                      <span className="text-stone">{new Date(result.date).toLocaleDateString()}</span>
-                      <span className="font-medium">{result.score}/100</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          </AssessmentIntroScreen>
         )}
 
         {/* Section Questions */}
@@ -953,6 +916,45 @@ https://cil.org/tools
         {/* Results Step */}
         {currentStep === 'results' && assessmentResult && (
           <div className="space-y-8">
+            {/* Already completed notice */}
+            {hasExistingSubmission && (
+              <div className="p-4 rounded-lg border border-gold/30 bg-gold/10">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-medium mb-1">Assessment Already Completed</h4>
+                    <p className="text-sm text-stone">
+                      You have already completed this assessment. Each assessment can only be taken once. Below are your saved results.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* Thank You Banner */}
+            {!hasExistingSubmission && (
+              <div className="bg-sage/10 border border-sage/30 p-6 rounded-lg text-center">
+                <h3 className="font-serif text-xl mb-2">Thank you for completing the CIL Assessment!</h3>
+                <p className="text-sm text-stone mb-4">
+                  Your responses contribute to research on cultural innovation and economic resilience.
+                </p>
+                <button
+                  onClick={() => {
+                    const text = `I just completed the CIL Assessment on Cultural Innovation Lab! Discover your cultural innovation potential: ${window.location.origin}/tools`
+                    if (navigator.share) {
+                      navigator.share({ title: 'CIL Assessment', text }).catch(() => {})
+                    } else {
+                      navigator.clipboard.writeText(text)
+                      toastSuccess('Link copied to clipboard!')
+                    }
+                  }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-sage text-white rounded-full text-sm hover:bg-sage/90 transition-colors"
+                >
+                  <Share2 className="w-4 h-4" />
+                  Share with a friend
+                </button>
+              </div>
+            )}
+
             {/* Score Summary */}
             <div className="text-center p-8 bg-gradient-to-br from-sand to-pearl rounded-lg">
               <p className="text-sm uppercase tracking-[0.2em] text-stone mb-2">
@@ -1024,11 +1026,11 @@ https://cil.org/tools
                   .filter(s => s.section !== 'demographics')
                   .map(section => (
                     <div key={section.section}>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium">
+                      <div className="flex justify-between gap-2 mb-1">
+                        <span className="text-sm font-medium truncate">
                           {SECTION_META[section.section].label}
                         </span>
-                        <span className="text-sm text-stone">{section.score}%</span>
+                        <span className="text-sm text-stone flex-shrink-0">{section.score}%</span>
                       </div>
                       <div className="h-2 bg-ink/10 rounded-full overflow-hidden">
                         <div

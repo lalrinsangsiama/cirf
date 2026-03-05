@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 26 - Culture + Diversity = Resilience</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.03;
+      background-image:
+        radial-gradient(circle at 20% 30%, #d4af37 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, #d4af37 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 70px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 30px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #fdfdfb;
+      margin-bottom: 20px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #d4af37;
+    }
+
+    .subtext {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #7c7c7c;
+      max-width: 650px;
+      margin-bottom: 50px;
+    }
+
+    .equation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 0;
+      flex: 1;
+    }
+
+    .eq-term {
+      text-align: center;
+    }
+
+    .eq-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+    }
+
+    .eq-term:nth-child(1) .eq-icon {
+      border: 2px solid #d4af37;
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .eq-term:nth-child(3) .eq-icon {
+      border: 2px solid #5b8c9e;
+      background: rgba(91, 140, 158, 0.08);
+    }
+
+    .eq-term:nth-child(5) .eq-icon {
+      border: 2px solid #a8b5a0;
+      background: rgba(168, 181, 160, 0.08);
+    }
+
+    .eq-icon-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .eq-term:nth-child(1) .eq-icon-text { color: #d4af37; }
+    .eq-term:nth-child(3) .eq-icon-text { color: #5b8c9e; }
+    .eq-term:nth-child(5) .eq-icon-text { color: #a8b5a0; }
+
+    .eq-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fdfdfb;
+      margin-bottom: 4px;
+    }
+
+    .eq-sublabel {
+      font-size: 12px;
+      font-weight: 300;
+      color: #7c7c7c;
+    }
+
+    .eq-operator {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(253, 253, 251, 0.3);
+      padding-bottom: 30px;
+    }
+
+    .finding-bar {
+      padding: 25px 30px;
+      background: rgba(168, 181, 160, 0.06);
+      border: 1px solid rgba(168, 181, 160, 0.15);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .finding-text {
+      font-size: 16px;
+      font-weight: 400;
+      color: #fdfdfb;
+      line-height: 1.5;
+    }
+
+    .finding-text strong {
+      color: #a8b5a0;
+      font-weight: 600;
+    }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.6);
+      line-height: 1.5;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding-top: 15px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="pattern"></div>
+
+    <div class="content">
+      <div class="label">Research Insight</div>
+      <h1 class="headline">Open culture breeds<br><em>entrepreneurial</em> resilience</h1>
+      <p class="subtext">Regions with open, diverse local cultures are significantly more likely to foster entrepreneurial renewal and economic recovery.</p>
+
+      <div class="equation">
+        <div class="eq-term">
+          <div class="eq-icon">
+            <div class="eq-icon-text">C</div>
+          </div>
+          <div class="eq-label">Open Culture</div>
+          <div class="eq-sublabel">Diverse values</div>
+        </div>
+
+        <div class="eq-operator">+</div>
+
+        <div class="eq-term">
+          <div class="eq-icon">
+            <div class="eq-icon-text">T</div>
+          </div>
+          <div class="eq-label">Tolerance</div>
+          <div class="eq-sublabel">Social openness</div>
+        </div>
+
+        <div class="eq-operator">=</div>
+
+        <div class="eq-term">
+          <div class="eq-icon">
+            <div class="eq-icon-text">R</div>
+          </div>
+          <div class="eq-label">Resilience</div>
+          <div class="eq-sublabel">Economic recovery</div>
+        </div>
+      </div>
+
+      <div class="finding-bar">
+        <div class="finding-text">Policy intervention is <strong>best targeted at the education system</strong>, where the tolerance and skill sets underpinning resilience can be most effectively developed.</div>
+      </div>
+    </div>
+
+    <div class="source">Source: Huggins, R. & Thompson, P. (2015). "Local entrepreneurial resilience and culture: the role of social values in fostering economic recovery." British localities, 2004-2011.</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -2,9 +2,10 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { validateInput, sanitizeString } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
+import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 
 /**
  * Profile update schema with validation rules
@@ -90,6 +91,11 @@ export async function GET() {
  */
 export async function PATCH(request: NextRequest) {
   try {
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return rateLimitErrorResponse(rateLimitResult.resetTime, apiRateLimit.message)
+    }
+
     const supabase = await createClient()
 
     // Check authentication

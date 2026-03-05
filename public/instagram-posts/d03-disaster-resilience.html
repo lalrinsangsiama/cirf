@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - Culture Is Infrastructure for Surviving Crisis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .label {
+      font-size: 13px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 15px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 40px;
+      font-weight: 400; color: #fdfdfb; line-height: 1.15;
+    }
+    .chart-section {
+      padding: 35px 80px 15px;
+    }
+    .chart-title {
+      font-size: 13px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: #5b8c9e; margin-bottom: 25px;
+    }
+    .trajectory-container {
+      position: relative; height: 280px; margin-bottom: 25px;
+    }
+    .trajectory-container svg {
+      width: 100%; height: 100%;
+    }
+    .cases-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 15px; padding: 0 80px 20px;
+    }
+    .case-card {
+      padding: 20px 18px;
+      background: rgba(245, 240, 232, 0.03);
+      border-top: 3px solid;
+      text-align: center;
+    }
+    .case-card:nth-child(1) { border-color: #c67557; }
+    .case-card:nth-child(2) { border-color: #5b8c9e; }
+    .case-card:nth-child(3) { border-color: #d4af37; }
+    .case-card:nth-child(4) { border-color: #a8b5a0; }
+    .case-event {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(253,253,251,0.4);
+      margin-bottom: 8px;
+    }
+    .case-place {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      color: #fdfdfb; margin-bottom: 6px;
+    }
+    .case-year {
+      font-size: 13px; color: rgba(253,253,251,0.35);
+    }
+    .stat-bar {
+      margin: 0 80px;
+      padding: 22px 30px;
+      background: rgba(91, 140, 158, 0.08);
+      border-left: 3px solid #5b8c9e;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif; font-size: 48px;
+      font-weight: 700; color: #5b8c9e; line-height: 1;
+    }
+    .stat-label {
+      font-size: 15px; color: #fdfdfb; line-height: 1.4; font-weight: 300;
+    }
+    .stat-label strong { color: #d4af37; font-weight: 600; }
+    .source {
+      position: absolute; bottom: 68px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      text-align: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px;
+      color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Emerging Evidence</div>
+      <h1 class="headline">Culture Is Infrastructure for Surviving Crisis</h1>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Recovery Trajectories: Cultural Infrastructure Impact</div>
+      <div class="trajectory-container">
+        <svg viewBox="0 0 920 280" fill="none">
+          <!-- Grid -->
+          <line x1="80" y1="20" x2="80" y2="240" stroke="rgba(253,253,251,0.08)"/>
+          <line x1="80" y1="240" x2="880" y2="240" stroke="rgba(253,253,251,0.15)"/>
+          <line x1="80" y1="130" x2="880" y2="130" stroke="rgba(253,253,251,0.05)"/>
+          <line x1="80" y1="60" x2="880" y2="60" stroke="rgba(253,253,251,0.05)"/>
+          <!-- Crisis point -->
+          <line x1="250" y1="20" x2="250" y2="240" stroke="rgba(198,117,87,0.3)" stroke-dasharray="4,4"/>
+          <text x="250" y="15" fill="rgba(198,117,87,0.6)" font-size="11" font-family="Inter" text-anchor="middle" letter-spacing="2">CRISIS</text>
+          <!-- Labels -->
+          <text x="30" y="65" fill="rgba(253,253,251,0.3)" font-size="10" font-family="Inter">100%</text>
+          <text x="30" y="135" fill="rgba(253,253,251,0.3)" font-size="10" font-family="Inter">50%</text>
+          <text x="30" y="245" fill="rgba(253,253,251,0.3)" font-size="10" font-family="Inter">0%</text>
+          <text x="480" y="268" fill="rgba(253,253,251,0.3)" font-size="10" font-family="Inter" text-anchor="middle" letter-spacing="2">TIME</text>
+          <!-- Strong cultural infrastructure (faster recovery) -->
+          <path d="M100,70 L200,68 L250,210 L380,140 L500,100 L650,75 L800,65 L860,60" stroke="#d4af37" stroke-width="3" fill="none"/>
+          <circle cx="860" cy="60" r="5" fill="#d4af37"/>
+          <!-- Weak cultural infrastructure (slower recovery) -->
+          <path d="M100,75 L200,73 L250,220 L380,200 L500,185 L650,170 L800,155 L860,145" stroke="rgba(253,253,251,0.25)" stroke-width="2" stroke-dasharray="6,4" fill="none"/>
+          <circle cx="860" cy="145" r="4" fill="rgba(253,253,251,0.25)"/>
+          <!-- Gap annotation -->
+          <line x1="830" y1="65" x2="830" y2="145" stroke="rgba(91,140,158,0.5)" stroke-width="1"/>
+          <text x="845" y="108" fill="#5b8c9e" font-size="12" font-family="Inter" font-weight="600">30-40%</text>
+          <text x="845" y="122" fill="#5b8c9e" font-size="10" font-family="Inter">faster</text>
+          <!-- Legend -->
+          <line x1="500" y1="25" x2="530" y2="25" stroke="#d4af37" stroke-width="3"/>
+          <text x="538" y="29" fill="rgba(253,253,251,0.6)" font-size="11" font-family="Inter">Strong cultural infrastructure</text>
+          <line x1="500" y1="45" x2="530" y2="45" stroke="rgba(253,253,251,0.25)" stroke-width="2" stroke-dasharray="6,4"/>
+          <text x="538" y="49" fill="rgba(253,253,251,0.35)" font-size="11" font-family="Inter">Weak cultural infrastructure</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-event">Tsunami</div>
+        <div class="case-place">Aceh</div>
+        <div class="case-year">2004</div>
+      </div>
+      <div class="case-card">
+        <div class="case-event">Earthquake</div>
+        <div class="case-place">Nepal</div>
+        <div class="case-year">2015</div>
+      </div>
+      <div class="case-card">
+        <div class="case-event">Hurricane</div>
+        <div class="case-place">Puerto Rico</div>
+        <div class="case-year">2017</div>
+      </div>
+      <div class="case-card">
+        <div class="case-event">Tsunami</div>
+        <div class="case-place">Japan</div>
+        <div class="case-year">2011</div>
+      </div>
+    </div>
+
+    <div class="stat-bar">
+      <div class="stat-number">30-40%</div>
+      <div class="stat-label">Estimated <strong>faster recovery</strong> in communities with strong cultural infrastructure and social cohesion networks</div>
+    </div>
+
+    <div class="source">Musialik et al. (2025); UNESCO 2016; Aldrich (2012)</div>
+
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

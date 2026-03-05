@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - The Hidden Economy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .gold-glow {
+      position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 70px 80px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 40px;
+    }
+    .big-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 140px; font-weight: 900; color: #fdfdfb;
+      line-height: 1; margin-bottom: 5px;
+    }
+    .big-unit {
+      font-family: 'Playfair Display', serif;
+      font-size: 60px; font-weight: 700; color: #d4af37;
+      margin-bottom: 10px;
+    }
+    .big-desc {
+      font-size: 20px; font-weight: 300; color: #7c7c7c; margin-bottom: 50px;
+    }
+    .divider {
+      width: 120px; height: 2px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      margin-bottom: 50px;
+    }
+    .callouts {
+      display: flex; gap: 60px;
+    }
+    .callout {
+      text-align: center; max-width: 300px;
+    }
+    .callout-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 700; color: #fdfdfb; line-height: 1.1;
+    }
+    .callout-value span { color: #d4af37; }
+    .callout-label {
+      font-size: 13px; font-weight: 400; color: #7c7c7c;
+      margin-top: 10px; line-height: 1.5; letter-spacing: 0.5px;
+    }
+    .callout-divider {
+      width: 1px; height: 80px; background: rgba(212,175,55,0.2);
+      align-self: center;
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="gold-glow"></div>
+    <div class="content">
+      <div class="label">The Hidden Economy</div>
+      <div class="big-number">300</div>
+      <div class="big-unit">Million Artisans</div>
+      <div class="big-desc">The world's most overlooked workforce</div>
+
+      <div class="divider"></div>
+
+      <div class="callouts">
+        <div class="callout">
+          <div class="callout-value">$985<span>B</span></div>
+          <div class="callout-label">Estimated global value<br>of the artisan economy</div>
+        </div>
+        <div class="callout-divider"></div>
+        <div class="callout">
+          <div class="callout-value">2<span>nd</span></div>
+          <div class="callout-label">Largest employer after agriculture<br>in developing nations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Callanan et al. (2020), McKinsey; Global Solutions Initiative 2021</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

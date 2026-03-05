@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post F07 - Measuring Cultural ROI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 30px;
+    }
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37;
+      margin-bottom: 18px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px; font-weight: 700; color: #fdfdfb; line-height: 1.15;
+    }
+    .headline em { color: #d4af37; font-style: normal; }
+    .table-section {
+      padding: 25px 60px;
+    }
+    .table {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .column {
+      border-radius: 8px; overflow: hidden;
+    }
+    .col-header {
+      padding: 18px 20px; text-align: center;
+    }
+    .col-header-1 { background: rgba(212,175,55,0.15); }
+    .col-header-2 { background: rgba(91,140,158,0.15); }
+    .col-header-3 { background: rgba(198,117,87,0.15); }
+    .col-icon {
+      font-size: 28px; margin-bottom: 6px;
+    }
+    .col-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+    }
+    .col-header-1 .col-title { color: #d4af37; }
+    .col-header-2 .col-title { color: #5b8c9e; }
+    .col-header-3 .col-title { color: #c67557; }
+    .col-items {
+      padding: 12px 0; display: flex; flex-direction: column; gap: 6px;
+    }
+    .col-item {
+      padding: 12px 20px;
+      background: rgba(245,240,232,0.03);
+      font-size: 13px; color: #fdfdfb; font-weight: 400;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .col-item::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .col-header-1 + .col-items .col-item::before { background: #d4af37; }
+    .col-header-2 + .col-items .col-item::before { background: #5b8c9e; }
+    .col-header-3 + .col-items .col-item::before { background: #c67557; }
+    .closing {
+      padding: 25px 80px 0; text-align: center;
+      font-size: 16px; font-weight: 600; color: #fdfdfb;
+      font-style: italic;
+    }
+    .closing em { color: #d4af37; font-style: normal; }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Measurement Framework</div>
+      <h1 class="headline">Measuring Cultural ROI:<br><em>What to Track</em></h1>
+    </div>
+    <div class="table-section">
+      <div class="table">
+        <div class="column">
+          <div class="col-header col-header-1">
+            <div class="col-title">Economic</div>
+          </div>
+          <div class="col-items">
+            <div class="col-item">GDP contribution</div>
+            <div class="col-item">Employment created</div>
+            <div class="col-item">Export revenue</div>
+            <div class="col-item">Tourism revenue</div>
+            <div class="col-item">IP income</div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="col-header col-header-2">
+            <div class="col-title">Social</div>
+          </div>
+          <div class="col-items">
+            <div class="col-item">Cultural participation</div>
+            <div class="col-item">Language vitality</div>
+            <div class="col-item">Youth engagement</div>
+            <div class="col-item">Community ownership %</div>
+            <div class="col-item">Social cohesion index</div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="col-header col-header-3">
+            <div class="col-title">Resilience</div>
+          </div>
+          <div class="col-items">
+            <div class="col-item">Income diversification</div>
+            <div class="col-item">Sector dependency ratio</div>
+            <div class="col-item">TEK documentation</div>
+            <div class="col-item">Recovery speed</div>
+            <div class="col-item">Adaptive capacity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="closing">"If you can't <em>measure</em> it, you can't <em>defend</em> it."</div>
+    <div class="source">UNESCO UIS 2019; UK DCMS 2023; CIL 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

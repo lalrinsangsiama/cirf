@@ -6,15 +6,16 @@ import crypto from 'crypto'
 const CSRF_TOKEN_NAME = 'csrf_token'
 const CSRF_HEADER_NAME = 'x-csrf-token'
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000 // 24 hours
-const SECRET_KEY = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || 'dev-only-csrf-secret'
-
-if (!process.env.CSRF_SECRET && !process.env.NEXTAUTH_SECRET) {
+function getCsrfSecret(): string {
+  const secret = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET
+  if (secret) return secret
   if (process.env.NODE_ENV === 'production') {
-    console.error('[SECURITY] CSRF_SECRET is not set in production. CSRF protection is using an insecure fallback. Set CSRF_SECRET in your environment variables immediately.')
-  } else {
-    console.warn('[SECURITY] CSRF_SECRET not set — using dev-only fallback. Set CSRF_SECRET before deploying.')
+    throw new Error('[SECURITY] CSRF_SECRET or NEXTAUTH_SECRET must be set in production')
   }
+  return 'dev-only-csrf-secret'
 }
+
+const SECRET_KEY = getCsrfSecret()
 
 /**
  * Routes that are exempt from CSRF validation
@@ -23,9 +24,9 @@ if (!process.env.CSRF_SECRET && !process.env.NEXTAUTH_SECRET) {
  * - Health check is read-only
  */
 const CSRF_EXEMPT_ROUTES = [
-  '/api/razorpay/webhook',
   '/auth/callback',
   '/api/health',
+  '/api/blog/seed', // Uses Bearer token authentication
 ]
 
 /**
@@ -157,7 +158,7 @@ export async function middleware(request: NextRequest) {
   if (!tokenValid) {
     const newToken = generateCsrfToken()
     response.cookies.set(CSRF_TOKEN_NAME, newToken, {
-      httpOnly: false, // Must be readable by JavaScript
+      httpOnly: false, // Double-submit cookie pattern: JS reads cookie to send as X-CSRF-TOKEN header
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',

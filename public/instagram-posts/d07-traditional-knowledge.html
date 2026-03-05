@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - 22% of Earth's Land. 80% of Its Biodiversity.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .label {
+      font-size: 13px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 15px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 38px;
+      font-weight: 400; color: #fdfdfb; line-height: 1.15;
+    }
+    .globe-section {
+      padding: 40px 80px 20px;
+      display: flex; justify-content: center;
+    }
+    .globe-container {
+      position: relative; width: 500px; height: 400px;
+    }
+    .globe-svg {
+      width: 100%; height: 100%;
+    }
+    .stats-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+    }
+    .stat-pair {
+      display: flex; gap: 80px; margin-bottom: 20px;
+    }
+    .globe-stat {
+      text-align: center;
+    }
+    .globe-stat-number {
+      font-family: 'Playfair Display', serif; font-size: 80px;
+      font-weight: 700; line-height: 1;
+    }
+    .globe-stat-unit {
+      font-family: 'Playfair Display', serif; font-size: 36px;
+      font-weight: 400;
+    }
+    .globe-stat-label {
+      font-size: 13px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; margin-top: 5px;
+    }
+    .stat-land .globe-stat-number { color: #a8b5a0; }
+    .stat-land .globe-stat-unit { color: #a8b5a0; }
+    .stat-land .globe-stat-label { color: rgba(168, 181, 160, 0.6); }
+    .stat-bio .globe-stat-number { color: #d4af37; }
+    .stat-bio .globe-stat-unit { color: #d4af37; }
+    .stat-bio .globe-stat-label { color: rgba(212, 175, 55, 0.6); }
+    .connector-text {
+      font-size: 14px; color: rgba(253,253,251,0.25);
+      letter-spacing: 4px; text-transform: uppercase; margin: 5px 0 15px;
+    }
+    .managed-by {
+      font-size: 14px; color: rgba(253,253,251,0.5); letter-spacing: 2px;
+      text-transform: uppercase; text-align: center;
+    }
+    .managed-by strong {
+      color: #5b8c9e; font-weight: 600;
+    }
+    .ipcc-badge {
+      margin: 15px auto 0; padding: 8px 24px;
+      background: rgba(91, 140, 158, 0.1);
+      border: 1px solid rgba(91, 140, 158, 0.3);
+      border-radius: 4px; text-align: center;
+      display: inline-block;
+    }
+    .ipcc-text {
+      font-size: 12px; font-weight: 500; color: #5b8c9e;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .quote-section {
+      margin: 25px 80px 0;
+      padding: 30px;
+      background: rgba(212, 175, 55, 0.05);
+      border-left: 3px solid #d4af37;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      color: #fdfdfb; font-style: italic; line-height: 1.4;
+    }
+    .bar-visual {
+      margin: 25px 80px 0;
+      display: flex; gap: 0; height: 50px;
+    }
+    .bar-segment {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; letter-spacing: 1px;
+    }
+    .bar-land {
+      width: 22%; background: rgba(168, 181, 160, 0.2);
+      border: 1px solid rgba(168, 181, 160, 0.3);
+      color: #a8b5a0;
+    }
+    .bar-rest {
+      width: 78%; background: rgba(253,253,251,0.02);
+      border: 1px solid rgba(253,253,251,0.05);
+      color: rgba(253,253,251,0.2);
+    }
+    .bar-label {
+      text-align: center; margin-top: 8px; padding: 0 80px;
+      display: flex;
+    }
+    .bar-label-item {
+      font-size: 10px; color: rgba(253,253,251,0.3);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .bar-label-item:first-child { width: 22%; }
+    .bar-label-item:last-child { width: 78%; text-align: center; }
+    .source {
+      position: absolute; bottom: 68px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      text-align: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px;
+      color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Climate + Culture</div>
+      <h1 class="headline">22% of Earth's Land.<br>80% of Its Biodiversity.</h1>
+    </div>
+
+    <div class="globe-section">
+      <div class="globe-container">
+        <svg class="globe-svg" viewBox="0 0 500 400">
+          <!-- Globe circle -->
+          <circle cx="250" cy="180" r="150" fill="none" stroke="rgba(168,181,160,0.15)" stroke-width="1"/>
+          <circle cx="250" cy="180" r="120" fill="none" stroke="rgba(168,181,160,0.08)" stroke-width="1"/>
+          <circle cx="250" cy="180" r="90" fill="none" stroke="rgba(168,181,160,0.05)" stroke-width="1"/>
+          <!-- Latitude lines -->
+          <ellipse cx="250" cy="180" rx="150" ry="40" fill="none" stroke="rgba(168,181,160,0.08)" stroke-width="1"/>
+          <ellipse cx="250" cy="140" rx="130" ry="30" fill="none" stroke="rgba(168,181,160,0.06)" stroke-width="1"/>
+          <ellipse cx="250" cy="220" rx="130" ry="30" fill="none" stroke="rgba(168,181,160,0.06)" stroke-width="1"/>
+          <!-- Longitude lines -->
+          <ellipse cx="250" cy="180" rx="40" ry="150" fill="none" stroke="rgba(168,181,160,0.08)" stroke-width="1"/>
+          <ellipse cx="250" cy="180" rx="100" ry="150" fill="none" stroke="rgba(168,181,160,0.06)" stroke-width="1"/>
+          <!-- Indigenous land highlights -->
+          <circle cx="180" cy="140" r="25" fill="rgba(168,181,160,0.15)" stroke="rgba(168,181,160,0.3)" stroke-width="1"/>
+          <circle cx="300" cy="160" r="30" fill="rgba(168,181,160,0.15)" stroke="rgba(168,181,160,0.3)" stroke-width="1"/>
+          <circle cx="230" cy="220" r="20" fill="rgba(168,181,160,0.15)" stroke="rgba(168,181,160,0.3)" stroke-width="1"/>
+          <circle cx="320" cy="210" r="22" fill="rgba(168,181,160,0.15)" stroke="rgba(168,181,160,0.3)" stroke-width="1"/>
+          <circle cx="200" cy="190" r="18" fill="rgba(168,181,160,0.15)" stroke="rgba(168,181,160,0.3)" stroke-width="1"/>
+          <!-- Biodiversity dots -->
+          <circle cx="180" cy="140" r="4" fill="#d4af37" opacity="0.8"/>
+          <circle cx="190" cy="150" r="3" fill="#d4af37" opacity="0.6"/>
+          <circle cx="170" cy="135" r="3" fill="#d4af37" opacity="0.6"/>
+          <circle cx="300" cy="160" r="4" fill="#d4af37" opacity="0.8"/>
+          <circle cx="310" cy="150" r="3" fill="#d4af37" opacity="0.6"/>
+          <circle cx="290" cy="170" r="3" fill="#d4af37" opacity="0.6"/>
+          <circle cx="230" cy="220" r="4" fill="#d4af37" opacity="0.8"/>
+          <circle cx="320" cy="210" r="4" fill="#d4af37" opacity="0.8"/>
+          <circle cx="200" cy="190" r="4" fill="#d4af37" opacity="0.8"/>
+        </svg>
+        <div class="stats-overlay">
+          <div class="stat-pair">
+            <div class="globe-stat stat-land">
+              <div class="globe-stat-number">22<span class="globe-stat-unit">%</span></div>
+              <div class="globe-stat-label">Land Surface</div>
+            </div>
+            <div class="globe-stat stat-bio">
+              <div class="globe-stat-number">80<span class="globe-stat-unit">%</span></div>
+              <div class="globe-stat-label">Biodiversity</div>
+            </div>
+          </div>
+          <div class="managed-by">Managed by <strong>Indigenous Peoples</strong></div>
+          <div style="text-align:center;margin-top:12px;">
+            <div class="ipcc-badge">
+              <div class="ipcc-text">IPCC 2022: TEK Endorsed for Climate Adaptation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-section">
+      <div class="quote-text">"The people with the least political power hold the most ecological knowledge."</div>
+    </div>
+
+    <div class="source">IPCC 2022; Berkes (2012); Maffi (2005)</div>
+
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

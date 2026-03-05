@@ -4,12 +4,14 @@ import {
   UserPlus,
   ClipboardCheck,
   TrendingUp,
-  BookOpen,
+  Unlock,
   ArrowRight,
   CheckCircle,
   Sparkles,
   Users,
+  BookOpen,
 } from 'lucide-react'
+import { ASSESSMENT_CONFIGS, SCORE_THRESHOLDS } from '@/lib/data/assessmentConfig'
 
 export const metadata: Metadata = {
   title: 'Getting Started with CIL',
@@ -19,6 +21,8 @@ export const metadata: Metadata = {
     description: 'A step-by-step guide to evaluating and improving your cultural innovation initiative using the CIL framework.',
   },
 }
+
+const cilConfig = ASSESSMENT_CONFIGS.cil
 
 export default function GettingStartedPage() {
   return (
@@ -45,7 +49,7 @@ export default function GettingStartedPage() {
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-ink">Create Your Account</h2>
-                <p className="text-stone text-sm">Get 1 free assessment credit</p>
+                <p className="text-stone text-sm">Sign up free — your first assessment costs nothing</p>
               </div>
             </div>
             <div className="p-6">
@@ -53,17 +57,17 @@ export default function GettingStartedPage() {
                 <UserPlus className="w-6 h-6 text-gold flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-stone mb-4">
-                    Sign up for a free account to access the CIL assessment tool.
-                    Every new user receives 1 free credit to evaluate their first initiative.
+                    Sign up for a free account to access the CIL assessment platform.
+                    No credit card required — your first assessment is completely free.
                   </p>
                   <ul className="space-y-2 text-sm text-stone">
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-sage" />
-                      Quick signup with email or Google
+                      Quick signup with email
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-sage" />
-                      1 free assessment credit included
+                      CIL assessment is free — no credit needed
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-sage" />
@@ -91,8 +95,8 @@ export default function GettingStartedPage() {
                 2
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-ink">Take the Assessment</h2>
-                <p className="text-stone text-sm">Answer 13 research-backed questions</p>
+                <h2 className="text-xl font-semibold text-ink">Take the CIL Assessment</h2>
+                <p className="text-stone text-sm">{cilConfig.questionCount} questions across {cilConfig.sections.length} dimensions (~{cilConfig.estimatedMinutes} min)</p>
               </div>
             </div>
             <div className="p-6">
@@ -100,29 +104,22 @@ export default function GettingStartedPage() {
                 <ClipboardCheck className="w-6 h-6 text-sage flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-stone mb-4">
-                    The CIL assessment evaluates your initiative across three key dimensions:
-                    Foundation, Capacity, and Outcomes. Each question has clear indicators
-                    to help you answer accurately.
+                    The CIL assessment evaluates your initiative across {cilConfig.sections.length} key dimensions.
+                    Each section explores a different aspect of your cultural innovation work.
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                    <div className="bg-sand/50 rounded-lg p-4">
-                      <p className="font-medium text-ink mb-1">Foundation</p>
-                      <p className="text-sm text-stone">4 questions on cultural integrity, community relevance, economic value, and adaptability</p>
-                    </div>
-                    <div className="bg-sand/50 rounded-lg p-4">
-                      <p className="font-medium text-ink mb-1">Capacity</p>
-                      <p className="text-sm text-stone">6 questions on adaptive, protective, cultural protection, social empowerment, community benefit, and community control</p>
-                    </div>
-                    <div className="bg-sand/50 rounded-lg p-4">
-                      <p className="font-medium text-ink mb-1">Outcomes</p>
-                      <p className="text-sm text-stone">3 questions on transformative, generative, and sustainable development results</p>
-                    </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+                    {cilConfig.sections.map((section) => (
+                      <div key={section.id} className="bg-sand/50 rounded-lg p-3">
+                        <p className="font-medium text-ink text-sm mb-0.5">{section.name}</p>
+                        <p className="text-xs text-stone">{section.questionCount} questions</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
               <div className="mt-6">
                 <Link
-                  href="/tools"
+                  href="/tools?start=cil"
                   className="inline-flex items-center gap-2 bg-sage text-white px-5 py-2.5 rounded-full font-medium hover:bg-sage/90 transition-colors"
                 >
                   Start assessment
@@ -140,7 +137,7 @@ export default function GettingStartedPage() {
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-ink">Understand Your Results</h2>
-                <p className="text-stone text-sm">Get actionable insights and benchmarks</p>
+                <p className="text-stone text-sm">Score 0-100 across four performance levels</p>
               </div>
             </div>
             <div className="p-6">
@@ -148,35 +145,44 @@ export default function GettingStartedPage() {
                 <TrendingUp className="w-6 h-6 text-ocean flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-stone mb-4">
-                    Your score (0-13) is categorized into resilience levels with specific
-                    success rate predictions based on our research.
+                    Your score (0-100) is categorized into four performance levels
+                    with personalized recommendations based on your results.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-4 p-3 rounded-lg bg-sage/10">
-                      <div className="w-10 h-10 bg-sage text-white rounded-lg flex items-center justify-center font-bold text-sm">
-                        11+
+                      <div className="w-12 h-10 bg-sage text-white rounded-lg flex items-center justify-center font-bold text-sm">
+                        {SCORE_THRESHOLDS.thriving.min}+
                       </div>
                       <div>
-                        <p className="font-medium text-ink">High Resilience</p>
-                        <p className="text-sm text-stone">85%+ success rate - Strong foundation for sustainable growth</p>
+                        <p className="font-medium text-ink">{SCORE_THRESHOLDS.thriving.label}</p>
+                        <p className="text-sm text-stone">Excellent performance with strong foundations across all dimensions</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 p-3 rounded-lg bg-ocean/10">
+                      <div className="w-12 h-10 bg-ocean text-white rounded-lg flex items-center justify-center font-bold text-sm">
+                        {SCORE_THRESHOLDS.established.min}-{SCORE_THRESHOLDS.established.max}
+                      </div>
+                      <div>
+                        <p className="font-medium text-ink">{SCORE_THRESHOLDS.established.label}</p>
+                        <p className="text-sm text-stone">Solid performance with some areas for improvement</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 p-3 rounded-lg bg-gold/10">
-                      <div className="w-10 h-10 bg-gold text-white rounded-lg flex items-center justify-center font-bold text-sm">
-                        7-10
+                      <div className="w-12 h-10 bg-gold text-white rounded-lg flex items-center justify-center font-bold text-sm">
+                        {SCORE_THRESHOLDS.developing.min}-{SCORE_THRESHOLDS.developing.max}
                       </div>
                       <div>
-                        <p className="font-medium text-ink">Moderate Resilience</p>
-                        <p className="text-sm text-stone">65% success rate - Good base with room for improvement</p>
+                        <p className="font-medium text-ink">{SCORE_THRESHOLDS.developing.label}</p>
+                        <p className="text-sm text-stone">Good progress with significant growth opportunities</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 p-3 rounded-lg bg-terracotta/10">
-                      <div className="w-10 h-10 bg-terracotta text-white rounded-lg flex items-center justify-center font-bold text-sm">
-                        &lt;7
+                      <div className="w-12 h-10 bg-terracotta text-white rounded-lg flex items-center justify-center font-bold text-sm">
+                        0-{SCORE_THRESHOLDS.emerging.max}
                       </div>
                       <div>
-                        <p className="font-medium text-ink">At Risk</p>
-                        <p className="text-sm text-stone">Below critical threshold - Focused intervention recommended</p>
+                        <p className="font-medium text-ink">{SCORE_THRESHOLDS.emerging.label}</p>
+                        <p className="text-sm text-stone">Early stage with foundational work needed</p>
                       </div>
                     </div>
                   </div>
@@ -187,46 +193,45 @@ export default function GettingStartedPage() {
 
           {/* Step 4 */}
           <div className="bg-white rounded-2xl border border-stone/10 overflow-hidden">
-            <div className="flex items-center gap-4 p-6 border-b border-stone/10 bg-lavender/30">
+            <div className="flex items-center gap-4 p-6 border-b border-stone/10 bg-gold/5">
               <div className="w-12 h-12 bg-ink text-white rounded-xl flex items-center justify-center font-bold text-lg">
                 4
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-ink">Learn from Case Studies</h2>
-                <p className="text-stone text-sm">See how similar initiatives succeeded</p>
+                <h2 className="text-xl font-semibold text-ink">Unlock Your Full Toolkit</h2>
+                <p className="text-stone text-sm">Progressive unlock — all free</p>
               </div>
             </div>
             <div className="p-6">
               <div className="flex items-start gap-4">
-                <BookOpen className="w-6 h-6 text-ink flex-shrink-0 mt-1" />
+                <Unlock className="w-6 h-6 text-gold flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-stone mb-4">
-                    Based on your score, we match you with relevant case studies from our
-                    database. Learn from initiatives with similar contexts and see what
-                    strategies led to their success.
+                    Completing CIL is just the beginning. Each assessment you complete unlocks
+                    more tools, resources, and earns you a credit for the next one.
                   </p>
-                  <ul className="space-y-2 text-sm text-stone">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-sage" />
-                      Case studies matched to your score range
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-sage" />
-                      Detailed innovations and lessons learned
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-sage" />
-                      Verified sources and citations
-                    </li>
-                  </ul>
+                  <div className="space-y-4 mb-4">
+                    <div className="border-l-4 border-sage pl-4">
+                      <p className="font-medium text-ink mb-1">Complete CIL (free)</p>
+                      <p className="text-sm text-stone">Unlocks 2 premium resources + 1 credit + access to all 5 secondary assessments</p>
+                    </div>
+                    <div className="border-l-4 border-ocean pl-4">
+                      <p className="font-medium text-ink mb-1">Take secondary assessments (6-8 min each)</p>
+                      <p className="text-sm text-stone">Each costs 1 credit but earns 1 back. Each unlocks 2 interactive tools + 1 resource.</p>
+                    </div>
+                    <div className="border-l-4 border-gold pl-4">
+                      <p className="font-medium text-ink mb-1">Complete all 6 assessments</p>
+                      <p className="text-sm text-stone">Total: 10 interactive tools + 7 premium resources — all free</p>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="mt-6">
                 <Link
-                  href="/framework"
-                  className="inline-flex items-center gap-2 border border-stone/20 bg-white px-5 py-2.5 rounded-full font-medium hover:bg-sand transition-colors"
+                  href="/tools?start=cil"
+                  className="inline-flex items-center gap-2 bg-gold text-white px-5 py-2.5 rounded-full font-medium hover:bg-gold/90 transition-colors"
                 >
-                  Explore the framework
+                  Start your journey
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -273,8 +278,8 @@ export default function GettingStartedPage() {
             Ready to evaluate your initiative?
           </h3>
           <p className="text-pearl/70 mb-6 max-w-xl mx-auto">
-            Get your free assessment credit and discover how the CIL framework
-            can help strengthen your cultural innovation project.
+            Start with the free CIL assessment and progressively unlock your
+            complete toolkit — all at no cost.
           </p>
           <Link
             href="/auth/signup"

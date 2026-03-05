@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { X, Sparkles, ArrowRight, Lock, Unlock, Download, FileText } from 'lucide-react'
+import { X, Sparkles, ArrowRight, Lock, Unlock, Download, FileText, Share2 } from 'lucide-react'
 import { AssessmentType, ASSESSMENT_CONFIGS, TOOL_CONFIGS } from '@/lib/data/assessmentConfig'
 import { getResourceByToolAccessId, type ResourceConfig } from '@/lib/data/resourcesConfig'
 
@@ -12,6 +12,7 @@ interface UnlockCelebrationProps {
   unlockedAssessments: AssessmentType[]
   grantedTools?: string[]
   grantedResources?: string[] // New prop for unlocked resources
+  completedAssessmentName?: string // Name of the assessment just completed
 }
 
 export default function UnlockCelebration({
@@ -20,6 +21,7 @@ export default function UnlockCelebration({
   unlockedAssessments,
   grantedTools = [],
   grantedResources = [],
+  completedAssessmentName,
 }: UnlockCelebrationProps) {
   const [showConfetti, setShowConfetti] = useState(false)
 
@@ -219,6 +221,25 @@ export default function UnlockCelebration({
               )}
             </p>
           </div>
+        </div>
+
+        {/* Share Button */}
+        <div className="px-8 pb-4">
+          <button
+            onClick={() => {
+              const name = completedAssessmentName || 'an assessment'
+              const text = `I just completed ${name} on CIL! Discover your cultural innovation potential: ${window.location.origin}/tools`
+              if (navigator.share) {
+                navigator.share({ title: 'CIL Assessment', text }).catch(() => {})
+              } else {
+                navigator.clipboard.writeText(text)
+              }
+            }}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-sand text-ink rounded-full text-sm hover:bg-ink hover:text-pearl transition-colors"
+          >
+            <Share2 className="w-4 h-4" />
+            Share with a friend
+          </button>
         </div>
 
         {/* Footer */}

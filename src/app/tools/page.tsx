@@ -13,6 +13,7 @@ import { getAssessmentRecommendations, getRecommendationBadge, type AssessmentRe
 import { createClient } from '@/lib/supabase/client'
 import { calculateAssessmentResult } from '@/lib/assessment/scoring'
 import { questionConfig } from '@/lib/data/assessmentQuestions'
+import { logger } from '@/lib/logger'
 
 const frameworks = [
   {
@@ -134,7 +135,7 @@ export default function ToolsPage() {
           }
         }
       } catch (error) {
-        console.error('Error fetching unlock status:', error)
+        logger.error('Error fetching unlock status', {}, error instanceof Error ? error : undefined)
       }
     }
 

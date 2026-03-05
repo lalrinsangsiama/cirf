@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post 27 - Innovation Drives Recovery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .post {
+      width: 1080px;
+      height: 1080px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .gold-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 70px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 40px;
+    }
+
+    .cycle {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      margin-bottom: 30px;
+    }
+
+    .cycle-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .cycle-center-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #d4af37;
+      line-height: 1.2;
+    }
+
+    .cycle-center-sub {
+      font-size: 13px;
+      font-weight: 400;
+      color: #7c7c7c;
+      margin-top: 5px;
+    }
+
+    .cycle-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 50%;
+    }
+
+    .cycle-ring-inner {
+      position: absolute;
+      top: 15%;
+      left: 15%;
+      width: 70%;
+      height: 70%;
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      border-radius: 50%;
+    }
+
+    .cycle-node {
+      position: absolute;
+      width: 130px;
+      text-align: center;
+    }
+
+    .node-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+    }
+
+    .node-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fdfdfb;
+      margin-bottom: 3px;
+    }
+
+    .node-desc {
+      font-size: 11px;
+      font-weight: 300;
+      color: #7c7c7c;
+      line-height: 1.4;
+    }
+
+    .node-1 { top: -30px; left: 50%; transform: translateX(-50%); }
+    .node-1 .node-dot { background: #d4af37; }
+
+    .node-2 { top: 50%; right: -40px; transform: translateY(-50%); }
+    .node-2 .node-dot { background: #5b8c9e; }
+
+    .node-3 { bottom: -30px; left: 50%; transform: translateX(-50%); }
+    .node-3 .node-dot { background: #a8b5a0; }
+
+    .node-4 { top: 50%; left: -40px; transform: translateY(-50%); }
+    .node-4 .node-dot { background: #c67557; }
+
+    .cycle-arrow {
+      position: absolute;
+      font-size: 20px;
+      color: rgba(212, 175, 55, 0.4);
+    }
+
+    .arrow-1 { top: 10%; right: 12%; transform: rotate(45deg); }
+    .arrow-2 { bottom: 10%; right: 12%; transform: rotate(135deg); }
+    .arrow-3 { bottom: 10%; left: 12%; transform: rotate(225deg); }
+    .arrow-4 { top: 10%; left: 12%; transform: rotate(315deg); }
+
+    .quote {
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: #7c7c7c;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .source {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+      right: 80px;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(124, 124, 124, 0.6);
+      line-height: 1.5;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding-top: 15px;
+      text-align: left;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fdfdfb;
+      letter-spacing: 2px;
+    }
+
+    .cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="gold-glow"></div>
+
+    <div class="content">
+      <div class="label">The Schumpeterian Cycle</div>
+
+      <div class="cycle">
+        <div class="cycle-ring"></div>
+        <div class="cycle-ring-inner"></div>
+
+        <div class="cycle-center">
+          <div class="cycle-center-text">Innovation<br>Drives<br>Recovery</div>
+          <div class="cycle-center-sub">The creative destruction cycle</div>
+        </div>
+
+        <div class="cycle-node node-1">
+          <div class="node-dot"></div>
+          <div class="node-title">Recession</div>
+          <div class="node-desc">Economic shock hits the region</div>
+        </div>
+
+        <div class="cycle-node node-2">
+          <div class="node-dot"></div>
+          <div class="node-title">Innovation</div>
+          <div class="node-desc">Cultural innovation systems activate</div>
+        </div>
+
+        <div class="cycle-node node-3">
+          <div class="node-dot"></div>
+          <div class="node-title">Adaptation</div>
+          <div class="node-desc">Economy restructures around new ideas</div>
+        </div>
+
+        <div class="cycle-node node-4">
+          <div class="node-dot"></div>
+          <div class="node-title">Resilience</div>
+          <div class="node-desc">Stronger, more diversified recovery</div>
+        </div>
+
+        <div class="cycle-arrow arrow-1">&#10148;</div>
+        <div class="cycle-arrow arrow-2">&#10148;</div>
+        <div class="cycle-arrow arrow-3">&#10148;</div>
+        <div class="cycle-arrow arrow-4">&#10148;</div>
+      </div>
+
+      <p class="quote">"Regional innovation systems contributed significantly to long-run adaptation and economic resilience in the face of periodic external shocks."</p>
+    </div>
+
+    <div class="source">Source: Simmie, J. (2014). "Regional Economic Resilience: A Schumpeterian Perspective." | Ricci & Agogue (2024). Montreal festivals adapted business models through innovation during COVID-19.</div>
+
+    <div class="bottom-bar">
+      <div class="logo">CIL</div>
+      <div class="cta">cultureinnovation.org</div>
+    </div>
+  </div>
+</body>
+</html>

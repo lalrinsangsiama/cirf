@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram - Heritage That Adapts, Survives</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .label {
+      font-size: 13px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 15px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif; font-size: 44px;
+      font-weight: 400; color: #fdfdfb; line-height: 1.15;
+    }
+    .spectrum-section {
+      padding: 50px 80px 20px;
+    }
+    .spectrum-label {
+      font-size: 13px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: #5b8c9e; margin-bottom: 35px;
+    }
+    .spectrum-container {
+      position: relative; height: 200px; margin-bottom: 30px;
+    }
+    .spectrum-bar {
+      position: absolute; top: 60px; left: 0; right: 0;
+      height: 8px; border-radius: 4px;
+      background: linear-gradient(to right,
+        rgba(198, 117, 87, 0.4) 0%,
+        rgba(198, 117, 87, 0.2) 20%,
+        rgba(212, 175, 55, 0.6) 45%,
+        rgba(212, 175, 55, 0.6) 55%,
+        rgba(91, 140, 158, 0.2) 80%,
+        rgba(91, 140, 158, 0.4) 100%
+      );
+    }
+    .spectrum-marker {
+      position: absolute; text-align: center;
+    }
+    .marker-left {
+      left: 0; top: 0; width: 150px;
+    }
+    .marker-center {
+      left: 50%; top: 0; transform: translateX(-50%); width: 240px;
+    }
+    .marker-right {
+      right: 0; top: 0; width: 150px; text-align: right;
+    }
+    .marker-label {
+      font-size: 14px; font-weight: 500; color: rgba(253,253,251,0.5);
+      margin-bottom: 8px;
+    }
+    .marker-label.active {
+      color: #d4af37; font-weight: 600; font-size: 16px;
+    }
+    .marker-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      margin: 15px auto 0;
+    }
+    .marker-dot.left-dot { background: #c67557; margin: 15px 0 0; }
+    .marker-dot.center-dot { background: #d4af37; width: 16px; height: 16px; }
+    .marker-dot.right-dot { background: #5b8c9e; margin: 15px 0 0 auto; }
+    .sweet-spot-badge {
+      position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 6px 20px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: #d4af37;
+    }
+    .sweet-spot-desc {
+      position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+      font-size: 13px; color: rgba(253,253,251,0.4); text-align: center;
+      width: 300px; line-height: 1.5;
+    }
+    .cities-section {
+      padding: 10px 80px 20px;
+    }
+    .cities-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(253,253,251,0.3); margin-bottom: 18px;
+    }
+    .cities-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+    }
+    .city-card {
+      padding: 25px 20px; text-align: center;
+      background: rgba(212, 175, 55, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.12);
+    }
+    .city-name {
+      font-family: 'Playfair Display', serif; font-size: 28px;
+      color: #fdfdfb; margin-bottom: 6px;
+    }
+    .city-desc {
+      font-size: 11px; color: rgba(253,253,251,0.4); letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .density-stat {
+      margin: 20px 80px 0;
+      padding: 25px 30px;
+      background: rgba(91, 140, 158, 0.06);
+      border-left: 3px solid #5b8c9e;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .density-number {
+      font-family: 'Playfair Display', serif; font-size: 48px;
+      font-weight: 700; color: #5b8c9e; line-height: 1; white-space: nowrap;
+    }
+    .density-number span { font-size: 24px; font-weight: 400; }
+    .density-text {
+      font-size: 15px; color: #fdfdfb; font-weight: 300; line-height: 1.4;
+    }
+    .density-text strong { color: #d4af37; font-weight: 600; }
+    .source {
+      position: absolute; bottom: 68px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      text-align: center;
+    }
+    .bottom-bar-text {
+      font-family: 'Playfair Display', serif; font-size: 20px;
+      color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">Schumpeterian Theory</div>
+      <h1 class="headline">Heritage That Adapts, Survives</h1>
+    </div>
+
+    <div class="spectrum-section">
+      <div class="spectrum-label">The Innovation Spectrum</div>
+      <div class="spectrum-container">
+        <div class="spectrum-marker marker-left">
+          <div class="marker-label">Pure Preservation</div>
+          <div class="marker-dot left-dot"></div>
+        </div>
+        <div class="spectrum-marker marker-center">
+          <div class="marker-label active">Dynamic Heritage Innovation</div>
+          <div class="marker-dot center-dot"></div>
+        </div>
+        <div class="spectrum-marker marker-right">
+          <div class="marker-label">Pure Novelty</div>
+          <div class="marker-dot right-dot"></div>
+        </div>
+        <div class="spectrum-bar"></div>
+        <div class="sweet-spot-badge">Sweet Spot</div>
+        <div class="sweet-spot-desc">Where tradition meets creative transformation. Heritage as living resource, not museum artifact.</div>
+      </div>
+    </div>
+
+    <div class="cities-section">
+      <div class="cities-title">Successful Hybrid Districts</div>
+      <div class="cities-grid">
+        <div class="city-card">
+          <div class="city-name">Kyoto</div>
+          <div class="city-desc">Craft + Technology</div>
+        </div>
+        <div class="city-card">
+          <div class="city-name">Amsterdam</div>
+          <div class="city-desc">Heritage + Design</div>
+        </div>
+        <div class="city-card">
+          <div class="city-name">Vienna</div>
+          <div class="city-desc">Music + Digital</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="density-stat">
+      <div class="density-number">15-20<span>%</span></div>
+      <div class="density-text"><strong>Higher economic density</strong> in hybrid heritage-innovation districts compared to pure preservation or pure innovation zones</div>
+    </div>
+
+    <div class="source">Simmie (2014) Cambridge Journal of Regions, Economy and Society</div>
+
+    <div class="bottom-bar">
+      <div class="bottom-bar-text">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

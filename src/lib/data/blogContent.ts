@@ -3,6 +3,15 @@
 
 import type { BlogCategoryId } from './blogCategories'
 
+export interface Citation {
+  author: string
+  year: string
+  title: string
+  journal?: string
+  doi?: string
+  url?: string
+}
+
 export interface BlogPostContent {
   slug: string
   title: string
@@ -13,6 +22,7 @@ export interface BlogPostContent {
   tags: string[]
   featured_image?: string
   status: 'draft' | 'review' | 'published' | 'archived'
+  citations?: Citation[]
 }
 
 export const BLOG_POSTS: BlogPostContent[] = [
@@ -25,7 +35,7 @@ export const BLOG_POSTS: BlogPostContent[] = [
     tags: ['reading-list', 'books', 'cultural-business', 'resources', 'education'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/reading-list.jpg',
+    featured_image: '/images/blog/reading-list.svg',
     content: `# The Ultimate Reading List for Cultural Entrepreneurs
 
 Building a cultural enterprise requires a unique blend of business acumen, cultural sensitivity, and innovative thinking. Whether you're preserving traditional crafts, revitalizing indigenous practices, or creating new expressions of cultural heritage, these 20 books will equip you with the knowledge and inspiration you need.
@@ -120,7 +130,52 @@ We'd love to hear what books have shaped your cultural entrepreneurship journey.
 
 ---
 
-*This reading list is updated annually. Last updated: January 2026*`
+*This reading list is updated annually. Last updated: January 2026*`,
+    citations: [
+      {
+        author: 'Coyle, D.',
+        year: '2018',
+        title: 'The Culture Code: The Secrets of Highly Successful Groups',
+        journal: 'Bantam Books',
+      },
+      {
+        author: 'Kimmerer, R. W.',
+        year: '2013',
+        title: 'Braiding Sweetgrass: Indigenous Wisdom, Scientific Knowledge and the Teachings of Plants',
+        journal: 'Milkweed Editions',
+      },
+      {
+        author: 'Prahalad, C. K.',
+        year: '2004',
+        title: 'The Fortune at the Bottom of the Pyramid: Eradicating Poverty Through Profits',
+        journal: 'Wharton School Publishing',
+      },
+      {
+        author: 'Howkins, J.',
+        year: '2001',
+        title: 'The Creative Economy: How People Make Money from Ideas',
+        journal: 'Allen Lane',
+      },
+      {
+        author: 'Smith, L. & Akagawa, N.',
+        year: '2009',
+        title: 'Intangible Heritage',
+        journal: 'Routledge',
+        doi: '10.4324/9780203885581',
+      },
+      {
+        author: 'Yunus, M.',
+        year: '2010',
+        title: 'Building Social Business: The New Kind of Capitalism That Serves Humanity\'s Most Pressing Needs',
+        journal: 'PublicAffairs',
+      },
+      {
+        author: 'Ries, E.',
+        year: '2011',
+        title: 'The Lean Startup: How Today\'s Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses',
+        journal: 'Crown Business',
+      },
+    ],
   },
 
   // 2. Understanding Cultural Appropriation vs Appreciation in Business
@@ -132,7 +187,7 @@ We'd love to hear what books have shaped your cultural entrepreneurship journey.
     tags: ['cultural-appropriation', 'ethics', 'business-ethics', 'cultural-sensitivity', 'framework'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/appropriation-appreciation.jpg',
+    featured_image: '/images/blog/appropriation-appreciation.svg',
     content: `# Understanding Cultural Appropriation vs Appreciation in Business
 
 One of the most challenging aspects of cultural entrepreneurship is navigating the line between appreciation and appropriation. Get it wrong, and you risk harming the communities you aim to serve while damaging your own reputation. Get it right, and you create models for ethical cultural commerce that benefit everyone.
@@ -272,7 +327,40 @@ When in doubt, slow down, listen more, and prioritize relationship over transact
 
 ---
 
-*Have questions about specific situations? Reach out to us for guidance on your cultural business decisions.*`
+*Have questions about specific situations? Reach out to us for guidance on your cultural business decisions.*`,
+    citations: [
+      {
+        author: 'Young, J. O.',
+        year: '2010',
+        title: 'Cultural Appropriation and the Arts',
+        journal: 'Wiley-Blackwell',
+        doi: '10.1002/9780470694190',
+      },
+      {
+        author: 'Ziff, B. & Rao, P. V.',
+        year: '1997',
+        title: 'Borrowed Power: Essays on Cultural Appropriation',
+        journal: 'Rutgers University Press',
+      },
+      {
+        author: 'Scafidi, S.',
+        year: '2005',
+        title: 'Who Owns Culture? Appropriation and Authenticity in American Law',
+        journal: 'Rutgers University Press',
+      },
+      {
+        author: 'WIPO',
+        year: '2024',
+        title: 'WIPO Treaty on Intellectual Property, Genetic Resources and Associated Traditional Knowledge',
+        url: 'https://www.wipo.int/diplomatic-conferences/en/genetic-resources/',
+      },
+      {
+        author: 'UNESCO',
+        year: '2003',
+        title: 'Convention for the Safeguarding of the Intangible Cultural Heritage',
+        url: 'https://ich.unesco.org/en/convention',
+      },
+    ],
   },
 
   // 3. A Brief History of Cultural Economies
@@ -284,7 +372,7 @@ When in doubt, slow down, listen more, and prioritize relationship over transact
     tags: ['history', 'cultural-economy', 'trade', 'creative-economy', 'education'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/history-cultural-economies.jpg',
+    featured_image: '/images/blog/history-cultural-economies.svg',
     content: `# A Brief History of Cultural Economies
 
 The idea that culture drives economic activity isn't new—it's ancient. From the earliest trade routes to the digital creative economy, cultural products, practices, and knowledge have always been at the heart of commerce. Understanding this history helps cultural entrepreneurs see their work not as a novel experiment but as a continuation of humanity's oldest economic tradition.
@@ -446,7 +534,51 @@ Cultural entrepreneurs today are building tomorrow's economy—one that values h
 
 ---
 
-*Next in this series: "The Economics of Authenticity: Why Cultural Products Command Premium Prices"*`
+*Next in this series: "The Economics of Authenticity: Why Cultural Products Command Premium Prices"*`,
+    citations: [
+      {
+        author: 'Florida, R.',
+        year: '2002',
+        title: 'The Rise of the Creative Class',
+        journal: 'Basic Books',
+      },
+      {
+        author: 'Howkins, J.',
+        year: '2001',
+        title: 'The Creative Economy: How People Make Money from Ideas',
+        journal: 'Allen Lane',
+      },
+      {
+        author: 'UNESCO',
+        year: '2005',
+        title: 'Convention on the Protection and Promotion of the Diversity of Cultural Expressions',
+        url: 'https://en.unesco.org/creativity/convention',
+      },
+      {
+        author: 'UNCTAD',
+        year: '2022',
+        title: 'Creative Economy Outlook 2022: The International Year of Creative Economy for Sustainable Development',
+        url: 'https://unctad.org/publication/creative-economy-outlook-2022',
+      },
+      {
+        author: 'Frankopan, P.',
+        year: '2015',
+        title: 'The Silk Roads: A New History of the World',
+        journal: 'Bloomsbury Publishing',
+      },
+      {
+        author: 'UNESCO',
+        year: '2003',
+        title: 'Convention for the Safeguarding of the Intangible Cultural Heritage',
+        url: 'https://ich.unesco.org/en/convention',
+      },
+      {
+        author: 'Morris, W.',
+        year: '1884',
+        title: 'Art and Socialism',
+        journal: 'Reprinted in Political Writings of William Morris, ed. A. L. Morton, 1973, Lawrence & Wishart',
+      },
+    ],
   },
 
   // 4. Cultural Innovation Around the World: Africa
@@ -458,7 +590,7 @@ Cultural entrepreneurs today are building tomorrow's economy—one that values h
     tags: ['africa', 'cultural-innovation', 'case-studies', 'entrepreneurs', 'series'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/africa-innovation.jpg',
+    featured_image: '/images/blog/africa-innovation.svg',
     content: `# Cultural Innovation Around the World: Africa
 
 Africa's cultural entrepreneurs are leading a quiet revolution. Across the continent, innovators are proving that traditional knowledge and practices can power modern economies while strengthening—not eroding—cultural identity. This is the first in our series exploring cultural innovation around the world.
@@ -659,7 +791,40 @@ Every successful brand invests heavily in telling the cultural stories behind th
 
 ---
 
-*Next in this series: Cultural Innovation Around the World: Asia*`
+*Next in this series: Cultural Innovation Around the World: Asia*`,
+    citations: [
+      {
+        author: 'UNCTAD',
+        year: '2022',
+        title: 'Creative Economy Outlook 2022: The International Year of Creative Economy for Sustainable Development',
+        url: 'https://unctad.org/publication/creative-economy-outlook-2022',
+      },
+      {
+        author: 'African Development Bank',
+        year: '2021',
+        title: 'Africa\'s Creative Economy: A Force for Transformation',
+        url: 'https://www.afdb.org/en',
+      },
+      {
+        author: 'UNESCO',
+        year: '2019',
+        title: 'Re|Shaping Cultural Policies: Advancing Creativity for Development',
+        url: 'https://en.unesco.org/creativity/global-report-2018',
+      },
+      {
+        author: 'Littrell, M. A. & Dickson, M. A.',
+        year: '2010',
+        title: 'Artisans and Fair Trade: Crafting Development',
+        journal: 'Kumarian Press',
+      },
+      {
+        author: 'Iweriebor, E. E. G.',
+        year: '2011',
+        title: 'The Colonization of Africa',
+        journal: 'Schomburg Center for Research in Black Culture, New York Public Library',
+        url: 'https://exhibitions.nypl.org/africanaage/essay-colonization-of-africa.html',
+      },
+    ],
   },
 
   // 5. Cultural Innovation Around the World: Asia
@@ -671,7 +836,7 @@ Every successful brand invests heavily in telling the cultural stories behind th
     tags: ['asia', 'cultural-innovation', 'case-studies', 'entrepreneurs', 'series'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/asia-innovation.jpg',
+    featured_image: '/images/blog/asia-innovation.svg',
     content: `# Cultural Innovation Around the World: Asia
 
 Asia presents a fascinating laboratory for cultural innovation. Home to some of the world's oldest continuous civilizations, Asian entrepreneurs face unique challenges: how do you innovate within traditions that have evolved over millennia? The answers they're finding offer lessons for cultural entrepreneurs everywhere.
@@ -904,7 +1069,42 @@ This principle applies across Asian cultural businesses, though expressed differ
 
 ---
 
-*Next in this series: Cultural Innovation Around the World: Latin America*`
+*Next in this series: Cultural Innovation Around the World: Latin America*`,
+    citations: [
+      {
+        author: 'UNESCO',
+        year: '2017',
+        title: 'Re|Shaping Cultural Policies: Advancing Creativity for Development',
+        url: 'https://en.unesco.org/creativity/global-report-2018',
+      },
+      {
+        author: 'Luckman, S.',
+        year: '2015',
+        title: 'Craft and the Creative Economy',
+        journal: 'Palgrave Macmillan',
+        doi: '10.1057/9781137399687',
+      },
+      {
+        author: 'UNCTAD',
+        year: '2018',
+        title: 'Creative Economy Outlook: Trends in International Trade in Creative Industries',
+        url: 'https://unctad.org/publication/creative-economy-outlook-trends-international-trade-creative-industries-2002-2015',
+      },
+      {
+        author: 'Cang, V. G.',
+        year: '2007',
+        title: 'Defining Intangible Cultural Heritage and Its Stakeholders: The Case of Japan',
+        journal: 'International Journal of Intangible Heritage, 2',
+        url: 'https://www.ijih.org/volumes/article/30',
+      },
+      {
+        author: 'Basu, P.',
+        year: '2011',
+        title: 'Object Diasporas, Resourcing Communities: Sierra Leonean Collections in the Global Museumscape',
+        journal: 'Museum Anthropology, 34(1), 28–42',
+        doi: '10.1111/j.1548-1379.2010.01105.x',
+      },
+    ],
   },
 
   // 6. Cultural Innovation Around the World: Latin America
@@ -916,7 +1116,7 @@ This principle applies across Asian cultural businesses, though expressed differ
     tags: ['latin-america', 'cultural-innovation', 'case-studies', 'entrepreneurs', 'series'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/latin-america-innovation.jpg',
+    featured_image: '/images/blog/latin-america-innovation.svg',
     content: `# Cultural Innovation Around the World: Latin America
 
 Latin America's cultural entrepreneurs occupy a unique space—where indigenous traditions meet colonial history meet contemporary creativity. The result is some of the world's most vibrant cultural innovation, driven by communities determined to build wealth while strengthening identity.
@@ -1152,7 +1352,41 @@ This worldview shapes businesses that measure success differently from conventio
 
 ---
 
-*This concludes our "Cultural Innovation Around the World" series. Stay tuned for deep dives into specific sectors and strategies.*`
+*This concludes our "Cultural Innovation Around the World" series. Stay tuned for deep dives into specific sectors and strategies.*`,
+    citations: [
+      {
+        author: 'International Labour Organization',
+        year: '1989',
+        title: 'Convention C169 — Indigenous and Tribal Peoples Convention',
+        url: 'https://www.ilo.org/dyn/normlex/en/f?p=NORMLEXPUB:12100:0::NO::P12100_ILO_CODE:C169',
+      },
+      {
+        author: 'UNESCO',
+        year: '2005',
+        title: 'Convention on the Protection and Promotion of the Diversity of Cultural Expressions',
+        url: 'https://en.unesco.org/creativity/convention',
+      },
+      {
+        author: 'Gudynas, E.',
+        year: '2011',
+        title: 'Buen Vivir: Today\'s Tomorrow',
+        journal: 'Development, 54(4), 441–447',
+        doi: '10.1057/dev.2011.86',
+      },
+      {
+        author: 'Littrell, M. A. & Dickson, M. A.',
+        year: '2010',
+        title: 'Artisans and Fair Trade: Crafting Development',
+        journal: 'Kumarian Press',
+      },
+      {
+        author: 'Vega, M.',
+        year: '2018',
+        title: 'Intellectual Property and the Protection of Traditional Knowledge, Traditional Cultural Expressions and Genetic Resources',
+        journal: 'WIPO Academy',
+        url: 'https://www.wipo.int/tk/en/',
+      },
+    ],
   },
 
   // 7. Top 10 Cultural Music Playlist - January 2026
@@ -1164,7 +1398,7 @@ This worldview shapes businesses that measure success differently from conventio
     tags: ['music', 'playlist', 'cultural-music', 'world-music', 'monthly'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/january-playlist.jpg',
+    featured_image: '/images/blog/january-playlist.svg',
     content: `# Top 10 Cultural Music Playlist - January 2026
 
 Welcome to our monthly playlist featuring artists who embody cultural innovation through music. These musicians blend traditional sounds with contemporary production, proving that heritage and innovation aren't opposites—they're partners.
@@ -1177,9 +1411,7 @@ January brings new releases from established cultural innovators and emerging ar
 
 ## The Playlist
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXaQ34lqGBfrU?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
-*Note: If you don't have Spotify, scroll down for YouTube links to each track.*
+Search for these artists on your preferred streaming platform and enjoy the track-by-track breakdown below.
 
 ---
 
@@ -1290,13 +1522,6 @@ Each song on this playlist represents a different approach to cultural innovatio
 9. **Avant-garde tradition** (Lankum)
 10. **Innovation from constraint** (KOKOKO!)
 
-## Listen on Other Platforms
-
-- **Apple Music**: [Link to Apple Music playlist]
-- **YouTube Music**: [Link to YouTube Music playlist]
-- **Deezer**: [Link to Deezer playlist]
-- **Individual YouTube videos**: Available below each track description
-
 ## Suggest a Track
 
 Know an artist who belongs on this playlist? We're always looking for new music that exemplifies cultural innovation. Requirements:
@@ -1316,7 +1541,29 @@ February's playlist will focus on "Love Songs Across Cultures"—romantic music 
 
 ---
 
-*Playlists are updated monthly. Follow us on Spotify to get notified when new playlists drop.*`
+*Playlists are updated monthly. Check back each month for new discoveries.*`,
+    citations: [
+      {
+        author: 'Feld, S.',
+        year: '2012',
+        title: 'Sound and Sentiment: Birds, Weeping, Poetics, and Song in Kaluli Expression',
+        journal: 'Duke University Press, 3rd edition',
+        doi: '10.1215/9780822395898',
+      },
+      {
+        author: 'Taylor, T. D.',
+        year: '1997',
+        title: 'Global Pop: World Music, World Markets',
+        journal: 'Routledge',
+      },
+      {
+        author: 'Bohlman, P. V.',
+        year: '2002',
+        title: 'World Music: A Very Short Introduction',
+        journal: 'Oxford University Press',
+        doi: '10.1093/actrade/9780192854292.001.0001',
+      },
+    ],
   },
 
   // 8. The $1.2 Trillion Question: How Traditional Knowledge Fuels Global Industries
@@ -1328,7 +1575,7 @@ February's playlist will focus on "Love Songs Across Cultures"—romantic music 
     tags: ['traditional-knowledge', 'research', 'methodology', 'benefit-sharing', 'WIPO', 'biopiracy', 'indigenous-rights'],
     author_name: 'Cultural Innovation Lab',
     status: 'published',
-    featured_image: '/images/blog/trillion-dollar-question.jpg',
+    featured_image: '/images/blog/trillion-dollar-question.svg',
     content: `# The $1.2 Trillion Question: How Traditional Knowledge Fuels Global Industries Without Fair Compensation
 
 On our homepage, we state that **$1.2 trillion in traditional knowledge has been commercialised** — without the communities who created it seeing a fair share. Some readers have rightly asked: where does that number come from?
@@ -1592,7 +1839,65 @@ If you have data, corrections, or feedback on this methodology, please contact u
 
 ---
 
-*This post is part of our research series examining the economics of traditional knowledge. For related reading, see our posts on [cultural appropriation vs appreciation in business](/blog/cultural-appropriation-vs-appreciation-business) and [the history of cultural economies](/blog/brief-history-cultural-economies).*`
+*This post is part of our research series examining the economics of traditional knowledge. For related reading, see our posts on [cultural appropriation vs appreciation in business](/blog/cultural-appropriation-vs-appreciation-business) and [the history of cultural economies](/blog/brief-history-cultural-economies).*`,
+    citations: [
+      {
+        author: 'Newman, D. J. & Cragg, G. M.',
+        year: '2020',
+        title: 'Natural Products as Sources of New Drugs over the Nearly Four Decades from 01/1981 to 09/2019',
+        journal: 'Journal of Natural Products, 83(3), 770–803',
+        doi: '10.1021/acs.jnatprod.9b01285',
+      },
+      {
+        author: 'Fabricant, D. S. & Farnsworth, N. R.',
+        year: '2001',
+        title: 'The Value of Plants Used in Traditional Medicine for Drug Discovery',
+        journal: 'Environmental Health Perspectives, 109(Suppl 1), 69–75',
+        doi: '10.1289/ehp.01109s169',
+      },
+      {
+        author: 'World Health Organization',
+        year: '2013',
+        title: 'WHO Traditional Medicine Strategy 2014–2023',
+        url: 'https://www.who.int/publications/i/item/9789241506096',
+      },
+      {
+        author: 'Food and Agriculture Organization of the United Nations',
+        year: '2019',
+        title: 'The State of the World\'s Biodiversity for Food and Agriculture',
+        url: 'https://www.fao.org/3/CA3129EN/CA3129EN.pdf',
+      },
+      {
+        author: 'WIPO',
+        year: '2024',
+        title: 'WIPO Treaty on Intellectual Property, Genetic Resources and Associated Traditional Knowledge',
+        url: 'https://www.wipo.int/diplomatic-conferences/en/genetic-resources/',
+      },
+      {
+        author: 'Fortune Business Insights',
+        year: '2024',
+        title: 'Herbal Medicine Market Size, Share & Industry Analysis, 2024–2032',
+        url: 'https://www.fortunebusinessinsights.com/herbal-medicine-market-106320',
+      },
+      {
+        author: 'UNCTAD',
+        year: '2022',
+        title: 'Creative Economy Outlook 2022',
+        url: 'https://unctad.org/publication/creative-economy-outlook-2022',
+      },
+      {
+        author: 'Grand View Research',
+        year: '2024',
+        title: 'Cosmetics Market Size, Share & Trends Analysis Report, 2024–2030',
+        url: 'https://www.grandviewresearch.com/industry-analysis/cosmetics-market',
+      },
+      {
+        author: 'Fashion Revolution',
+        year: '2023',
+        title: 'Fashion Transparency Index 2023',
+        url: 'https://www.fashionrevolution.org/about/transparency/',
+      },
+    ],
   },
 ]
 

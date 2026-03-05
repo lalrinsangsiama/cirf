@@ -97,7 +97,7 @@ export default function OGImage() {
               marginTop: '48px',
             }}
           >
-            cil-framework.org
+            culturalinnovationlab.org
           </span>
         </div>
 

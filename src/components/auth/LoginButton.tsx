@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from './AuthProvider'
-import { User, LogOut, LayoutDashboard, ChevronDown, CreditCard } from 'lucide-react'
+import { User, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react'
 
 export function LoginButton() {
   const { user, profile, loading, signOut } = useAuth()
@@ -75,16 +75,6 @@ export function LoginButton() {
             >
               <LayoutDashboard className="w-4 h-4" />
               Dashboard
-            </Link>
-
-            <Link
-              href="/pricing"
-              onClick={() => setDropdownOpen(false)}
-              className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-sand transition-colors"
-            >
-              <CreditCard className="w-4 h-4" />
-              Buy Credits
-              <span className="ml-auto text-xs text-stone">{profile?.credits || 0} remaining</span>
             </Link>
 
             <div className="border-t border-stone/10 mt-2 pt-2">

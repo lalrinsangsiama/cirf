@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post E04 - Heritage vs Growth False Choice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .header {
+      padding: 55px 80px 25px;
+    }
+    .label {
+      font-size: 14px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #c67557;
+      background: rgba(198,117,87,0.1); padding: 8px 20px; border-radius: 4px;
+      display: inline-block; margin-bottom: 20px;
+    }
+    .false-binary {
+      display: flex; align-items: center; justify-content: center;
+      gap: 30px; padding: 10px 0;
+    }
+    .binary-word {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 700; color: #fdfdfb;
+    }
+    .vs-box {
+      position: relative; width: 90px; height: 90px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .vs-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 700; color: #7c7c7c;
+    }
+    .x-mark {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .x-mark::before, .x-mark::after {
+      content: ''; position: absolute;
+      top: 50%; left: 50%;
+      width: 100px; height: 4px; background: #c67557;
+      border-radius: 2px;
+    }
+    .x-mark::before { transform: translate(-50%, -50%) rotate(45deg); }
+    .x-mark::after { transform: translate(-50%, -50%) rotate(-45deg); }
+    .formula {
+      text-align: center; padding: 25px 80px;
+    }
+    .formula-line {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: #d4af37;
+      line-height: 1.6;
+    }
+    .formula-line .plus { color: #fdfdfb; margin: 0 8px; }
+    .formula-line .equals { color: #a8b5a0; margin: 0 12px; }
+    .proof-section {
+      padding: 25px 80px;
+    }
+    .proof-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 20px;
+    }
+    .proof-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    }
+    .proof-card {
+      background: rgba(245,240,232,0.03);
+      border-radius: 8px; padding: 22px 24px;
+      border-bottom: 2px solid rgba(168,181,160,0.4);
+    }
+    .proof-country {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: #a8b5a0; margin-bottom: 6px;
+    }
+    .proof-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: #fdfdfb;
+    }
+    .proof-desc {
+      font-size: 12px; font-weight: 400; color: #7c7c7c; margin-top: 4px;
+      line-height: 1.3;
+    }
+    .source {
+      position: absolute; bottom: 75px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      text-align: center;
+    }
+    .bottom-bar span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: #fdfdfb;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="header">
+      <div class="label">False Binary</div>
+    </div>
+    <div class="false-binary">
+      <div class="binary-word">Heritage</div>
+      <div class="vs-box">
+        <div class="vs-text">vs</div>
+        <div class="x-mark"></div>
+      </div>
+      <div class="binary-word">Growth</div>
+    </div>
+    <div class="formula">
+      <div class="formula-line">
+        Heritage <span class="plus">+</span> Smart Policy <span class="equals">=</span> Growth <span class="plus">+</span> Resilience
+      </div>
+    </div>
+    <div class="proof-section">
+      <div class="proof-label">The Proof</div>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-country">Italy</div>
+          <div class="proof-stat">+4.2%</div>
+          <div class="proof-desc">Cultural regions outperformed during recession &mdash; recession insurance</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-country">Rwanda</div>
+          <div class="proof-stat">$620M</div>
+          <div class="proof-desc">Cultural tourism revenue through heritage-led strategy</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-country">Scotland</div>
+          <div class="proof-stat">&pound;6B</div>
+          <div class="proof-desc">Creative industries contribution to national economy</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-country">UK Heritage</div>
+          <div class="proof-stat">&pound;31B/yr</div>
+          <div class="proof-desc">Annual economic contribution from heritage sector</div>
+        </div>
+      </div>
+    </div>
+    <div class="source">Cellini & Cuccia 2019; Historic England 2023; RDB 2024</div>
+    <div class="bottom-bar"><span>Cultural Innovation Lab</span></div>
+  </div>
+</body>
+</html>

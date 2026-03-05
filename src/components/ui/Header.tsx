@@ -12,7 +12,6 @@ const navigation = [
   { name: 'Framework', href: '/framework' },
   { name: 'Tools', href: '/tools' },
   { name: 'Resources', href: '/resources' },
-  { name: 'Pricing', href: '/pricing' },
   { name: 'Blog', href: '/blog' },
   { name: 'About', href: '/about' },
 ]
@@ -25,7 +24,6 @@ export function Header() {
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null)
-  const lastMenuItemRef = useRef<HTMLAnchorElement>(null)
 
   // Check if current page is an auth page (don't show header on auth pages)
   const isAuthPage = pathname?.startsWith('/auth')
@@ -231,7 +229,7 @@ export function Header() {
               {navigation.map((item, index) => (
                 <li key={item.name} role="none">
                   <Link
-                    ref={index === 0 ? firstMenuItemRef : index === navigation.length - 1 ? lastMenuItemRef : undefined}
+                    ref={index === 0 ? firstMenuItemRef : undefined}
                     href={item.href}
                     role="menuitem"
                     className={cn(

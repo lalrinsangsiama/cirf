@@ -16,22 +16,10 @@ import {
   AlertCircle,
 } from 'lucide-react'
 
-interface Citation {
-  author: string
-  year: string
-  title: string
-  journal?: string
-  doi?: string
-  url?: string
-}
+import { BLOG_CATEGORIES } from '@/lib/data/blogCategories'
+import type { Citation } from '@/lib/data/blogContent'
 
-const CATEGORIES = [
-  { id: 'research', name: 'Research Insights' },
-  { id: 'case-study', name: 'Case Studies' },
-  { id: 'practitioner-tips', name: 'Practitioner Tips' },
-  { id: 'news', name: 'News' },
-  { id: 'framework-updates', name: 'Framework Updates' },
-]
+const CATEGORIES = BLOG_CATEGORIES.filter(c => c.id !== 'all')
 
 function NewBlogPostContent() {
   const router = useRouter()

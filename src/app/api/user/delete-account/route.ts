@@ -2,9 +2,10 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { validateInput } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
+import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 
 const deleteAccountSchema = z.object({
   confirmation: z.literal('DELETE', {
@@ -14,6 +15,11 @@ const deleteAccountSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return rateLimitErrorResponse(rateLimitResult.resetTime, apiRateLimit.message)
+    }
+
     const supabase = await createClient()
 
     // Check authentication

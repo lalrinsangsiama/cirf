@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIL Instagram Post - Rwanda Conservation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: #1a1a1a; padding: 20px;
+    }
+    .post {
+      width: 1080px; height: 1080px; background: #0a0a0a;
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .content {
+      position: relative; z-index: 10;
+      padding: 55px 60px 120px;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .label {
+      font-size: 14px; font-weight: 500; letter-spacing: 4px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 18px; margin-top: 5px;
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 44px; font-weight: 700; color: #fdfdfb;
+      line-height: 1.15; margin-bottom: 45px;
+    }
+    /* Circular flow */
+    .flow {
+      position: relative; width: 700px; height: 700px;
+    }
+    .flow-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 180px; height: 180px; border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.3);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(212,175,55,0.04);
+    }
+    .flow-center-icon { font-size: 14px; color: #d4af37; margin-bottom: 4px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+    .flow-center-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: #fdfdfb; line-height: 1.2;
+    }
+    .flow-center-label { font-size: 11px; color: #7c7c7c; margin-top: 2px; }
+    /* Nodes positioned around circle */
+    .node {
+      position: absolute; width: 200px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .node-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 18px 16px; width: 100%;
+      text-align: center;
+    }
+    .node-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: #fdfdfb;
+    }
+    .node-num span { color: #d4af37; }
+    .node-label {
+      font-size: 12px; color: #a0a0a0; margin-top: 4px;
+      font-weight: 400; line-height: 1.3;
+    }
+    .node-step {
+      font-size: 10px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 6px;
+    }
+    /* Position nodes in circle */
+    .node-1 { top: -10px; left: 50%; transform: translateX(-50%); }
+    .node-2 { top: 50%; right: -20px; transform: translateY(-50%); }
+    .node-3 { bottom: -10px; left: 50%; transform: translateX(-50%); }
+    .node-4 { top: 50%; left: -20px; transform: translateY(-50%); }
+    .node-5 { top: 55px; right: 10px; }
+    .node-6 { top: 55px; left: 10px; }
+    /* Arrows - SVG circle path */
+    .flow-arrows {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .source {
+      position: absolute; bottom: 72px; left: 0; right: 0;
+      text-align: center; font-size: 11px; color: rgba(124,124,124,0.6);
+    }
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 25px 80px; text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: #fdfdfb; letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="post">
+    <div class="content">
+      <div class="label">Case Study: Rwanda</div>
+      <div class="headline">Conservation as Cultural IP</div>
+
+      <div class="flow">
+        <svg class="flow-arrows" viewBox="0 0 700 700">
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#d4af37" opacity="0.5"/>
+            </marker>
+          </defs>
+          <!-- Circular arrows connecting nodes -->
+          <path d="M 350 105 Q 520 105 560 250" stroke="#d4af37" stroke-opacity="0.25" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          <path d="M 560 350 Q 560 500 420 580" stroke="#d4af37" stroke-opacity="0.25" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          <path d="M 280 580 Q 140 500 140 350" stroke="#d4af37" stroke-opacity="0.25" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          <path d="M 140 250 Q 180 105 350 95" stroke="#d4af37" stroke-opacity="0.25" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        </svg>
+
+        <div class="flow-center">
+          <div class="flow-center-icon">Virtuous</div>
+          <div class="flow-center-val">Cycle</div>
+          <div class="flow-center-label">Self-reinforcing loop</div>
+        </div>
+
+        <div class="node node-1">
+          <div class="node-box" style="border-color:rgba(91,140,158,0.3);background:rgba(91,140,158,0.05);">
+            <div class="node-step">Tourism Revenue</div>
+            <div class="node-num" style="color:#5b8c9e;">$1,500</div>
+            <div class="node-label">Per gorilla tracking permit</div>
+          </div>
+        </div>
+
+        <div class="node node-2">
+          <div class="node-box" style="border-color:rgba(212,175,55,0.3);background:rgba(212,175,55,0.05);">
+            <div class="node-step">Community Share</div>
+            <div class="node-num"><span>10%</span></div>
+            <div class="node-label">Revenue to local communities</div>
+          </div>
+        </div>
+
+        <div class="node node-3">
+          <div class="node-box" style="border-color:rgba(168,181,160,0.3);background:rgba(168,181,160,0.05);">
+            <div class="node-step">Development</div>
+            <div class="node-num" style="color:#a8b5a0;">1,200+</div>
+            <div class="node-label">Community projects funded</div>
+          </div>
+        </div>
+
+        <div class="node node-4">
+          <div class="node-box" style="border-color:rgba(198,117,87,0.3);background:rgba(198,117,87,0.05);">
+            <div class="node-step">Conservation</div>
+            <div class="node-num" style="color:#c67557;">480 <span style="font-size:18px;color:#7c7c7c;">&rarr;</span> 1,063</div>
+            <div class="node-label">Gorilla population growth</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Rwanda Development Board 2023; Environmental Law Institute 2025</div>
+    <div class="bottom-bar">
+      <div class="logo">Cultural Innovation Lab</div>
+    </div>
+  </div>
+</body>
+</html>

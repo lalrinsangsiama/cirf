@@ -5,7 +5,6 @@ import { validateEnv, features } from '@/lib/env'
 interface HealthStatus {
   status: 'healthy' | 'degraded' | 'unhealthy'
   timestamp: string
-  version: string
   checks: {
     database: CheckResult
     environment: CheckResult
@@ -27,7 +26,6 @@ export async function GET(): Promise<NextResponse<HealthStatus>> {
     features: {
       ai: features.ai,
       analytics: features.analytics,
-      payments: features.payments,
       email: features.email,
     },
   }
@@ -76,7 +74,6 @@ export async function GET(): Promise<NextResponse<HealthStatus>> {
   const response: HealthStatus = {
     status: overallStatus,
     timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '0.1.0',
     checks,
   }
 

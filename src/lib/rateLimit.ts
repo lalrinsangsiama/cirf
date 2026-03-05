@@ -204,18 +204,11 @@ export const aiRateLimit: RateLimitConfig = {
 }
 
 /**
- * Payment rate limiter: 10 orders per hour
+ * Email rate limiter: 5 emails per 15 minutes
  */
-export const paymentRateLimit: RateLimitConfig = {
-  windowMs: 60 * 60 * 1000, // 1 hour
-  maxRequests: 10,
-  message: 'Too many payment attempts. Please try again later.',
+export const emailRateLimit: RateLimitConfig = {
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  maxRequests: 5,
+  message: 'Too many email requests. Please try again later.',
 }
 
-/**
- * Webhook rate limiter: 100 per minute (more permissive for Razorpay)
- */
-export const webhookRateLimit: RateLimitConfig = {
-  windowMs: 60 * 1000, // 1 minute
-  maxRequests: 100,
-}

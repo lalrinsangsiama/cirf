@@ -2,15 +2,19 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { validateInput } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
+import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 import { AssessmentType } from '@/lib/data/assessmentConfig'
 
 // Request schema for saving draft
 const saveDraftSchema = z.object({
   assessmentType: z.enum(['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
-  answers: z.record(z.string(), z.union([z.number(), z.string(), z.array(z.string())])),
+  answers: z.record(z.string(), z.union([z.number(), z.string().max(1000), z.array(z.string().max(100)).max(20)])).refine(
+    (obj) => Object.keys(obj).length <= 500,
+    { message: 'Too many answer keys' }
+  ),
   currentSection: z.string().optional(),
 })
 
@@ -85,6 +89,11 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now()
 
   try {
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return rateLimitErrorResponse(rateLimitResult.resetTime, apiRateLimit.message)
+    }
+
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -151,6 +160,11 @@ export async function POST(request: NextRequest) {
 // DELETE: Remove a draft (called when assessment is completed)
 export async function DELETE(request: NextRequest) {
   try {
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return rateLimitErrorResponse(rateLimitResult.resetTime, apiRateLimit.message)
+    }
+
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
