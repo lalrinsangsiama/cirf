@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { successResponse, errorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, rateLimitErrorResponse } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
+import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 
 /**
  * GET /api/tools/access
@@ -9,6 +10,11 @@ import { Errors } from '@/lib/api/errors'
  */
 export async function GET(request: NextRequest) {
   try {
+    const rateLimitResult = checkRateLimit(request, apiRateLimit)
+    if (!rateLimitResult.allowed) {
+      return rateLimitErrorResponse(rateLimitResult.resetTime, apiRateLimit.message)
+    }
+
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 

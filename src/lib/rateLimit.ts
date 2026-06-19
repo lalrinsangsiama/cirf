@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 interface RateLimitConfig {
   windowMs: number // Time window in milliseconds
@@ -13,10 +14,10 @@ interface RateLimitEntry {
 
 // In-memory store for rate limiting
 // WARNING: This in-memory Map doesn't work across multiple server instances.
-// For production at scale with multiple instances, migrate to Redis/Upstash:
-// - Upstash: https://upstash.com/docs/redis/sdks/ratelimit
-// - Redis: Use ioredis with a rate limiting library like 'rate-limiter-flexible'
+// Each serverless cold start gets a fresh Map, making rate limiting ineffective at scale.
+// For production at scale, migrate to Upstash Redis (@upstash/ratelimit).
 const rateLimitStore = new Map<string, RateLimitEntry>()
+let hasLoggedLimitation = false
 
 // Cleanup old entries periodically
 const CLEANUP_INTERVAL = 60000 // 1 minute
@@ -63,6 +64,11 @@ export function checkRateLimit(
   config: RateLimitConfig,
   identifier?: string
 ): { allowed: boolean; remaining: number; resetTime: number } {
+  if (!hasLoggedLimitation) {
+    hasLoggedLimitation = true
+    logger.warn('Rate limiting uses in-memory store — ineffective across serverless cold starts. Consider Upstash Redis for production scale.')
+  }
+
   cleanup()
 
   const clientId = identifier || getClientId(request)

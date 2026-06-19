@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { validateInput } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
@@ -18,6 +18,8 @@ const saveDraftSchema = z.object({
   currentSection: z.string().optional(),
 })
 
+const validAssessmentTypes: AssessmentType[] = ['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']
+
 // GET: Retrieve a user's draft assessment
 export async function GET(request: NextRequest) {
   try {
@@ -28,12 +30,12 @@ export async function GET(request: NextRequest) {
       return errorResponse(Errors.unauthorized('You must be logged in to access drafts'))
     }
 
-    // Get assessment type from query params
+    // Get and validate assessment type from query params
     const searchParams = request.nextUrl.searchParams
     const assessmentType = searchParams.get('type') as AssessmentType | null
 
-    if (!assessmentType) {
-      return errorResponse(Errors.badRequest('Assessment type is required'))
+    if (!assessmentType || !validAssessmentTypes.includes(assessmentType)) {
+      return errorResponse(Errors.badRequest('Valid assessment type is required'))
     }
 
     // Get the draft
@@ -102,7 +104,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse and validate input
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(saveDraftSchema, body)
 
     if (!validation.success) {
@@ -172,12 +175,12 @@ export async function DELETE(request: NextRequest) {
       return errorResponse(Errors.unauthorized('You must be logged in to delete drafts'))
     }
 
-    // Get assessment type from query params
+    // Get and validate assessment type from query params
     const searchParams = request.nextUrl.searchParams
     const assessmentType = searchParams.get('type') as AssessmentType | null
 
-    if (!assessmentType) {
-      return errorResponse(Errors.badRequest('Assessment type is required'))
+    if (!assessmentType || !validAssessmentTypes.includes(assessmentType)) {
+      return errorResponse(Errors.badRequest('Valid assessment type is required'))
     }
 
     // Delete the draft

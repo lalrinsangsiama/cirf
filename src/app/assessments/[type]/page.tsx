@@ -205,7 +205,7 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
   // Redirect if invalid assessment type
   useEffect(() => {
     if (!config) {
-      router.push('/tools')
+      router.push('/dashboard')
     }
   }, [config, router])
 
@@ -543,12 +543,12 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
                   Sign In
                 </Link>
               ) : requirement ? (
-                <Link href="/tools" className="btn-primary">
+                <Link href="/assessments/cil" className="btn-primary">
                   Take {requirement.name} Assessment
                 </Link>
               ) : null}
-              <Link href="/tools" className="btn-secondary">
-                Back to Tools
+              <Link href="/dashboard" className="btn-secondary">
+                Back to Dashboard
               </Link>
             </div>
           </div>
@@ -615,10 +615,10 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
           <div className="flex items-center justify-between">
             <div>
               <Link
-                href="/tools"
+                href="/dashboard"
                 className="text-pearl/60 text-sm hover:text-pearl transition-colors mb-2 inline-block"
               >
-                ← Back to Tools
+                ← Back to Dashboard
               </Link>
               <h1 className="text-2xl font-serif text-pearl">{config.fullName}</h1>
               <p className="text-pearl/70 text-sm flex items-center gap-2 mt-1">
@@ -1159,10 +1159,10 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
                   Take Again
                 </button>
                 <Link
-                  href="/tools"
+                  href="/dashboard"
                   className="flex items-center gap-2 px-4 py-2 bg-ink text-pearl rounded-full text-sm hover:bg-ink/90 transition-colors"
                 >
-                  Back to Tools
+                  Back to Dashboard
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

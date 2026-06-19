@@ -44,21 +44,26 @@ export async function GET(): Promise<NextResponse<HealthStatus>> {
     const dbStart = Date.now()
     const supabase = await createServiceClient()
 
-    // Simple query to check connectivity
+    // Lightweight connectivity check
     const { error } = await supabase
       .from('profiles')
-      .select('id')
-      .limit(1)
+      .select('id', { count: 'exact', head: true })
 
+    const isProduction = process.env.NODE_ENV === 'production'
     checks.database = {
       status: error ? 'fail' : 'pass',
-      message: error ? error.message : 'Connected',
+      message: error
+        ? (isProduction ? 'Database check failed' : error.message)
+        : 'Connected',
       latencyMs: Date.now() - dbStart,
     }
   } catch (error) {
+    const isProduction = process.env.NODE_ENV === 'production'
     checks.database = {
       status: 'fail',
-      message: error instanceof Error ? error.message : 'Connection failed',
+      message: isProduction
+        ? 'Database connection failed'
+        : (error instanceof Error ? error.message : 'Connection failed'),
     }
   }
 

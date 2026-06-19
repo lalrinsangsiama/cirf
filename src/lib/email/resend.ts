@@ -62,8 +62,11 @@ async function sendEmailWithRetry(
 
       if (error) {
         lastError = error.message
-        // Only retry on rate limits or server errors
-        if (error.message?.includes('rate') || error.message?.includes('500')) {
+        // Retry on rate limits (429) or server errors (5xx)
+        const statusCode = (error as { statusCode?: number }).statusCode
+        const isRetryable = statusCode === 429 || (statusCode !== undefined && statusCode >= 500) ||
+          error.message?.includes('rate') || error.message?.includes('500')
+        if (isRetryable) {
           if (attempt < maxRetries - 1) {
             const delay = baseDelayMs * Math.pow(2, attempt)
             logger.warn(`Email send failed, retrying in ${delay}ms`, { attempt: attempt + 1, maxRetries, error: error.message })
@@ -506,5 +509,89 @@ export async function sendPasswordResetEmail({
     subject: 'Reset Your Password - CIL',
     html: getPasswordResetEmailHtml({ email, name, resetUrl }),
     text: getPasswordResetEmailText({ email, name, resetUrl }),
+  })
+}
+
+/**
+ * Send the free CIRF self-assessment results (lead-capture flow on /assessment).
+ * Delivers the promised results summary + a link to the Cultural Innovation
+ * Strategy Toolkit in Resources.
+ */
+export async function sendCIRFResultsEmail({
+  email,
+  name,
+  totalScore,
+  overallLabel,
+  pillars,
+  recommendations,
+}: {
+  email: string
+  name?: string
+  totalScore: number
+  overallLabel: string
+  pillars: { title: string; score: number; level: string }[]
+  recommendations: string[]
+}) {
+  const greeting = name ? `Hi ${escapeHtml(name)},` : 'Hi there,'
+  const resourcesUrl = `${baseUrl}/resources`
+  const surveyUrl = `${baseUrl}/survey`
+  const assessmentUrl = `${baseUrl}/assessment`
+
+  const pillarRows = pillars
+    .map(
+      (p) => `
+      <tr>
+        <td style="padding:8px 0;color:#0D1B2A;font-size:14px;">${escapeHtml(p.title)}</td>
+        <td style="padding:8px 0;text-align:right;color:#1A8A7D;font-weight:600;font-size:14px;">${p.score}/20 &middot; ${escapeHtml(p.level)}</td>
+      </tr>`
+    )
+    .join('')
+
+  const recItems = recommendations
+    .map((r) => `<li style="margin-bottom:10px;color:#4a5568;font-size:14px;line-height:1.5;">${escapeHtml(r)}</li>`)
+    .join('')
+
+  const html = `
+  <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:0 auto;background:#FAF7F2;padding:32px;">
+    <h1 style="font-family:Georgia,serif;color:#0D1B2A;font-size:24px;margin:0 0 8px;">Your CIRF Assessment Results</h1>
+    <p style="color:#4a5568;font-size:14px;margin:0 0 24px;">${greeting}</p>
+
+    <div style="background:white;border-radius:16px;padding:24px;text-align:center;margin-bottom:20px;">
+      <p style="color:#999;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:0 0 4px;">Overall Score</p>
+      <p style="color:#1A8A7D;font-size:48px;font-weight:700;margin:0;line-height:1;">${totalScore}<span style="font-size:20px;color:#999;"> / 80</span></p>
+      <p style="color:#D4A843;font-weight:600;font-size:16px;margin:8px 0 0;">${escapeHtml(overallLabel)}</p>
+    </div>
+
+    <div style="background:white;border-radius:16px;padding:24px;margin-bottom:20px;">
+      <h2 style="font-family:Georgia,serif;color:#0D1B2A;font-size:16px;margin:0 0 12px;">Pillar Breakdown</h2>
+      <table style="width:100%;border-collapse:collapse;">${pillarRows}</table>
+    </div>
+
+    <div style="background:white;border-radius:16px;padding:24px;margin-bottom:20px;">
+      <h2 style="font-family:Georgia,serif;color:#0D1B2A;font-size:16px;margin:0 0 12px;">Your Top Recommendations</h2>
+      <ul style="margin:0;padding-left:18px;">${recItems}</ul>
+    </div>
+
+    <div style="text-align:center;margin:28px 0;">
+      <a href="${resourcesUrl}" style="display:inline-block;background:#1A8A7D;color:white;text-decoration:none;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;">Download the Cultural Innovation Strategy Toolkit</a>
+    </div>
+
+    <p style="color:#4a5568;font-size:13px;line-height:1.6;text-align:center;">
+      Want to go deeper? <a href="${surveyUrl}" style="color:#1A8A7D;">Take part in the expert validation survey</a>,
+      or <a href="${assessmentUrl}" style="color:#1A8A7D;">revisit your assessment</a>.
+    </p>
+
+    <p style="color:#999;font-size:11px;text-align:center;margin-top:24px;">
+      Cultural Innovation Lab &middot; This assessment is provided for informational and educational purposes as part of ongoing academic research.
+    </p>
+  </div>`
+
+  const text = `Your CIRF Assessment Results\n\n${name ? `Hi ${name},` : 'Hi there,'}\n\nOverall score: ${totalScore}/80 (${overallLabel})\n\nPillar breakdown:\n${pillars.map((p) => `- ${p.title}: ${p.score}/20 (${p.level})`).join('\n')}\n\nTop recommendations:\n${recommendations.map((r) => `- ${r}`).join('\n')}\n\nDownload the Cultural Innovation Strategy Toolkit: ${resourcesUrl}\nTake the expert survey: ${surveyUrl}\n\nCultural Innovation Lab`
+
+  return sendEmail({
+    to: email,
+    subject: `Your CIRF Assessment Results — ${totalScore}/80 (${overallLabel})`,
+    html,
+    text,
   })
 }

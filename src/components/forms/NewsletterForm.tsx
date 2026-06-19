@@ -37,6 +37,7 @@ export function NewsletterForm({
         body: JSON.stringify({
           email: formData.email,
           name: formData.name || undefined,
+          role: formData.role || undefined,
         }),
       })
 
@@ -68,13 +69,16 @@ export function NewsletterForm({
   if (variant === 'compact') {
     return (
       <form onSubmit={handleSubmit} className={`flex gap-2 ${className}`}>
+        <label htmlFor="newsletter-email-compact" className="sr-only">Email address</label>
         <input
+          id="newsletter-email-compact"
           type="email"
           placeholder="Enter your email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className="flex-1 px-4 py-2 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
           required
+          aria-required="true"
         />
         <button
           type="submit"
@@ -101,37 +105,50 @@ export function NewsletterForm({
       )}
 
       {showName && (
-        <input
-          type="text"
-          placeholder="Your name (optional)"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
-        />
+        <div>
+          <label htmlFor="newsletter-name" className="sr-only">Name (optional)</label>
+          <input
+            id="newsletter-name"
+            type="text"
+            placeholder="Your name (optional)"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
+          />
+        </div>
       )}
 
-      <input
-        type="email"
-        placeholder="Your email *"
-        value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-        className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
-        required
-      />
+      <div>
+        <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+        <input
+          id="newsletter-email"
+          type="email"
+          placeholder="Your email *"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
+          required
+          aria-required="true"
+        />
+      </div>
 
       {showRole && (
-        <select
-          value={formData.role}
-          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-          className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
-        >
+        <div>
+          <label htmlFor="newsletter-role" className="sr-only">Your role</label>
+          <select
+            id="newsletter-role"
+            value={formData.role}
+            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+            className="w-full px-4 py-3 rounded-lg border border-ink/20 bg-pearl focus:outline-none focus:ring-2 focus:ring-gold/50"
+          >
           <option value="">I am a...</option>
           <option value="researcher">Researcher</option>
           <option value="practitioner">Practitioner</option>
           <option value="policymaker">Policymaker</option>
           <option value="community">Community member</option>
           <option value="other">Other</option>
-        </select>
+          </select>
+        </div>
       )}
 
       <button

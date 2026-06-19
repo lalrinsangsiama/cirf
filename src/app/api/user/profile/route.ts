@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { validateInput, sanitizeString } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
@@ -106,7 +106,8 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Parse and validate request body
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(profileUpdateSchema, body)
 
     if (!validation.success) {

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { SiteHeader } from '@/components/site/SiteHeader'
+import { SiteFooter } from '@/components/site/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'Resources & Downloads',
@@ -14,5 +16,11 @@ export default function ResourcesLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <div style={{ backgroundColor: '#FAF7F2', minHeight: '100vh' }}>
+      <SiteHeader />
+      <main>{children}</main>
+      <SiteFooter />
+    </div>
+  )
 }

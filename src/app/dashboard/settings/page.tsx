@@ -9,7 +9,7 @@ import {
   ArrowLeft,
   Settings,
   Shield,
-  Bell,
+  // Bell, // hidden with Notification Preferences section (cil-cleanup-pass)
   Download,
   Trash2,
   Loader2,
@@ -156,7 +156,8 @@ export default function SettingsPage() {
             </div>
           </section>
 
-          {/* Notifications Section */}
+          {/* Notifications Section — hidden until the feature is built (cil-cleanup-pass).
+              Restore this block (and the Bell import) when notification preferences ship.
           <section className="bg-white rounded-2xl shadow-sm border border-stone/10 p-6">
             <h2 className="text-lg font-semibold text-ink flex items-center gap-2 mb-4">
               <Bell className="w-5 h-5 text-gold" />
@@ -166,6 +167,7 @@ export default function SettingsPage() {
               Notification preferences coming soon.
             </p>
           </section>
+          */}
 
           {/* Data Export Section */}
           <section className="bg-white rounded-2xl shadow-sm border border-stone/10 p-6">

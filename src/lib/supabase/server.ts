@@ -45,7 +45,8 @@ export async function createServiceClient() {
               cookieStore.set(name, value, options)
             )
           } catch {
-            // Ignore errors in Server Components
+            // Server Components cannot set cookies after rendering begins.
+            // This is expected and safe to ignore — middleware handles session refresh.
           }
         },
       },

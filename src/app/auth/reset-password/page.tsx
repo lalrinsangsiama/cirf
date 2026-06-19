@@ -22,28 +22,40 @@ function ResetPasswordForm() {
 
   // Check if user has a valid recovery session
   useEffect(() => {
+    let isMounted = true
+    let retryTimer: ReturnType<typeof setTimeout> | undefined
+
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
 
       // The user should have a session from clicking the email link
       // Supabase handles the recovery code automatically
       if (session) {
-        setIsValidSession(true)
+        if (isMounted) setIsValidSession(true)
       } else {
         // Check if there's an error in the URL (from Supabase redirect)
         const errorDescription = searchParams.get('error_description')
         if (errorDescription) {
-          setError(decodeURIComponent(errorDescription))
-          setIsValidSession(false)
+          if (isMounted) {
+            setError(decodeURIComponent(errorDescription))
+            setIsValidSession(false)
+          }
         } else {
           // No session yet - Supabase might still be processing the recovery
           // Give it a moment and check again
-          setTimeout(async () => {
-            const { data: { session: retrySession } } = await supabase.auth.getSession()
-            setIsValidSession(!!retrySession)
-            if (!retrySession) {
-              setError('Invalid or expired reset link. Please request a new one.')
-            }
+          retryTimer = setTimeout(() => {
+            supabase.auth.getSession().then(({ data: { session: retrySession } }) => {
+              if (!isMounted) return
+              setIsValidSession(!!retrySession)
+              if (!retrySession) {
+                setError('Invalid or expired reset link. Please request a new one.')
+              }
+            }).catch(() => {
+              if (isMounted) {
+                setIsValidSession(false)
+                setError('Failed to verify reset link. Please try again.')
+              }
+            })
           }, 1000)
         }
       }
@@ -54,11 +66,13 @@ function ResetPasswordForm() {
     // Listen for auth state changes (recovery session)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
-        setIsValidSession(true)
+        if (isMounted) setIsValidSession(true)
       }
     })
 
     return () => {
+      isMounted = false
+      if (retryTimer) clearTimeout(retryTimer)
       subscription.unsubscribe()
     }
   }, [supabase.auth, searchParams])
@@ -93,16 +107,22 @@ function ResetPasswordForm() {
     setLoading(false)
 
     // Sign out and redirect to login after a delay
-    setTimeout(async () => {
-      await supabase.auth.signOut()
-      router.push('/auth/login?message=Password reset successful. Please sign in with your new password.')
+    setTimeout(() => {
+      supabase.auth.signOut()
+        .then(() => {
+          router.push('/auth/login?message=Password reset successful. Please sign in with your new password.')
+        })
+        .catch(() => {
+          // Still redirect even if sign-out fails
+          router.push('/auth/login?message=Password reset successful. Please sign in with your new password.')
+        })
     }, 2000)
   }
 
   // Loading state while checking session
   if (isValidSession === null) {
     return (
-      <div className="w-full max-w-md text-center">
+      <div className="w-full max-w-md text-center" role="status" aria-label="Verifying reset link">
         <div className="w-12 h-12 border-4 border-stone/20 border-t-gold rounded-full animate-spin mx-auto mb-4" />
         <p className="text-stone">Verifying reset link...</p>
       </div>

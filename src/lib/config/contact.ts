@@ -27,8 +27,8 @@ export const CONTACT_INFO = {
   // Website URLs
   urls: {
     base: process.env.NEXT_PUBLIC_SITE_URL || 'https://culturalinnovationlab.org',
-    contact: '/about#contact',
-    support: '/about#contact',
+    contact: '/contact',
+    support: '/contact',
   },
 } as const
 

@@ -1,641 +1,125 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
-import { ArrowRight, TrendingUp, Globe2, Shield, Users, CheckCircle2, ChevronRight, Sparkles, Unlock, Calculator, BarChart3, BookOpen, Lock, Clock } from 'lucide-react'
-import { useAuth } from '@/components/auth/AuthProvider'
-import { ASSESSMENT_CONFIGS, type AssessmentType } from '@/lib/data/assessmentConfig'
-import { trackEvent } from '@/lib/analytics/posthog'
+import { SiteHeader } from '@/components/site/SiteHeader'
+import { SiteFooter } from '@/components/site/SiteFooter'
+
+export const metadata: Metadata = {
+  description:
+    'The Cultural Innovation Lab builds the frameworks, tools, and evidence for treating cultural heritage as economic infrastructure. Research across 12 countries and 6 continents.',
+}
+
+const ROUTES = [
+  {
+    href: '/framework',
+    eyebrow: 'The Framework',
+    title: 'Explore the Framework',
+    body: 'The Cultural Innovation Resilience Framework (CIRF) — four pillars for measuring, protecting, and scaling cultural innovation.',
+  },
+  {
+    href: '/evidence',
+    eyebrow: 'Global Evidence',
+    title: 'See the Evidence',
+    body: 'Cultural innovation models from around the world that ground the framework in real economic outcomes.',
+  },
+  {
+    href: '/about',
+    eyebrow: 'The Research',
+    title: 'About the research',
+    body: 'The doctoral research and the researcher behind the Lab, and how the framework was built.',
+  },
+]
 
 export default function HomePage() {
-  const { user, profile, loading: authLoading } = useAuth()
-  const observerRef = useRef<IntersectionObserver | null>(null)
-
-  useEffect(() => {
-    // Add js-ready class to enable scroll animations (content visible by default if JS fails)
-    document.documentElement.classList.add('js-ready')
-
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
-    )
-
-    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-      observerRef.current?.observe(el)
-    })
-
-    return () => {
-      observerRef.current?.disconnect()
-      document.documentElement.classList.remove('js-ready')
-    }
-  }, [])
-
-  const assessmentOrder: AssessmentType[] = ['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']
-
   return (
-    <>
-      {/* Hero Section with Assessment CTA */}
-      <section className="min-h-screen flex items-center relative overflow-hidden bg-pearl">
-        {/* Background grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(90deg, #0a0a0a 0, #0a0a0a 1px, transparent 1px, transparent 100px),
-              repeating-linear-gradient(0deg, #0a0a0a 0, #0a0a0a 1px, transparent 1px, transparent 100px)
-            `,
-          }}
-        />
-
-        <div className="w-full px-6 md:px-16 relative z-10">
-          {/* Full-width heading */}
-          <h1 className="font-serif text-[clamp(3rem,10vw,9rem)] font-light leading-[0.85] tracking-tight text-ink">
-            <span className="hero-line">
-              <span>Unlock Your</span>
-            </span>
-            <span className="hero-line">
-              <span className="italic text-gold">Cultural Innovation</span>
-            </span>
-            <span className="hero-line">
-              <span>Potential</span>
-            </span>
-          </h1>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mt-10 lg:mt-16">
-            <div>
-              <p
-                className="text-base md:text-lg leading-relaxed font-light max-w-[500px] text-ink/80 animate-fade-in-up"
-                style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
-              >
-                Take the free CIL Assessment to discover your strengths and unlock exclusive tools, frameworks, and funding guides designed for cultural entrepreneurs.
-              </p>
-
-              {/* Quick Value Proposition */}
-              <div
-                className="mt-6 space-y-2 text-ink/70 animate-fade-in-up"
-                style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}
-              >
-                <div className="flex items-center gap-2 text-sm">
-                  <Unlock className="w-4 h-4 text-sage" />
-                  <span>6 assessments & tools — complete CIL to unlock 5 more free</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Unlock className="w-4 h-4 text-sage" />
-                  <span>Premium tools & calculators</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Unlock className="w-4 h-4 text-sage" />
-                  <span>Global Funding Guide 2026</span>
-                </div>
-              </div>
-
-              <div
-                className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in-up"
-                style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
-              >
-                <Link href="/tools?start=cil" onClick={() => trackEvent('cta_click', { cta: 'hero_take_assessment', location: 'homepage_hero' })} className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
-                  Take the Free Assessment
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-                <Link href="/framework" className="btn-secondary inline-flex items-center justify-center gap-2">
-                  Explore the Framework
-                </Link>
-              </div>
-            </div>
-
-            {/* Survey Listing Card */}
-            <div
-              className="bg-white rounded-2xl shadow-xl p-8 animate-fade-in-up hidden lg:block"
-              style={{ animationDelay: '1s', animationFillMode: 'forwards' }}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-serif text-xl">6 Assessments</h3>
-                <span className="text-sm text-ink/60">Complete all for free</span>
-              </div>
-
-              <div className="space-y-3">
-                {assessmentOrder.map((type) => {
-                  const cfg = ASSESSMENT_CONFIGS[type]
-                  const isCIL = type === 'cil'
-                  return (
-                    <Link
-                      key={type}
-                      href={isCIL ? '/tools?start=cil' : `/assessments/${type}`}
-                      className="flex items-center gap-3 p-3 rounded-lg border border-ink/10 hover:border-gold/40 hover:bg-sand/50 transition-all group"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">{cfg.name}</span>
-                          {isCIL && (
-                            <span className="inline-flex items-center px-2 py-0.5 bg-gold/20 text-gold text-[10px] font-semibold rounded-full uppercase tracking-wide">
-                              Free — Start Here
-                            </span>
-                          )}
-                          {!isCIL && (
-                            <Lock className="w-3 h-3 text-ink/30" />
-                          )}
-                        </div>
-                        <p className="text-xs text-ink/60 truncate mt-0.5">
-                          {cfg.completionRewardSummary.split(',')[0]}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-ink/50 flex-shrink-0">
-                        <Clock className="w-3 h-3" />
-                        ~{cfg.estimatedMinutes}m
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-ink/30 group-hover:text-gold transition-colors flex-shrink-0" />
-                    </Link>
-                  )
-                })}
-              </div>
-
-              <p className="text-xs text-ink/50 mt-4 text-center">
-                Complete CIL to unlock all 5 secondary assessments
-              </p>
-
-              <Link
-                href="/tools?start=cil"
-                className="mt-4 w-full bg-ink text-pearl py-3 rounded-full font-medium hover:bg-gold hover:text-ink transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                Start Free Assessment
-                <ChevronRight className="w-4 h-4" />
+    <div style={{ backgroundColor: '#FAF7F2', color: '#0D1B2A', minHeight: '100vh' }}>
+      <SiteHeader />
+      <main>
+        {/* Hero */}
+        <section className="py-24 md:py-32" style={{ background: 'linear-gradient(160deg, #FAF7F2 0%, #f0f5f4 100%)' }}>
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: '#D4A843' }}>
+              Cultural Innovation Lab
+            </p>
+            {/* PLACEHOLDER positioning line — refine in the copy pass.
+                Framing: "economic infrastructure builder for overlooked assets". */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif", color: '#0D1B2A' }}>
+              Cultural heritage is economic infrastructure.
+            </h1>
+            <p className="text-lg md:text-xl leading-relaxed mb-10" style={{ color: '#4a5568' }}>
+              {/* PLACEHOLDER subhead — refine in the copy pass. */}
+              The Cultural Innovation Lab builds the frameworks, tools, and evidence that policymakers,
+              entrepreneurs, and communities need to turn culture into resilient, shared economic value.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/framework" className="inline-flex px-8 py-4 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#1A8A7D' }}>
+                Explore the Framework →
+              </Link>
+              <Link href="/evidence" className="inline-flex px-8 py-4 rounded-full text-sm font-semibold" style={{ border: '1px solid #0D1B2A', color: '#0D1B2A' }}>
+                See the Evidence
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Marquee Section */}
-      <section className="py-16 md:py-32 bg-ink text-pearl overflow-hidden">
-        <div className="flex animate-marquee">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex shrink-0 pr-8 whitespace-nowrap">
-              {['Heritage', 'Innovation', 'Resilience', 'Community', 'Future'].map((word) => (
-                <span
-                  key={word}
-                  className="font-serif text-[clamp(2rem,5vw,5rem)] font-light italic px-6 md:px-12 flex items-center gap-6 md:gap-12"
+        {/* What the Lab is */}
+        <section className="py-20" style={{ backgroundColor: '#f5f2ed' }}>
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: "'Playfair Display', serif", color: '#0D1B2A' }}>
+              What the Lab is
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: '#4a5568' }}>
+              Cultural innovation — the strategic transformation of heritage, traditions, and community
+              knowledge into economic opportunity — is one of the world’s most powerful but least measured
+              economic forces. The Cultural Innovation Lab is the applied research platform of a doctoral
+              study at the Swiss School of Business and Management Geneva, providing an assessment tool, an
+              evidence base of global case studies, and a research instrument validating the framework with
+              experts worldwide.
+            </p>
+          </div>
+        </section>
+
+        {/* Three routes onward */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid gap-6 md:grid-cols-3">
+              {ROUTES.map((route) => (
+                <Link
+                  key={route.href}
+                  href={route.href}
+                  className="block p-8 rounded-2xl bg-white transition-shadow hover:shadow-md"
+                  style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}
                 >
-                  {word}
-                  <span className="w-2 h-2 rounded-full bg-gold" />
-                </span>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#D4A843' }}>
+                    {route.eyebrow}
+                  </p>
+                  <h3 className="text-xl font-bold mb-3" style={{ fontFamily: "'Playfair Display', serif", color: '#0D1B2A' }}>
+                    {route.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#4a5568' }}>
+                    {route.body}
+                  </p>
+                  <span className="text-sm font-semibold" style={{ color: '#1A8A7D' }}>
+                    Learn more →
+                  </span>
+                </Link>
               ))}
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* The Problem Section */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-sand">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-32">
-          <div>
-            <p className="section-label">The Problem We Exist to Solve</p>
-            <h2 className="font-serif text-[clamp(2rem,4vw,3.5rem)] font-light leading-tight">
-              One impossible choice.
-            </h2>
           </div>
+        </section>
 
-          <div className="lg:col-span-2 pt-8 lg:pt-16">
-            <div className="animate-on-scroll mb-8">
-              <p className="text-xl md:text-2xl leading-relaxed font-light mb-6">
-                Millions of cultural entrepreneurs face the same impossible choice every day:
-              </p>
-              <p className="text-lg leading-relaxed font-light text-ink/80 mb-4">
-                Abandon your culture to succeed in the modern economy.
-              </p>
-              <p className="text-lg leading-relaxed font-light text-ink/80 mb-8">
-                Or preserve your identity while watching opportunities pass you by.
-              </p>
-            </div>
-
-            {/* Stat Callout */}
-            <div className="animate-on-scroll bg-sand border border-gold/40 rounded-lg p-6 mb-8">
-              <div className="flex items-start gap-4">
-                <div className="bg-gold/20 rounded-full p-2 flex-shrink-0">
-                  <TrendingUp className="w-5 h-5 text-gold" />
-                </div>
-                <Link href="/blog/traditional-knowledge-trillion-dollar-economy" className="group block">
-                  <p className="font-serif text-3xl text-gold mb-1">$1.2 trillion</p>
-                  <p className="text-sm text-ink/70">in traditional knowledge commercialised — without the communities who created it seeing a fair share. <span className="underline group-hover:text-gold transition-colors">Read our methodology →</span></p>
-                </Link>
-              </div>
-            </div>
-
-            <div className="animate-on-scroll mb-8 space-y-4">
-              <p className="text-base leading-relaxed font-light text-ink/70">
-                Languages disappearing every two weeks. Youth forced to leave their communities.
-              </p>
-              <p className="text-base leading-relaxed font-light text-ink/70">
-                The mainstream message? Your traditions are obstacles. Replace them with &quot;modern&quot; alternatives.
-              </p>
-            </div>
-
-            <div className="animate-on-scroll bg-pearl p-6 rounded-lg border-l-4 border-gold">
-              <h3 className="font-serif text-xl mb-3 font-normal">There is a third path.</h3>
-              <p className="text-base leading-relaxed font-light mb-2">
-                Not preservation as a museum exercise.
-              </p>
-              <p className="text-base leading-relaxed font-light mb-2">
-                Not modernisation as cultural erasure.
-              </p>
-              <p className="text-base leading-relaxed font-light">
-                <span className="font-medium">Cultural innovation</span> — where your traditions become your competitive advantage.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Visual Break */}
-      <section className="py-32 md:py-48 relative bg-ink flex items-center justify-center">
-        <h2 className="font-serif text-[clamp(2.5rem,8vw,10rem)] text-pearl font-light italic text-center px-4 animate-fade-in">
-          Culture is Capital
-        </h2>
-      </section>
-
-      {/* What We Do Section */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-pearl">
-        <div className="max-w-[1600px] mx-auto">
-          <p className="section-label">What We Do</p>
-          <h2 className="section-title mb-16">Four Arms. One Mission.</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: Shield,
-                title: 'Research & Frameworks',
-                number: '01',
-                description: 'We develop the intellectual infrastructure for cultural innovation — original frameworks, measurement tools, and empirical evidence that prove culture drives economic resilience.',
-              },
-              {
-                icon: TrendingUp,
-                title: 'Policy & Protection',
-                number: '02',
-                description: 'Cultural knowledge belongs to communities, not corporations. We work at the intersection of indigenous intellectual property, anti-appropriation advocacy, and economic policy.',
-              },
-              {
-                icon: Globe2,
-                title: 'Global Network',
-                number: '03',
-                description: 'We connect cultural entrepreneurs across borders, link them to global policy processes, and amplify their collective voice where economic decisions are made.',
-              },
-              {
-                icon: Users,
-                title: 'Ventures',
-                number: '04',
-                description: 'We don\'t just theorise about cultural innovation — we build it. Our ventures are living laboratories testing whether our frameworks work in markets.',
-              },
-            ].map((item, i) => (
-              <div
-                key={item.title}
-                className="animate-on-scroll bg-sand p-8 card-hover gold-border-top"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <span className="text-gold font-serif text-sm">{item.number}</span>
-                <item.icon className="w-10 h-10 text-gold mb-4 mt-2" strokeWidth={1.5} />
-                <h3 className="font-serif text-xl mb-3">{item.title}</h3>
-                <p className="text-base leading-relaxed font-light text-ink/70">{item.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Link href="/framework" className="btn-primary inline-flex items-center gap-2">
-              Explore the Framework
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* What You Unlock Section */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-gradient-to-br from-sage/10 via-pearl to-gold/10">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 mb-4">
-              <Unlock className="w-5 h-5 text-gold" />
-              <p className="section-label mb-0">What You Unlock</p>
-            </div>
-            <h2 className="section-title">Complete Your Assessment. Unlock Everything.</h2>
-            <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto mt-4 text-ink/70">
-              One free assessment opens the door to a complete toolkit for cultural entrepreneurs.
+        {/* Quiet invited-expert line */}
+        <section className="py-12 text-center" style={{ backgroundColor: '#0D1B2A' }}>
+          <div className="max-w-3xl mx-auto px-6">
+            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
+              Are you an invited expert reviewer?{' '}
+              <Link href="/survey" className="font-semibold underline underline-offset-4" style={{ color: '#D4A843' }}>
+                Take the validation survey
+              </Link>
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Assessments Card */}
-            <div className="animate-on-scroll bg-pearl p-8 rounded-xl shadow-lg border border-sage/20">
-              <div className="w-14 h-14 bg-sage/20 rounded-xl flex items-center justify-center mb-6">
-                <BarChart3 className="w-7 h-7 text-sage" strokeWidth={1.5} />
-              </div>
-              <h3 className="font-serif text-2xl mb-3">6 Assessments</h3>
-              <p className="text-ink/70 mb-6">
-                Comprehensive evaluations covering resilience, innovation readiness, sustainability, and pricing strategy.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sage flex-shrink-0" />
-                  <span className="text-sm">CIL (Main Assessment)</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sage flex-shrink-0" />
-                  <span className="text-sm">5 specialized follow-ups (FREE)</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sage flex-shrink-0" />
-                  <span className="text-sm">Personalized recommendations</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Tools Card */}
-            <div className="animate-on-scroll bg-pearl p-8 rounded-xl shadow-lg border border-ocean/20" style={{ animationDelay: '0.1s' }}>
-              <div className="w-14 h-14 bg-ocean/20 rounded-xl flex items-center justify-center mb-6">
-                <Calculator className="w-7 h-7 text-ocean" strokeWidth={1.5} />
-              </div>
-              <h3 className="font-serif text-2xl mb-3">10+ Tools</h3>
-              <p className="text-ink/70 mb-6">
-                Calculators and measurement tools to track your cultural innovation journey.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-ocean flex-shrink-0" />
-                  <span className="text-sm">Innovation Intensity Ratio</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-ocean flex-shrink-0" />
-                  <span className="text-sm">Cultural Leverage Index</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-ocean flex-shrink-0" />
-                  <span className="text-sm">Pricing Calculator & more</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Resources Card */}
-            <div className="animate-on-scroll bg-pearl p-8 rounded-xl shadow-lg border border-gold/20" style={{ animationDelay: '0.2s' }}>
-              <div className="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-6">
-                <BookOpen className="w-7 h-7 text-gold" strokeWidth={1.5} />
-              </div>
-              <h3 className="font-serif text-2xl mb-3">Premium Resources</h3>
-              <p className="text-ink/70 mb-6">
-                Exclusive guides and frameworks to accelerate your cultural enterprise.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0" />
-                  <span className="text-sm">Global Funding Guide 2026</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0" />
-                  <span className="text-sm">Creative Reconstruction Framework</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0" />
-                  <span className="text-sm">Templates & worksheets</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-16 text-center">
-            <Link href="/tools" onClick={() => trackEvent('cta_click', { cta: 'start_assessment', location: 'homepage_unlock_section' })} className="btn-primary bg-gold text-ink hover:bg-ink hover:text-pearl inline-flex items-center gap-2 text-lg px-8 py-4">
-              Start Your Free Assessment
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <p className="text-sm text-ink/60 mt-4">
-              CIL assessment ~20 min + 5 follow-up assessments ~8 min each — all free
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* The Thesis Section */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-gradient-to-b from-pearl to-sand">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-16">
-            <p className="section-label">The Thesis</p>
-            <h2 className="section-title">What the Evidence Shows</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-ink/10">
-            {[
-              { value: '$126B', label: 'Māori Economy', subtext: '8.9% of New Zealand GDP' },
-              { value: '$43.9B', label: 'Native American Enterprises', subtext: 'Annual revenue' },
-              { value: 'R50B', label: 'South African Stokvels', subtext: 'Serving 12 million people' },
-              { value: '35-40%', label: 'Better Recovery', subtext: 'During economic crises' },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="animate-on-scroll bg-pearl p-8 md:p-12 text-center hover:bg-sand transition-colors duration-300"
-              >
-                <p className="font-serif text-[clamp(2.5rem,5vw,5rem)] font-light text-gold mb-2">
-                  {stat.value}
-                </p>
-                <p className="text-sm uppercase tracking-[0.2em] text-ink/70">{stat.label}</p>
-                <p className="text-xs text-ink/50 mt-1">{stat.subtext}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Case Studies Preview - Updated with CIL ventures */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-pearl">
-        <div className="max-w-[1600px] mx-auto">
-          <p className="section-label">Our Ventures</p>
-          <h2 className="section-title mb-8">Living Laboratories</h2>
-          <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl mb-16">
-            Each venture validates the thesis that culture creates economy.
-            From eco-friendly mobility to blockchain-enabled heritage monetisation.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                region: 'Cultural Gaming',
-                title: 'Treaxures',
-                stat: 'AR Platform',
-                subtitle: 'Gamifying cultural exploration',
-                color: 'from-terracotta to-gold',
-              },
-              {
-                region: 'Music Heritage',
-                title: 'Cultural Sound Lab',
-                stat: 'Blockchain',
-                subtitle: 'Traditional musicians monetising heritage',
-                color: 'from-ocean to-sage',
-              },
-              {
-                region: 'Sustainable Mobility',
-                title: 'Bambam Karts',
-                stat: 'Eco-Mobility',
-                subtitle: 'Adapting traditional Mizo designs',
-                color: 'from-sage to-gold',
-              },
-            ].map((study, i) => (
-              <Link
-                key={study.title}
-                href="/framework"
-                className="animate-on-scroll group aspect-[3/4] relative overflow-hidden card-hover block"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${study.color}`} />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-
-                <div className="absolute top-6 left-6">
-                  <span className="text-4xl font-serif font-light text-pearl/30">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <p className="text-sm uppercase tracking-[0.15em] text-pearl/80 mb-2">{study.region}</p>
-                  <h3 className="font-serif text-2xl text-pearl mb-2">{study.title}</h3>
-                  <p className="text-gold font-medium">{study.stat}</p>
-                  <p className="text-pearl/70 text-sm">{study.subtitle}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Link href="/framework" className="btn-secondary inline-flex items-center gap-2">
-              Explore the Framework
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Approach Section */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-sand">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="section-label">Our Approach</p>
-              <h2 className="font-serif text-3xl md:text-4xl font-light mb-6">
-                Practitioner-led research.<br />Research-informed practice.
-              </h2>
-              <p className="text-lg leading-relaxed mb-6">
-                Most research on indigenous economies is conducted by outsiders looking in.
-                Most cultural entrepreneurs build without frameworks to guide them.
-                CIL operates at the intersection.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sage" />
-                  <span>Every framework tested in at least one venture</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sage" />
-                  <span>Every venture designed to answer a research question</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sage" />
-                  <span>Dual accountability: academic rigour + market reality</span>
-                </div>
-              </div>
-              <Link href="/framework" className="btn-primary inline-flex items-center gap-2 mt-8">
-                Explore the Framework
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="bg-pearl p-8 rounded-lg">
-              <h3 className="font-medium mb-6">Creative Reconstruction</h3>
-              <p className="text-ink/70 mb-6">
-                A deliberate counterpoint to Schumpeter&apos;s creative destruction.
-              </p>
-              <div className="space-y-4">
-                {[
-                  { contrast: 'Conventional innovation destroys what came before', ours: 'Cultural innovation revitalises and recombines it' },
-                  { contrast: 'The old dies for the new', ours: 'The old adapts and evolves' },
-                  { contrast: 'Abandon tradition for modernity', ours: 'Innovate from tradition into both' },
-                ].map((item, i) => (
-                  <div key={i} className="border-l-2 border-gold pl-4">
-                    <p className="text-sm text-stone line-through">{item.contrast}</p>
-                    <p className="text-sm font-medium mt-1">{item.ours}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 md:py-48 px-6 md:px-16 bg-ink text-pearl text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-serif text-[clamp(2rem,5vw,4rem)] font-light mb-8">
-            Complete Your Assessment → Unlock Everything
-          </h2>
-          <p className="text-lg md:text-xl leading-relaxed font-light opacity-90 mb-8">
-            One free assessment unlocks a complete toolkit for cultural entrepreneurs: specialized assessments, premium tools, and exclusive resources.
-          </p>
-
-          {/* What You Get */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 text-left">
-            <div className="bg-pearl/10 rounded-lg p-4">
-              <div className="text-gold font-serif text-2xl mb-1">6</div>
-              <div className="text-sm opacity-80">Specialized Assessments</div>
-            </div>
-            <div className="bg-pearl/10 rounded-lg p-4">
-              <div className="text-gold font-serif text-2xl mb-1">10+</div>
-              <div className="text-sm opacity-80">Premium Tools</div>
-            </div>
-            <div className="bg-pearl/10 rounded-lg p-4">
-              <div className="text-gold font-serif text-2xl mb-1">2</div>
-              <div className="text-sm opacity-80">Exclusive Guides</div>
-            </div>
-            <div className="bg-pearl/10 rounded-lg p-4">
-              <div className="text-gold font-serif text-2xl mb-1">∞</div>
-              <div className="text-sm opacity-80">Free Forever</div>
-            </div>
-          </div>
-
-          {/* Auth-aware CTA */}
-          {!authLoading && !user && (
-            <div className="bg-pearl/10 rounded-xl p-6 mb-8 max-w-md mx-auto">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Sparkles className="w-5 h-5 text-gold" />
-                <span className="font-medium">Get started free</span>
-              </div>
-              <p className="text-sm opacity-80">
-                Sign up now — your first assessment is free
-              </p>
-            </div>
-          )}
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {!authLoading && !user ? (
-              <>
-                <Link href="/auth/signup" className="btn-primary bg-gold text-ink hover:bg-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
-                  Sign Up Free
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/auth/login" className="btn-secondary border-pearl text-pearl hover:bg-pearl/10 inline-flex items-center justify-center gap-2">
-                  Log In
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/tools" className="btn-primary bg-gold text-ink hover:bg-pearl inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
-                  Take the Assessment
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/resources" className="btn-secondary border-pearl text-pearl hover:bg-pearl/10 inline-flex items-center justify-center gap-2">
-                  View Resources
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   )
 }

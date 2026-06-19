@@ -127,7 +127,7 @@ export default function ResourcesPage() {
       )}
 
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-48 md:pb-24 px-6 md:px-16 bg-pearl">
+      <section className="pt-12 pb-16 md:pt-20 md:pb-24 px-6 md:px-16 bg-pearl">
         <div className="max-w-[1600px] mx-auto">
           <p className="section-label opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
             Downloads

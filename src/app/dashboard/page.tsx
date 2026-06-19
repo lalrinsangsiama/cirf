@@ -371,7 +371,7 @@ export default function DashboardPage() {
                 const cilStatus = progressSummary?.assessmentStatuses?.cil
                 return (
                   <Link
-                    href="/tools?start=cil"
+                    href="/assessments/cil"
                     className={cn(
                       'flex-shrink-0 px-4 py-3 rounded-xl border-2 transition-all min-w-[100px] text-center',
                       cilStatus?.isCompleted
@@ -401,7 +401,7 @@ export default function DashboardPage() {
                 return (
                   <div key={type} className="flex items-center gap-2 flex-shrink-0">
                     <Link
-                      href={isUnlocked ? `/assessments/${type}` : '/tools'}
+                      href={isUnlocked ? `/assessments/${type}` : '/assessments/cil'}
                       className={cn(
                         'px-3 py-3 rounded-xl border transition-all min-w-[80px] text-center',
                         isCompleted
@@ -552,7 +552,7 @@ export default function DashboardPage() {
 
                 <div className="text-center">
                   <Link
-                    href="/tools?start=cil"
+                    href="/assessments/cil"
                     className="inline-flex items-center gap-2 bg-ink text-pearl px-6 py-3 rounded-full font-medium hover:bg-ink/90 transition-colors"
                   >
                     Take CIL Assessment

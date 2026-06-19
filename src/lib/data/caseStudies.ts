@@ -1,3 +1,13 @@
+// ============================================================================
+// PARKED PENDING RE-VERIFICATION (cil-cleanup-pass)
+// ----------------------------------------------------------------------------
+// The case studies in this file are NOT to be displayed to users until their
+// sources, figures, and citations have been re-verified. The data is preserved
+// below for that review. Nothing currently imports these exports, and the
+// /evidence page intentionally shows a "being verified" placeholder instead.
+// Do NOT wire this data into any user-facing surface before sign-off.
+// ============================================================================
+
 import type {
   Industry,
   OrganizationType,

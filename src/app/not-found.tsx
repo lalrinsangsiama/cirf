@@ -32,11 +32,11 @@ export default function NotFound() {
           </Link>
 
           <Link
-            href="/blog"
+            href="/framework"
             className="inline-flex items-center justify-center font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-transparent text-ink border border-ink/20 hover:bg-ink/5 hover:border-ink/40 focus:ring-ink/10 px-4 py-2.5 text-sm gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
-            Browse blog
+            Explore the framework
           </Link>
         </div>
 
@@ -48,8 +48,11 @@ export default function NotFound() {
             <Link href="/framework" className="text-ocean hover:underline">
               Framework
             </Link>
-            <Link href="/tools" className="text-ocean hover:underline">
+            <Link href="/assessment" className="text-ocean hover:underline">
               Assessment Tool
+            </Link>
+            <Link href="/evidence" className="text-ocean hover:underline">
+              Evidence
             </Link>
             <Link href="/resources" className="text-ocean hover:underline">
               Resources
@@ -57,7 +60,7 @@ export default function NotFound() {
             <Link href="/blog" className="text-ocean hover:underline">
               Blog
             </Link>
-            <Link href="/about#contact" className="text-ocean hover:underline">
+            <Link href="/contact" className="text-ocean hover:underline">
               Contact
             </Link>
           </nav>

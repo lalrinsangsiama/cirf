@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { generateBlogPost } from '@/lib/ai/contentGenerator'
 import { generatePostSchema, validateInput } from '@/lib/validation'
 import { checkRateLimit, aiRateLimit } from '@/lib/rateLimit'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 
@@ -48,7 +48,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse and validate input
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(generatePostSchema, body)
 
     if (!validation.success) {

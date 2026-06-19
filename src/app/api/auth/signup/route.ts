@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { validateInput } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 import { checkRateLimit, authRateLimit } from '@/lib/rateLimit'
@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse and validate input
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(signupSchema, body)
 
     if (!validation.success) {
@@ -84,7 +85,8 @@ export async function POST(request: NextRequest) {
         }, 'Account created. Please check your email to verify your account.')
       }
 
-      return errorResponse(Errors.badRequest(error.message))
+      // Don't leak internal error details to the client
+      return errorResponse(Errors.badRequest('Unable to create account. Please try again.'))
     }
 
     // Check if email confirmation is required

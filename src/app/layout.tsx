@@ -1,58 +1,21 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Header } from '@/components/ui/Header'
-import { Footer } from '@/components/ui/Footer'
-import { AuthProvider } from '@/components/auth/AuthProvider'
-import { ToastProvider } from '@/components/ui/ToastProvider'
-import { PostHogProvider } from '@/components/analytics/PostHogProvider'
-import { GlobalJsonLd } from '@/components/seo/JsonLd'
-import { CookieConsent } from '@/components/legal/CookieConsent'
 import './globals.css'
+import { PostHogProvider } from '@/components/analytics/PostHogProvider'
+import { CookieConsent } from '@/components/legal/CookieConsent'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://culturalinnovationlab.org'),
   title: {
-    default: 'Cultural Innovation Lab | Building Economies from Heritage',
-    template: '%s | CIL',
+    default: 'Cultural Innovation Lab',
+    template: '%s | Cultural Innovation Lab',
   },
-  description: 'Heritage is not a museum. It is an economy waiting to be built. We research, build, and connect the global ecosystem of cultural entrepreneurs.',
-  keywords: [
-    'cultural innovation',
-    'cultural entrepreneurship',
-    'indigenous entrepreneurship',
-    'heritage economy',
-    'cultural innovation lab',
-    'cultural preservation',
-    'sustainable development',
-    'community resilience',
-  ],
-  authors: [{ name: 'Cultural Innovation Lab' }],
-  creator: 'Cultural Innovation Lab',
+  description: 'Assess your cultural innovation initiative with the CIRF Framework — built from global research into cultural innovation and economic resilience.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: '/',
     siteName: 'Cultural Innovation Lab',
-    title: 'Cultural Innovation Lab | Building Economies from Heritage',
-    description: 'Heritage is not a museum. It is an economy waiting to be built. We research, build, and connect the global ecosystem of cultural entrepreneurs.',
-    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'Cultural Innovation Lab' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Cultural Innovation Lab | Building Economies from Heritage',
-    description: 'Heritage is not a museum. It is an economy waiting to be built.',
-    images: ['/og-image.svg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 
@@ -64,40 +27,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Global JSON-LD structured data for SEO */}
-        <GlobalJsonLd />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
-      <body>
-        {/* Skip to main content link for accessibility */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:bg-ink focus:text-pearl focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-gold"
-        >
-          Skip to main content
-        </a>
-
-        <AuthProvider>
-          <Suspense fallback={null}>
-            <PostHogProvider>
-              <ToastProvider>
-                <Header />
-                <main id="main-content" tabIndex={-1}>
-                  {children}
-                </main>
-                <Footer />
-                <CookieConsent />
-
-                {/* Live region for screen reader announcements */}
-                <div
-                  aria-live="polite"
-                  aria-atomic="true"
-                  className="sr-only"
-                  id="announcer"
-                />
-              </ToastProvider>
-            </PostHogProvider>
-          </Suspense>
-        </AuthProvider>
+      <body className="antialiased" style={{ fontFamily: "'Inter', sans-serif" }}>
+        {children}
+        {/* Analytics page-view tracking — isolated in Suspense (useSearchParams)
+            so it doesn't force the static pages to render dynamically. Self-gates
+            on PostHog env keys, so it's a no-op when analytics is disabled. */}
+        <Suspense fallback={null}>
+          <PostHogProvider />
+        </Suspense>
+        <CookieConsent />
       </body>
     </html>
   )

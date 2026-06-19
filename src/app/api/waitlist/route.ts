@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/server'
 import { waitlistSchema, validateInput } from '@/lib/validation'
 import { checkRateLimit, newsletterRateLimit } from '@/lib/rateLimit'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 
@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse and validate input
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(waitlistSchema, body)
 
     if (!validation.success) {

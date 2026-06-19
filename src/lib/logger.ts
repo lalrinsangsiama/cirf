@@ -4,6 +4,27 @@ interface LogContext {
   [key: string]: unknown
 }
 
+// Fields that should be redacted from log output to prevent PII/secret leakage
+const SENSITIVE_FIELDS = new Set([
+  'password', 'token', 'secret', 'apiKey', 'api_key',
+  'authorization', 'cookie', 'creditCard', 'credit_card',
+  'ssn', 'phone',
+])
+
+function scrubContext(context: LogContext): LogContext {
+  const scrubbed: LogContext = {}
+  for (const [key, value] of Object.entries(context)) {
+    if (SENSITIVE_FIELDS.has(key.toLowerCase())) {
+      scrubbed[key] = '[REDACTED]'
+    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      scrubbed[key] = scrubContext(value as LogContext)
+    } else {
+      scrubbed[key] = value
+    }
+  }
+  return scrubbed
+}
+
 interface LogEntry {
   timestamp: string
   level: LogLevel
@@ -78,7 +99,7 @@ function createLogEntry(
     timestamp: new Date().toISOString(),
     level,
     message,
-    ...(context && { context }),
+    ...(context && { context: scrubContext(context) }),
   }
 
   if (error) {

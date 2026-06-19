@@ -168,7 +168,7 @@ export default function ToolsPage() {
 
   if (showAssessment) {
     return (
-      <div className="pt-32 pb-24 px-6 md:px-16 bg-pearl min-h-screen">
+      <div className="pt-12 pb-24 px-6 md:px-16 bg-pearl min-h-screen">
         <div className="max-w-[1200px] mx-auto">
           <button
             onClick={() => setShowAssessment(false)}
@@ -185,7 +185,7 @@ export default function ToolsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-16 md:pt-48 md:pb-24 px-6 md:px-16 bg-gradient-to-br from-lavender to-pearl">
+      <section className="pt-12 pb-16 md:pt-20 md:pb-24 px-6 md:px-16 bg-gradient-to-br from-lavender to-pearl">
         <div className="max-w-[1600px] mx-auto">
           <p className="section-label opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
             Practical Resources

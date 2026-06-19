@@ -52,6 +52,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
+              // 'unsafe-inline' required for PostHog — Next.js App Router doesn't support nonce-based CSP without custom middleware
               "script-src 'self' 'unsafe-inline' https://*.posthog.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",

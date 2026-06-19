@@ -1,11 +1,14 @@
 -- =============================================================================
 -- Razorpay Test User Seed Script
 -- =============================================================================
+-- WARNING: This script is for LOCAL DEVELOPMENT ONLY.
+-- Do NOT use these credentials in production environments.
+-- =============================================================================
 -- Purpose: Creates a test user account for Razorpay integration testing
 --
 -- Test Credentials:
---   Email: razorpay-test@cil-framework.org
---   Password: CilTest2024!
+--   Email: razorpay-test@culturalinnovationlab.org
+--   Password: CilTest2024! (local dev only)
 --
 -- Usage:
 --   1. Create the user in Supabase Auth Dashboard first (or via API)
@@ -25,11 +28,11 @@ BEGIN
     -- Get the user ID from auth.users
     SELECT id INTO test_user_id
     FROM auth.users
-    WHERE email = 'razorpay-test@cil-framework.org';
+    WHERE email = 'razorpay-test@culturalinnovationlab.org';
 
     IF test_user_id IS NULL THEN
         RAISE NOTICE 'Test user not found in auth.users. Please create the user first with:';
-        RAISE NOTICE 'Email: razorpay-test@cil-framework.org';
+        RAISE NOTICE 'Email: razorpay-test@culturalinnovationlab.org';
         RAISE NOTICE 'Password: CilTest2024!';
         RETURN;
     END IF;
@@ -38,7 +41,7 @@ BEGIN
     INSERT INTO public.profiles (id, email, full_name, credits, created_at, updated_at)
     VALUES (
         test_user_id,
-        'razorpay-test@cil-framework.org',
+        'razorpay-test@culturalinnovationlab.org',
         'Razorpay Test User',
         100,  -- Pre-loaded credits for testing
         NOW(),
@@ -63,7 +66,7 @@ END $$;
 -- INSERT INTO public.profiles (id, email, full_name, credits, created_at, updated_at)
 -- VALUES (
 --     'YOUR-USER-UUID-HERE',
---     'razorpay-test@cil-framework.org',
+--     'razorpay-test@culturalinnovationlab.org',
 --     'Razorpay Test User',
 --     100,
 --     NOW(),
@@ -86,14 +89,14 @@ END $$;
 --     p.credits,
 --     p.created_at
 -- FROM public.profiles p
--- WHERE p.email = 'razorpay-test@cil-framework.org';
+-- WHERE p.email = 'razorpay-test@culturalinnovationlab.org';
 
 -- =============================================================================
 -- Checkout Flow Testing Instructions
 -- =============================================================================
 --
 -- 1. Login at /auth/login with:
---    Email: razorpay-test@cil-framework.org
+--    Email: razorpay-test@culturalinnovationlab.org
 --    Password: CilTest2024!
 --
 -- 2. Navigate to /pricing

@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
             <span className="hero-line"><span>Privacy Policy</span></span>
           </h1>
           <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-            Last updated: 1 March 2026
+            Last updated: 5 March 2026
           </p>
         </div>
       </section>
@@ -124,6 +124,12 @@ export default function PrivacyPolicyPage() {
                     Sends transactional and marketing emails. Their privacy policy: <a href="https://resend.com/privacy" target="_blank" rel="noopener noreferrer" className="text-ocean hover:underline">resend.com/privacy</a>
                   </p>
                 </div>
+                <div className="bg-pearl p-6 rounded-lg">
+                  <h4 className="font-medium mb-2">PostHog (Analytics)</h4>
+                  <p className="text-stone text-sm">
+                    Provides anonymous website analytics to help us understand how visitors use our site. We do not track personally identifiable information through analytics. Their privacy policy: <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-ocean hover:underline">posthog.com/privacy</a>
+                  </p>
+                </div>
               </div>
 
               <p className="text-lg leading-relaxed text-stone mt-6">
@@ -225,7 +231,7 @@ export default function PrivacyPolicyPage() {
               <div className="bg-pearl p-6 rounded-lg">
                 <p className="text-stone">
                   Email: <a href="mailto:hello@culturalinnovationlab.org" className="text-ocean hover:underline">hello@culturalinnovationlab.org</a><br />
-                  Website: <Link href="/about#contact" className="text-ocean hover:underline">Contact Form</Link>
+                  Website: <Link href="/contact" className="text-ocean hover:underline">Contact Form</Link>
                 </p>
               </div>
             </div>

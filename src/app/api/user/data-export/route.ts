@@ -59,6 +59,27 @@ export async function GET(request: NextRequest) {
         .eq('user_id', user.id),
     ])
 
+    // Log warnings for any individual query failures (graceful degradation)
+    const queryResults = [
+      { name: 'profiles', result: profileResult },
+      { name: 'assessments', result: assessmentsResult },
+      { name: 'credit_transactions', result: transactionsResult },
+      { name: 'newsletter_subscribers', result: newsletterResult },
+      { name: 'tool_access', result: toolAccessResult },
+      { name: 'assessment_drafts', result: draftsResult },
+      { name: 'assessment_unlocks', result: unlocksResult },
+    ]
+    for (const { name, result } of queryResults) {
+      if (result.error) {
+        logger.warn(`Data export: failed to fetch ${name}`, {
+          userId: user.id,
+          table: name,
+          error: result.error.message,
+          code: result.error.code,
+        })
+      }
+    }
+
     const exportData = {
       exportDate: new Date().toISOString(),
       userId: user.id,

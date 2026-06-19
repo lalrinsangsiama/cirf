@@ -25,6 +25,11 @@ const CSRF_EXEMPT_ROUTES = [
   '/auth/callback',
   '/api/health',
   '/api/blog/seed', // Uses Bearer token authentication
+  '/api/newsletter', // Public endpoint with rate limiting + Zod validation
+  '/api/contact', // Public endpoint with rate limiting + Zod validation
+  '/api/survey/submit', // Anonymous survey submission with rate limiting
+  '/api/survey/draft', // Anonymous draft saving with rate limiting
+  '/api/assessments/cirf-results', // Anonymous free-assessment results email with rate limiting
 ]
 
 /**
@@ -125,7 +130,12 @@ function isCsrfExempt(pathname: string): boolean {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // Run Supabase session update first
+  // Note (cil-cleanup-pass): the previous ALLOWED_PATHS allowlist that redirected
+  // every non-listed path to "/" (the survey) was removed. All marketing/legal
+  // pages are now public; auth gating for /dashboard and /admin is enforced by
+  // updateSession() below.
+
+  // Run Supabase session update first (handles /dashboard + /admin auth redirects)
   const response = await updateSession(request)
 
   // Only apply CSRF to API routes

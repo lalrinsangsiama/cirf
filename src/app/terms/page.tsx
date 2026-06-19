@@ -19,7 +19,7 @@ export default function TermsOfServicePage() {
             <span className="hero-line"><span>Terms of Service</span></span>
           </h1>
           <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-            Last updated: 1 March 2026
+            Last updated: 5 March 2026
           </p>
         </div>
       </section>
@@ -90,9 +90,26 @@ export default function TermsOfServicePage() {
               </p>
             </div>
 
+            {/* AI-Generated Content */}
+            <div className="mb-12">
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">5. AI-Assisted Features</h2>
+              <p className="text-lg leading-relaxed text-stone mb-4">
+                Certain features of our platform use third-party artificial intelligence services (Anthropic) to generate or assist with content. When using AI-assisted features:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-stone mb-4">
+                <li>Your inputs may be sent to third-party AI providers for processing</li>
+                <li>AI-generated content is provided for informational purposes only and should not be treated as professional advice</li>
+                <li>We do not guarantee the accuracy, completeness, or suitability of AI-generated content</li>
+                <li>You are responsible for reviewing and verifying any AI-generated content before relying on it</li>
+              </ul>
+              <p className="text-lg leading-relaxed text-stone">
+                Your assessment responses and personal data are not used to train AI models. For details on how third-party services handle data, please refer to our <Link href="/privacy" className="text-ocean hover:underline">Privacy Policy</Link>.
+              </p>
+            </div>
+
             {/* Intellectual Property */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">5. Intellectual Property</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">6. Intellectual Property</h2>
 
               <h3 className="font-medium text-xl mb-3 mt-6">Our Content</h3>
               <p className="text-lg leading-relaxed text-stone mb-4">
@@ -117,7 +134,7 @@ export default function TermsOfServicePage() {
 
             {/* User Content */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">6. User Content</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">7. User Content</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 You retain ownership of any content you submit (assessment responses, feedback, etc.). By submitting content, you grant us a non-exclusive, royalty-free license to:
               </p>
@@ -133,7 +150,7 @@ export default function TermsOfServicePage() {
 
             {/* Prohibited Conduct */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">7. Prohibited Conduct</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">8. Prohibited Conduct</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 When using our Services, you agree not to:
               </p>
@@ -151,7 +168,7 @@ export default function TermsOfServicePage() {
 
             {/* Limitation of Liability */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">8. Limitation of Liability</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">9. Limitation of Liability</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 To the maximum extent permitted by law:
               </p>
@@ -167,7 +184,7 @@ export default function TermsOfServicePage() {
 
             {/* Disclaimer */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">9. Disclaimer of Warranties</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">10. Disclaimer of Warranties</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 THE SERVICES ARE PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING:
               </p>
@@ -181,7 +198,7 @@ export default function TermsOfServicePage() {
 
             {/* Indemnification */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">10. Indemnification</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">11. Indemnification</h2>
               <p className="text-lg leading-relaxed text-stone">
                 You agree to indemnify and hold harmless CIL, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from: your use of the Services; your violation of these Terms; your violation of any third-party rights; or any content you submit.
               </p>
@@ -189,7 +206,7 @@ export default function TermsOfServicePage() {
 
             {/* Termination */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">11. Termination</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">12. Termination</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 You may terminate your account at any time by contacting us. We may suspend or terminate your access if:
               </p>
@@ -206,7 +223,7 @@ export default function TermsOfServicePage() {
 
             {/* Governing Law */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">12. Governing Law & Disputes</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">13. Governing Law & Disputes</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 These Terms are governed by the laws of India. Any disputes arising from these Terms or your use of the Services shall be:
               </p>
@@ -219,7 +236,7 @@ export default function TermsOfServicePage() {
 
             {/* Severability */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">13. Severability</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">14. Severability</h2>
               <p className="text-lg leading-relaxed text-stone">
                 If any provision of these Terms is found to be unenforceable, the remaining provisions will continue in full force and effect. The unenforceable provision will be modified to the minimum extent necessary to make it enforceable.
               </p>
@@ -227,7 +244,7 @@ export default function TermsOfServicePage() {
 
             {/* Changes */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">14. Changes to Terms</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">15. Changes to Terms</h2>
               <p className="text-lg leading-relaxed text-stone">
                 We may update these Terms from time to time. Material changes will be notified via email or a prominent notice on our website. Your continued use after changes constitutes acceptance of the updated Terms.
               </p>
@@ -235,14 +252,14 @@ export default function TermsOfServicePage() {
 
             {/* Contact */}
             <div className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">15. Contact Us</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-4">16. Contact Us</h2>
               <p className="text-lg leading-relaxed text-stone mb-4">
                 If you have questions about these Terms of Service, please contact us:
               </p>
               <div className="bg-pearl p-6 rounded-lg">
                 <p className="text-stone">
                   Email: <a href="mailto:hello@culturalinnovationlab.org" className="text-ocean hover:underline">hello@culturalinnovationlab.org</a><br />
-                  Website: <Link href="/about#contact" className="text-ocean hover:underline">Contact Form</Link>
+                  Website: <Link href="/contact" className="text-ocean hover:underline">Contact Form</Link>
                 </p>
               </div>
             </div>

@@ -64,12 +64,15 @@ export function BlogNewsletterForm() {
             </div>
           )}
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <label htmlFor="blog-newsletter-email" className="sr-only">Email address</label>
             <input
+              id="blog-newsletter-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
+              aria-required="true"
               className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-pearl placeholder:text-pearl/50 focus:outline-none focus:ring-2 focus:ring-gold/50"
             />
             <button

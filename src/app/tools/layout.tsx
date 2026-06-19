@@ -1,5 +1,7 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
+import { SiteHeader } from '@/components/site/SiteHeader'
+import { SiteFooter } from '@/components/site/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'Assessment Tool | Measure Your Cultural Innovation Resilience',
@@ -34,8 +36,14 @@ export default function ToolsLayout({
   children: React.ReactNode
 }) {
   return (
-    <Suspense fallback={<ToolsLoading />}>
-      {children}
-    </Suspense>
+    <div style={{ backgroundColor: '#FAF7F2', minHeight: '100vh' }}>
+      <SiteHeader />
+      <main>
+        <Suspense fallback={<ToolsLoading />}>
+          {children}
+        </Suspense>
+      </main>
+      <SiteFooter />
+    </div>
   )
 }

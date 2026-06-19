@@ -59,6 +59,12 @@ const ENV_VARS: EnvVar[] = [
     required: true,
     description: 'CSRF token signing secret (generate with: openssl rand -hex 32)',
   },
+  {
+    name: 'ADMIN_SECRET_KEY',
+    required: true,
+    pattern: /^.{32,}$/,
+    description: 'Bearer token for protected admin routes (generate with: openssl rand -hex 32)',
+  },
 
   // App URLs
   {

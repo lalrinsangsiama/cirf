@@ -153,3 +153,40 @@
     text-wrap: balance;
   }
 }
+
+/* Survey transition classes */
+.survey-enter-right {
+  animation: slideInRight 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.survey-enter-left {
+  animation: slideInLeft 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.survey-exit-left {
+  animation: slideOutLeft 0.3s ease-in forwards;
+}
+
+.survey-exit-right {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+@keyframes slideInRight {
+  0% { opacity: 0; transform: translateX(30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOutLeft {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-30px); }
+}
+
+@keyframes slideOutRight {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(30px); }
+}

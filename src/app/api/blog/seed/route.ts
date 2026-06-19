@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 import { BLOG_POSTS } from '@/lib/data/blogContent'
 import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
+import { timingSafeEqual } from 'crypto'
 
 // Create admin client with service role key to bypass RLS
 function createAdminClient() {
@@ -46,12 +47,23 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (authHeader !== `Bearer ${adminSecret}`) {
+    // Constant-time comparison to prevent timing attacks
+    const encoder = new TextEncoder()
+    const a = encoder.encode(authHeader || '')
+    const b = encoder.encode(`Bearer ${adminSecret}`)
+    const isEqual = a.byteLength === b.byteLength &&
+      timingSafeEqual(a, b)
+    if (!isEqual) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       )
     }
+
+    logger.info('Blog seed initiated', {
+      path: '/api/blog/seed',
+      ip: request.headers.get('x-forwarded-for') || 'unknown',
+    })
 
     // Use admin client to bypass RLS
     const supabase = createAdminClient()
@@ -160,14 +172,14 @@ export async function GET() {
     const existingPosts: string[] = []
     const missingPosts: string[] = []
 
-    for (const post of BLOG_POSTS) {
-      const { data } = await supabase
-        .from('blog_posts')
-        .select('slug')
-        .eq('slug', post.slug)
-        .single()
+    const { data: existingSlugs } = await supabase
+      .from('blog_posts')
+      .select('slug')
+      .in('slug', BLOG_POSTS.map(p => p.slug))
 
-      if (data) {
+    const existingSet = new Set((existingSlugs || []).map((p: { slug: string }) => p.slug))
+    for (const post of BLOG_POSTS) {
+      if (existingSet.has(post.slug)) {
         existingPosts.push(post.slug)
       } else {
         missingPosts.push(post.slug)

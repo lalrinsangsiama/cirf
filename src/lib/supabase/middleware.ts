@@ -59,20 +59,9 @@ export async function updateSession(request: NextRequest) {
     // This prevents users from manipulating their own profile to gain admin access
     const userRole = user.app_metadata?.role
 
-    // Fallback to profile check if app_metadata not set (for backward compatibility)
-    let isAdmin = userRole === 'admin'
-
-    if (!isAdmin) {
-      // Legacy fallback: check profiles table
-      // This should only be needed until all admins have their JWT claims set
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
-
-      isAdmin = profile?.role === 'admin'
-    }
+    // Only trust JWT app_metadata for admin role — never fall back to profiles table
+    // which could be manipulated via RLS bypass or stale data
+    const isAdmin = userRole === 'admin'
 
     if (!isAdmin) {
       const url = request.nextUrl.clone()

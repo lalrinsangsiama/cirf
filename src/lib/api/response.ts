@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { ApiError, ErrorCode, ErrorStatusCodes } from './errors'
 import { logger } from '../logger'
 
@@ -155,6 +155,23 @@ export function rateLimitErrorResponse(
       },
     }
   )
+}
+
+/**
+ * Safely parse JSON request body, returning a 400 error for malformed JSON
+ */
+export async function parseJsonBody<T = unknown>(
+  request: NextRequest
+): Promise<{ data: T; error: null } | { data: null; error: NextResponse<ErrorResponse> }> {
+  try {
+    const data = await request.json()
+    return { data: data as T, error: null }
+  } catch {
+    return {
+      data: null,
+      error: validationErrorResponse('Invalid JSON in request body'),
+    }
+  }
 }
 
 /**

@@ -198,8 +198,8 @@ export default function SeedBlogPage() {
               <div className="mt-4 p-4 bg-terracotta/10 rounded-lg">
                 <p className="text-sm font-medium text-terracotta mb-2">Errors:</p>
                 <ul className="text-xs text-terracotta space-y-1">
-                  {results.errors.map((e, i) => (
-                    <li key={i}>
+                  {results.errors.map((e) => (
+                    <li key={e.slug}>
                       <strong>{e.slug}:</strong> {e.error}
                     </li>
                   ))}
@@ -227,8 +227,8 @@ export default function SeedBlogPage() {
           </button>
 
           {results && results.created.length + results.updated.length > 0 && (
-            <Link href="/blog" className="btn-secondary">
-              View Blog
+            <Link href="/admin/blog" className="btn-secondary">
+              View Posts
             </Link>
           )}
         </div>

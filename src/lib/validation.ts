@@ -79,6 +79,9 @@ export const newsletterSchema = z.object({
     .max(100, 'Name is too long')
     .optional()
     .transform((val) => (val ? sanitizeString(val.trim()) : undefined)),
+  role: z
+    .enum(['researcher', 'practitioner', 'policymaker', 'community', 'other'])
+    .optional(),
 })
 
 export type NewsletterInput = z.infer<typeof newsletterSchema>

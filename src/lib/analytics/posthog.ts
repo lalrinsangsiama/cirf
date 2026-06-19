@@ -84,6 +84,11 @@ export function trackAssessmentCompleted(
   })
 }
 
+// ── DORMANT: payment / credit-purchase analytics ──────────────────────────
+// These helpers (and the Razorpay dependency + payment_orders / razorpay_*
+// DB columns) are intentionally parked. There is currently NO payment flow in
+// the app — credits are earned through the assessment unlock loop, not bought.
+// Kept ready to activate if paid features are introduced; no action needed.
 export function trackCreditPurchaseStarted(
   packId: string,
   credits: number,

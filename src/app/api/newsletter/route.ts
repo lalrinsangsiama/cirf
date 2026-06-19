@@ -3,7 +3,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 import { sendNewsletterWelcome } from '@/lib/email/resend'
 import { newsletterSchema, validateInput } from '@/lib/validation'
 import { checkRateLimit, newsletterRateLimit } from '@/lib/rateLimit'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 
@@ -25,14 +25,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse and validate input
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(newsletterSchema, body)
 
     if (!validation.success) {
       return validationErrorResponse(validation.error, validation.errors)
     }
 
-    const { email, name } = validation.data
+    const { email, name, role } = validation.data
     const supabase = await createServiceClient()
 
     // Check if already subscribed
@@ -53,7 +54,7 @@ export async function POST(request: NextRequest) {
         // Resubscribe
         const { error: updateError } = await supabase
           .from('newsletter_subscribers')
-          .update({ subscribed: true, name: name || null })
+          .update({ subscribed: true, name: name || null, role: role || null })
           .eq('id', existing.id)
 
         if (updateError) {
@@ -85,6 +86,7 @@ export async function POST(request: NextRequest) {
       .insert({
         email,
         name: name || null,
+        role: role || null,
         subscribed: true,
       })
 

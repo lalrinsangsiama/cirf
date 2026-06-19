@@ -7,7 +7,7 @@ import { SECTION_META } from '@/lib/data/assessmentQuestions'
 import { z } from 'zod'
 import { checkRateLimit, emailRateLimit } from '@/lib/rateLimit'
 import { validateInput } from '@/lib/validation'
-import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse } from '@/lib/api/response'
+import { successResponse, errorResponse, validationErrorResponse, rateLimitErrorResponse, parseJsonBody } from '@/lib/api/response'
 import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 
@@ -51,7 +51,8 @@ export async function POST(request: NextRequest) {
       return errorResponse(Errors.unauthorized('Unauthorized - please log in'))
     }
 
-    const body = await request.json()
+    const { data: body, error: jsonError } = await parseJsonBody(request)
+    if (jsonError) return jsonError
     const validation = validateInput(assessmentEmailSchema, body)
 
     if (!validation.success) {
@@ -130,7 +131,7 @@ export async function POST(request: NextRequest) {
 
     if (!emailResult.success) {
       // Log the failure
-      await admin.from('email_logs').insert({
+      const { error: logError } = await admin.from('email_logs').insert({
         user_id: userId,
         email_type: 'assessment_results',
         recipient_email: profile.email,
@@ -139,6 +140,10 @@ export async function POST(request: NextRequest) {
         status: 'failed',
         metadata: { error: emailResult.error },
       })
+
+      if (logError) {
+        logger.warn('Failed to insert email failure log', { userId, assessmentId, error: logError.message })
+      }
 
       logger.error('Failed to send assessment results email', {
         userId,
@@ -150,7 +155,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Log successful send
-    await admin.from('email_logs').insert({
+    const { error: successLogError } = await admin.from('email_logs').insert({
       user_id: userId,
       email_type: 'assessment_results',
       recipient_email: profile.email,
@@ -159,6 +164,10 @@ export async function POST(request: NextRequest) {
       status: 'sent',
       metadata: { score, interpretation: interpretation.level },
     })
+
+    if (successLogError) {
+      logger.warn('Failed to insert email success log', { userId, assessmentId, error: successLogError.message })
+    }
 
     logger.email('Assessment results sent', { userId, assessmentId, assessmentType })
 

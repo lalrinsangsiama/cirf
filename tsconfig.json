@@ -37,6 +37,7 @@
   ],
   "exclude": [
     "node_modules",
-    "notes"
+    "notes",
+    "src/_archived_pages"
   ]
 }

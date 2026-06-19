@@ -258,13 +258,17 @@ export async function grantCreditsOnCompletion(
   }
 
   // Record transaction
-  await client.from('credit_transactions').insert({
+  const { error: txError } = await client.from('credit_transactions').insert({
     user_id: userId,
     amount: creditsToGrant,
     type: 'earned',
     description: `Completed ${config.name} assessment`,
     reference_id: assessmentType,
   })
+
+  if (txError) {
+    logger.warn('Failed to record credit transaction', { userId, assessmentType, error: txError.message })
+  }
 
   return creditsToGrant
 }
@@ -390,24 +394,31 @@ export async function handleAssessmentCompletion(
   grantedResources: string[]
   creditsEarned: number
 }> {
-  // Run all grants in parallel for speed
-  const [unlockedAssessments, grantedTools, grantedResources, creditsEarned] =
-    await Promise.all([
-      // Unlock assessments (for CIL completion)
-      unlockAssessmentsOnCompletion(userId, assessmentType, assessmentId, supabase),
-      // Grant tool access (for secondary assessment completion)
-      grantToolAccess(userId, assessmentType, supabase),
-      // Grant resource access (for any assessment completion)
-      grantResourceAccess(userId, assessmentType, supabase),
-      // Grant credits (for any assessment completion)
-      grantCreditsOnCompletion(userId, assessmentType, supabase),
-    ])
+  // Run all grants in parallel — use allSettled so partial failures don't block others
+  const results = await Promise.allSettled([
+    unlockAssessmentsOnCompletion(userId, assessmentType, assessmentId, supabase),
+    grantToolAccess(userId, assessmentType, supabase),
+    grantResourceAccess(userId, assessmentType, supabase),
+    grantCreditsOnCompletion(userId, assessmentType, supabase),
+  ])
+
+  const labels = ['unlockAssessments', 'grantTools', 'grantResources', 'grantCredits'] as const
+  for (let i = 0; i < results.length; i++) {
+    if (results[i].status === 'rejected') {
+      const reason = (results[i] as PromiseRejectedResult).reason
+      logger.error(`Assessment completion: ${labels[i]} failed`, {
+        userId,
+        assessmentType,
+        error: reason instanceof Error ? reason.message : String(reason),
+      })
+    }
+  }
 
   return {
-    unlockedAssessments,
-    grantedTools,
-    grantedResources,
-    creditsEarned,
+    unlockedAssessments: results[0].status === 'fulfilled' ? results[0].value : [],
+    grantedTools: results[1].status === 'fulfilled' ? results[1].value : [],
+    grantedResources: results[2].status === 'fulfilled' ? results[2].value : [],
+    creditsEarned: results[3].status === 'fulfilled' ? results[3].value : 0,
   }
 }
 
