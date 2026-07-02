@@ -4,7 +4,7 @@ import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { useCsrf } from '@/hooks/useCsrf'
+import { csrfFetch } from '@/lib/csrfFetch'
 import { Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle } from 'lucide-react'
 import { validateRedirectUrl } from '@/lib/utils/validateRedirect'
 
@@ -20,7 +20,6 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null)
 
   const supabase = createClient()
-  const { getCsrfHeaders } = useCsrf()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,9 +28,8 @@ function LoginForm() {
 
     try {
       // Use rate-limited API endpoint
-      const response = await fetch('/api/auth/login', {
+      const response = await csrfFetch('/api/auth/login', {
         method: 'POST',
-        headers: getCsrfHeaders(),
         body: JSON.stringify({ email, password }),
       })
 

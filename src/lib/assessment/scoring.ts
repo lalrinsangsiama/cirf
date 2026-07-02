@@ -520,7 +520,7 @@ export function calculateAssessmentResult(
     }))
 
   const totalWeight = weightedScores.reduce((sum, w) => sum + w.weight, 0)
-  let baseScore = weightedScores.reduce((sum, w) => sum + w.score * w.weight, 0) / totalWeight
+  const baseScore = weightedScores.reduce((sum, w) => sum + w.score * w.weight, 0) / totalWeight
 
   // Calculate synergy bonus
   const synergyBonus = calculateSynergyBonus(constructScores)

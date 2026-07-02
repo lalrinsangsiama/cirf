@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useCsrf } from '@/hooks/useCsrf'
+import { csrfFetch } from '@/lib/csrfFetch'
 import { Mail, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react'
 
 export default function ForgotPasswordPage() {
@@ -11,8 +11,6 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
-  const { getCsrfHeaders } = useCsrf()
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -20,9 +18,8 @@ export default function ForgotPasswordPage() {
 
     try {
       // Use rate-limited API endpoint
-      const response = await fetch('/api/auth/forgot-password', {
+      const response = await csrfFetch('/api/auth/forgot-password', {
         method: 'POST',
-        headers: getCsrfHeaders(),
         body: JSON.stringify({ email }),
       })
 

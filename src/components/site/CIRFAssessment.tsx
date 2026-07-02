@@ -56,7 +56,7 @@ export function CIRFAssessment() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          sessionId: `cirf-${Date.now()}`,
+          sessionId: `cirf-${crypto.randomUUID()}`,
           answers: { type: 'cirf-assessment', email, name, role, country, sectors, ...answers },
           currentScreen: 99,
         }),

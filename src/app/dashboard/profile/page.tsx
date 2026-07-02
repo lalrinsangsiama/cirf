@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { cn } from '@/lib/utils'
+import { csrfFetch } from '@/lib/csrfFetch'
 import {
   ArrowLeft,
   User,
@@ -156,9 +157,8 @@ export default function ProfileEditPage() {
     setSaved(false)
 
     try {
-      const response = await fetch('/api/user/profile', {
+      const response = await csrfFetch('/api/user/profile', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
 

@@ -142,9 +142,30 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET /api/blog/seed - Check seed status
-export async function GET() {
+// GET /api/blog/seed - Check seed status (same bearer auth as POST)
+export async function GET(request: NextRequest) {
   try {
+    const authHeader = request.headers.get('Authorization')
+    const adminSecret = process.env.ADMIN_SECRET_KEY
+
+    if (!adminSecret) {
+      return NextResponse.json(
+        { error: 'Admin secret key not configured' },
+        { status: 500 }
+      )
+    }
+
+    const encoder = new TextEncoder()
+    const a = encoder.encode(authHeader || '')
+    const b = encoder.encode(`Bearer ${adminSecret}`)
+    const isEqual = a.byteLength === b.byteLength && timingSafeEqual(a, b)
+    if (!isEqual) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let supabase: any
     try {

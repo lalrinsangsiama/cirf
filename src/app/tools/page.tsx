@@ -369,7 +369,7 @@ export default function ToolsPage() {
                         <Link href={`/assessments/${framework.id}`} className="btn-primary text-sm cursor-pointer">
                           {isCompleted ? 'Take Again' : 'Start Assessment'}
                         </Link>
-                        <Link href={`/framework/${framework.id}`} className="btn-secondary text-sm cursor-pointer">
+                        <Link href="/framework" className="btn-secondary text-sm cursor-pointer">
                           View Details
                         </Link>
                       </>
@@ -381,9 +381,9 @@ export default function ToolsPage() {
                         >
                           Unlock with CIL
                         </button>
-                        <a href={`/framework/${framework.id}`} className="btn-secondary text-sm cursor-pointer">
+                        <Link href="/framework" className="btn-secondary text-sm cursor-pointer">
                           Learn More
-                        </a>
+                        </Link>
                       </>
                     )}
                   </div>

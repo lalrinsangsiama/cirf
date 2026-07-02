@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import { csrfFetch } from '@/lib/csrfFetch'
 
 function UnsubscribeForm() {
   const searchParams = useSearchParams()
@@ -20,9 +21,8 @@ function UnsubscribeForm() {
     setStatus('loading')
 
     try {
-      const res = await fetch('/api/newsletter/unsubscribe', {
+      const res = await csrfFetch('/api/newsletter/unsubscribe', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
 

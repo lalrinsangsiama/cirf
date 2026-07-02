@@ -57,6 +57,7 @@ import { ciraQuestions, CIRA_SECTION_META } from '@/lib/data/ciraQuestions'
 import { tblQuestions, TBL_SECTION_META } from '@/lib/data/tblQuestions'
 import { cissQuestions, CISS_SECTION_META } from '@/lib/data/cissQuestions'
 import { pricingQuestions, PRICING_SECTION_META } from '@/lib/data/pricingQuestions'
+import { csrfFetch } from '@/lib/csrfFetch'
 
 interface PageProps {
   params: { type: string }
@@ -251,9 +252,8 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
 
     setAutoSaveStatus('saving')
     try {
-      const response = await fetch('/api/assessments/draft', {
+      const response = await csrfFetch('/api/assessments/draft', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           assessmentType,
           answers,
@@ -331,7 +331,7 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
     if (!user || !hasDraft) return
 
     try {
-      await fetch(`/api/assessments/draft?type=${assessmentType}`, {
+      await csrfFetch(`/api/assessments/draft?type=${assessmentType}`, {
         method: 'DELETE',
       })
       setHasDraft(false)
@@ -382,9 +382,8 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
       try {
         // Submit assessment via atomic API endpoint
         // This handles credit deduction and assessment saving in a single transaction
-        const response = await fetch('/api/assessments/submit', {
+        const response = await csrfFetch('/api/assessments/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             assessmentType,
             answers,
@@ -472,9 +471,8 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
 
     setSendingEmail(true)
     try {
-      const response = await fetch('/api/email/assessment-results', {
+      const response = await csrfFetch('/api/email/assessment-results', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           assessmentId,
           userId: user.id,

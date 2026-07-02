@@ -68,6 +68,7 @@ import { AssessmentType, ASSESSMENT_CONFIGS } from '@/lib/data/assessmentConfig'
 import UnlockCelebration from './UnlockCelebration'
 import AssessmentIntroScreen from './AssessmentIntroScreen'
 import { trackAssessmentStarted, trackAssessmentCompleted } from '@/lib/analytics/posthog'
+import { csrfFetch } from '@/lib/csrfFetch'
 
 type Step = 'overview' | LikertSection | 'results'
 
@@ -231,9 +232,8 @@ export function CILAssessmentTool() {
 
     setAutoSaveStatus('saving')
     try {
-      const response = await fetch('/api/assessments/draft', {
+      const response = await csrfFetch('/api/assessments/draft', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           assessmentType: 'cil',
           answers: answersToSave,
@@ -283,7 +283,7 @@ export function CILAssessmentTool() {
     if (!user || !hasDraft) return
 
     try {
-      await fetch('/api/assessments/draft?type=cil', {
+      await csrfFetch('/api/assessments/draft?type=cil', {
         method: 'DELETE',
       })
       setHasDraft(false)
@@ -422,9 +422,8 @@ export function CILAssessmentTool() {
         // Background save — don't block the UI
         ;(async () => {
           try {
-            const response = await fetch('/api/assessments/submit', {
+            const response = await csrfFetch('/api/assessments/submit', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 assessmentType: 'cil',
                 answers,
@@ -507,9 +506,8 @@ export function CILAssessmentTool() {
 
     setSendingEmail(true)
     try {
-      const response = await fetch('/api/email/assessment-results', {
+      const response = await csrfFetch('/api/email/assessment-results', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           assessmentId,
           userId: user.id,

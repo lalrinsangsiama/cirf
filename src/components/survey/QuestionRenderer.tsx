@@ -1,6 +1,14 @@
 'use client'
 
-import type { SurveyQuestion, AnswerValue } from '@/lib/survey/types'
+import type {
+  SurveyQuestion,
+  AnswerValue,
+  SingleSelectAnswer,
+  MultiSelectAnswer,
+  LikertMatrixAnswer,
+  TripleRatingAnswer,
+  RankingAnswer,
+} from '@/lib/survey/types'
 import { ConsentCheckbox } from './questions/ConsentCheckbox'
 import { SingleSelect } from './questions/SingleSelect'
 import { MultiSelectSurvey } from './questions/MultiSelectSurvey'
@@ -47,7 +55,7 @@ export function QuestionRenderer({ question, value, onChange }: QuestionRenderer
             options={question.options}
             hasOther={question.hasOther}
             conditionalTextOn={question.conditionalTextOn}
-            value={value as any}
+            value={value as SingleSelectAnswer | undefined}
             onChange={handleChange}
           />
         )}
@@ -59,7 +67,7 @@ export function QuestionRenderer({ question, value, onChange }: QuestionRenderer
             hasOther={question.hasOther}
             maxSelections={question.maxSelections}
             minSelections={question.minSelections}
-            value={value as any}
+            value={value as MultiSelectAnswer | undefined}
             onChange={handleChange}
           />
         )}
@@ -68,7 +76,7 @@ export function QuestionRenderer({ question, value, onChange }: QuestionRenderer
           <LikertMatrix
             statements={question.statements}
             scale={question.scale}
-            value={value as any}
+            value={value as LikertMatrixAnswer | undefined}
             onChange={handleChange}
           />
         )}
@@ -78,7 +86,7 @@ export function QuestionRenderer({ question, value, onChange }: QuestionRenderer
             indicators={question.indicators}
             dimensions={question.dimensions}
             scale={question.scale}
-            value={value as any}
+            value={value as TripleRatingAnswer | undefined}
             onChange={handleChange}
           />
         )}
@@ -97,7 +105,7 @@ export function QuestionRenderer({ question, value, onChange }: QuestionRenderer
         {question.type === 'ranking' && (
           <RankingQuestion
             items={question.items}
-            value={value as any}
+            value={value as RankingAnswer | undefined}
             onChange={handleChange}
           />
         )}

@@ -8,7 +8,7 @@ interface LogContext {
 const SENSITIVE_FIELDS = new Set([
   'password', 'token', 'secret', 'apiKey', 'api_key',
   'authorization', 'cookie', 'creditCard', 'credit_card',
-  'ssn', 'phone',
+  'ssn', 'phone', 'email', 'name', 'fullname', 'full_name',
 ])
 
 function scrubContext(context: LogContext): LogContext {

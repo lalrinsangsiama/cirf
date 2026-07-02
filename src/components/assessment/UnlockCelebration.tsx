@@ -15,6 +15,30 @@ interface UnlockCelebrationProps {
   completedAssessmentName?: string // Name of the assessment just completed
 }
 
+interface ConfettiPiece {
+  left: string
+  animationDelay: string
+  backgroundColor: string
+  width: string
+  height: string
+  borderRadius: string
+}
+
+function makeConfettiPieces(count: number): ConfettiPiece[] {
+  const colors = ['#D4A574', '#6B8E6B', '#5B8FA8', '#C17C5E']
+  return Array.from({ length: count }, () => {
+    const size = Math.random() * 10 + 5
+    return {
+      left: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 2}s`,
+      backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: Math.random() > 0.5 ? '50%' : '0',
+    }
+  })
+}
+
 export default function UnlockCelebration({
   isOpen,
   onClose,
@@ -23,13 +47,13 @@ export default function UnlockCelebration({
   grantedResources = [],
   completedAssessmentName,
 }: UnlockCelebrationProps) {
-  const [showConfetti, setShowConfetti] = useState(false)
+  const [confettiPieces, setConfettiPieces] = useState<ConfettiPiece[]>([])
 
   useEffect(() => {
     if (isOpen) {
-      setShowConfetti(true)
+      setConfettiPieces(makeConfettiPieces(50))
       // Auto-close confetti after animation
-      const timer = setTimeout(() => setShowConfetti(false), 3000)
+      const timer = setTimeout(() => setConfettiPieces([]), 3000)
       return () => clearTimeout(timer)
     }
   }, [isOpen])
@@ -63,23 +87,10 @@ export default function UnlockCelebration({
       />
 
       {/* Confetti Animation */}
-      {showConfetti && (
+      {confettiPieces.length > 0 && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-confetti"
-              style={{
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                backgroundColor: ['#D4A574', '#6B8E6B', '#5B8FA8', '#C17C5E'][
-                  Math.floor(Math.random() * 4)
-                ],
-                width: `${Math.random() * 10 + 5}px`,
-                height: `${Math.random() * 10 + 5}px`,
-                borderRadius: Math.random() > 0.5 ? '50%' : '0',
-              }}
-            />
+          {confettiPieces.map((piece, i) => (
+            <div key={i} className="absolute animate-confetti" style={piece} />
           ))}
         </div>
       )}

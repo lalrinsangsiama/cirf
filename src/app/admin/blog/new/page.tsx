@@ -18,6 +18,7 @@ import {
 
 import { BLOG_CATEGORIES } from '@/lib/data/blogCategories'
 import type { Citation } from '@/lib/data/blogContent'
+import { csrfFetch } from '@/lib/csrfFetch'
 
 const CATEGORIES = BLOG_CATEGORIES.filter(c => c.id !== 'all')
 
@@ -118,11 +119,8 @@ function NewBlogPostContent() {
     setError(null)
 
     try {
-      const response = await fetch('/api/ai/generate-post', {
+      const response = await csrfFetch('/api/ai/generate-post', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({ topic: aiTopic }),
       })
 

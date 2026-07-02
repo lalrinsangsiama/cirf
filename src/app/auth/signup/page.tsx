@@ -3,7 +3,7 @@
 import { useState, Suspense, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { useCsrf } from '@/hooks/useCsrf'
+import { csrfFetch } from '@/lib/csrfFetch'
 import { Mail, Lock, User, Building2, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { validateRedirectUrl } from '@/lib/utils/validateRedirect'
 
@@ -74,8 +74,6 @@ function SignupForm() {
     [formData.password]
   )
 
-  const { getCsrfHeaders } = useCsrf()
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData(prev => ({
       ...prev,
@@ -90,9 +88,8 @@ function SignupForm() {
 
     try {
       // Use rate-limited API endpoint
-      const response = await fetch('/api/auth/signup', {
+      const response = await csrfFetch('/api/auth/signup', {
         method: 'POST',
-        headers: getCsrfHeaders(),
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,

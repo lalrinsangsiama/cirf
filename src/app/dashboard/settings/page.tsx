@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { cn } from '@/lib/utils'
+import { csrfFetch } from '@/lib/csrfFetch'
 import {
   ArrowLeft,
   Settings,
@@ -73,9 +74,8 @@ export default function SettingsPage() {
     setDeleteError(null)
 
     try {
-      const response = await fetch('/api/user/delete-account', {
+      const response = await csrfFetch('/api/user/delete-account', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ confirmation: 'DELETE' }),
       })
 
