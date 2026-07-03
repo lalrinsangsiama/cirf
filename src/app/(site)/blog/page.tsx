@@ -47,7 +47,7 @@ export default async function BlogPage({
     query = query.eq('category', selectedCategory)
   }
 
-  const { data: posts } = await query
+  const { data: posts, error: postsError } = await query
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -170,16 +170,25 @@ export default async function BlogPage({
                 </Link>
               </>
             ) : (
-              <>
-                <h3 className="text-xl font-semibold text-ink mb-2">Blog Coming Soon</h3>
-                <p className="text-stone mb-4">
-                  We&apos;re preparing articles on cultural innovation, community resilience,
-                  and practical frameworks for cultural entrepreneurs.
-                </p>
-                <p className="text-stone text-sm mb-6">
-                  Subscribe below to be the first to know when we publish.
-                </p>
-              </>
+              postsError ? (
+                <>
+                  <h3 className="text-xl font-semibold text-ink mb-2">Articles Temporarily Unavailable</h3>
+                  <p className="text-stone mb-4">
+                    We couldn&apos;t load our articles right now. Please try again in a few minutes.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-xl font-semibold text-ink mb-2">Blog Coming Soon</h3>
+                  <p className="text-stone mb-4">
+                    We&apos;re preparing articles on cultural innovation, community resilience,
+                    and practical frameworks for cultural entrepreneurs.
+                  </p>
+                  <p className="text-stone text-sm mb-6">
+                    Subscribe below to be the first to know when we publish.
+                  </p>
+                </>
+              )
             )}
           </div>
         )}

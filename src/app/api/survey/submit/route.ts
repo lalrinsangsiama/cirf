@@ -11,7 +11,7 @@ const SUBMIT_RATE_LIMIT = {
 
 export async function POST(request: NextRequest) {
   const rateCheck = checkRateLimit(request, SUBMIT_RATE_LIMIT)
-  if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime)
+  if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime, SUBMIT_RATE_LIMIT.message)
 
   try {
     const { data: body, error: parseErr } = await parseJsonBody<{

@@ -11,7 +11,8 @@ import { AssessmentType } from '@/lib/data/assessmentConfig'
 // Request schema for saving draft
 const saveDraftSchema = z.object({
   assessmentType: z.enum(['cil', 'cimm', 'cira', 'tbl', 'ciss', 'pricing']),
-  answers: z.record(z.string(), z.union([z.number(), z.string().max(1000), z.array(z.string().max(100)).max(20)])).refine(
+  // String max must cover the UI's textarea maxLength (2000 in LikertScale)
+  answers: z.record(z.string(), z.union([z.number(), z.string().max(2000), z.array(z.string().max(100)).max(20)])).refine(
     (obj) => Object.keys(obj).length <= 500,
     { message: 'Too many answer keys' }
   ),

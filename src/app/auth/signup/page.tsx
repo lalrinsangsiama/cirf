@@ -68,6 +68,7 @@ function SignupForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [needsConfirmation, setNeedsConfirmation] = useState(true)
 
   const passwordStrength = useMemo(
     () => getPasswordStrength(formData.password),
@@ -114,6 +115,7 @@ function SignupForm() {
         return
       }
 
+      setNeedsConfirmation(result.data?.requiresEmailConfirmation !== false)
       setSuccess(true)
       setLoading(false)
     } catch {
@@ -128,16 +130,24 @@ function SignupForm() {
         <div className="w-16 h-16 bg-sage/20 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle className="w-8 h-8 text-sage" />
         </div>
-        <h1 className="text-2xl font-serif font-bold text-ink mb-2">Check your email</h1>
+        <h1 className="text-2xl font-serif font-bold text-ink mb-2">
+          {needsConfirmation ? 'Check your email' : 'Account created'}
+        </h1>
         <p className="text-stone mb-6">
-          We&apos;ve sent a confirmation link to <strong>{formData.email}</strong>.
-          Click the link to activate your account.
+          {needsConfirmation ? (
+            <>
+              We&apos;ve sent a confirmation link to <strong>{formData.email}</strong>.
+              Click the link to activate your account.
+            </>
+          ) : (
+            <>Your account is ready. You can sign in now.</>
+          )}
         </p>
         <Link
           href="/auth/login"
           className="inline-flex items-center gap-2 text-gold font-medium hover:underline"
         >
-          Back to login
+          {needsConfirmation ? 'Back to login' : 'Sign in'}
         </Link>
       </div>
     )

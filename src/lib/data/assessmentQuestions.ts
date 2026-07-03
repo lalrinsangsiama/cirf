@@ -1030,6 +1030,7 @@ export const questionConfig = {
   questionConstructs: Object.fromEntries(
     likertQuestions.map(q => [q.id, q.construct])
   ) as Record<string, string>,
+  reverseQuestions: likertQuestions.filter(q => q.reverse).map(q => q.id),
 }
 
 // Total question counts

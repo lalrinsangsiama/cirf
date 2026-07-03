@@ -1311,6 +1311,146 @@ export const RECOMMENDATION_LIBRARY: Record<ConstructId, RecommendationVariant[]
       priority: 'high',
     },
   ],
+  // Cultural Capital (additional constructs)
+  culturalMechanisms: [
+    {
+      id: 'cultmech-default',
+      context: { construct: 'culturalMechanisms' },
+      title: 'Strengthen How Cultural Knowledge Is Passed On',
+      description:
+        'Build reliable transmission mechanisms — apprenticeships, mentoring, and structured teaching — so cultural knowledge moves between generations instead of resting with a few individuals.',
+      actionSteps: [
+        { action: 'Map how each core cultural practice is currently taught and by whom', timeframe: 'this-week' },
+        { action: 'Pair experienced practitioners with at least one learner in a defined mentoring arrangement', timeframe: 'this-month' },
+        { action: 'Create simple teaching materials (guides, videos, recorded demonstrations) for the most critical skills', timeframe: 'this-quarter' },
+        { action: 'Review transmission progress with practitioners and learners twice a year', timeframe: 'ongoing' },
+      ],
+      impact: 'Reliable transmission mechanisms keep cultural knowledge alive and reduce dependence on individual knowledge holders',
+      priority: 'high',
+    },
+  ],
+  culturalConsumption: [
+    {
+      id: 'cultcons-default',
+      context: { construct: 'culturalConsumption' },
+      title: 'Grow Community Engagement with Your Cultural Offerings',
+      description:
+        'Increase how often and how deeply your community engages with your cultural products and experiences, building the audience base your enterprise depends on.',
+      actionSteps: [
+        { action: 'Identify your three most engaged audience segments and what draws them', timeframe: 'this-week' },
+        { action: 'Launch one recurring touchpoint (event series, newsletter, open studio) that invites repeat engagement', timeframe: 'this-month' },
+        { action: 'Lower barriers to first-time participation with introductory offerings or community days', timeframe: 'this-quarter' },
+        { action: 'Track participation and repeat-engagement rates to see what deepens involvement', timeframe: 'ongoing' },
+      ],
+      impact: 'A consistently engaged audience sustains demand and amplifies cultural value',
+      priority: 'medium',
+    },
+  ],
+  // Innovation Activities (additional constructs)
+  businessModelAdaptation: [
+    {
+      id: 'bizmodel-default',
+      context: { construct: 'businessModelAdaptation' },
+      title: 'Make Your Business Model Adaptable',
+      description:
+        'Regularly test and adjust how you create and capture value so the enterprise can shift when markets, costs, or audience behavior change.',
+      actionSteps: [
+        { action: 'Sketch your current business model and mark the assumptions most at risk', timeframe: 'this-week' },
+        { action: 'Pilot one alternative revenue or delivery approach (subscriptions, workshops, licensing, digital)', timeframe: 'this-quarter' },
+        { action: 'Set a quarterly review to compare model performance and retire what underperforms', timeframe: 'ongoing' },
+        { action: 'Document lessons from each pilot so future adaptations start from evidence', timeframe: 'ongoing' },
+      ],
+      impact: 'An adaptable business model lets the enterprise absorb market shifts without crisis',
+      priority: 'high',
+    },
+  ],
+  knowledgeDiversity: [
+    {
+      id: 'knowdiv-default',
+      context: { construct: 'knowledgeDiversity' },
+      title: 'Broaden the Knowledge Feeding Your Innovation',
+      description:
+        'Draw on a wider mix of knowledge sources — other disciplines, industries, and communities — so new ideas come from combination rather than repetition.',
+      actionSteps: [
+        { action: 'List the knowledge sources behind your last three innovations and note the gaps', timeframe: 'this-week' },
+        { action: 'Connect with two practitioners or experts outside your immediate field', timeframe: 'this-month' },
+        { action: 'Run one cross-disciplinary collaboration or learning exchange', timeframe: 'this-quarter' },
+        { action: 'Build ongoing input channels (reading groups, guest sessions, community consultations)', timeframe: 'ongoing' },
+      ],
+      impact: 'Diverse knowledge inputs consistently produce more novel and resilient innovations',
+      priority: 'medium',
+    },
+  ],
+  // Organizational Capacities (additional constructs)
+  purposeClarity: [
+    {
+      id: 'purpose-default',
+      context: { construct: 'purposeClarity' },
+      title: 'Sharpen and Share Your Purpose',
+      description:
+        'Make the enterprise\'s cultural and economic purpose explicit and shared, so decisions, priorities, and partnerships align without constant renegotiation.',
+      actionSteps: [
+        { action: 'Write a one-paragraph purpose statement covering both cultural mission and economic goals', timeframe: 'this-week' },
+        { action: 'Test it with team and community members and revise until it resonates', timeframe: 'this-month' },
+        { action: 'Use the statement to screen one real decision (a partnership, product, or investment)', timeframe: 'this-quarter' },
+        { action: 'Revisit the purpose annually as the enterprise and community evolve', timeframe: 'ongoing' },
+      ],
+      impact: 'Shared purpose speeds decisions and keeps growth aligned with cultural mission',
+      priority: 'medium',
+    },
+  ],
+  dependencyRisk: [
+    {
+      id: 'keyperson-default',
+      context: { construct: 'dependencyRisk' },
+      title: 'Reduce Key-Person Dependency',
+      description:
+        'Spread critical knowledge, relationships, and responsibilities beyond one or two people so the enterprise can operate through departures, illness, or transitions.',
+      actionSteps: [
+        { action: 'Identify the tasks, relationships, and knowledge that depend on a single person', timeframe: 'this-week' },
+        { action: 'Document the two most critical processes so someone else could run them', timeframe: 'this-month' },
+        { action: 'Cross-train at least one backup for each critical role', timeframe: 'this-quarter' },
+        { action: 'Introduce shared ownership of key external relationships (funders, partners, elders)', timeframe: 'ongoing' },
+      ],
+      impact: 'Distributing critical knowledge removes the single point of failure that sinks many cultural enterprises',
+      priority: 'critical',
+    },
+  ],
+  // Economic Resilience (additional constructs)
+  culturalInnovationPathway: [
+    {
+      id: 'cipathway-default',
+      context: { construct: 'culturalInnovationPathway' },
+      title: 'Build a Clear Path from Tradition to New Value',
+      description:
+        'Define how traditional practices become new products, services, and revenue — a repeatable pathway rather than one-off experiments.',
+      actionSteps: [
+        { action: 'Pick one traditional practice with untapped potential and define a target offering', timeframe: 'this-week' },
+        { action: 'Prototype the offering with community input to keep cultural integrity intact', timeframe: 'this-quarter' },
+        { action: 'Establish criteria for which traditions can be adapted commercially and which are protected', timeframe: 'this-quarter' },
+        { action: 'Turn successful experiments into a documented innovation process the team can repeat', timeframe: 'ongoing' },
+      ],
+      impact: 'A repeatable innovation pathway converts cultural depth into sustained economic value',
+      priority: 'high',
+    },
+  ],
+  employmentProtection: [
+    {
+      id: 'employprot-default',
+      context: { construct: 'employmentProtection' },
+      title: 'Protect Jobs Through Downturns',
+      description:
+        'Put practices in place — flexible arrangements, reserves, work-sharing — that keep skilled people employed through shocks instead of losing them permanently.',
+      actionSteps: [
+        { action: 'Estimate the minimum monthly cost of retaining your core team', timeframe: 'this-week' },
+        { action: 'Define a downturn plan (reduced hours, role sharing, temporary redeployment) before it is needed', timeframe: 'this-month' },
+        { action: 'Build a payroll reserve or access to bridge financing covering 2-3 months', timeframe: 'this-quarter' },
+        { action: 'Review retention capacity after each season or major contract cycle', timeframe: 'ongoing' },
+      ],
+      impact: 'Retaining skilled people through shocks preserves the capabilities recovery depends on',
+      priority: 'high',
+    },
+  ],
 }
 
 /**

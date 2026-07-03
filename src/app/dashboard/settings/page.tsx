@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/components/auth/AuthProvider'
@@ -32,6 +32,13 @@ export default function SettingsPage() {
   const [exportSuccess, setExportSuccess] = useState(false)
   const [exportError, setExportError] = useState<string | null>(null)
 
+  // Client-side auth fallback (middleware handles the server-side redirect)
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/auth/login?redirectTo=/dashboard/settings')
+    }
+  }, [authLoading, user, router])
+
   const handleExportData = async () => {
     if (!user) return
 
@@ -49,7 +56,12 @@ export default function SettingsPage() {
         throw new Error(data.error?.message || 'Failed to export data')
       }
 
-      const blob = await response.blob()
+      // Unwrap the API envelope so the downloaded file is the export itself
+      const payload = await response.json()
+      const blob = new Blob(
+        [JSON.stringify(payload.data ?? payload, null, 2)],
+        { type: 'application/json' }
+      )
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
@@ -108,7 +120,6 @@ export default function SettingsPage() {
   }
 
   if (!user) {
-    router.push('/auth/login?redirectTo=/dashboard/settings')
     return null
   }
 

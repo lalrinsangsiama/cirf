@@ -27,7 +27,7 @@ export function BlogNewsletterForm() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to subscribe')
+        throw new Error(data.error?.message || 'Failed to subscribe')
       }
 
       setStatus({ type: 'success', message: data.message })

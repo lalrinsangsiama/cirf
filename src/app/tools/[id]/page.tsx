@@ -76,15 +76,18 @@ export default function ToolPage({ params }: PageProps) {
         const supabase = createClient()
         const { data } = await supabase
           .from('assessments')
-          .select('score, section_scores, assessment_type')
+          .select('score, interpretation, assessment_type')
           .eq('user_id', user.id)
           .eq('assessment_type', mapping.assessmentType)
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle()
 
-        if (data?.section_scores) {
-          const scores = data.section_scores as Record<string, number>
+        // Section scores are stored inside the interpretation JSONB
+        // (see /api/assessments/submit) — there is no section_scores column
+        const sectionScoresRaw = (data?.interpretation as { sectionScores?: Record<string, number> } | null)?.sectionScores
+        if (sectionScoresRaw) {
+          const scores = sectionScoresRaw
           const values: Record<string, number> = {}
 
           for (const [inputId, sectionId] of Object.entries(mapping.inputMappings)) {

@@ -111,13 +111,13 @@ export const TOOL_PAGE_CONFIGS: Record<string, ToolPageConfig> = {
     name: 'Innovation Inclusivity Score',
     description: 'Evaluates participation and benefit distribution across marginalized groups.',
     formula: 'IIS = (Marginalized Participants / Total Participants) × Benefit Share %',
-    formulaExplanation: 'Measures both participation and benefit equity. A score above 50% indicates inclusive innovation practices.',
+    formulaExplanation: 'Measures both participation and benefit equity. A score above 35% indicates inclusive innovation practices.',
     inputs: [
       { id: 'margParticipants', label: 'Marginalized Group Participants', type: 'number', min: 0, max: 100000, step: 1, defaultValue: 30 },
       { id: 'totalParticipants', label: 'Total Participants', type: 'number', min: 1, max: 100000, step: 1, defaultValue: 100 },
       { id: 'benefitShare', label: 'Benefit Share to Marginalized Groups', type: 'percentage', min: 0, max: 100, step: 1, defaultValue: 40, unit: '%' },
     ],
-    calculate: (v) => (v.margParticipants / v.totalParticipants) * v.benefitShare,
+    calculate: (v) => Math.min(100, (v.margParticipants / v.totalParticipants) * v.benefitShare),
     formatResult: (r) => `${r.toFixed(1)}%`,
     interpretations: [
       { min: 0, max: 15, label: 'Exclusive', color: 'terracotta', description: 'Innovation benefits are not reaching marginalized groups.', actions: ['Conduct inclusivity audit', 'Create targeted outreach programs', 'Establish benefit-sharing agreements'] },
@@ -208,7 +208,7 @@ export const TOOL_PAGE_CONFIGS: Record<string, ToolPageConfig> = {
       { id: 'enhancing', label: 'Culture-Enhancing Innovations', type: 'number', min: 0, max: 1000, step: 1, defaultValue: 5, helpText: 'Innovations that extend/enrich cultural practices' },
       { id: 'total', label: 'Total Innovation Count', type: 'number', min: 1, max: 1000, step: 1, defaultValue: 20, helpText: 'All innovations including purely commercial ones' },
     ],
-    calculate: (v) => ((v.maintaining + v.enhancing) / v.total) * 100,
+    calculate: (v) => Math.min(100, ((v.maintaining + v.enhancing) / v.total) * 100),
     formatResult: (r) => `${Math.round(r)}%`,
     interpretations: [
       { min: 0, max: 30, label: 'Erosion Risk', color: 'terracotta', description: 'Most innovations are not connected to cultural preservation.', actions: ['Conduct cultural impact assessment', 'Create cultural preservation requirements', 'Engage cultural elders in innovation process'] },

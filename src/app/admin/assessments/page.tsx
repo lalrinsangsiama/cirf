@@ -126,6 +126,7 @@ export default function AdminAssessmentsPage() {
   const [dateFilter, setDateFilter] = useState('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'table' | 'analytics'>('analytics')
+  const [fetchError, setFetchError] = useState<string | null>(null)
 
   const supabase = createClient()
 
@@ -183,6 +184,8 @@ export default function AdminAssessmentsPage() {
     ])
 
     const unified: UnifiedRow[] = []
+
+    setFetchError(completedRes.error?.message || draftsRes.error?.message || null)
 
     if (completedRes.data) {
       for (const item of completedRes.data) {
@@ -940,7 +943,13 @@ export default function AdminAssessmentsPage() {
 
             {/* Results Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-stone/10 overflow-hidden">
-              {filteredRows.length === 0 ? (
+              {fetchError ? (
+                <div className="p-12 text-center">
+                  <ClipboardCheck className="w-12 h-12 text-terracotta/40 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-ink mb-2">Failed to load assessments</h3>
+                  <p className="text-terracotta text-sm">{fetchError}</p>
+                </div>
+              ) : filteredRows.length === 0 ? (
                 <div className="p-12 text-center">
                   <ClipboardCheck className="w-12 h-12 text-stone/40 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-ink mb-2">No assessments found</h3>

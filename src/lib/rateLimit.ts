@@ -118,9 +118,14 @@ export function rateLimitResponse(
 ): NextResponse {
   const retryAfter = Math.ceil((resetTime - Date.now()) / 1000)
 
+  // Same envelope as errorResponse() so clients can always read error.message
   return NextResponse.json(
     {
-      error: message || 'Too many requests. Please try again later.',
+      success: false,
+      error: {
+        code: 'RATE_LIMITED',
+        message: message || 'Too many requests. Please try again later.',
+      },
       retryAfter,
     },
     {

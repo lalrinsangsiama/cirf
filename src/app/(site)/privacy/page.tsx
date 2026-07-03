@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | CIL',
+  title: 'Privacy Policy',
   description: 'Learn how the Cultural Innovation Lab collects, uses, and protects your personal data.',
 }
 

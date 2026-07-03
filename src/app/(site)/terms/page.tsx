@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | CIL',
+  title: 'Terms of Service',
   description: 'Terms and conditions for using the Cultural Innovation Lab platform and services.',
 }
 

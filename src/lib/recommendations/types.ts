@@ -93,6 +93,8 @@ export type ConstructId =
   | 'practitionerRelationships'
   | 'culturalMembership'
   | 'culturalMeaning'
+  | 'culturalMechanisms'
+  | 'culturalConsumption'
   // Innovation Activities
   | 'productDevelopment'
   | 'techniqueCombination'
@@ -103,6 +105,8 @@ export type ConstructId =
   | 'externalCollaboration'
   | 'feedbackIteration'
   | 'narrativeInnovation'
+  | 'businessModelAdaptation'
+  | 'knowledgeDiversity'
   // Organizational Capacities
   | 'adaptiveResponse'
   | 'learningFromSetbacks'
@@ -113,6 +117,8 @@ export type ConstructId =
   | 'communityDecisionMaking'
   | 'benefitDistribution'
   | 'allianceNetworks'
+  | 'purposeClarity'
+  | 'dependencyRisk'
   // Economic Resilience
   | 'revenueRetention'
   | 'teamRetention'
@@ -124,6 +130,8 @@ export type ConstructId =
   | 'intergenerationalPlanning'
   | 'revenueDiversification'
   | 'culturalBrandPremium'
+  | 'culturalInnovationPathway'
+  | 'employmentProtection'
 
 /**
  * Context used for matching recommendations
@@ -239,6 +247,8 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   practitionerRelationships: 'Practitioner Relationships',
   culturalMembership: 'Cultural Membership',
   culturalMeaning: 'Cultural Meaning Preservation',
+  culturalMechanisms: 'Cultural Transmission Mechanisms',
+  culturalConsumption: 'Cultural Engagement & Consumption',
   // Innovation Activities
   productDevelopment: 'Innovation Pipeline',
   techniqueCombination: 'Technique Innovation',
@@ -249,6 +259,8 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   externalCollaboration: 'External Collaboration',
   feedbackIteration: 'Feedback & Iteration',
   narrativeInnovation: 'Cultural Narrative Innovation',
+  businessModelAdaptation: 'Business Model Adaptation',
+  knowledgeDiversity: 'Knowledge Diversity',
   // Organizational Capacities
   adaptiveResponse: 'Adaptive Capacity',
   learningFromSetbacks: 'Learning Systems',
@@ -259,6 +271,8 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   communityDecisionMaking: 'Community Governance',
   benefitDistribution: 'Benefit Distribution',
   allianceNetworks: 'Alliance Networks',
+  purposeClarity: 'Purpose Clarity',
+  dependencyRisk: 'Key-Person Resilience',
   // Economic Resilience
   revenueRetention: 'Revenue Retention',
   teamRetention: 'Team Retention',
@@ -270,6 +284,8 @@ export const CONSTRUCT_LABELS: Record<ConstructId, string> = {
   intergenerationalPlanning: 'Intergenerational Planning',
   revenueDiversification: 'Revenue Diversification',
   culturalBrandPremium: 'Cultural Brand Premium',
+  culturalInnovationPathway: 'Cultural Innovation Pathway',
+  employmentProtection: 'Employment Protection',
 }
 
 /**

@@ -45,6 +45,7 @@ export default function AdminBlogPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [actionError, setActionError] = useState<string | null>(null)
 
   const supabase = createClient()
 
@@ -67,6 +68,7 @@ export default function AdminBlogPage() {
       .select('id, slug, title, excerpt, category, status, published_at, created_at, view_count')
       .order('created_at', { ascending: false })
 
+    setActionError(error ? `Failed to load posts: ${error.message}` : null)
     if (data) {
       setPosts(data)
     }
@@ -79,7 +81,10 @@ export default function AdminBlogPage() {
     setDeleting(id)
     const { error } = await supabase.from('blog_posts').delete().eq('id', id)
 
-    if (!error) {
+    if (error) {
+      setActionError(`Failed to delete post: ${error.message}`)
+    } else {
+      setActionError(null)
       setPosts(posts.filter(p => p.id !== id))
     }
     setDeleting(null)
@@ -95,13 +100,16 @@ export default function AdminBlogPage() {
 
     const { error } = await supabase.from('blog_posts').update(updates).eq('id', id)
 
-    if (!error) {
-      setPosts(posts.map(p =>
-        p.id === id
-          ? { ...p, status: newStatus, published_at: newStatus === 'published' ? new Date().toISOString() : p.published_at }
-          : p
-      ))
+    if (error) {
+      setActionError(`Failed to update post: ${error.message}`)
+      return
     }
+    setActionError(null)
+    setPosts(posts.map(p =>
+      p.id === id
+        ? { ...p, status: newStatus, published_at: newStatus === 'published' ? new Date().toISOString() : p.published_at }
+        : p
+    ))
   }
 
   const filteredPosts = posts.filter(post => {
@@ -167,6 +175,13 @@ export default function AdminBlogPage() {
             </Link>
           </div>
         </div>
+
+        {/* Action/fetch errors */}
+        {actionError && (
+          <div className="mb-6 p-4 bg-terracotta/10 border border-terracotta/20 rounded-xl">
+            <p className="text-sm text-terracotta">{actionError}</p>
+          </div>
+        )}
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">

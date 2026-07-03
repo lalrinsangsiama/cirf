@@ -277,6 +277,17 @@ export default function ResourcesPage() {
                         </>
                       )}
                     </button>
+                  ) : resource.isPremiumUpsell ? (
+                    // Premium upsells have no unlock/purchase path yet — never
+                    // promise "Complete X to Unlock" (grantResourceAccess
+                    // excludes isPremiumUpsell resources)
+                    <button
+                      disabled
+                      className="w-full btn-secondary flex items-center justify-center gap-2 opacity-60 cursor-not-allowed"
+                    >
+                      <Bell className="w-4 h-4" />
+                      Coming Soon
+                    </button>
                   ) : !user ? (
                     <Link
                       href="/auth/signup?redirectTo=/resources"

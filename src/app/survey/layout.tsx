@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'CIRF Expert Validation Survey | Cultural Innovation Lab',
+  title: 'CIRF Expert Validation Survey',
   description: 'Expert validation questionnaire for the Cultural Innovation Resilience Framework (CIRF) — doctoral research study by Lalrinngheti Sangsiama.',
   robots: { index: false, follow: false },
 }

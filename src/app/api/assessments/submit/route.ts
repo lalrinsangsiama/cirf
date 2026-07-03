@@ -7,6 +7,7 @@ import { Errors } from '@/lib/api/errors'
 import { logger } from '@/lib/logger'
 import { checkRateLimit, apiRateLimit } from '@/lib/rateLimit'
 import { AssessmentType, ASSESSMENT_CONFIGS, getScoreInterpretation } from '@/lib/data/assessmentConfig'
+import { calculateAssessmentResult, type AssessmentAnswers } from '@/lib/assessment/scoring'
 import { handleAssessmentCompletion } from '@/lib/services/assessmentUnlockService'
 
 // Scoring utilities for server-side calculation
@@ -262,9 +263,53 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Calculate score server-side (never trust client-calculated scores)
-    const { overallScore, sectionScores, constructScores } = calculateScore(answers, assessmentType)
-    const interpretation = getScoreInterpretation(overallScore)
+    // Calculate score server-side (never trust client-calculated scores).
+    // CIL uses the same scoring module the client renders results from
+    // (construct grouping, section weights, synergy bonus) so the stored/
+    // emailed score always matches what the user saw. Secondary assessments
+    // use the flat weighted mean below.
+    let overallScore: number
+    let sectionScores: Record<string, number>
+    let constructScores: Record<string, number>
+    let interpretationPayload: {
+      level: string
+      description: string
+      color: string
+      [key: string]: unknown
+    }
+
+    if (assessmentType === 'cil') {
+      const result = calculateAssessmentResult(answers as AssessmentAnswers, questionConfig)
+      overallScore = result.overallScore
+      sectionScores = Object.fromEntries(
+        result.sectionScores
+          .filter(s => s.section !== 'demographics')
+          .map(s => [s.section, s.score])
+      )
+      constructScores = result.constructScores
+      interpretationPayload = {
+        level: result.interpretation.level,
+        description: result.interpretation.description,
+        color: result.interpretation.color,
+        successRate: result.interpretation.successRate,
+        synergyBonus: result.synergyBonus,
+        sectionScores,
+        constructScores,
+      }
+    } else {
+      const calculated = calculateScore(answers, assessmentType)
+      overallScore = calculated.overallScore
+      sectionScores = calculated.sectionScores
+      constructScores = calculated.constructScores
+      const interpretation = getScoreInterpretation(overallScore)
+      interpretationPayload = {
+        level: interpretation.level,
+        description: interpretation.description,
+        color: interpretation.color,
+        sectionScores,
+        constructScores,
+      }
+    }
 
     // Determine if this assessment requires credits
     const requiresCredit = config.creditCost > 0
@@ -278,13 +323,7 @@ export async function POST(request: NextRequest) {
       p_assessment_type: assessmentType,
       p_answers: answers,
       p_score: overallScore,
-      p_interpretation: {
-        level: interpretation.level,
-        description: interpretation.description,
-        color: interpretation.color,
-        sectionScores,
-        constructScores,
-      },
+      p_interpretation: interpretationPayload,
       p_requires_credit: requiresCredit,
     })
 
@@ -375,9 +414,9 @@ export async function POST(request: NextRequest) {
       assessmentId,
       score: overallScore,
       interpretation: {
-        level: interpretation.level,
-        description: interpretation.description,
-        color: interpretation.color,
+        level: interpretationPayload.level,
+        description: interpretationPayload.description,
+        color: interpretationPayload.color,
       },
       sectionScores,
       constructScores,

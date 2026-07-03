@@ -220,6 +220,7 @@ export interface SectionScore {
 export interface AssessmentResult {
   overallScore: number // CIL Score (0-100)
   sectionScores: SectionScore[]
+  constructScores: Record<string, number> // 0-1 scale, across all sections
   synergyBonus: number
   activeSynergies: typeof SYNERGY_PAIRS
   interpretation: ScoreInterpretation
@@ -435,9 +436,23 @@ export function calculateAssessmentResult(
   questionConfig: {
     sectionQuestions: Record<AssessmentSection, string[]>
     questionConstructs: Record<string, string>
+    reverseQuestions?: string[]
   }
 ): AssessmentResult {
-  const { sectionQuestions, questionConstructs } = questionConfig
+  const { sectionQuestions, questionConstructs, reverseQuestions = [] } = questionConfig
+
+  // Apply reverse scoring (e.g. oc-11 "depends heavily on one or two key
+  // people") before any construct math, mirroring the server-side scorer.
+  if (reverseQuestions.length > 0) {
+    const flipped: AssessmentAnswers = { ...answers }
+    for (const id of reverseQuestions) {
+      const v = flipped[id]
+      if (typeof v === 'number' && v >= 1 && v <= 7) {
+        flipped[id] = 8 - v
+      }
+    }
+    answers = flipped
+  }
 
   // Calculate construct scores
   const constructScores: Record<string, number> = {}
@@ -537,6 +552,7 @@ export function calculateAssessmentResult(
   return {
     overallScore: Math.round(overallScore),
     sectionScores,
+    constructScores,
     synergyBonus: Math.round(synergyBonus * 100),
     activeSynergies,
     interpretation,

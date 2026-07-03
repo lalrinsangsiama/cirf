@@ -13,10 +13,7 @@ import {
   getAssessmentConfig,
   getScoreInterpretation,
 } from '@/lib/data/assessmentConfig'
-import {
-  checkAssessmentAccess,
-  getUserUnlockStatus,
-} from '@/lib/services/assessmentUnlockService'
+import { checkAssessmentAccess } from '@/lib/services/assessmentUnlockService'
 import { cn } from '@/lib/utils'
 import { logger } from '@/lib/logger'
 import {
@@ -58,10 +55,6 @@ import { tblQuestions, TBL_SECTION_META } from '@/lib/data/tblQuestions'
 import { cissQuestions, CISS_SECTION_META } from '@/lib/data/cissQuestions'
 import { pricingQuestions, PRICING_SECTION_META } from '@/lib/data/pricingQuestions'
 import { csrfFetch } from '@/lib/csrfFetch'
-
-interface PageProps {
-  params: { type: string }
-}
 
 // Section meta type
 interface SectionMetaItem {
@@ -203,12 +196,17 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
   const assessmentType = type as AssessmentType
   const config = ASSESSMENT_CONFIGS[assessmentType]
 
-  // Redirect if invalid assessment type
+  // Redirect if invalid assessment type. The CIL assessment itself lives in
+  // the interactive tool on /tools — this page has no CIL questions.
   useEffect(() => {
+    if (type === 'cil') {
+      router.replace('/tools?start=cil')
+      return
+    }
     if (!config) {
       router.push('/dashboard')
     }
-  }, [config, router])
+  }, [type, config, router])
 
   // Check access and existing submission
   useEffect(() => {
@@ -221,7 +219,7 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
       // Check if user already completed this assessment (1 response per person)
       const { data: existing } = await supabase
         .from('assessments')
-        .select('id, score, interpretation, created_at')
+        .select('id, score, interpretation, answers, created_at')
         .eq('user_id', user.id)
         .eq('assessment_type', assessmentType)
         .maybeSingle()
@@ -231,6 +229,11 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
         setExistingScore(existing.score)
         setExistingDate(existing.created_at)
         setAssessmentId(existing.id)
+        // Restore saved answers so the results view recomputes the real
+        // scores instead of rendering 0 from an empty answer set
+        if (existing.answers && typeof existing.answers === 'object') {
+          setAnswers(existing.answers as Record<string, number | string>)
+        }
         // Show results view with existing data
         setShowResults(true)
       }
@@ -491,9 +494,13 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
             return prev - 1
           })
         }, 1000)
+      } else {
+        const data = await response.json().catch(() => null)
+        setError(data?.error?.message || 'Failed to send results email. Please try again.')
       }
     } catch (error) {
       logger.error('Error sending email', {}, error instanceof Error ? error : undefined)
+      setError('Failed to send results email. Please try again.')
     }
     setSendingEmail(false)
   }
@@ -541,7 +548,7 @@ export default function AssessmentPage({ params }: { params: Promise<{ type: str
                   Sign In
                 </Link>
               ) : requirement ? (
-                <Link href="/assessments/cil" className="btn-primary">
+                <Link href="/tools?start=cil" className="btn-primary">
                   Take {requirement.name} Assessment
                 </Link>
               ) : null}

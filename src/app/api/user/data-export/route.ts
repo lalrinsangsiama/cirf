@@ -104,7 +104,7 @@ export async function GET(request: NextRequest) {
       transactionCount: exportData.metadata.totalTransactions,
     })
 
-    return successResponse({ data: exportData })
+    return successResponse(exportData)
   } catch (error) {
     logger.error('Data export error', {
       path: '/api/user/data-export',

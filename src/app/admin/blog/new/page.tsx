@@ -124,19 +124,22 @@ function NewBlogPostContent() {
         body: JSON.stringify({ topic: aiTopic }),
       })
 
-      const data = await response.json()
+      const payload = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to generate content')
+        throw new Error(payload.error?.message || 'Failed to generate content')
       }
+
+      // successResponse wraps the generated post as { success, data: {...} }
+      const post = payload.data || {}
 
       setFormData(prev => ({
         ...prev,
-        title: data.title || prev.title,
-        excerpt: data.excerpt || prev.excerpt,
-        content: data.content || prev.content,
-        citations: data.citations || prev.citations,
-        slug: generateSlug(data.title || prev.title),
+        title: post.title || prev.title,
+        excerpt: post.excerpt || prev.excerpt,
+        content: post.content || prev.content,
+        citations: post.citations || prev.citations,
+        slug: generateSlug(post.title || prev.title),
       }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate content')

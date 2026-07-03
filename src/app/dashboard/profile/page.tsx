@@ -112,6 +112,13 @@ export default function ProfileEditPage() {
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Client-side auth fallback (middleware handles the server-side redirect)
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/auth/login?redirectTo=/dashboard/profile')
+    }
+  }, [authLoading, user, router])
+
   // Populate form with existing profile data
   useEffect(() => {
     if (profile) {
@@ -191,7 +198,6 @@ export default function ProfileEditPage() {
   }
 
   if (!user) {
-    router.push('/auth/login?redirectTo=/dashboard/profile')
     return null
   }
 

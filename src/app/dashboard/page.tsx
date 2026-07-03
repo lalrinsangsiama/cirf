@@ -371,7 +371,7 @@ export default function DashboardPage() {
                 const cilStatus = progressSummary?.assessmentStatuses?.cil
                 return (
                   <Link
-                    href="/assessments/cil"
+                    href="/tools?start=cil"
                     className={cn(
                       'flex-shrink-0 px-4 py-3 rounded-xl border-2 transition-all min-w-[100px] text-center',
                       cilStatus?.isCompleted
@@ -401,7 +401,7 @@ export default function DashboardPage() {
                 return (
                   <div key={type} className="flex items-center gap-2 flex-shrink-0">
                     <Link
-                      href={isUnlocked ? `/assessments/${type}` : '/assessments/cil'}
+                      href={isUnlocked ? `/assessments/${type}` : '/tools?start=cil'}
                       className={cn(
                         'px-3 py-3 rounded-xl border transition-all min-w-[80px] text-center',
                         isCompleted
@@ -526,7 +526,7 @@ export default function DashboardPage() {
                   </div>
                   <h3 className="text-lg font-semibold text-ink mb-2">Welcome to CIL!</h3>
                   <p className="text-stone text-sm max-w-md mx-auto">
-                    Start your journey by taking the CIL Assessment — it takes about 10 minutes and unlocks personalized tools and insights.
+                    Start your journey by taking the CIL Assessment — it takes about 20 minutes and unlocks personalized tools and insights.
                   </p>
                 </div>
 
@@ -552,7 +552,7 @@ export default function DashboardPage() {
 
                 <div className="text-center">
                   <Link
-                    href="/assessments/cil"
+                    href="/tools?start=cil"
                     className="inline-flex items-center gap-2 bg-ink text-pearl px-6 py-3 rounded-full font-medium hover:bg-ink/90 transition-colors"
                   >
                     Take CIL Assessment

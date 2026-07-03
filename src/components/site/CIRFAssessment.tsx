@@ -25,6 +25,7 @@ export function CIRFAssessment() {
   const [sectors, setSectors] = useState<string[]>([])
   const [animClass, setAnimClass] = useState('animate-fade-in-up')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [emailStatus, setEmailStatus] = useState<'pending' | 'sent' | 'failed'>('pending')
 
   const pillarOrder: Step[] = ['info', 1, 2, 3, 4, 'results']
   const currentIdx = pillarOrder.indexOf(step)
@@ -62,14 +63,18 @@ export function CIRFAssessment() {
         }),
       })
     } catch { /* silent */ }
-    // ... and email the promised results + toolkit (best-effort)
+    // ... and email the promised results + toolkit. Track the outcome so we
+    // can tell the user if the promised email didn't go out.
     try {
-      await fetch('/api/assessments/cirf-results', {
+      const res = await fetch('/api/assessments/cirf-results', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, name: name || undefined, answers }),
       })
-    } catch { /* silent */ }
+      setEmailStatus(res.ok ? 'sent' : 'failed')
+    } catch {
+      setEmailStatus('failed')
+    }
     goTo('results')
     setIsSubmitting(false)
   }
@@ -82,7 +87,7 @@ export function CIRFAssessment() {
   const totalScore = pillarScores.reduce((s, p) => s + p.score, 0)
 
   // Validation
-  const infoValid = email.includes('@') && email.includes('.')
+  const infoValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
   const pillarValid = (pillarId: number) => {
     const pillar = CIRF_PILLARS.find((p) => p.id === pillarId)
     return pillar ? pillar.questions.every((q) => answers[q.id]) : false
@@ -92,7 +97,21 @@ export function CIRFAssessment() {
   const currentPillar = typeof step === 'number' ? CIRF_PILLARS.find((p) => p.id === step) : null
 
   if (step === 'results') {
-    return <CIRFResults pillarScores={pillarScores} totalScore={totalScore} name={name} />
+    return (
+      <>
+        {emailStatus === 'failed' && (
+          <div
+            role="alert"
+            className="max-w-3xl mx-auto mt-6 px-6 py-4 rounded-xl text-sm"
+            style={{ backgroundColor: '#FDF0EC', color: '#9A4B32', border: '1px solid #E8C4B5' }}
+          >
+            We couldn&apos;t send your results email to {email}. Your results are shown below — please
+            double-check your email address or contact us at hello@culturalinnovationlab.org for the toolkit.
+          </div>
+        )}
+        <CIRFResults pillarScores={pillarScores} totalScore={totalScore} name={name} />
+      </>
+    )
   }
 
   return (
