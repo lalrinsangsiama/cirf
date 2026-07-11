@@ -68,7 +68,7 @@ export function SiteHeader() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden px-6 pb-6 space-y-4 animate-fade-in-up">
+        <div id="mobile-menu" className="md:hidden px-6 pb-6 space-y-4 animate-fade-in-up">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

@@ -52,13 +52,13 @@ test.describe('Blog', () => {
 
 test.describe('Case Studies', () => {
   test('case studies page loads', async ({ page }) => {
-    await page.goto('/case-studies')
+    await page.goto('/evidence')
 
     await expect(page.locator('h1')).toBeVisible()
   })
 
   test('case studies page shows content', async ({ page }) => {
-    await page.goto('/case-studies')
+    await page.goto('/evidence')
 
     // Check for case study cards or content
     const content = page.locator('main')

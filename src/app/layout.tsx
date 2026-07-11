@@ -32,6 +32,12 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased" style={{ fontFamily: "'Inter', sans-serif" }}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-pearl"
+        >
+          Skip to main content
+        </a>
         {children}
         {/* Analytics page-view tracking — isolated in Suspense (useSearchParams)
             so it doesn't force the static pages to render dynamically. Self-gates

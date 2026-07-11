@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Navigation', () => {
   test('homepage loads successfully', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/CIL/)
+    await expect(page).toHaveTitle(/Cultural Innovation Lab/)
   })
 
   test('main navigation links work', async ({ page }) => {
@@ -12,10 +12,6 @@ test.describe('Navigation', () => {
     // Test Framework link
     await page.click('text=Framework')
     await expect(page).toHaveURL(/\/framework/)
-
-    // Test Tools link
-    await page.click('text=Tools')
-    await expect(page).toHaveURL(/\/tools/)
 
     // Test Blog link
     await page.click('text=Blog')
@@ -28,7 +24,7 @@ test.describe('Navigation', () => {
 
   test('logo links to homepage', async ({ page }) => {
     await page.goto('/about')
-    await page.click('a:has-text("CIL")')
+    await page.click('header a[href="/"]')
     await expect(page).toHaveURL('/')
   })
 
@@ -37,21 +33,19 @@ test.describe('Navigation', () => {
     await page.setViewportSize({ width: 375, height: 667 })
     await page.goto('/')
 
-    // Menu panel exists but should be off-screen initially (translate-x-full)
     const mobileMenu = page.locator('#mobile-menu')
-    await expect(mobileMenu).toHaveClass(/translate-x-full/)
+    const menuButton = page.locator('button[aria-label="Toggle menu"]')
+
+    // Menu panel is unmounted (not just hidden) until opened
+    await expect(mobileMenu).toHaveCount(0)
 
     // Click menu button to open
-    await page.click('button[aria-label="Open menu"]')
+    await menuButton.click()
+    await expect(mobileMenu).toBeVisible()
 
-    // Menu should be on-screen (translate-x-0)
-    await expect(mobileMenu).toHaveClass(/translate-x-0/)
-
-    // Click the close button using keyboard escape or click with scroll
-    await page.keyboard.press('Escape')
-
-    // Menu should be off-screen again
-    await expect(mobileMenu).toHaveClass(/translate-x-full/)
+    // Click the toggle button again to close
+    await menuButton.click()
+    await expect(mobileMenu).toHaveCount(0)
   })
 
   test('mobile navigation links work', async ({ page }) => {
@@ -59,13 +53,13 @@ test.describe('Navigation', () => {
     await page.goto('/')
 
     // Open menu
-    await page.click('button[aria-label="Open menu"]')
+    await page.click('button[aria-label="Toggle menu"]')
 
-    // Click Tools link in mobile menu
-    await page.click('#mobile-menu >> text=Tools')
+    // Click Framework link in mobile menu
+    await page.click('#mobile-menu >> text=Framework')
 
-    // Should navigate to tools page
-    await expect(page).toHaveURL(/\/tools/)
+    // Should navigate to framework page
+    await expect(page).toHaveURL(/\/framework/)
   })
 })
 

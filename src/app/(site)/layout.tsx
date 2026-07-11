@@ -8,7 +8,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <div style={{ backgroundColor: '#FAF7F2', color: '#0D1B2A', minHeight: '100vh' }}>
       <SiteHeader />
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1}>{children}</main>
       <SiteFooter />
     </div>
   )

@@ -10,43 +10,43 @@ test.describe('Contact Form', () => {
   })
 
   test('contact form has required fields', async ({ page }) => {
-    await page.goto('/about#contact')
+    await page.goto('/contact')
 
     // Wait for the contact section to be visible
     await page.waitForSelector('#contact', { state: 'visible' })
 
-    // Check for form fields using the "Send Message" form specifically (not newsletter)
-    const contactForm = page.locator('#contact form:has(button:has-text("Send Message"))')
-    await expect(contactForm.locator('input[name="name"]')).toBeVisible()
+    // Check for form fields using the "Send message" form specifically (not newsletter)
+    const contactForm = page.locator('#contact form:has(button:has-text("Send message"))')
+    await expect(contactForm.locator('#contact-name')).toBeVisible()
     await expect(contactForm.locator('input[type="email"]')).toBeVisible()
     await expect(contactForm.locator('textarea')).toBeVisible()
   })
 
   test('contact form validates required fields', async ({ page }) => {
-    await page.goto('/about#contact')
+    await page.goto('/contact')
 
     // Wait for form to load
     await page.waitForSelector('#contact form', { state: 'visible' })
 
-    // Target the contact form specifically (the one with "Send Message" button)
-    const submitButton = page.locator('#contact button:has-text("Send Message")')
+    // Target the contact form specifically (the one with "Send message" button)
+    const submitButton = page.locator('#contact button:has-text("Send message")')
     await submitButton.click()
 
-    // Form should not submit (stay on page with contact section)
-    await expect(page).toHaveURL(/\/about/)
+    // Form should not submit (stay on the contact page)
+    await expect(page).toHaveURL(/\/contact/)
   })
 
   test('contact form shows validation errors', async ({ page }) => {
-    await page.goto('/about#contact')
+    await page.goto('/contact')
 
     // Wait for form to load
     await page.waitForSelector('#contact form', { state: 'visible' })
 
     // Target the contact form specifically
-    const contactForm = page.locator('#contact form:has(button:has-text("Send Message"))')
+    const contactForm = page.locator('#contact form:has(button:has-text("Send message"))')
 
     // Fill in invalid email
-    await contactForm.locator('input[name="name"]').fill('Test User')
+    await contactForm.locator('#contact-name').fill('Test User')
     await contactForm.locator('input[type="email"]').fill('invalid')
     await contactForm.locator('textarea').fill('This is a test message that is long enough.')
 

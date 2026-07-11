@@ -33,7 +33,7 @@ export default function HomePage() {
   return (
     <div style={{ backgroundColor: '#FAF7F2', color: '#0D1B2A', minHeight: '100vh' }}>
       <SiteHeader />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero */}
         <section className="py-24 md:py-32" style={{ background: 'linear-gradient(160deg, #FAF7F2 0%, #f0f5f4 100%)' }}>
           <div className="max-w-3xl mx-auto px-6 text-center">
