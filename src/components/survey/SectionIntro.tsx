@@ -13,11 +13,22 @@ export function SectionIntro({ title, body, highlight }: SectionIntroProps) {
         {title}
       </h2>
 
-      {body && (
-        <p className="text-[14px] leading-relaxed" style={{ color: '#5a7a6a' }}>
-          {body}
-        </p>
-      )}
+      {body &&
+        body.split(/\n\s*\n/).map((para, i) => {
+          // A short opening sentence (e.g. "Your data.") is rendered as an inline lead-in
+          const m = para.match(/^([^.]{2,40}\.)\s+([\s\S]*)$/)
+          return (
+            <p key={i} className="text-[14px] leading-relaxed" style={{ color: '#5a7a6a' }}>
+              {m ? (
+                <>
+                  <strong style={{ color: '#3a5a4a' }}>{m[1]}</strong> {m[2]}
+                </>
+              ) : (
+                para
+              )}
+            </p>
+          )
+        })}
 
       {highlight && (
         <div

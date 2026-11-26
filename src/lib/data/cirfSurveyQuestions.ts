@@ -10,7 +10,7 @@ export const SURVEY_SECTIONS: SectionInfo[] = [
   { id: 'consent', title: 'Welcome', estimatedMinutes: 1 },
   { id: 'profile', title: 'Section A: Respondent Profile', subtitle: 'Your professional context', estimatedMinutes: 2 },
   { id: 'definition', title: 'Section B: Definition & Scope', subtitle: 'Evaluating the proposed definition of cultural innovation', estimatedMinutes: 3 },
-  { id: 'pillars', title: 'Section C: Framework Pillars', subtitle: 'Evaluating the four CIRF pillars', estimatedMinutes: 10 },
+  { id: 'pillars', title: 'Section C: Framework Pillars', subtitle: 'Evaluating the four CIRF pillars and the governance layer', estimatedMinutes: 11 },
   { id: 'barriers', title: 'Section D: Barriers & Enablers', subtitle: 'Obstacles and success factors', estimatedMinutes: 4 },
   { id: 'metrics', title: 'Section E: Metrics & Implementation', subtitle: 'Measuring cultural innovation', estimatedMinutes: 3 },
   { id: 'reflections', title: 'Final Reflections', estimatedMinutes: 2 },
@@ -45,13 +45,17 @@ export const SURVEY_SCREENS: SurveyScreen[] = [
     section: 'consent',
     introContent: {
       title: 'Expert Validation Questionnaire',
-      body: `Thank you for agreeing to participate in this expert validation study. Your professional expertise is invaluable to this research, which seeks to develop the Cultural Innovation Resilience Framework (CIRF) — the first integrated, scalable framework for positioning cultural innovation as a strategic driver of economic resilience.
+      body: `Thank you for taking part in this expert validation study. It forms part of doctoral research by Lalrinngheti Sangsiama for the Doctor of Business Administration at the Swiss School of Business and Management Geneva, supervised by Ramesh Kumar.
 
-Cultural innovation — the strategic transformation of cultural heritage, traditions, and community knowledge into viable economic opportunities — is a growing global phenomenon. Yet it lacks formal definition, a unified framework, and standardised metrics. This study addresses these gaps.
+About the research. The study proposes the Cultural Innovation Resilience Framework (CIRF): a framework for understanding how cultural heritage, traditions and community knowledge can become sources of economic resilience. The CIRF has four pillars (Economic Value Creation; Cultural Integrity and Authenticity; Adaptability and Sustainability; Social Empowerment and Inclusion), supported by an institutional governance layer. It is deliberately bounded: it applies to communities and enterprises that choose to engage wider markets, including global ones. It is not proposed as a model for all cultural practice.
 
-You have been selected as an expert based on your professional experience in cultural innovation, cultural entrepreneurship, creative economy policy, heritage management, or a related field. This questionnaire asks you to evaluate the proposed framework — its definition, pillars, indicators, and practical applicability. Your candid feedback will directly shape the final CIRF.
+Your role. You have been invited because of your professional experience in cultural entrepreneurship, creative economy policy, heritage management, or a related field. You will be asked to evaluate the proposed definition, pillars, governance layer and indicators. Critical and disagreeing views are as valuable as agreement; please answer from your own experience.
 
-Your participation is entirely voluntary. You may skip any question or withdraw at any time. All responses are anonymised; your name will not appear in the thesis unless you provide explicit written permission. Data is stored securely and used solely for this academic research.`,
+Participation and withdrawal. Taking part is voluntary. Most questions can be skipped. You can stop at any time by closing this page, and an unfinished questionnaire is not used. If you wish to withdraw after submitting, email the researcher; once responses have been anonymised and analysed it may no longer be possible to remove them.
+
+Your data. Responses are anonymised in the thesis and any publications; no respondent is identified by name unless they give explicit permission at the end of the questionnaire. Contact details you choose to give (for a follow-up conversation, a summary of findings, or acknowledgement) are used only for those purposes and are never reported alongside your answers. Data is stored securely, used solely for this academic research, and retained only for the period required by SSBM Geneva's research governance policies before secure deletion.
+
+This questionnaire is hosted on the Cultural Innovation Lab website, which is run by the researcher. Questions about the study: hello@culturalinnovationlab.org`,
       highlight: 'Estimated Completion Time: 20–25 minutes',
     },
     questions: [
@@ -61,7 +65,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
         type: 'consent',
         label: 'Informed Consent',
         required: true,
-        consentText: 'I confirm that I have read the above information and consent to participate in this study.',
+        consentText: 'I am 18 or over, I have read the information above, and I consent to take part in this study.',
       },
     ],
   },
@@ -171,7 +175,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
     sectionLabel: 'Section B: Definition and Scope of Cultural Innovation',
     introContent: {
       title: 'Definition and Scope of Cultural Innovation',
-      body: 'This section evaluates the proposed definition of cultural innovation. It addresses Research Question 1: What are the defining characteristics of cultural innovation?',
+      body: 'This section evaluates the proposed definition of cultural innovation.',
       highlight: 'Proposed Definition: Cultural innovation is the strategic transformation of cultural heritage, traditions, and community-embedded knowledge into viable economic opportunities that generate measurable value while preserving cultural integrity, fostering adaptability, and empowering the communities from which they originate.',
     },
     questions: [
@@ -231,7 +235,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
     sectionLabel: 'Section C: Evaluation of the CIRF Framework Pillars',
     introContent: {
       title: 'Pillar 1: Economic Value Creation',
-      body: 'This section evaluates each of the four pillars of the Cultural Innovation Resilience Framework. It addresses Research Questions 2 and 5.',
+      body: 'This section evaluates each of the four pillars of the CIRF in turn, then the governance layer and the framework as a whole.',
       highlight: 'Definition: The transformation of cultural assets into measurable economic outputs including revenue generation, employment creation, GDP contribution, export value, and tourism multiplier effects.',
     },
     questions: [
@@ -244,9 +248,11 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
         scale: LIKERT_5_SCALE,
         statements: [
           { id: 'q8_s1', text: 'This pillar is essential for cultural innovation to achieve economic resilience.' },
-          { id: 'q8_s2', text: 'The proposed indicators (cultural GDP share, creative employment rates, export values, tourism multipliers) are relevant and measurable.' },
+          { id: 'q8_s2', text: 'The proposed indicators (cultural GDP share, creative employment rates, export values, tourism multipliers) are relevant.' },
+          { id: 'q8_s5', text: 'The data needed for these indicators is realistically available.' },
           { id: 'q8_s3', text: 'This pillar adequately captures how cultural innovation creates economic value.' },
-          { id: 'q8_s4', text: 'Governments and investors would find these indicators useful for decision-making.' },
+          { id: 'q8_s4', text: 'Governments would find these indicators useful for decision-making.' },
+          { id: 'q8_s6', text: 'Investors would find these indicators useful for decision-making.' },
         ],
       },
     ],
@@ -342,7 +348,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
           { id: 'q12_s1', text: 'Adaptability is essential for the long-term survival of cultural enterprises.' },
           { id: 'q12_s2', text: 'Digital technology is a critical enabler of cultural innovation in the current era.' },
           { id: 'q12_s3', text: 'Intergenerational knowledge transfer is adequately captured in this pillar.' },
-          { id: 'q12_s4', text: 'The proposed indicators are practical and measurable.' },
+          { id: 'q12_s4', text: 'The proposed indicators (digital adoption, hybrid business models, intergenerational knowledge transfer, climate-resilient practices) can realistically be measured.' },
         ],
       },
     ],
@@ -390,7 +396,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
           { id: 'q14_s1', text: 'Social empowerment and inclusion should be a core component of any cultural innovation framework.' },
           { id: 'q14_s2', text: 'Cultural innovation has the potential to reduce economic inequality in marginalised communities.' },
           { id: 'q14_s3', text: 'The proposed indicators (participation demographics, income shifts, women/youth entrepreneurship, social mobility) are relevant.' },
-          { id: 'q14_s4', text: 'Current policies adequately support social inclusion in cultural entrepreneurship.' },
+          { id: 'q14_s4', text: 'In the context(s) I work in, current policies adequately support social inclusion in cultural entrepreneurship.' },
         ],
       },
     ],
@@ -415,31 +421,70 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
     ],
   },
 
-  // ═══════════���═══════════════════════════��═══
-  // SCREEN 13: Overall Framework Q16
-  // ═════════════════��═════════════════════════
+  // ═══════════════════════════════════════════
+  // SCREEN: Institutional Governance Layer (Q16a)
+  // ═══════════════════════════════════════════
   {
     id: 13,
     section: 'pillars',
     introContent: {
+      title: 'The Institutional Governance Layer',
+      body: 'The governance layer is not a fifth pillar. It sets out the institutional conditions the CIRF treats as necessary for the four pillars to function: dedicated IP frameworks for traditional and cultural knowledge; funding mechanisms designed for cultural enterprises; market access infrastructure (physical and digital); culturally responsive education; and policy designed for the local context rather than generic entrepreneurship support.',
+      highlight: 'Definition: The enabling institutional infrastructure without which the four pillars cannot operate sustainably.',
+    },
+    questions: [
+      {
+        id: 'q16a',
+        section: 'pillars',
+        type: 'likert-matrix',
+        label: 'Please rate the following statements about the governance layer:',
+        required: true,
+        scale: LIKERT_5_SCALE,
+        statements: [
+          { id: 'q16a_s1', text: 'Treating governance as enabling conditions, rather than as a fifth pillar, is the right structure.' },
+          { id: 'q16a_s2', text: 'The five governance conditions listed above are the right ones.' },
+          { id: 'q16a_s3', text: 'Without these institutional conditions, the four pillars are unlikely to be sustained.' },
+          { id: 'q16a_s4', text: 'Community ownership of the enterprise itself (not only of the cultural knowledge it uses) strengthens its commercial performance.' },
+        ],
+      },
+      {
+        id: 'q16b',
+        section: 'pillars',
+        type: 'open-text',
+        label: 'Is any institutional condition missing from the governance layer, or should any be removed?',
+        placeholder: 'Your response...',
+        required: false,
+        rows: 3,
+      },
+    ],
+  },
+
+  // ═══════════���═══════════════════════════��═══
+  // SCREEN 13: Overall Framework Q16
+  // ═════════════════��═════════════════════════
+  {
+    id: 14,
+    section: 'pillars',
+    introContent: {
       title: 'Overall Framework Assessment',
-      body: 'Considering all four pillars together, please evaluate the CIRF as a whole.',
+      body: 'Considering the four pillars and the governance layer together, please evaluate the CIRF as a whole.',
     },
     questions: [
       {
         id: 'q16',
         section: 'pillars',
         type: 'likert-matrix',
-        label: 'Considering all four pillars together, please rate:',
+        label: 'Please rate:',
         required: true,
         scale: LIKERT_5_SCALE,
         statements: [
-          { id: 'q16_s1', text: 'The four pillars collectively provide a comprehensive framework for cultural innovation.' },
-          { id: 'q16_s2', text: 'The framework is applicable across different countries and cultural contexts.' },
+          { id: 'q16_s1', text: 'The four pillars, together with the governance layer, provide a comprehensive framework for cultural innovation.' },
+          { id: 'q16_s2', text: 'Within its stated scope, the framework is applicable across different countries and cultural contexts.' },
+          { id: 'q16_s7', text: 'Limiting the framework to communities and enterprises that choose to engage wider markets is an appropriate boundary.' },
           { id: 'q16_s3', text: 'The framework would be useful for policymakers designing cultural innovation strategies.' },
           { id: 'q16_s4', text: 'The framework would be useful for cultural entrepreneurs structuring their enterprises.' },
           { id: 'q16_s5', text: 'The framework would be useful for investors evaluating cultural innovation opportunities.' },
-          { id: 'q16_s6', text: 'No existing framework adequately addresses what the CIRF proposes to cover.' },
+          { id: 'q16_s6r', text: 'An existing framework already adequately covers what the CIRF proposes to cover.' },
         ],
       },
     ],
@@ -449,14 +494,14 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 14: Q17 + Q18 (ranking)
   // ════════════════════���══════════════════════
   {
-    id: 14,
+    id: 15,
     section: 'pillars',
     questions: [
       {
         id: 'q17',
         section: 'pillars',
         type: 'open-text',
-        label: 'Are there any additional pillars or dimensions that should be included in the CIRF?',
+        label: 'Are there any additional pillars or dimensions that should be included in the CIRF? If an existing framework already covers this ground, please name it.',
         placeholder: 'Your response...',
         required: false,
         rows: 3,
@@ -481,12 +526,12 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 15: Q19 (barriers multi-select, pick 5)
   // ═══════════════════���═══════════════════════
   {
-    id: 15,
+    id: 16,
     section: 'barriers',
     sectionLabel: 'Section D: Barriers and Enablers',
     introContent: {
       title: 'Barriers and Enablers',
-      body: 'This section identifies the most significant obstacles and success factors for cultural innovation. It addresses Research Question 4.',
+      body: 'This section identifies the most significant obstacles and success factors for cultural innovation.',
     },
     questions: [
       {
@@ -523,7 +568,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 16: Q20 + Q21
   // ════════════════════════════��══════════════
   {
-    id: 16,
+    id: 17,
     section: 'barriers',
     questions: [
       {
@@ -551,12 +596,12 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 17: Q22 (triple-rating matrix)
   // ══════════════���════════════════════════════
   {
-    id: 17,
+    id: 18,
     section: 'metrics',
     sectionLabel: 'Section E: Metrics and Implementation',
     introContent: {
       title: 'Metrics and Implementation',
-      body: 'This section evaluates how cultural innovation should be measured and implemented. It addresses Research Question 6.',
+      body: 'This section evaluates how cultural innovation should be measured and implemented.',
     },
     questions: [
       {
@@ -592,7 +637,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 18: Q23 + Q24
   // ═════════���═══════════════════════��═════════
   {
-    id: 18,
+    id: 19,
     section: 'metrics',
     questions: [
       {
@@ -612,6 +657,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
         required: true,
         hasOther: false,
         conditionalTextOn: 'combination',
+        conditionalTextPlaceholder: 'Which combination?',
         options: [
           { value: 'government_stats', label: 'National government statistical offices' },
           { value: 'cultural_agencies', label: 'Dedicated cultural innovation agencies or ministries' },
@@ -628,7 +674,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 19: Q25 (final reflections)
   // ════════════════��══════════════════════════
   {
-    id: 19,
+    id: 20,
     section: 'reflections',
     sectionLabel: 'Final Reflections',
     questions: [
@@ -648,7 +694,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   // SCREEN 20: Q26 + Q27 + Q28 (follow-up)
   // ═══════════════════════════════════════════
   {
-    id: 20,
+    id: 21,
     section: 'reflections',
     questions: [
       {
@@ -659,6 +705,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
         required: true,
         hasOther: false,
         conditionalTextOn: 'yes',
+        conditionalTextPlaceholder: 'Your email address',
         options: [
           { value: 'yes', label: 'Yes — please contact me' },
           { value: 'no', label: 'No, I prefer not to be contacted further' },
@@ -672,6 +719,7 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
         required: true,
         hasOther: false,
         conditionalTextOn: 'yes',
+        conditionalTextPlaceholder: 'Your email address',
         options: [
           { value: 'yes', label: 'Yes — please send to me' },
           { value: 'no', label: 'No, thank you' },
@@ -681,9 +729,11 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
         id: 'q28',
         section: 'reflections',
         type: 'single-select',
-        label: 'May the researcher acknowledge your contribution by name in the thesis acknowledgements section?',
+        label: 'May the researcher acknowledge your contribution by name in the thesis acknowledgements section? (Your answers will still not be attributed to you.)',
         required: true,
         hasOther: false,
+        conditionalTextOn: 'yes',
+        conditionalTextPlaceholder: 'Your name and affiliation, as you would like them to appear',
         options: [
           { value: 'yes', label: 'Yes, you may use my name' },
           { value: 'no', label: 'No, I prefer to remain anonymous' },
@@ -693,4 +743,4 @@ Your participation is entirely voluntary. You may skip any question or withdraw 
   },
 ]
 
-export const TOTAL_SCREENS = SURVEY_SCREENS.length // 21 (0-20), plus thank you screen = 22 total steps
+export const TOTAL_SCREENS = SURVEY_SCREENS.length // 22 screens (0-21), plus thank-you screen

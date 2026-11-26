@@ -55,6 +55,7 @@ export function QuestionRenderer({ question, value, onChange }: QuestionRenderer
             options={question.options}
             hasOther={question.hasOther}
             conditionalTextOn={question.conditionalTextOn}
+            conditionalTextPlaceholder={question.conditionalTextPlaceholder}
             value={value as SingleSelectAnswer | undefined}
             onChange={handleChange}
           />

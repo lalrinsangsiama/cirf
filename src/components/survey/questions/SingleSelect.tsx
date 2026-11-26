@@ -8,11 +8,12 @@ interface SingleSelectProps {
   options: { value: string; label: string }[]
   hasOther: boolean
   conditionalTextOn?: string
+  conditionalTextPlaceholder?: string
   value: SingleSelectAnswer | undefined
   onChange: (value: SingleSelectAnswer) => void
 }
 
-export function SingleSelect({ questionId, options, hasOther, conditionalTextOn, value, onChange }: SingleSelectProps) {
+export function SingleSelect({ questionId, options, hasOther, conditionalTextOn, conditionalTextPlaceholder, value, onChange }: SingleSelectProps) {
   const selected = value?.value || ''
   const [otherText, setOtherText] = useState(value?.otherText || '')
   const showTextField = conditionalTextOn && selected === conditionalTextOn
@@ -61,10 +62,10 @@ export function SingleSelect({ questionId, options, hasOther, conditionalTextOn,
       {showTextField && (
         <div className="ml-8 mt-2 animate-fade-in-up">
           <input
-            type="text"
+            type={conditionalTextPlaceholder?.toLowerCase().includes('email') ? 'email' : 'text'}
             value={otherText}
             onChange={(e) => handleOtherText(e.target.value)}
-            placeholder="Please specify..."
+            placeholder={conditionalTextPlaceholder || 'Please specify...'}
             className="w-full px-4 py-2.5 rounded-xl border-2 text-sm focus:outline-none transition-colors duration-200"
             style={{
               borderColor: 'rgba(74, 173, 224, 0.25)',
