@@ -18,12 +18,12 @@ export function ThankYouScreen() {
       </div>
 
       <h2 className="text-3xl font-serif font-semibold mb-4" style={{ color: '#1a3a2a' }}>
-        Thank You for Your Invaluable Contribution
+        Thank you for your contribution
       </h2>
 
       <p className="text-[15px] leading-relaxed max-w-lg mx-auto mb-6" style={{ color: '#5a7a6a' }}>
-        Your expertise is helping to build the first unified framework for cultural innovation
-        as a driver of economic resilience. Your responses have been securely recorded.
+        Your responses have been securely recorded. Your expertise will directly inform how the
+        Cultural Innovation Resilience Framework is refined.
       </p>
 
       {/* Unlocked content */}
@@ -32,7 +32,7 @@ export function ThankYouScreen() {
         style={{ background: 'linear-gradient(135deg, rgba(26, 138, 125, 0.06), rgba(212, 168, 67, 0.04))', border: '1px solid rgba(26, 138, 125, 0.15)' }}
       >
         <p className="text-sm font-semibold mb-4" style={{ color: '#1A8A7D' }}>
-          🎉 You&apos;ve unlocked the full platform:
+          If you would like to explore further:
         </p>
         <div className="space-y-2.5">
           <Link href="/assessment" className="flex items-center gap-3 p-3 rounded-xl transition-all hover:bg-white/60 group">

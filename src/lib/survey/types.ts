@@ -13,6 +13,7 @@ export interface SingleSelectQuestion extends BaseQuestion {
   options: { value: string; label: string }[]
   hasOther: boolean
   conditionalTextOn?: string // show text input when this value is selected
+  conditionalTextPlaceholder?: string
 }
 
 export interface MultiSelectQuestion extends BaseQuestion {
